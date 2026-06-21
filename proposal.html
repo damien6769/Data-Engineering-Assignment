@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Team 11 — Angel, Sophia, Damien, Levl, Suen Hong">
-<meta name="dcterms.date" content="2026-06-21">
+<meta name="dcterms.date" content="2026-06-22">
 
-<title>Re-examining Singapore’s Declining Birth Rate</title>
+<title>Re-examining Singapore’s Declining Fertility</title>
 <style>
 
 code{white-space: pre-wrap;}
@@ -2220,25 +2220,26 @@ vertical-align: -.125em;
   <ul class="collapse">
   <li><a href="#w1-colour-saturation-illusion" id="toc-w1-colour-saturation-illusion" class="nav-link" data-scroll-target="#w1-colour-saturation-illusion"><span class="header-section-number">3.0.1</span> W1 — Colour saturation illusion</a></li>
   <li><a href="#w2-lack-of-demographic-scaling" id="toc-w2-lack-of-demographic-scaling" class="nav-link" data-scroll-target="#w2-lack-of-demographic-scaling"><span class="header-section-number">3.0.2</span> W2 — Lack of demographic scaling</a></li>
-  <li><a href="#w3-inappropriate-use-of-bar-charts-for-a-timeline" id="toc-w3-inappropriate-use-of-bar-charts-for-a-timeline" class="nav-link" data-scroll-target="#w3-inappropriate-use-of-bar-charts-for-a-timeline"><span class="header-section-number">3.0.3</span> W3 — Inappropriate use of bar charts for a timeline</a></li>
+  <li><a href="#w3-limited-temporal-and-compositional-encoding" id="toc-w3-limited-temporal-and-compositional-encoding" class="nav-link" data-scroll-target="#w3-limited-temporal-and-compositional-encoding"><span class="header-section-number">3.0.3</span> W3 — Limited temporal and compositional encoding</a></li>
   <li><a href="#w4-limited-data-dimensionality" id="toc-w4-limited-data-dimensionality" class="nav-link" data-scroll-target="#w4-limited-data-dimensionality"><span class="header-section-number">3.0.4</span> W4 — Limited data dimensionality</a></li>
   <li><a href="#w5-short-time-horizon" id="toc-w5-short-time-horizon" class="nav-link" data-scroll-target="#w5-short-time-horizon"><span class="header-section-number">3.0.5</span> W5 — Short time horizon</a></li>
   <li><a href="#w6-lack-of-explicit-axis-labels-and-legend" id="toc-w6-lack-of-explicit-axis-labels-and-legend" class="nav-link" data-scroll-target="#w6-lack-of-explicit-axis-labels-and-legend"><span class="header-section-number">3.0.6</span> W6 — Lack of explicit axis labels and legend</a></li>
   <li><a href="#w7-absence-of-explanatory-variables" id="toc-w7-absence-of-explanatory-variables" class="nav-link" data-scroll-target="#w7-absence-of-explanatory-variables"><span class="header-section-number">3.0.7</span> W7 — Absence of explanatory variables</a></li>
-  <li><a href="#w8-misleading-axis-range" id="toc-w8-misleading-axis-range" class="nav-link" data-scroll-target="#w8-misleading-axis-range"><span class="header-section-number">3.0.8</span> W8 — Misleading axis range</a></li>
+  <li><a href="#w8-compressed-variation-on-the-raw-count-scale" id="toc-w8-compressed-variation-on-the-raw-count-scale" class="nav-link" data-scroll-target="#w8-compressed-variation-on-the-raw-count-scale"><span class="header-section-number">3.0.8</span> W8 — Compressed variation on the raw-count scale</a></li>
   <li><a href="#w9-arbitrary-period-averaging" id="toc-w9-arbitrary-period-averaging" class="nav-link" data-scroll-target="#w9-arbitrary-period-averaging"><span class="header-section-number">3.0.9</span> W9 — Arbitrary period averaging</a></li>
   </ul></li>
   <li><a href="#proposed-improvements-plan-only" id="toc-proposed-improvements-plan-only" class="nav-link" data-scroll-target="#proposed-improvements-plan-only"><span class="header-section-number">4</span> Proposed Improvements (Plan Only)</a>
   <ul class="collapse">
   <li><a href="#i1-use-fertility-rate-not-just-raw-counts-addresses-w2" id="toc-i1-use-fertility-rate-not-just-raw-counts-addresses-w2" class="nav-link" data-scroll-target="#i1-use-fertility-rate-not-just-raw-counts-addresses-w2"><span class="header-section-number">4.0.1</span> I1 — Use fertility rate, not just raw counts → <em>addresses W2</em></a></li>
   <li><a href="#i2-make-colour-carry-meaning-addresses-w1-w4" id="toc-i2-make-colour-carry-meaning-addresses-w1-w4" class="nav-link" data-scroll-target="#i2-make-colour-carry-meaning-addresses-w1-w4"><span class="header-section-number">4.0.2</span> I2 — Make colour carry meaning → <em>addresses W1, W4</em></a></li>
-  <li><a href="#i3-use-chart-types-suited-to-change-over-time-addresses-w3" id="toc-i3-use-chart-types-suited-to-change-over-time-addresses-w3" class="nav-link" data-scroll-target="#i3-use-chart-types-suited-to-change-over-time-addresses-w3"><span class="header-section-number">4.0.3</span> I3 — Use chart types suited to change over time → <em>addresses W3</em></a></li>
+  <li><a href="#i3-show-annual-change-and-age-composition-together-addresses-w3-w4" id="toc-i3-show-annual-change-and-age-composition-together-addresses-w3-w4" class="nav-link" data-scroll-target="#i3-show-annual-change-and-age-composition-together-addresses-w3-w4"><span class="header-section-number">4.0.3</span> I3 — Show annual change and age composition together → <em>addresses W3, W4</em></a></li>
   <li><a href="#i4-add-labels-legend-and-annotations-addresses-w6" id="toc-i4-add-labels-legend-and-annotations-addresses-w6" class="nav-link" data-scroll-target="#i4-add-labels-legend-and-annotations-addresses-w6"><span class="header-section-number">4.0.4</span> I4 — Add labels, legend, and annotations → <em>addresses W6</em></a></li>
-  <li><a href="#i5-add-demographic-dimensions-addresses-w4-w7" id="toc-i5-add-demographic-dimensions-addresses-w4-w7" class="nav-link" data-scroll-target="#i5-add-demographic-dimensions-addresses-w4-w7"><span class="header-section-number">4.0.5</span> I5 — Add demographic dimensions → <em>addresses W4, W7</em></a></li>
-  <li><a href="#i6-add-contextual-explanatory-variables-addresses-w7" id="toc-i6-add-contextual-explanatory-variables-addresses-w7" class="nav-link" data-scroll-target="#i6-add-contextual-explanatory-variables-addresses-w7"><span class="header-section-number">4.0.6</span> I6 — Add contextual explanatory variables → <em>addresses W7</em></a></li>
+  <li><a href="#i5-add-female-lfpr-and-singlehood-trends-addresses-w7" id="toc-i5-add-female-lfpr-and-singlehood-trends-addresses-w7" class="nav-link" data-scroll-target="#i5-add-female-lfpr-and-singlehood-trends-addresses-w7"><span class="header-section-number">4.0.5</span> I5 — Add female LFPR and singlehood trends → <em>addresses W7</em></a></li>
+  <li><a href="#i6-add-population-policy-context-addresses-w7" id="toc-i6-add-population-policy-context-addresses-w7" class="nav-link" data-scroll-target="#i6-add-population-policy-context-addresses-w7"><span class="header-section-number">4.0.6</span> I6 — Add population-policy context → <em>addresses W7</em></a></li>
   <li><a href="#i7-extend-the-historical-time-horizon-addresses-w5" id="toc-i7-extend-the-historical-time-horizon-addresses-w5" class="nav-link" data-scroll-target="#i7-extend-the-historical-time-horizon-addresses-w5"><span class="header-section-number">4.0.7</span> I7 — Extend the historical time horizon → <em>addresses W5</em></a></li>
-  <li><a href="#i8-resolve-the-standalone-2012-bar-addresses-w9" id="toc-i8-resolve-the-standalone-2012-bar-addresses-w9" class="nav-link" data-scroll-target="#i8-resolve-the-standalone-2012-bar-addresses-w9"><span class="header-section-number">4.0.8</span> I8 — Resolve the standalone 2012 bar → <em>addresses W9</em></a></li>
-  <li><a href="#i9-rescale-the-axis-appropriately-addresses-w8" id="toc-i9-rescale-the-axis-appropriately-addresses-w8" class="nav-link" data-scroll-target="#i9-rescale-the-axis-appropriately-addresses-w8"><span class="header-section-number">4.0.9</span> I9 — Rescale the axis appropriately → <em>addresses W8</em></a></li>
+  <li><a href="#i8-replace-arbitrary-period-averages-with-an-annual-series-addresses-w9" id="toc-i8-replace-arbitrary-period-averages-with-an-annual-series-addresses-w9" class="nav-link" data-scroll-target="#i8-replace-arbitrary-period-averages-with-an-annual-series-addresses-w9"><span class="header-section-number">4.0.8</span> I8 — Replace arbitrary period averages with an annual series → <em>addresses W9</em></a></li>
+  <li><a href="#i9-use-appropriate-zero-based-rate-and-percentage-scales-addresses-w8" id="toc-i9-use-appropriate-zero-based-rate-and-percentage-scales-addresses-w8" class="nav-link" data-scroll-target="#i9-use-appropriate-zero-based-rate-and-percentage-scales-addresses-w8"><span class="header-section-number">4.0.9</span> I9 — Use appropriate zero-based rate and percentage scales → <em>addresses W8</em></a></li>
+  <li><a href="#i10-add-chinese-zodiac-context-addresses-w7" id="toc-i10-add-chinese-zodiac-context-addresses-w7" class="nav-link" data-scroll-target="#i10-add-chinese-zodiac-context-addresses-w7"><span class="header-section-number">4.0.10</span> I10 — Add Chinese zodiac context → <em>addresses W7</em></a></li>
   </ul></li>
   <li><a href="#data-engineering-workflow-raw-visualization-ready" id="toc-data-engineering-workflow-raw-visualization-ready" class="nav-link" data-scroll-target="#data-engineering-workflow-raw-visualization-ready"><span class="header-section-number">5</span> Data Engineering Workflow (Raw → Visualization-Ready)</a>
   <ul class="collapse">
@@ -2276,7 +2277,7 @@ vertical-align: -.125em;
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Re-examining Singapore’s Declining Birth Rate</h1>
+<h1 class="title">Re-examining Singapore’s Declining Fertility</h1>
 <p class="subtitle lead">AAI1001 Data Engineering &amp; Visualization — Project Proposal</p>
 </div>
 
@@ -2294,7 +2295,7 @@ vertical-align: -.125em;
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">June 21, 2026</p>
+      <p class="date">June 22, 2026</p>
     </div>
   </div>
   
@@ -2322,15 +2323,16 @@ Figure 1: Original CNA visualization: <em>Drop in Singapore citizen births in 2
 <section id="what-cna-tells" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="what-cna-tells"><span class="header-section-number">1.1</span> What CNA Tells</h2>
 <p>The original visualisation shows the annual number of Singapore citizen births from 2012 to 2022, highlighting a decline from an average of 32.7k births (2013–2017) to 31.8k births (2018–2022). It shows the downward trend in births and raises concerns regarding Singapore’s low fertility rate and ageing population.</p>
+<p>The original chart measures citizen birth counts, whereas our redesign uses resident fertility and singlehood measures together with a national female labour-force participation estimate. These measures do not share an identical population base; they are combined to examine broad long-term patterns rather than to imply a direct one-to-one statistical decomposition of citizen births.</p>
 </section>
 <section id="our-story" class="level2" data-number="1.2">
 <h2 data-number="1.2" class="anchored" data-anchor-id="our-story"><span class="header-section-number">1.2</span> Our Story</h2>
 <blockquote class="blockquote">
-<p><strong>Which demographic, social, and economic factors are associated with Singapore’s declining birth rate?</strong></p>
+<p><strong>Which demographic, social, and economic factors are associated with Singapore’s declining fertility?</strong></p>
 </blockquote>
-<p>Over the span of two generations, Singapore’s demographic anxieties have inverted. The government once sought to curb the rapidly increasing population in the nation’s infancy. However, they are soon confronted with a decline in fertility. The resident total fertility rate (TFR) fell below 1.0 for the first time in 2023, and continued declining to 0.87 in 2025. In order for a population to replace itself, a TFr of 2.1 is required. Singapore is set on a dangerous precendent if this is not resolved. The objective of this project is to explore the causes behind Singapore’s drastic decline in fertility rates.</p>
-<p>After the Second World War ended in the Pacific, Singapore saw a post-war baby boom. Confronted with a rising population, the government introduced the Stop at Two campaign in 1972, actively discouraging larger families. This also accelerated a decline that modernisation had already set in motion. The policy proved highly effective as the TFR reached replacement level by 1975 and continued falling afterwards. By the 1980s, the state reverse its position. In 1983, the Great Marriage Debate publicly identified educated wmen as marrying and bearing children at lower rates. Then the Graduate Mothers Scheme was introduced in 1984 in a bid to influence university educated women benefits for having more children, such as having priority for primary school registration for their third and subsequent children. This policy was not well received by the public and was short-lived. IN 1987, the government introduced Hove Three or More, If You Can Afford It, marked a decisive shift towards pro-natalist policy. However, none of these interventions could stop the rapidly declining birth rate. Across the Baby Bonus scheme in 2001, and successive enhancements to parenthood support, fertility continued to fall to its present record lows.</p>
-<p>This sustained policy failure forms the analytical core of the project. If financial, housing, and taxation incentives have repeatedly proven unable to raise fertility, the underlying drivers are likely to be structural and cultural rather than political. As a growing proportion of women attain university education and enter professional employment, the average age at first marriage has risen, deferring first births and compressing the period available for subsequent children. At the same time, an ageing population reduces the number of women in the prime childbearing age groups, exerting downward pressure on births independently of individual fertility behaviour. This interpretation is consistent with the Department of Statistics’ own decomposition of the TFR, which attributes the largest component of the decline not to married couples having fewer children, but to a rising proportion of women in the prime childbearing ages remaining unmarried.</p>
+<p>Over the past two generations, Singapore’s demographic priorities have reversed. During the country’s early development, rapid population growth was a major policy concern; today, attention has shifted towards persistently low fertility. Singapore’s resident total fertility rate (TFR) fell below 1.0 for the first time in 2023 and declined further to 0.87 in 2025, substantially below the replacement level of approximately 2.1. This project examines the demographic, social, and economic factors associated with that long-term decline.</p>
+<p>Singapore experienced a post-war baby boom before introducing increasingly strong family-planning measures. The <em>Stop at Two</em> campaign began in 1972 and formed part of a broader anti-natalist policy environment. TFR reached replacement level in 1975 and continued to decline. By the 1980s, the government had begun reversing its position. The 1983 Great Marriage Debate and the short-lived Graduate Mothers Scheme in 1984 focused public attention on marriage and fertility among university-educated women. In 1987, <em>Have Three or More, If You Can Afford It</em> marked a clearer shift towards pro-natalist policy, followed by the Baby Bonus Scheme in 2001 and later expansions of parenthood support. Despite these interventions, fertility remained below replacement level and continued its long-term decline.</p>
+<p>This contrast between sustained policy intervention and persistently low fertility provides the analytical focus of the project. The visualization will not treat policy, employment, or marriage patterns as proven causes. Instead, it will examine how fertility has changed alongside broader structural and cultural developments. Rising female labour-force participation and a growing proportion of women remaining single during prime childbearing ages may be associated with delayed family formation and a shorter period available for having children. Age-specific fertility rates can additionally show whether childbearing has shifted from younger to older maternal age groups. Bringing these measures together allows the project to investigate how Singapore’s fertility decline relates to changes in women’s employment, singlehood, maternal age, policy context, and selected cultural patterns.</p>
 </section>
 </section>
 <section id="strengths-of-the-original-visualization" class="level1" data-number="2">
@@ -2347,23 +2349,23 @@ Figure 1: Original CNA visualization: <em>Drop in Singapore citizen births in 2
 <p>Each weakness is stated with an explanation and a justification.</p>
 <section id="w1-colour-saturation-illusion" class="level3" data-number="3.0.1">
 <h3 data-number="3.0.1" class="anchored" data-anchor-id="w1-colour-saturation-illusion"><span class="header-section-number">3.0.1</span> W1 — Colour saturation illusion</h3>
-<p><strong>Explanation:</strong> The chart uses colour value categorically — a lighter shade for 2013–2017, a deeper purple for 2018–2022, and an even lighter tone for 2012, visually isolating it from both groups. <strong>Justification:</strong> Higher colour saturation naturally implies greater magnitude to the human eye, so the <em>lower</em>-birth years of 2018–2022 carry the heaviest visual weight despite representing the decline. The distinctly light 2012 bar reads as a low-value outlier, yet its 33.2k figure is higher than every bar in the darker 2018–2022 block. The intent was categorical, but the execution introduces a misleading signal.</p>
+<p><strong>Explanation:</strong> The chart uses colour value categorically — a lighter shade for 2013–2017, a deeper purple for 2018–2022, and an even lighter tone for 2012, visually isolating it from both groups. <strong>Justification:</strong> The darker, more saturated bars attract greater visual attention and may be interpreted as more important or larger, even though they represent the lower-birth period of 2018–2022. The distinctly light 2012 bar reads as a low-value outlier, yet its 33.2k figure is higher than every bar in the darker 2018–2022 block. The intent was categorical, but the execution introduces a potentially misleading visual emphasis.</p>
 </section>
 <section id="w2-lack-of-demographic-scaling" class="level3" data-number="3.0.2">
 <h3 data-number="3.0.2" class="anchored" data-anchor-id="w2-lack-of-demographic-scaling"><span class="header-section-number">3.0.2</span> W2 — Lack of demographic scaling</h3>
-<p><strong>Explanation:</strong> The graph plots absolute raw volume rather than scaling counts against Singapore’s changing demographic structure. <strong>Justification:</strong> Raw births depend on the size of the reproductive group. If the base population of women in prime childbearing ages shrank over the decade due to ageing, births fall even if individual fertility behaviour stayed constant or rose. Without normalizing into a fertility rate, the chart measures population ageing rather than actual family-planning behaviour (the <em>denominator fallacy</em>: raw counts conflate how many people exist with the choices those people make).</p>
+<p><strong>Explanation:</strong> The graph plots absolute raw volume rather than scaling counts against Singapore’s changing demographic structure. <strong>Justification:</strong> Raw births depend on the size of the reproductive group. If the population of women in prime childbearing ages shrank over the decade, births could fall even if individual fertility behaviour stayed constant or rose. Without normalising the counts into fertility rates, the chart cannot distinguish changes in fertility behaviour from changes in the size and age structure of the female population.</p>
 </section>
-<section id="w3-inappropriate-use-of-bar-charts-for-a-timeline" class="level3" data-number="3.0.3">
-<h3 data-number="3.0.3" class="anchored" data-anchor-id="w3-inappropriate-use-of-bar-charts-for-a-timeline"><span class="header-section-number">3.0.3</span> W3 — Inappropriate use of bar charts for a timeline</h3>
-<p><strong>Explanation:</strong> Individual vertical bars map a chronological 2012–2022 timeline, treating each year as a discrete category rather than a continuous progression. <strong>Justification:</strong> Time is continuous. Each bar is an independent visual unit, so the eye is not guided to read acceleration, deceleration, or slope between years. A continuous line chart would more clearly reveal whether the decline is steady, accelerating, or punctuated by sharp drops.</p>
+<section id="w3-limited-temporal-and-compositional-encoding" class="level3" data-number="3.0.3">
+<h3 data-number="3.0.3" class="anchored" data-anchor-id="w3-limited-temporal-and-compositional-encoding"><span class="header-section-number">3.0.3</span> W3 — Limited temporal and compositional encoding</h3>
+<p><strong>Explanation:</strong> The chart uses one undivided bar for each year, so it shows annual totals but not how the demographic composition of fertility changes over time. <strong>Justification:</strong> Readers can compare bar heights, but they cannot identify which maternal age groups contribute to the decline or relate the annual changes to longer-term explanatory trends. Adding meaningful segments and continuous contextual lines would make both composition and direction of change easier to interpret.</p>
 </section>
 <section id="w4-limited-data-dimensionality" class="level3" data-number="3.0.4">
 <h3 data-number="3.0.4" class="anchored" data-anchor-id="w4-limited-data-dimensionality"><span class="header-section-number">3.0.4</span> W4 — Limited data dimensionality</h3>
-<p><strong>Explanation:</strong> Only total citizen births per year are shown, with no breakdown by maternal age group, ethnicity, or birth order. <strong>Justification:</strong> The chart confirms a decline but cannot explain it. A breakdown would let readers identify which demographic segments drive the decline and whether it is concentrated or broad-based.</p>
+<p><strong>Explanation:</strong> Only total citizen births per year are shown, with no breakdown by maternal age group and no accompanying demographic or socioeconomic variables. <strong>Justification:</strong> The chart confirms a decline but cannot explain where it is concentrated or which broader changes are associated with it. Adding age-specific fertility and contextual variables would shift the visualization from a single total towards a multidimensional account of the decline.</p>
 </section>
 <section id="w5-short-time-horizon" class="level3" data-number="3.0.5">
 <h3 data-number="3.0.5" class="anchored" data-anchor-id="w5-short-time-horizon"><span class="header-section-number">3.0.5</span> W5 — Short time horizon</h3>
-<p><strong>Explanation:</strong> Birth data is shown only from 2012 to 2022 — roughly an 11-year window. <strong>Justification:</strong> This captures recent change but not the multi-decade demographic trends shaping Singapore’s fertility landscape. Long-run drivers — rising female education and labour-force participation (the shift the 1984 Graduate Mothers Scheme was meant to counter) and major policy events — predate this window and are invisible here.</p>
+<p><strong>Explanation:</strong> Birth data is shown only from 2012 to 2022 — roughly an 11-year window. <strong>Justification:</strong> This captures recent change but not the multi-decade demographic trends shaping Singapore’s fertility landscape. Long-run developments — including rising female education and labour-force participation, as well as major population policies such as the 1984 Graduate Mothers Scheme — predate this window and are invisible here.</p>
 </section>
 <section id="w6-lack-of-explicit-axis-labels-and-legend" class="level3" data-number="3.0.6">
 <h3 data-number="3.0.6" class="anchored" data-anchor-id="w6-lack-of-explicit-axis-labels-and-legend"><span class="header-section-number">3.0.6</span> W6 — Lack of explicit axis labels and legend</h3>
@@ -2373,13 +2375,13 @@ Figure 1: Original CNA visualization: <em>Drop in Singapore citizen births in 2
 <h3 data-number="3.0.7" class="anchored" data-anchor-id="w7-absence-of-explanatory-variables"><span class="header-section-number">3.0.7</span> W7 — Absence of explanatory variables</h3>
 <p><strong>Explanation:</strong> The chart presents a single descriptive metric — births per year — with no variables that could account for the decline. <strong>Justification:</strong> A single-variable chart answers <em>what</em> happened, not <em>why</em>. The causes of declining births are multi-factorial (behavioural, structural, economic). Without an explanatory layer, the chart is a diagnostic snapshot rather than an analytical tool. <em>(Overlaps with W4.)</em></p>
 </section>
-<section id="w8-misleading-axis-range" class="level3" data-number="3.0.8">
-<h3 data-number="3.0.8" class="anchored" data-anchor-id="w8-misleading-axis-range"><span class="header-section-number">3.0.8</span> W8 — Misleading axis range</h3>
-<p><strong>Explanation:</strong> The y-axis spans 0–35k, yet every bar sits within the narrow 30.4k–33.7k range. <strong>Justification:</strong> Because all values fall in the top ~10% of the axis, the bars look nearly identical and the empty space below 30k dominates, making a real year-on-year drop look negligible. A range starting nearer 28k–29k would surface the variation. <em>(Note: this is in tension with the “honest baseline” strength — we will treat it as a presentation trade-off rather than dishonesty.)</em></p>
+<section id="w8-compressed-variation-on-the-raw-count-scale" class="level3" data-number="3.0.8">
+<h3 data-number="3.0.8" class="anchored" data-anchor-id="w8-compressed-variation-on-the-raw-count-scale"><span class="header-section-number">3.0.8</span> W8 — Compressed variation on the raw-count scale</h3>
+<p><strong>Explanation:</strong> The y-axis correctly begins at zero, but the annual birth counts occupy only the narrow 30.4k–33.7k range near the top of the scale. <strong>Justification:</strong> Retaining a zero baseline is appropriate for bars, yet the combination of raw counts and a 0–35k axis makes the year-to-year variation difficult to distinguish. Replacing the count-only view with age-specific fertility rates and meaningful stacked segments can reveal changes without truncating the bar-chart baseline.</p>
 </section>
 <section id="w9-arbitrary-period-averaging" class="level3" data-number="3.0.9">
 <h3 data-number="3.0.9" class="anchored" data-anchor-id="w9-arbitrary-period-averaging"><span class="header-section-number">3.0.9</span> W9 — Arbitrary period averaging</h3>
-<p><strong>Explanation:</strong> Eleven individual years are collapsed into two 5-year block averages (32.7k vs 31.8k), presenting a 0.9k gap as the headline. <strong>Justification:</strong> The two-period split is an arbitrary editorial choice, and the 0.9k gap is shown without any measure of variability. Individual years contradict the implied narrative — 2019 (32.8k) exceeds several years in the supposedly higher 2013–2017 block. The averaging manufactures a cleaner story than the data fully supports.</p>
+<p><strong>Explanation:</strong> Eleven individual years are collapsed into two 5-year block averages (32.7k vs 31.8k), presenting a 0.9k gap as the headline. <strong>Justification:</strong> The two-period split is an arbitrary editorial choice, and the 0.9k gap is shown without any measure of variability. Individual years complicate the implied narrative — 2019 (32.8k) exceeds several years in the supposedly higher 2013–2017 block. The averaging produces a cleaner narrative than the annual variation alone supports.</p>
 </section>
 </section>
 <section id="proposed-improvements-plan-only" class="level1" data-number="4">
@@ -2387,39 +2389,43 @@ Figure 1: Original CNA visualization: <em>Drop in Singapore citizen births in 2
 <p>Each improvement targets one or more weaknesses above.</p>
 <section id="i1-use-fertility-rate-not-just-raw-counts-addresses-w2" class="level3" data-number="4.0.1">
 <h3 data-number="4.0.1" class="anchored" data-anchor-id="i1-use-fertility-rate-not-just-raw-counts-addresses-w2"><span class="header-section-number">4.0.1</span> I1 — Use fertility rate, not just raw counts → <em>addresses W2</em></h3>
-<p>Add the <strong>resident total fertility rate (TFR)</strong> and <strong>age-specific fertility rate (ASFR)</strong> by mother’s age group (20–24, 25–29, 30–34, 35–39). Normalizing births against the relevant female population separates true fertility behaviour from the mechanical effect of a shrinking reproductive-age base.</p>
+<p>We plan to replace the count-only view with <strong>age-specific fertility rates (ASFR)</strong> for the seven maternal age groups from 15–19 to 45–49, while retaining published total fertility rate (TFR) as a summary and validation measure. Rates relate births to the relevant female population, separating fertility behaviour from changes in the size of the reproductive-age population.</p>
 </section>
 <section id="i2-make-colour-carry-meaning-addresses-w1-w4" class="level3" data-number="4.0.2">
 <h3 data-number="4.0.2" class="anchored" data-anchor-id="i2-make-colour-carry-meaning-addresses-w1-w4"><span class="header-section-number">4.0.2</span> I2 — Make colour carry meaning → <em>addresses W1, W4</em></h3>
-<p>Break the data down by mother’s age group, assigning each group its own distinct colour. A sequential scale can additionally encode fertility magnitude (darker = higher fertility within a group). Birth order and ethnic group (Chinese, Malay, Indian) will be incorporated as further dimensions to surface where the decline concentrates.</p>
+<p>We propose assigning each of the seven maternal age groups a distinct and consistently ordered colour. Colour would therefore identify age composition rather than editorial time blocks, allowing readers to see whether fertility is shifting from younger to older age groups without implying that darker periods necessarily have larger values.</p>
 </section>
-<section id="i3-use-chart-types-suited-to-change-over-time-addresses-w3" class="level3" data-number="4.0.3">
-<h3 data-number="4.0.3" class="anchored" data-anchor-id="i3-use-chart-types-suited-to-change-over-time-addresses-w3"><span class="header-section-number">4.0.3</span> I3 — Use chart types suited to change over time → <em>addresses W3</em></h3>
-<p>Redesign as a <strong>stacked area chart</strong> (year on x-axis, ASFR on y-axis, each age group a coloured band), with an <strong>overlaid line</strong> for a contextual driver such as female labour-force participation rate or median age at first marriage. This shows both the composition of fertility by age group and how an external driver tracks alongside it.</p>
+<section id="i3-show-annual-change-and-age-composition-together-addresses-w3-w4" class="level3" data-number="4.0.3">
+<h3 data-number="4.0.3" class="anchored" data-anchor-id="i3-show-annual-change-and-age-composition-together-addresses-w3-w4"><span class="header-section-number">4.0.3</span> I3 — Show annual change and age composition together → <em>addresses W3, W4</em></h3>
+<p>The initial design uses <strong>stacked annual bars</strong> with year on the x-axis, ASFR on the left y-axis, and maternal age group represented by coloured segments. The combined height would summarise the annual level across age-specific fertility rates, while the segments would show how each age group contributes. Continuous contextual variables are provisionally represented as lines so that their direction and long-term movement remain easy to follow.</p>
 </section>
 <section id="i4-add-labels-legend-and-annotations-addresses-w6" class="level3" data-number="4.0.4">
 <h3 data-number="4.0.4" class="anchored" data-anchor-id="i4-add-labels-legend-and-annotations-addresses-w6"><span class="header-section-number">4.0.4</span> I4 — Add labels, legend, and annotations → <em>addresses W6</em></h3>
-<p>Add explicit axis titles (“Number of Citizen Births” / “Year”), a legend describing every colour or band, and short annotations for key reference periods (e.g. pandemic years) so the chart is self-contained and interpretable without the article.</p>
+<p>The visualization will include explicit axis titles for <strong>Year</strong>, <strong>ASFR (births per 1,000 women)</strong>, and <strong>Percent (%)</strong>, together with legends for maternal age groups and the contextual variables. Any policy labels, line styles, background shading, and zodiac markers retained in the final design will also be explained so the visualization remains interpretable without the original article.</p>
 </section>
-<section id="i5-add-demographic-dimensions-addresses-w4-w7" class="level3" data-number="4.0.5">
-<h3 data-number="4.0.5" class="anchored" data-anchor-id="i5-add-demographic-dimensions-addresses-w4-w7"><span class="header-section-number">4.0.5</span> I5 — Add demographic dimensions → <em>addresses W4, W7</em></h3>
-<p>Enrich the visualization with maternal age group, birth order, and ethnicity. This shifts the chart from purely descriptive to analytical — letting readers see, for example, whether the decline is driven by women in their 20s having fewer first children, or by couples stopping after one child.</p>
+<section id="i5-add-female-lfpr-and-singlehood-trends-addresses-w7" class="level3" data-number="4.0.5">
+<h3 data-number="4.0.5" class="anchored" data-anchor-id="i5-add-female-lfpr-and-singlehood-trends-addresses-w7"><span class="header-section-number">4.0.5</span> I5 — Add female LFPR and singlehood trends → <em>addresses W7</em></h3>
+<p>We plan to overlay female labour-force participation rate and the mean proportion of single women across ages 25–39, initially as lines on a shared secondary percentage axis. These variables add socioeconomic and demographic context, allowing their long-term movement to be compared descriptively with the fertility trend.</p>
 </section>
-<section id="i6-add-contextual-explanatory-variables-addresses-w7" class="level3" data-number="4.0.6">
-<h3 data-number="4.0.6" class="anchored" data-anchor-id="i6-add-contextual-explanatory-variables-addresses-w7"><span class="header-section-number">4.0.6</span> I6 — Add contextual explanatory variables → <em>addresses W7</em></h3>
-<p>Layer in contextual variables such as median age at first marriage and fertility by age group, indicating whether the decline links to delayed childbearing, fewer higher-order births, or shifting patterns across age groups — moving the chart from snapshot to explanatory tool.</p>
+<section id="i6-add-population-policy-context-addresses-w7" class="level3" data-number="4.0.6">
+<h3 data-number="4.0.6" class="anchored" data-anchor-id="i6-add-population-policy-context-addresses-w7"><span class="header-section-number">4.0.6</span> I6 — Add population-policy context → <em>addresses W7</em></h3>
+<p>The initial annotation plan marks the 1972 <em>Stop at Two</em> campaign, the 1987 policy reversal, the 2001 Baby Bonus Scheme, and the 2023 TFR-below-1.0 milestone. The pro-natalist period beginning in 1987 may also be distinguished through background shading. The final annotation style will be refined for readability. These annotations support before-and-after descriptive comparisons without claiming that the visualization alone proves a causal policy effect.</p>
 </section>
 <section id="i7-extend-the-historical-time-horizon-addresses-w5" class="level3" data-number="4.0.7">
 <h3 data-number="4.0.7" class="anchored" data-anchor-id="i7-extend-the-historical-time-horizon-addresses-w5"><span class="header-section-number">4.0.7</span> I7 — Extend the historical time horizon → <em>addresses W5</em></h3>
-<p>Extend the analysis period from 2012–2022 to roughly <strong>1960–2025</strong>. A longer horizon distinguishes temporary fluctuations from long-run trends and situates the decline against major policy shifts: the anti-natalist <em>Stop at Two</em> campaign (1972), the 1987 policy reversal, and the Baby Bonus scheme (2001), alongside long-run rises in female education and workforce participation.</p>
+<p>We plan to extend the analysis period from 2012–2022 to roughly <strong>1960–2025</strong>, subject to the final availability and consistency of each series. A longer horizon distinguishes temporary fluctuations from long-run trends and situates the decline against major policy shifts: the anti-natalist <em>Stop at Two</em> campaign (1972), the 1987 policy reversal, and the Baby Bonus Scheme (2001), alongside long-run changes in female labour-force participation and singlehood.</p>
 </section>
-<section id="i8-resolve-the-standalone-2012-bar-addresses-w9" class="level3" data-number="4.0.8">
-<h3 data-number="4.0.8" class="anchored" data-anchor-id="i8-resolve-the-standalone-2012-bar-addresses-w9"><span class="header-section-number">4.0.8</span> I8 — Resolve the standalone 2012 bar → <em>addresses W9</em></h3>
-<p>Either incorporate 2012 into the comparison structure (e.g. extend the first block to 2012–2017), explicitly label it as a pre-period baseline with annotation, or remove it — preserving a coherent period structure instead of an unexplained isolated bar.</p>
+<section id="i8-replace-arbitrary-period-averages-with-an-annual-series-addresses-w9" class="level3" data-number="4.0.8">
+<h3 data-number="4.0.8" class="anchored" data-anchor-id="i8-replace-arbitrary-period-averages-with-an-annual-series-addresses-w9"><span class="header-section-number">4.0.8</span> I8 — Replace arbitrary period averages with an annual series → <em>addresses W9</em></h3>
+<p>Where data is available, the redesign will display annual observations using a consistent structure instead of dividing the data into arbitrary five-year editorial blocks. This preserves annual variation and allows readers to assess long-term patterns without relying on two selected averages.</p>
 </section>
-<section id="i9-rescale-the-axis-appropriately-addresses-w8" class="level3" data-number="4.0.9">
-<h3 data-number="4.0.9" class="anchored" data-anchor-id="i9-rescale-the-axis-appropriately-addresses-w8"><span class="header-section-number">4.0.9</span> I9 — Rescale the axis appropriately → <em>addresses W8</em></h3>
-<p>Where the redesign retains a count-based panel, begin the y-axis nearer 28,000–29,000 so year-on-year differences are visible without distorting proportions. (For rate-based panels under I1, the axis will be chosen to match the natural range of TFR/ASFR.)</p>
+<section id="i9-use-appropriate-zero-based-rate-and-percentage-scales-addresses-w8" class="level3" data-number="4.0.9">
+<h3 data-number="4.0.9" class="anchored" data-anchor-id="i9-use-appropriate-zero-based-rate-and-percentage-scales-addresses-w8"><span class="header-section-number">4.0.9</span> I9 — Use appropriate zero-based rate and percentage scales → <em>addresses W8</em></h3>
+<p>The current plan uses a zero-based ASFR axis for the fertility bars and a clearly labelled secondary percentage axis for female LFPR and singlehood. The precise scales will be refined during implementation. Age-group stacking can make changes in fertility composition visible while preserving an honest zero baseline for the bars.</p>
+</section>
+<section id="i10-add-chinese-zodiac-context-addresses-w7" class="level3" data-number="4.0.10">
+<h3 data-number="4.0.10" class="anchored" data-anchor-id="i10-add-chinese-zodiac-context-addresses-w7"><span class="header-section-number">4.0.10</span> I10 — Add Chinese zodiac context → <em>addresses W7</em></h3>
+<p>Dragon and Tiger years may be marked with distinct symbols, provisionally upward and downward triangles beneath the annual bars. This adds a discrete cultural layer that can be compared with short-term fertility changes while keeping it visually separate from the continuous numerical series.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -2447,12 +2453,12 @@ Figure 1: Original CNA visualization: <em>Drop in Singapore citizen births in 2
 <td>I1</td>
 </tr>
 <tr class="odd">
-<td>W3 Bar chart for a timeline</td>
+<td>W3 Limited temporal and compositional encoding</td>
 <td>I3</td>
 </tr>
 <tr class="even">
 <td>W4 Limited dimensionality</td>
-<td>I2, I5</td>
+<td>I2, I3</td>
 </tr>
 <tr class="odd">
 <td>W5 Short time horizon</td>
@@ -2464,11 +2470,11 @@ Figure 1: Original CNA visualization: <em>Drop in Singapore citizen births in 2
 </tr>
 <tr class="odd">
 <td>W7 No explanatory variables</td>
-<td>I5, I6</td>
+<td>I5, I6, I10</td>
 </tr>
 <tr class="even">
-<td>W8 Misleading axis range</td>
-<td>I9</td>
+<td>W8 Compressed variation on the raw-count scale</td>
+<td>I1, I9</td>
 </tr>
 <tr class="odd">
 <td>W9 Arbitrary period averaging</td>
@@ -2484,7 +2490,7 @@ Figure 1: Original CNA visualization: <em>Drop in Singapore citizen births in 2
 <h1 data-number="5"><span class="header-section-number">5</span> Data Engineering Workflow (Raw → Visualization-Ready)</h1>
 <section id="data-requirements-and-dimensions" class="level2" data-number="5.1">
 <h2 data-number="5.1" class="anchored" data-anchor-id="data-requirements-and-dimensions"><span class="header-section-number">5.1</span> Data Requirements and Dimensions</h2>
-<p>The proposed visualization covers <strong>1960–2025</strong> and combines fertility outcomes with demographic, economic, policy, and cultural context. Its seven dimensions or analytical layers are shown below.</p>
+<p>The proposed visualization is planned to cover approximately <strong>1960–2025</strong>, subject to the final availability and consistency of each series. It combines fertility outcomes with demographic, economic, policy, and cultural context through the seven dimensions or analytical layers shown below.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 25%">
@@ -2497,7 +2503,7 @@ Figure 1: Original CNA visualization: <em>Drop in Singapore citizen births in 2
 <th>Dimension / layer</th>
 <th>Variable used</th>
 <th>Unit</th>
-<th>Visual encoding</th>
+<th>Planned visual encoding</th>
 </tr>
 </thead>
 <tbody>
@@ -2511,7 +2517,7 @@ Figure 1: Original CNA visualization: <em>Drop in Singapore citizen births in 2
 <td>Fertility</td>
 <td>Age-specific fertility rate (ASFR)</td>
 <td>Births per 1,000 women</td>
-<td>Height of each stacked-bar segment</td>
+<td>Stacked-bar height</td>
 </tr>
 <tr class="odd">
 <td>Fertility composition</td>
@@ -2523,42 +2529,42 @@ Figure 1: Original CNA visualization: <em>Drop in Singapore citizen births in 2
 <td>Labour-market context</td>
 <td>Female labour-force participation rate (LFPR)</td>
 <td>Percent</td>
-<td>Black line on right axis</td>
+<td>Contextual line on a percentage axis</td>
 </tr>
 <tr class="odd">
-<td>Marriage context</td>
-<td>Mean proportion of single women aged 25–39</td>
+<td>Singlehood context</td>
+<td>Mean female singlehood rate across ages 25–39</td>
 <td>Percent</td>
-<td>Purple line on right axis</td>
+<td>Contextual line on a percentage axis</td>
 </tr>
 <tr class="even">
 <td>Policy context</td>
 <td>Selected population policies and fertility milestone</td>
 <td>Event year / policy era</td>
-<td>Vertical lines, labels, and shaded background</td>
+<td>Annotations and possible background shading</td>
 </tr>
 <tr class="odd">
 <td>Cultural context</td>
 <td>Dragon and Tiger years</td>
 <td>Zodiac category</td>
-<td>Upward and downward triangles</td>
+<td>Distinct event symbols</td>
 </tr>
 </tbody>
 </table>
 <p>The seven maternal age groups are <strong>15–19, 20–24, 25–29, 30–34, 35–39, 40–44, and 45–49</strong>. Total fertility rate (TFR) is retained as a published summary measure and as a validation variable. It is related to the age-specific rates by the approximation</p>
 <p>[ , ]</p>
-<p>because each ASFR represents a five-year age band. TFR is therefore not plotted as a separate line; the stacked bars show the age-specific components underlying the overall fertility level.</p>
+<p>because each ASFR represents a five-year age band. In the initial design, TFR is not plotted as a separate line; the stacked bars show the age-specific components underlying the overall fertility level. This treatment may be refined if another representation communicates the relationship more clearly.</p>
 </section>
 <section id="data-sources" class="level2" data-number="5.2">
 <h2 data-number="5.2" class="anchored" data-anchor-id="data-sources"><span class="header-section-number">5.2</span> Data Sources</h2>
-<p>Three numerical datasets and two manually curated annotation tables are required.</p>
+<p>The workflow uses three numerical data sources together with manually curated policy and zodiac annotation tables.</p>
 <section id="births-and-fertility-rates" class="level3" data-number="5.2.1">
 <h3 data-number="5.2.1" class="anchored" data-anchor-id="births-and-fertility-rates"><span class="header-section-number">5.2.1</span> Births and Fertility Rates</h3>
-<p>The primary dataset is the Singapore Department of Statistics (SingStat) <strong>Births and Fertility Rates, Annual</strong> CSV file. It provides annual observations from <strong>1960 to 2025</strong>, including published TFR and ASFR for the seven maternal age groups. ASFR is measured as births per 1,000 women in each age group. The published TFR series will be retained for comparison with the value derived from the seven ASFR groups.</p>
+<p>The primary dataset is the Singapore Department of Statistics (SingStat) <strong>Births and Fertility Rates, Annual</strong> CSV file ([official SingStat table link to be inserted]). It provides annual observations from <strong>1960 to 2025</strong>, including published TFR and ASFR for the seven maternal age groups. ASFR is measured as births per 1,000 women in each age group. The published TFR series will be retained for comparison with the value derived from the seven ASFR groups.</p>
 </section>
 <section id="proportion-of-singles" class="level3" data-number="5.2.2">
 <h3 data-number="5.2.2" class="anchored" data-anchor-id="proportion-of-singles"><span class="header-section-number">5.2.2</span> Proportion of Singles</h3>
-<p>The second SingStat dataset is table <strong>M810581, “Proportion of Singles Among Resident Population by Selected Age Group and Sex, Annual.”</strong> The table measures the proportion of the resident population who are <strong>never married</strong>. Resident population includes Singapore citizens and permanent residents. The visualization uses female observations for ages <strong>25–29, 30–34, and 35–39</strong>. Available observations cover 1980 and 1983–2024; values for 1981 and 1982 are unavailable.</p>
+<p>The second SingStat dataset is table <strong>M810581, “Proportion of Singles Among Resident Population by Selected Age Group and Sex, Annual”</strong> ([official SingStat table link to be inserted]). The table measures the proportion of the resident population who are <strong>never married</strong>. Resident population includes Singapore citizens and permanent residents. The current plan uses female observations for ages <strong>25–29, 30–34, and 35–39</strong>. Available observations cover 1980 and 1983–2024; values for 1981 and 1982 are unavailable.</p>
 </section>
 <section id="female-labour-force-participation" class="level3" data-number="5.2.3">
 <h3 data-number="5.2.3" class="anchored" data-anchor-id="female-labour-force-participation"><span class="header-section-number">5.2.3</span> Female Labour-Force Participation</h3>
@@ -2566,7 +2572,7 @@ Figure 1: Original CNA visualization: <em>Drop in Singapore citizen births in 2
 </section>
 <section id="policy-and-zodiac-annotations" class="level3" data-number="5.2.4">
 <h3 data-number="5.2.4" class="anchored" data-anchor-id="policy-and-zodiac-annotations"><span class="header-section-number">5.2.4</span> Policy and Zodiac Annotations</h3>
-<p>The policy annotations will be entered as a small table based on the team’s background research. Only events displayed in the proposed visualization will be included:</p>
+<p>The policy annotations will be entered as a small table based on the team’s background research. The initial annotation plan includes the following selected events:</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 33%">
@@ -2584,31 +2590,31 @@ Figure 1: Original CNA visualization: <em>Drop in Singapore citizen births in 2
 <tr class="odd">
 <td>1972</td>
 <td>Stop at Two campaign</td>
-<td>Dotted vertical line</td>
+<td>Provisional event annotation</td>
 </tr>
 <tr class="even">
 <td>1987</td>
 <td>“Have Three or More, If You Can Afford It” policy reversal</td>
-<td>Dashed vertical line</td>
+<td>Provisional event annotation</td>
 </tr>
 <tr class="odd">
 <td>2001</td>
 <td>Baby Bonus Scheme</td>
-<td>Dashed vertical line</td>
+<td>Provisional event annotation</td>
 </tr>
 <tr class="even">
 <td>2023</td>
 <td>Resident TFR fell below 1.0</td>
-<td>Dashed milestone line</td>
+<td>Provisional milestone annotation</td>
 </tr>
 <tr class="odd">
 <td>1987–2025</td>
 <td>Pro-natalist policy era</td>
-<td>Light background shading</td>
+<td>Possible background shading</td>
 </tr>
 </tbody>
 </table>
-<p>The zodiac table will identify the Dragon and Tiger years within the study period. Dragon years (1964, 1976, 1988, 2000, 2012, and 2024) will use upward triangles, while Tiger years (1962, 1974, 1986, 1998, 2010, and 2022) will use downward triangles. These markers allow possible short-term cultural effects to be compared against the fertility bars without treating zodiac years as a continuous numerical variable.</p>
+<p>The zodiac table will identify the Dragon and Tiger years within the study period. Dragon years (1964, 1976, 1988, 2000, 2012, and 2024) and Tiger years (1962, 1974, 1986, 1998, 2010, and 2022) will be represented using distinct symbols; upward and downward triangles are the current provisional choice. These markers allow possible short-term cultural effects to be compared against the fertility bars without treating zodiac years as a continuous numerical variable.</p>
 </section>
 </section>
 <section id="raw-data-structure-and-known-challenges" class="level2" data-number="5.3">
@@ -2668,145 +2674,43 @@ Figure 1: Original CNA visualization: <em>Drop in Singapore citizen births in 2
 <section id="stage-1-import-the-raw-sources" class="level3" data-number="5.4.1">
 <h3 data-number="5.4.1" class="anchored" data-anchor-id="stage-1-import-the-raw-sources"><span class="header-section-number">5.4.1</span> Stage 1 — Import the Raw Sources</h3>
 <p>The two SingStat CSV files will be imported with <code>readr::read_csv()</code>. Female LFPR will be requested directly through <code>WDI::WDI()</code>, using Singapore’s country code <code>SGP</code> and the national-estimate indicator. In the final project repository, file paths will be relative to the RStudio project rather than tied to one team member’s computer.</p>
-<div class="cell">
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>fertility_raw <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">&quot;data/raw/BirthsAndFertilityRatesAnnual.csv&quot;</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>singles_raw   <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">&quot;data/raw/M810581.csv&quot;</span>, <span class="at">skip =</span> <span class="dv">10</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>lfpr_raw <span class="ot">&lt;-</span> WDI<span class="sc">::</span><span class="fu">WDI</span>(</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">country   =</span> <span class="st">&quot;SGP&quot;</span>,</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">indicator =</span> <span class="st">&quot;SL.TLF.CACT.FE.NE.ZS&quot;</span>,</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">start     =</span> <span class="dv">1960</span>,</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">end       =</span> <span class="dv">2025</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
 </section>
 <section id="stage-2-prepare-asfr-and-tfr" class="level3" data-number="5.4.2">
 <h3 data-number="5.4.2" class="anchored" data-anchor-id="stage-2-prepare-asfr-and-tfr"><span class="header-section-number">5.4.2</span> Stage 2 — Prepare ASFR and TFR</h3>
 <p>The fertility table will be filtered to the published TFR row and the seven ASFR rows. <code>pivot_longer()</code> will convert the year columns into observations so that one ASFR row represents one <strong>year × age-group</strong> combination. The year will be converted to an integer, rate values to numeric, and maternal age group to an ordered factor.</p>
-<div class="cell">
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>age_levels <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;15-19&quot;</span>, <span class="st">&quot;20-24&quot;</span>, <span class="st">&quot;25-29&quot;</span>, <span class="st">&quot;30-34&quot;</span>,</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;35-39&quot;</span>, <span class="st">&quot;40-44&quot;</span>, <span class="st">&quot;45-49&quot;</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>asfr_viz <span class="ot">&lt;-</span> fertility_raw <span class="sc">|&gt;</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(DataSeries, <span class="st">&quot;Years&quot;</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>DataSeries, <span class="at">names_to =</span> <span class="st">&quot;year&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;asfr&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">year =</span> <span class="fu">as.integer</span>(year),</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">age_group =</span> DataSeries <span class="sc">|&gt;</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_squish</span>() <span class="sc">|&gt;</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_remove</span>(<span class="st">&quot; Years&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_replace_all</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">s*-</span><span class="sc">\\</span><span class="st">s*&quot;</span>, <span class="st">&quot;-&quot;</span>),</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">asfr =</span> readr<span class="sc">::</span><span class="fu">parse_number</span>(asfr, <span class="at">na =</span> <span class="st">&quot;na&quot;</span>)</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">between</span>(year, <span class="dv">1960</span>, <span class="dv">2025</span>), age_group <span class="sc">%in%</span> age_levels) <span class="sc">|&gt;</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">age_group =</span> <span class="fu">factor</span>(age_group, <span class="at">levels =</span> age_levels, <span class="at">ordered =</span> <span class="cn">TRUE</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
-<p>For validation, annual ASFR values will be summed and converted to an approximate TFR. This derived result will be compared with the published TFR in the same SingStat file. Small differences may occur because the published rates are rounded.</p>
+<p>For validation, annual ASFR values will be summed and converted to an approximate TFR. The derived-versus-published comparison will be performed from <strong>1980 onward</strong>, when all seven age-group series are available. Earlier years will retain the published TFR, but the incomplete ASFR coverage for ages 45–49 will be documented and will not be treated as a complete reconstruction. Small differences from 1980 onward may occur because the published rates are rounded.</p>
 </section>
 <section id="stage-3-prepare-female-singlehood" class="level3" data-number="5.4.3">
 <h3 data-number="5.4.3" class="anchored" data-anchor-id="stage-3-prepare-female-singlehood"><span class="header-section-number">5.4.3</span> Stage 3 — Prepare Female Singlehood</h3>
 <p>The singlehood table will first be separated into age-group blocks. Age-group labels will be filled down to the nested sex rows, after which only Female observations for ages 25–29, 30–34, and 35–39 will be retained. The wide year columns will then be reshaped into long format.</p>
 <p>To reproduce the proposed visualization, the female singlehood measure will be calculated as the unweighted mean of the three published age-specific percentages:</p>
 <p>[ _{25-39} = . ]</p>
-<p>The resulting variable will therefore be described precisely as the <strong>mean proportion of single women across the 25–29, 30–34, and 35–39 age groups</strong>, rather than as a population-weighted percentage of all women aged 25–39.</p>
+<p>The resulting variable will therefore initially be described as the <strong>mean proportion of single women across the 25–29, 30–34, and 35–39 age groups</strong>, rather than as a population-weighted percentage of all women aged 25–39. A population-weighted calculation may be considered during implementation if suitable female population data is available.</p>
 </section>
 <section id="stage-4-prepare-female-lfpr" class="level3" data-number="5.4.4">
 <h3 data-number="5.4.4" class="anchored" data-anchor-id="stage-4-prepare-female-lfpr"><span class="header-section-number">5.4.4</span> Stage 4 — Prepare Female LFPR</h3>
 <p>The World Bank result will be reduced to <code>year</code> and the female LFPR value, renamed <code>female_lfpr</code>, and filtered to the available 1970–2024 period. Values will remain in their original percentage unit. No unavailable years will be estimated or replaced with zero.</p>
-<div class="cell">
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>lfpr_clean <span class="ot">&lt;-</span> lfpr_raw <span class="sc">|&gt;</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">year =</span> <span class="fu">as.integer</span>(year),</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">female_lfpr =</span> SL.TLF.CACT.FE.NE.ZS</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">between</span>(year, <span class="dv">1970</span>, <span class="dv">2024</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(year)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
 </section>
 <section id="stage-5-create-policy-and-zodiac-tables" class="level3" data-number="5.4.5">
 <h3 data-number="5.4.5" class="anchored" data-anchor-id="stage-5-create-policy-and-zodiac-tables"><span class="header-section-number">5.4.5</span> Stage 5 — Create Policy and Zodiac Tables</h3>
-<p>Policy events, the pro-natalist era, and zodiac years will be stored in separate tibbles rather than repeated across every numerical observation. This keeps annotations independent from the measured fertility and percentage variables.</p>
-<div class="cell">
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>policy_events <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>year, <span class="sc">~</span>event, <span class="sc">~</span>event_type,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1972</span>, <span class="st">&quot;Stop at Two&quot;</span>, <span class="st">&quot;Anti-natalist&quot;</span>,</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1987</span>, <span class="st">&quot;Have Three or More&quot;</span>, <span class="st">&quot;Pro-natalist&quot;</span>,</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2001</span>, <span class="st">&quot;Baby Bonus&quot;</span>, <span class="st">&quot;Pro-natalist&quot;</span>,</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2023</span>, <span class="st">&quot;TFR below 1.0&quot;</span>, <span class="st">&quot;Milestone&quot;</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>policy_eras <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">start_year =</span> <span class="dv">1987</span>,</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">end_year   =</span> <span class="dv">2025</span>,</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">era        =</span> <span class="st">&quot;Pro-natalist era&quot;</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>zodiac_events <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>year, <span class="sc">~</span>zodiac,</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1962</span>, <span class="st">&quot;Tiger&quot;</span>, <span class="dv">1964</span>, <span class="st">&quot;Dragon&quot;</span>,</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1974</span>, <span class="st">&quot;Tiger&quot;</span>, <span class="dv">1976</span>, <span class="st">&quot;Dragon&quot;</span>,</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1986</span>, <span class="st">&quot;Tiger&quot;</span>, <span class="dv">1988</span>, <span class="st">&quot;Dragon&quot;</span>,</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1998</span>, <span class="st">&quot;Tiger&quot;</span>, <span class="dv">2000</span>, <span class="st">&quot;Dragon&quot;</span>,</span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2010</span>, <span class="st">&quot;Tiger&quot;</span>, <span class="dv">2012</span>, <span class="st">&quot;Dragon&quot;</span>,</span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2022</span>, <span class="st">&quot;Tiger&quot;</span>, <span class="dv">2024</span>, <span class="st">&quot;Dragon&quot;</span></span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
+<p>Policy events, the 2023 fertility milestone, the pro-natalist era, and zodiac years will be stored in separate annotation tables rather than repeated across every numerical observation. This keeps annotations independent from the measured fertility and percentage variables.</p>
 </section>
 <section id="stage-6-align-and-join-the-annual-drivers" class="level3" data-number="5.4.6">
 <h3 data-number="5.4.6" class="anchored" data-anchor-id="stage-6-align-and-join-the-annual-drivers"><span class="header-section-number">5.4.6</span> Stage 6 — Align and Join the Annual Drivers</h3>
 <p>A complete year index from 1960 to 2025 will form the left side of the joins. The female LFPR and singlehood tables will be joined by <code>year</code>, producing one annual driver table. This preserves years outside each source’s coverage as <code>NA</code>, including the singlehood gap in 1981–1982. The ASFR table will remain separate and in long format because it contains seven rows per year.</p>
-<div class="cell">
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>year_index <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">year =</span> <span class="dv">1960</span><span class="sc">:</span><span class="dv">2025</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>drivers_viz <span class="ot">&lt;-</span> year_index <span class="sc">|&gt;</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(lfpr_clean, <span class="at">by =</span> <span class="st">&quot;year&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(single_clean, <span class="at">by =</span> <span class="st">&quot;year&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
 </section>
 <section id="stage-7-prepare-the-secondary-percentage-axis" class="level3" data-number="5.4.7">
 <h3 data-number="5.4.7" class="anchored" data-anchor-id="stage-7-prepare-the-secondary-percentage-axis"><span class="header-section-number">5.4.7</span> Stage 7 — Prepare the Secondary Percentage Axis</h3>
-<p>ASFR is measured per 1,000 women, whereas female LFPR and singlehood are percentages. The original percentage variables will be retained unchanged. Additional fields will be created only to map the two lines onto the left-axis coordinate system required by <code>ggplot2</code>.</p>
-<p>If the final left and right axes span 0–1,200 and 0–100 respectively, the planned scale factor is:</p>
-<p>[ ==12. ]</p>
-<p>The plotting coordinates will therefore be <code>female_lfpr × 12</code> and <code>single_rate_25_39 × 12</code>. The secondary axis will apply the inverse transformation, dividing plotted coordinates by 12 so that readers still see the original percentages. The scale factor may be adjusted if the final ASFR axis limit changes during implementation.</p>
+<p>ASFR is measured per 1,000 women, whereas female LFPR and singlehood are percentages. The original percentage variables will be retained unchanged. During implementation, a reversible scale transformation will be calculated from the selected primary and secondary axis ranges so that the two percentage series can be displayed alongside ASFR. The final axis limits and scale factor will be determined after testing the readability of the visualization.</p>
 </section>
 </section>
 <section id="validation-checks" class="level2" data-number="5.5">
 <h2 data-number="5.5" class="anchored" data-anchor-id="validation-checks"><span class="header-section-number">5.5</span> Validation Checks</h2>
-<p>Before plotting, the pipeline will apply the following checks:</p>
-<ol type="1">
-<li>Confirm that each available <strong>year × age-group</strong> ASFR key is unique.</li>
-<li>Confirm that the seven expected maternal age groups are present.</li>
-<li>Confirm that ASFR values are non-negative.</li>
-<li>Compare approximate TFR derived from ASFR with the published TFR series.</li>
-<li>Confirm that female LFPR and singlehood percentages fall between 0 and 100.</li>
-<li>Confirm that the driver table contains exactly one row for every year from 1960 to 2025.</li>
-<li>Confirm that unavailable values, including singlehood in 1981–1982 and ASFR ages 45–49 before 1980, remain <code>NA</code>.</li>
-<li>Confirm that joins do not introduce duplicate years or change the intended number of observations.</li>
-<li>Confirm that all policy and zodiac annotation years fall within the visualization period.</li>
-</ol>
-<p>These checks will be implemented with summaries and assertions such as <code>count()</code>, <code>anyDuplicated()</code>, <code>between()</code>, and <code>stopifnot()</code> so that data problems are detected before the final chart is produced.</p>
+<p>Before plotting, the pipeline will check that year and age-group keys are unique, expected age groups are present, numerical values fall within plausible ranges, missing observations remain correctly identified, and joins do not create duplicate or unintended rows. Approximate TFR derived from ASFR will be compared with the published TFR series from 1980 onward, when all seven maternal age groups are available. Policy and zodiac years will also be checked against the selected visualization period.</p>
 </section>
 <section id="visualization-ready-outputs" class="level2" data-number="5.6">
 <h2 data-number="5.6" class="anchored" data-anchor-id="visualization-ready-outputs"><span class="header-section-number">5.6</span> Visualization-Ready Outputs</h2>
-<p>The completed pipeline will pass the following objects to the <code>ggplot2</code> visualization:</p>
+<p>The completed pipeline will produce the following visualization-ready datasets:</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 25%">
@@ -2816,48 +2720,42 @@ Figure 1: Original CNA visualization: <em>Drop in Singapore citizen births in 2
 </colgroup>
 <thead>
 <tr class="header">
-<th>Object</th>
-<th>Grain</th>
+<th>Dataset</th>
+<th>Structure</th>
 <th>Main fields</th>
 <th>Purpose</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>asfr_viz</code></td>
+<td>Fertility data</td>
 <td>One row per year × age group</td>
-<td><code>year</code>, <code>age_group</code>, <code>asfr</code></td>
+<td>Year, maternal age group, ASFR</td>
 <td>Stacked fertility bars</td>
 </tr>
 <tr class="even">
-<td><code>tfr_validation</code></td>
+<td>TFR validation data</td>
 <td>One row per year</td>
-<td><code>year</code>, <code>published_tfr</code>, <code>derived_tfr</code>, <code>difference</code></td>
-<td>Validate stacked ASFR against TFR</td>
+<td>Year, published TFR, derived TFR, difference</td>
+<td>Check the ASFR transformation</td>
 </tr>
 <tr class="odd">
-<td><code>drivers_viz</code></td>
+<td>Annual driver data</td>
 <td>One row per year</td>
-<td><code>year</code>, <code>female_lfpr</code>, <code>single_rate_25_39</code>, transformed plotting fields</td>
-<td>Black and purple lines</td>
+<td>Year, female LFPR, mean female singlehood rate</td>
+<td>Contextual trend lines</td>
 </tr>
 <tr class="even">
-<td><code>policy_events</code></td>
-<td>One row per event</td>
-<td><code>year</code>, <code>event</code>, <code>event_type</code></td>
-<td>Vertical policy and milestone annotations</td>
+<td>Policy and milestone data</td>
+<td>One row per event or policy era</td>
+<td>Year or period, label, event type</td>
+<td>Policy lines, labels, and shading</td>
 </tr>
 <tr class="odd">
-<td><code>policy_eras</code></td>
-<td>One row per era</td>
-<td><code>start_year</code>, <code>end_year</code>, <code>era</code></td>
-<td>Background policy shading</td>
-</tr>
-<tr class="even">
-<td><code>zodiac_events</code></td>
-<td>One row per zodiac event</td>
-<td><code>year</code>, <code>zodiac</code></td>
-<td>Dragon and Tiger markers</td>
+<td>Zodiac data</td>
+<td>One row per selected zodiac year</td>
+<td>Year, Dragon or Tiger category</td>
+<td>Cultural-context markers</td>
 </tr>
 </tbody>
 </table>
@@ -2865,14 +2763,14 @@ Figure 1: Original CNA visualization: <em>Drop in Singapore citizen births in 2
 </section>
 <section id="reproducibility" class="level2" data-number="5.7">
 <h2 data-number="5.7" class="anchored" data-anchor-id="reproducibility"><span class="header-section-number">5.7</span> Reproducibility</h2>
-<p>The final implementation will be developed in RStudio and rendered with Quarto. All file paths will be relative to the project directory, raw files will remain unchanged, and all cleaning steps will be recorded in R code. The final static visualization will be produced with <code>ggplot2</code>; <code>dplyr</code>, <code>tidyr</code>, <code>stringr</code>, <code>readr</code>, <code>WDI</code>, and <code>scales</code> will support data preparation and formatting. The proposal code is illustrative and is not executed at this stage.</p>
+<p>The planned implementation will be developed in RStudio and rendered with Quarto. All file paths will be relative to the project directory, raw files will remain unchanged, and all cleaning steps will be recorded in R code. The visualization is expected to be produced with <code>ggplot2</code>; <code>dplyr</code>, <code>tidyr</code>, <code>stringr</code>, <code>readr</code>, <code>WDI</code>, and <code>scales</code> are the currently selected packages for data preparation and formatting. The proposal code is illustrative and is not executed at this stage.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Intended tooling (plan only — not executed in the proposal)</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)  <span class="co"># dplyr, tidyr, readr, stringr, ggplot2</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(WDI)        <span class="co"># World Bank indicator retrieval</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)     <span class="co"># Axis and percentage formatting</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Intended tooling (plan only — not executed in the proposal)</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)  <span class="co"># dplyr, tidyr, readr, stringr, ggplot2</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(WDI)        <span class="co"># World Bank indicator retrieval</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)     <span class="co"># Axis and percentage formatting</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section>
