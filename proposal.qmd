@@ -150,28 +150,252 @@ Where the redesign retains a count-based panel, begin the y-axis nearer 28,000�
 
 # Data Engineering Workflow (Raw → Visualization-Ready)
 
-::: callout-important
-## To be completed
+## Data Requirements and Dimensions
 
-This section needs the detailed, step-by-step workflow from raw data sources to a tidy, visualization-ready dataset. We'll work this out together — it should name the actual datasets (e.g. SingStat / Department of Statistics tables for births, TFR, ASFR, population by age and sex, marriages, female labour-force participation), and document each transformation step (import, cleaning, joining, reshaping into tidy/long format, deriving rates).
+The proposed visualization covers **1960–2025** and combines fertility outcomes with demographic, economic, policy, and cultural context. Its seven dimensions or analytical layers are shown below.
 
-*Placeholder outline below — to be expanded.*
-:::
+| Dimension / layer | Variable used | Unit | Visual encoding |
+|----|----|----|----|
+| Time | Year | Calendar year | Horizontal axis |
+| Fertility | Age-specific fertility rate (ASFR) | Births per 1,000 women | Height of each stacked-bar segment |
+| Fertility composition | Mother's age group | Seven five-year age groups | Bar fill colour |
+| Labour-market context | Female labour-force participation rate (LFPR) | Percent | Black line on right axis |
+| Marriage context | Mean proportion of single women aged 25–39 | Percent | Purple line on right axis |
+| Policy context | Selected population policies and fertility milestone | Event year / policy era | Vertical lines, labels, and shaded background |
+| Cultural context | Dragon and Tiger years | Zodiac category | Upward and downward triangles |
 
-1.  **Acquire raw data** from reliable sources (Department of Statistics Singapore / SingStat, data.gov.sg) for: citizen births, TFR, ASFR by age group, resident population by age and sex, marriages, and contextual drivers.
-2.  **Inspect & document** each raw file (format, units, time coverage, missing values).
-3.  **Clean & standardize** — consistent year formats, age-group labels, ethnic-group labels; handle missing values and any pre/post definitional changes.
-4.  **Reshape to tidy/long format** suitable for `ggplot2`.
-5.  **Join** datasets on common keys (year, age group, ethnicity) and **derive rates** (e.g. ASFR = births to women in age group ÷ female population in that age group).
-6.  **Validate** derived figures against published totals; export the visualization-ready dataset.
+The seven maternal age groups are **15–19, 20–24, 25–29, 30–34, 35–39, 40–44, and 45–49**. Total fertility rate (TFR) is retained as a published summary measure and as a validation variable. It is related to the age-specific rates by the approximation
+
+\[ \text{TFR} \approx \frac{5 \times \sum \text{ASFR}}{1000}, \]
+
+because each ASFR represents a five-year age band. TFR is therefore not plotted as a separate line; the stacked bars show the age-specific components underlying the overall fertility level.
+
+## Data Sources
+
+Three numerical datasets and two manually curated annotation tables are required.
+
+### Births and Fertility Rates
+
+The primary dataset is the Singapore Department of Statistics (SingStat) **Births and Fertility Rates, Annual** CSV file. It provides annual observations from **1960 to 2025**, including published TFR and ASFR for the seven maternal age groups. ASFR is measured as births per 1,000 women in each age group. The published TFR series will be retained for comparison with the value derived from the seven ASFR groups.
+
+### Proportion of Singles
+
+The second SingStat dataset is table **M810581, “Proportion of Singles Among Resident Population by Selected Age Group and Sex, Annual.”** The table measures the proportion of the resident population who are **never married**. Resident population includes Singapore citizens and permanent residents. The visualization uses female observations for ages **25–29, 30–34, and 35–39**. Available observations cover 1980 and 1983–2024; values for 1981 and 1982 are unavailable.
+
+### Female Labour-Force Participation
+
+Female LFPR will be retrieved from the [World Bank World Development Indicators](https://data.worldbank.org/indicator/SL.TLF.CACT.FE.NE.ZS?locations=SG) using indicator **`SL.TLF.CACT.FE.NE.ZS`**, “Labour force participation rate, female (% of female population ages 15+) (national estimate).” The national-estimate series is selected because it covers **1970–2024**, matching the long historical period required by the visualization. The series is measured as a percentage.
+
+### Policy and Zodiac Annotations
+
+The policy annotations will be entered as a small table based on the team's background research. Only events displayed in the proposed visualization will be included:
+
+| Year / period | Event | Planned encoding |
+|----|----|----|
+| 1972 | Stop at Two campaign | Dotted vertical line |
+| 1987 | “Have Three or More, If You Can Afford It” policy reversal | Dashed vertical line |
+| 2001 | Baby Bonus Scheme | Dashed vertical line |
+| 2023 | Resident TFR fell below 1.0 | Dashed milestone line |
+| 1987–2025 | Pro-natalist policy era | Light background shading |
+
+The zodiac table will identify the Dragon and Tiger years within the study period. Dragon years (1964, 1976, 1988, 2000, 2012, and 2024) will use upward triangles, while Tiger years (1962, 1974, 1986, 1998, 2010, and 2022) will use downward triangles. These markers allow possible short-term cultural effects to be compared against the fertility bars without treating zodiac years as a continuous numerical variable.
+
+## Raw Data Structure and Known Challenges
+
+The raw sources are not immediately ready for plotting. The main structural issues and planned treatments are:
+
+| Raw-data issue | Planned treatment |
+|----|----|
+| The fertility CSV stores data series in rows and years in columns, ordered from newest to oldest. | Select the required TFR and ASFR rows, then reshape the year columns into a long `year` variable. |
+| ASFR age labels contain indentation, spaces, and the word “Years.” | Remove extra whitespace and standardize labels to `15-19`, `20-24`, ..., `45-49`. |
+| ASFR for ages 45–49 is unavailable before 1980. | Preserve these observations as `NA`; unavailable values will not be converted to zero. |
+| M810581 contains metadata and footnote rows above and below the data table. | Import the data section only or remove non-data rows after import. |
+| M810581 uses a hierarchical layout in which Male and Female rows appear beneath each age-group row. | Carry the age-group label down to its sex rows, label the sex explicitly, and retain Female observations only. |
+| M810581 has no observations for 1981 and 1982. | Add these years to the full year index with `NA`, producing an honest gap in the plotted line rather than interpolated values. |
+| The numerical sources begin and end in different years. | Create a complete 1960–2025 year index and retain missing values outside each source's coverage. |
+| ASFR and the two contextual lines use different units. | Retain the original values and create separate transformed plotting coordinates for the secondary axis. |
+
+In all sources, `NA` represents an unavailable observation and is distinct from an observed value of zero. No missing observations will be automatically imputed.
+
+## Planned Data Engineering Pipeline
+
+The workflow will be implemented in RStudio as a reproducible sequence of transformations. Raw objects will remain unchanged, and each stage will create a new, clearly named object.
+
+### Stage 1 — Import the Raw Sources
+
+The two SingStat CSV files will be imported with `readr::read_csv()`. Female LFPR will be requested directly through `WDI::WDI()`, using Singapore's country code `SGP` and the national-estimate indicator. In the final project repository, file paths will be relative to the RStudio project rather than tied to one team member's computer.
+
+```{r}
+#| label: planned-import
+#| eval: false
+fertility_raw <- readr::read_csv("data/raw/BirthsAndFertilityRatesAnnual.csv")
+singles_raw   <- readr::read_csv("data/raw/M810581.csv", skip = 10)
+
+lfpr_raw <- WDI::WDI(
+  country   = "SGP",
+  indicator = "SL.TLF.CACT.FE.NE.ZS",
+  start     = 1960,
+  end       = 2025
+)
+```
+
+### Stage 2 — Prepare ASFR and TFR
+
+The fertility table will be filtered to the published TFR row and the seven ASFR rows. `pivot_longer()` will convert the year columns into observations so that one ASFR row represents one **year × age-group** combination. The year will be converted to an integer, rate values to numeric, and maternal age group to an ordered factor.
+
+```{r}
+#| label: planned-fertility-cleaning
+#| eval: false
+age_levels <- c(
+  "15-19", "20-24", "25-29", "30-34",
+  "35-39", "40-44", "45-49"
+)
+
+asfr_viz <- fertility_raw |>
+  filter(str_detect(DataSeries, "Years")) |>
+  pivot_longer(-DataSeries, names_to = "year", values_to = "asfr") |>
+  transmute(
+    year = as.integer(year),
+    age_group = DataSeries |>
+      str_squish() |>
+      str_remove(" Years") |>
+      str_replace_all("\\s*-\\s*", "-"),
+    asfr = readr::parse_number(asfr, na = "na")
+  ) |>
+  filter(between(year, 1960, 2025), age_group %in% age_levels) |>
+  mutate(age_group = factor(age_group, levels = age_levels, ordered = TRUE))
+```
+
+For validation, annual ASFR values will be summed and converted to an approximate TFR. This derived result will be compared with the published TFR in the same SingStat file. Small differences may occur because the published rates are rounded.
+
+### Stage 3 — Prepare Female Singlehood
+
+The singlehood table will first be separated into age-group blocks. Age-group labels will be filled down to the nested sex rows, after which only Female observations for ages 25–29, 30–34, and 35–39 will be retained. The wide year columns will then be reshaped into long format.
+
+To reproduce the proposed visualization, the female singlehood measure will be calculated as the unweighted mean of the three published age-specific percentages:
+
+\[ \text{Mean single rate}\_{25-39} = \frac{
+\text{Rate}_{25-29}+
+\text{Rate}_{30-34}+
+\text{Rate}_{35-39}
+}{3}. \]
+
+The resulting variable will therefore be described precisely as the **mean proportion of single women across the 25–29, 30–34, and 35–39 age groups**, rather than as a population-weighted percentage of all women aged 25–39.
+
+### Stage 4 — Prepare Female LFPR
+
+The World Bank result will be reduced to `year` and the female LFPR value, renamed `female_lfpr`, and filtered to the available 1970–2024 period. Values will remain in their original percentage unit. No unavailable years will be estimated or replaced with zero.
+
+```{r}
+#| label: planned-lfpr-cleaning
+#| eval: false
+lfpr_clean <- lfpr_raw |>
+  transmute(
+    year = as.integer(year),
+    female_lfpr = SL.TLF.CACT.FE.NE.ZS
+  ) |>
+  filter(between(year, 1970, 2024)) |>
+  arrange(year)
+```
+
+### Stage 5 — Create Policy and Zodiac Tables
+
+Policy events, the pro-natalist era, and zodiac years will be stored in separate tibbles rather than repeated across every numerical observation. This keeps annotations independent from the measured fertility and percentage variables.
+
+```{r}
+#| label: planned-annotations
+#| eval: false
+policy_events <- tribble(
+  ~year, ~event, ~event_type,
+  1972, "Stop at Two", "Anti-natalist",
+  1987, "Have Three or More", "Pro-natalist",
+  2001, "Baby Bonus", "Pro-natalist",
+  2023, "TFR below 1.0", "Milestone"
+)
+
+policy_eras <- tibble(
+  start_year = 1987,
+  end_year   = 2025,
+  era        = "Pro-natalist era"
+)
+
+zodiac_events <- tribble(
+  ~year, ~zodiac,
+  1962, "Tiger", 1964, "Dragon",
+  1974, "Tiger", 1976, "Dragon",
+  1986, "Tiger", 1988, "Dragon",
+  1998, "Tiger", 2000, "Dragon",
+  2010, "Tiger", 2012, "Dragon",
+  2022, "Tiger", 2024, "Dragon"
+)
+```
+
+### Stage 6 — Align and Join the Annual Drivers
+
+A complete year index from 1960 to 2025 will form the left side of the joins. The female LFPR and singlehood tables will be joined by `year`, producing one annual driver table. This preserves years outside each source's coverage as `NA`, including the singlehood gap in 1981–1982. The ASFR table will remain separate and in long format because it contains seven rows per year.
+
+```{r}
+#| label: planned-joining
+#| eval: false
+year_index <- tibble(year = 1960:2025)
+
+drivers_viz <- year_index |>
+  left_join(lfpr_clean, by = "year") |>
+  left_join(single_clean, by = "year")
+```
+
+### Stage 7 — Prepare the Secondary Percentage Axis
+
+ASFR is measured per 1,000 women, whereas female LFPR and singlehood are percentages. The original percentage variables will be retained unchanged. Additional fields will be created only to map the two lines onto the left-axis coordinate system required by `ggplot2`.
+
+If the final left and right axes span 0–1,200 and 0–100 respectively, the planned scale factor is:
+
+\[ \text{scale factor}=\frac{1200}{100}=12. \]
+
+The plotting coordinates will therefore be `female_lfpr × 12` and `single_rate_25_39 × 12`. The secondary axis will apply the inverse transformation, dividing plotted coordinates by 12 so that readers still see the original percentages. The scale factor may be adjusted if the final ASFR axis limit changes during implementation.
+
+## Validation Checks
+
+Before plotting, the pipeline will apply the following checks:
+
+1.  Confirm that each available **year × age-group** ASFR key is unique.
+2.  Confirm that the seven expected maternal age groups are present.
+3.  Confirm that ASFR values are non-negative.
+4.  Compare approximate TFR derived from ASFR with the published TFR series.
+5.  Confirm that female LFPR and singlehood percentages fall between 0 and 100.
+6.  Confirm that the driver table contains exactly one row for every year from 1960 to 2025.
+7.  Confirm that unavailable values, including singlehood in 1981–1982 and ASFR ages 45–49 before 1980, remain `NA`.
+8.  Confirm that joins do not introduce duplicate years or change the intended number of observations.
+9.  Confirm that all policy and zodiac annotation years fall within the visualization period.
+
+These checks will be implemented with summaries and assertions such as `count()`, `anyDuplicated()`, `between()`, and `stopifnot()` so that data problems are detected before the final chart is produced.
+
+## Visualization-Ready Outputs
+
+The completed pipeline will pass the following objects to the `ggplot2` visualization:
+
+| Object | Grain | Main fields | Purpose |
+|----|----|----|----|
+| `asfr_viz` | One row per year × age group | `year`, `age_group`, `asfr` | Stacked fertility bars |
+| `tfr_validation` | One row per year | `year`, `published_tfr`, `derived_tfr`, `difference` | Validate stacked ASFR against TFR |
+| `drivers_viz` | One row per year | `year`, `female_lfpr`, `single_rate_25_39`, transformed plotting fields | Black and purple lines |
+| `policy_events` | One row per event | `year`, `event`, `event_type` | Vertical policy and milestone annotations |
+| `policy_eras` | One row per era | `start_year`, `end_year`, `era` | Background policy shading |
+| `zodiac_events` | One row per zodiac event | `year`, `zodiac` | Dragon and Tiger markers |
+
+This structure keeps measured variables, derived variables, and contextual annotations separate while providing all fields required to reproduce the proposed single-layered visualization.
+
+## Reproducibility
+
+The final implementation will be developed in RStudio and rendered with Quarto. All file paths will be relative to the project directory, raw files will remain unchanged, and all cleaning steps will be recorded in R code. The final static visualization will be produced with `ggplot2`; `dplyr`, `tidyr`, `stringr`, `readr`, `WDI`, and `scales` will support data preparation and formatting. The proposal code is illustrative and is not executed at this stage.
 
 ```{r}
 #| label: planned-packages
 #| eval: false
 # Intended tooling (plan only — not executed in the proposal)
-library(tidyverse)   # dplyr, tidyr, readr, ggplot2
-library(lubridate)   # date handling if needed
-library(scales)      # axis formatting
+library(tidyverse)  # dplyr, tidyr, readr, stringr, ggplot2
+library(WDI)        # World Bank indicator retrieval
+library(scales)     # Axis and percentage formatting
 ```
 
 # Planned Data Analysis (Plan Only)
@@ -184,8 +408,7 @@ The policies are visualised to show the effects of each policy introduced by the
 
 We chose the FLFP and numner of single women dimensions to show the cultural shift in Singaporean attitudes towards bearing children. As Singapore modernised, women began attaining higher levels of education and becoming part of the workforce, hence decreasing the number of women having children. Furthermore, with more people spending longer time studying and establishing careers in their twenties, it results in people having kids at a later age. Additionally, more women are choosing to be single so they can focus on their careers instead. This exacerbates the low fertility problem.
 
-
-On top of that, we also intend to look at things from a cultural angle. Singapore have many traditions and beliefs deeply rooted in superstitution passed down from our ancestors. We wanted to see if the Chinese Zodiac had any particular effect on birth rates for particular years. Any observable patterns can confirm if our hypothesis is correct. 
+On top of that, we also intend to look at things from a cultural angle. Singapore have many traditions and beliefs deeply rooted in superstitution passed down from our ancestors. We wanted to see if the Chinese Zodiac had any particular effect on birth rates for particular years. Any observable patterns can confirm if our hypothesis is correct.
 
 The data is drawn from official sources and imported directly into R. Births and age-specific fertility rates, and the proportion of singles by age and sex, are downloaded as CSV files from the Singapore Department of Statistics and read in with readr. Female labour force participation is obtained more cleanly through the WDI package, which queries the World Bank's World Development Indicators and retrieves the national-estimate series for Singapore directly from the World Bank's interface into a tidy data frame. This avoids any manual download, keeps the series reproducible, and is used because it extends the participation figures back to 1970, whereas the local survey series begins only around 1991.
 
