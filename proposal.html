@@ -2340,7 +2340,7 @@ Figure 1: Original CNA visualization: <em>Drop in Singapore citizen births in 2
 <ol type="1">
 <li><strong>Honest baseline scaling.</strong> The vertical axis correctly begins at 0. In bar charts, readers judge magnitude by the physical length of the bars, so starting at 0 avoids artificially exaggerating the drop in births.</li>
 <li><strong>Direct value labeling.</strong> Every bar displays its exact value at the top, removing the need for readers to trace lines back to the axis to estimate the number.</li>
-<li><strong>Multi-level comparison.</strong> The chart combines annual bars with five-year block averages, smoothing short-term spikes or dips (e.g. 2013 and 2022) and helping readers see the broader 10-year downward trend.</li>
+<li><strong>Multi-level comparison.</strong> The chart combines annual bars with five-year block averages, smoothing short-term spikes or dips (e.g. 2013 and 2022) and helping readers see the broader 10-year downward trend. These averages provide a useful high-level summary, although the selected grouping should still be interpreted alongside the annual variation.</li>
 <li><strong>Clear and direct title.</strong> The title <em>“Drop in Singapore citizen births in 2022”</em> communicates the key message within seconds.</li>
 </ol>
 </section>
@@ -2421,7 +2421,7 @@ Figure 1: Original CNA visualization: <em>Drop in Singapore citizen births in 2
 </section>
 <section id="i9-use-appropriate-zero-based-rate-and-percentage-scales-addresses-w8" class="level3" data-number="4.0.9">
 <h3 data-number="4.0.9" class="anchored" data-anchor-id="i9-use-appropriate-zero-based-rate-and-percentage-scales-addresses-w8"><span class="header-section-number">4.0.9</span> I9 — Use appropriate zero-based rate and percentage scales → <em>addresses W8</em></h3>
-<p>The current plan uses a zero-based ASFR axis for the fertility bars and a clearly labelled secondary percentage axis for female LFPR and singlehood. The precise scales will be refined during implementation. Age-group stacking can make changes in fertility composition visible while preserving an honest zero baseline for the bars.</p>
+<p>The current plan uses a zero-based ASFR axis for the fertility bars and a clearly labelled secondary percentage axis for female LFPR and singlehood. The precise scales will be refined during implementation, and the transformation and units for both axes will be stated explicitly so readers do not compare the line heights directly with ASFR values. Age-group stacking can make changes in fertility composition visible while preserving an honest zero baseline for the bars.</p>
 </section>
 <section id="i10-add-chinese-zodiac-context-addresses-w7" class="level3" data-number="4.0.10">
 <h3 data-number="4.0.10" class="anchored" data-anchor-id="i10-add-chinese-zodiac-context-addresses-w7"><span class="header-section-number">4.0.10</span> I10 — Add Chinese zodiac context → <em>addresses W7</em></h3>
@@ -2654,7 +2654,7 @@ Figure 1: Original CNA visualization: <em>Drop in Singapore citizen births in 2
 </tr>
 <tr class="even">
 <td>M810581 has no observations for 1981 and 1982.</td>
-<td>Add these years to the full year index with <code>NA</code>, producing an honest gap in the plotted line rather than interpolated values.</td>
+<td>Preserve these years as <code>NA</code>; do not replace them with zero or interpolate them without justification.</td>
 </tr>
 <tr class="odd">
 <td>The numerical sources begin and end in different years.</td>

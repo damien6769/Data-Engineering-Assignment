@@ -51,7 +51,7 @@ This contrast between sustained policy intervention and persistently low fertili
 
 1.  **Honest baseline scaling.** The vertical axis correctly begins at 0. In bar charts, readers judge magnitude by the physical length of the bars, so starting at 0 avoids artificially exaggerating the drop in births.
 2.  **Direct value labeling.** Every bar displays its exact value at the top, removing the need for readers to trace lines back to the axis to estimate the number.
-3.  **Multi-level comparison.** The chart combines annual bars with five-year block averages, smoothing short-term spikes or dips (e.g. 2013 and 2022) and helping readers see the broader 10-year downward trend.
+3.  **Multi-level comparison.** The chart combines annual bars with five-year block averages, smoothing short-term spikes or dips (e.g. 2013 and 2022) and helping readers see the broader 10-year downward trend. These averages provide a useful high-level summary, although the selected grouping should still be interpreted alongside the annual variation.
 4.  **Clear and direct title.** The title *"Drop in Singapore citizen births in 2022"* communicates the key message within seconds.
 
 # Weaknesses of the Original Visualization
@@ -132,7 +132,7 @@ Where data is available, the redesign will display annual observations using a c
 
 ### I9 — Use appropriate zero-based rate and percentage scales → *addresses W8*
 
-The current plan uses a zero-based ASFR axis for the fertility bars and a clearly labelled secondary percentage axis for female LFPR and singlehood. The precise scales will be refined during implementation. Age-group stacking can make changes in fertility composition visible while preserving an honest zero baseline for the bars.
+The current plan uses a zero-based ASFR axis for the fertility bars and a clearly labelled secondary percentage axis for female LFPR and singlehood. The precise scales will be refined during implementation, and the transformation and units for both axes will be stated explicitly so readers do not compare the line heights directly with ASFR values. Age-group stacking can make changes in fertility composition visible while preserving an honest zero baseline for the bars.
 
 ### I10 — Add Chinese zodiac context → *addresses W7*
 
@@ -217,7 +217,7 @@ The raw sources are not immediately ready for plotting. The main structural issu
 | ASFR for ages 45–49 is unavailable before 1980. | Preserve these observations as `NA`; unavailable values will not be converted to zero. |
 | M810581 contains metadata and footnote rows above and below the data table. | Import the data section only or remove non-data rows after import. |
 | M810581 uses a hierarchical layout in which Male and Female rows appear beneath each age-group row. | Carry the age-group label down to its sex rows, label the sex explicitly, and retain Female observations only. |
-| M810581 has no observations for 1981 and 1982. | Add these years to the full year index with `NA`, producing an honest gap in the plotted line rather than interpolated values. |
+| M810581 has no observations for 1981 and 1982. | Preserve these years as `NA`; do not replace them with zero or interpolate them without justification. |
 | The numerical sources begin and end in different years. | Create a complete 1960–2025 year index and retain missing values outside each source's coverage. |
 | ASFR and the two contextual lines use different units. | Retain the original values and create separate transformed plotting coordinates for the secondary axis. |
 
