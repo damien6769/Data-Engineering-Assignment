@@ -1,0 +1,214 @@
+---
+title: "Re-examining Singapore's Declining Birth Rate"
+subtitle: "AAI1001 Data Engineering & Visualization — Project Proposal"
+author: "Team 11 — Angel, Sophia, Damien, Levl, Suen Hong"
+date: last-modified
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    toc-location: left
+    toc-title: "Contents"
+    number-sections: true
+    theme: cosmo
+    code-fold: true
+    code-summary: "Show code"
+    embed-resources: true
+    fig-cap-location: bottom
+    smooth-scroll: true
+editor: visual
+---
+
+```{r}
+#| label: setup
+#| include: false
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+# Chosen Visualization
+
+**Source:** [Channel NewsAsia — *Marriage, birth rate, fertility, ageing population, immigration (2022)*](https://www.channelnewsasia.com/singapore/marriage-birth-rate-fertility-ageing-population-immigration2022-3807991)
+
+![Original CNA visualization: *Drop in Singapore citizen births in 2022* (Infographic: Clara Ho; Source: National Population and Talent Division, Prime Minister's Office).](images/cna_birth_chart.png){#fig-original width="80%"}
+
+## What CNA Tells
+
+The original visualisation shows the annual number of Singapore citizen births from 2012 to 2022, highlighting a decline from an average of 32.7k births (2013–2017) to 31.8k births (2018–2022). It shows the downward trend in births and raises concerns regarding Singapore's low fertility rate and ageing population.
+
+## Our Story
+
+> **Which demographic, social, and economic factors are associated with Singapore's declining birth rate?**
+
+Over the span of two generations, Singapore's demographic anxieties have inverted. The government once sought to curb the rapidly increasing population in the nation's infancy. However, they are soon confronted with a decline in fertility. The resident total fertility rate (TFR) fell below 1.0 for the first time in 2023, and continued declining to 0.87 in 2025. In order for a population to replace itself, a TFr of 2.1 is required. Singapore is set on a dangerous precendent if this is not resolved. The objective of this project is to explore the causes behind Singapore's drastic decline in fertility rates.
+
+After the Second World War ended in the Pacific, Singapore saw a post-war baby boom. Confronted with a rising population, the government introduced the Stop at Two campaign in 1972, actively discouraging larger families. This also accelerated a decline that modernisation had already set in motion. The policy proved highly effective as the TFR reached replacement level by 1975 and continued falling afterwards. By the 1980s, the state reverse its position. In 1983, the Great Marriage Debate publicly identified educated wmen as marrying and bearing children at lower rates. Then the Graduate Mothers Scheme was introduced in 1984 in a bid to influence university educated women benefits for having more children, such as having priority for primary school registration for their third and subsequent children. This policy was not well received by the public and was short-lived. IN 1987, the government introduced Hove Three or More, If You Can Afford It, marked a decisive shift towards pro-natalist policy. However, none of these interventions could stop the rapidly declining birth rate. Across the Baby Bonus scheme in 2001, and successive enhancements to parenthood support, fertility continued to fall to its present record lows.
+
+This sustained policy failure forms the analytical core of the project. If financial, housing, and taxation incentives have repeatedly proven unable to raise fertility, the underlying drivers are likely to be structural and cultural rather than political. As a growing proportion of women attain university education and enter professional employment, the average age at first marriage has risen, deferring first births and compressing the period available for subsequent children. At the same time, an ageing population reduces the number of women in the prime childbearing age groups, exerting downward pressure on births independently of individual fertility behaviour. This interpretation is consistent with the Department of Statistics' own decomposition of the TFR, which attributes the largest component of the decline not to married couples having fewer children, but to a rising proportion of women in the prime childbearing ages remaining unmarried.
+
+# Strengths of the Original Visualization
+
+1.  **Honest baseline scaling.** The vertical axis correctly begins at 0. In bar charts, readers judge magnitude by the physical length of the bars, so starting at 0 avoids artificially exaggerating the drop in births.
+2.  **Direct value labeling.** Every bar displays its exact value at the top, removing the need for readers to trace lines back to the axis to estimate the number.
+3.  **Multi-level comparison.** The chart combines annual bars with five-year block averages, smoothing short-term spikes or dips (e.g. 2013 and 2022) and helping readers see the broader 10-year downward trend.
+4.  **Clear and direct title.** The title *"Drop in Singapore citizen births in 2022"* communicates the key message within seconds.
+
+# Weaknesses of the Original Visualization
+
+Each weakness is stated with an explanation and a justification.
+
+### W1 — Colour saturation illusion
+
+**Explanation:** The chart uses colour value categorically — a lighter shade for 2013–2017, a deeper purple for 2018–2022, and an even lighter tone for 2012, visually isolating it from both groups. **Justification:** Higher colour saturation naturally implies greater magnitude to the human eye, so the *lower*-birth years of 2018–2022 carry the heaviest visual weight despite representing the decline. The distinctly light 2012 bar reads as a low-value outlier, yet its 33.2k figure is higher than every bar in the darker 2018–2022 block. The intent was categorical, but the execution introduces a misleading signal.
+
+### W2 — Lack of demographic scaling
+
+**Explanation:** The graph plots absolute raw volume rather than scaling counts against Singapore's changing demographic structure. **Justification:** Raw births depend on the size of the reproductive group. If the base population of women in prime childbearing ages shrank over the decade due to ageing, births fall even if individual fertility behaviour stayed constant or rose. Without normalizing into a fertility rate, the chart measures population ageing rather than actual family-planning behaviour (the *denominator fallacy*: raw counts conflate how many people exist with the choices those people make).
+
+### W3 — Inappropriate use of bar charts for a timeline
+
+**Explanation:** Individual vertical bars map a chronological 2012–2022 timeline, treating each year as a discrete category rather than a continuous progression. **Justification:** Time is continuous. Each bar is an independent visual unit, so the eye is not guided to read acceleration, deceleration, or slope between years. A continuous line chart would more clearly reveal whether the decline is steady, accelerating, or punctuated by sharp drops.
+
+### W4 — Limited data dimensionality
+
+**Explanation:** Only total citizen births per year are shown, with no breakdown by maternal age group, ethnicity, or birth order. **Justification:** The chart confirms a decline but cannot explain it. A breakdown would let readers identify which demographic segments drive the decline and whether it is concentrated or broad-based.
+
+### W5 — Short time horizon
+
+**Explanation:** Birth data is shown only from 2012 to 2022 — roughly an 11-year window. **Justification:** This captures recent change but not the multi-decade demographic trends shaping Singapore's fertility landscape. Long-run drivers — rising female education and labour-force participation (the shift the 1984 Graduate Mothers Scheme was meant to counter) and major policy events — predate this window and are invisible here.
+
+### W6 — Lack of explicit axis labels and legend
+
+**Explanation:** Neither axis is explicitly labelled, and there is no legend explaining the colour variations. **Justification:** Readers must infer that the y-axis is citizen births and that colour marks time periods. Effective visualizations should be self-contained; explicit labels such as "Number of Citizen Births" and "Year" would reduce ambiguity for readers viewing the chart apart from the article.
+
+### W7 — Absence of explanatory variables
+
+**Explanation:** The chart presents a single descriptive metric — births per year — with no variables that could account for the decline. **Justification:** A single-variable chart answers *what* happened, not *why*. The causes of declining births are multi-factorial (behavioural, structural, economic). Without an explanatory layer, the chart is a diagnostic snapshot rather than an analytical tool. *(Overlaps with W4.)*
+
+### W8 — Misleading axis range
+
+**Explanation:** The y-axis spans 0–35k, yet every bar sits within the narrow 30.4k–33.7k range. **Justification:** Because all values fall in the top \~10% of the axis, the bars look nearly identical and the empty space below 30k dominates, making a real year-on-year drop look negligible. A range starting nearer 28k–29k would surface the variation. *(Note: this is in tension with the "honest baseline" strength — we will treat it as a presentation trade-off rather than dishonesty.)*
+
+### W9 — Arbitrary period averaging
+
+**Explanation:** Eleven individual years are collapsed into two 5-year block averages (32.7k vs 31.8k), presenting a 0.9k gap as the headline. **Justification:** The two-period split is an arbitrary editorial choice, and the 0.9k gap is shown without any measure of variability. Individual years contradict the implied narrative — 2019 (32.8k) exceeds several years in the supposedly higher 2013–2017 block. The averaging manufactures a cleaner story than the data fully supports.
+
+# Proposed Improvements (Plan Only)
+
+Each improvement targets one or more weaknesses above.
+
+### I1 — Use fertility rate, not just raw counts → *addresses W2*
+
+Add the **resident total fertility rate (TFR)** and **age-specific fertility rate (ASFR)** by mother's age group (20–24, 25–29, 30–34, 35–39). Normalizing births against the relevant female population separates true fertility behaviour from the mechanical effect of a shrinking reproductive-age base.
+
+### I2 — Make colour carry meaning → *addresses W1, W4*
+
+Break the data down by mother's age group, assigning each group its own distinct colour. A sequential scale can additionally encode fertility magnitude (darker = higher fertility within a group). Birth order and ethnic group (Chinese, Malay, Indian) will be incorporated as further dimensions to surface where the decline concentrates.
+
+### I3 — Use chart types suited to change over time → *addresses W3*
+
+Redesign as a **stacked area chart** (year on x-axis, ASFR on y-axis, each age group a coloured band), with an **overlaid line** for a contextual driver such as female labour-force participation rate or median age at first marriage. This shows both the composition of fertility by age group and how an external driver tracks alongside it.
+
+### I4 — Add labels, legend, and annotations → *addresses W6*
+
+Add explicit axis titles ("Number of Citizen Births" / "Year"), a legend describing every colour or band, and short annotations for key reference periods (e.g. pandemic years) so the chart is self-contained and interpretable without the article.
+
+### I5 — Add demographic dimensions → *addresses W4, W7*
+
+Enrich the visualization with maternal age group, birth order, and ethnicity. This shifts the chart from purely descriptive to analytical — letting readers see, for example, whether the decline is driven by women in their 20s having fewer first children, or by couples stopping after one child.
+
+### I6 — Add contextual explanatory variables → *addresses W7*
+
+Layer in contextual variables such as median age at first marriage and fertility by age group, indicating whether the decline links to delayed childbearing, fewer higher-order births, or shifting patterns across age groups — moving the chart from snapshot to explanatory tool.
+
+### I7 — Extend the historical time horizon → *addresses W5*
+
+Extend the analysis period from 2012–2022 to roughly **1960–2025**. A longer horizon distinguishes temporary fluctuations from long-run trends and situates the decline against major policy shifts: the anti-natalist *Stop at Two* campaign (1972), the 1987 policy reversal, and the Baby Bonus scheme (2001), alongside long-run rises in female education and workforce participation.
+
+### I8 — Resolve the standalone 2012 bar → *addresses W9*
+
+Either incorporate 2012 into the comparison structure (e.g. extend the first block to 2012–2017), explicitly label it as a pre-period baseline with annotation, or remove it — preserving a coherent period structure instead of an unexplained isolated bar.
+
+### I9 — Rescale the axis appropriately → *addresses W8*
+
+Where the redesign retains a count-based panel, begin the y-axis nearer 28,000–29,000 so year-on-year differences are visible without distorting proportions. (For rate-based panels under I1, the axis will be chosen to match the natural range of TFR/ASFR.)
+
+::: callout-tip
+## Weakness → Improvement mapping (summary)
+
+| Weakness                       | Addressed by |
+|--------------------------------|--------------|
+| W1 Colour saturation illusion  | I2           |
+| W2 Lack of demographic scaling | I1           |
+| W3 Bar chart for a timeline    | I3           |
+| W4 Limited dimensionality      | I2, I5       |
+| W5 Short time horizon          | I7           |
+| W6 Missing labels / legend     | I4           |
+| W7 No explanatory variables    | I5, I6       |
+| W8 Misleading axis range       | I9           |
+| W9 Arbitrary period averaging  | I8           |
+:::
+
+# Data Engineering Workflow (Raw → Visualization-Ready)
+
+::: callout-important
+## To be completed
+
+This section needs the detailed, step-by-step workflow from raw data sources to a tidy, visualization-ready dataset. We'll work this out together — it should name the actual datasets (e.g. SingStat / Department of Statistics tables for births, TFR, ASFR, population by age and sex, marriages, female labour-force participation), and document each transformation step (import, cleaning, joining, reshaping into tidy/long format, deriving rates).
+
+*Placeholder outline below — to be expanded.*
+:::
+
+1.  **Acquire raw data** from reliable sources (Department of Statistics Singapore / SingStat, data.gov.sg) for: citizen births, TFR, ASFR by age group, resident population by age and sex, marriages, and contextual drivers.
+2.  **Inspect & document** each raw file (format, units, time coverage, missing values).
+3.  **Clean & standardize** — consistent year formats, age-group labels, ethnic-group labels; handle missing values and any pre/post definitional changes.
+4.  **Reshape to tidy/long format** suitable for `ggplot2`.
+5.  **Join** datasets on common keys (year, age group, ethnicity) and **derive rates** (e.g. ASFR = births to women in age group ÷ female population in that age group).
+6.  **Validate** derived figures against published totals; export the visualization-ready dataset.
+
+```{r}
+#| label: planned-packages
+#| eval: false
+# Intended tooling (plan only — not executed in the proposal)
+library(tidyverse)   # dplyr, tidyr, readr, ggplot2
+library(lubridate)   # date handling if needed
+library(scales)      # axis formatting
+```
+
+# Planned Data Analysis (Plan Only)
+
+Singapore's resident fertility has fallen steeply since 1960, dropping below the replacement rate within about fifteen years and reaching a record low total fertility rate of 0.97 in 2023. The original chart we set out to redesign presents this decline as a simple fall in citizen births, which records the outcome but says nothing about its causes. Our central question is therefore why fertility has fallen, and our aim is to bring the decline and its principal drivers into a single figure so they can be read against one another on a shared timeline.
+
+We began exploring data by plotting total fertility against a range of drivers drawn from research and official statistics. These included the median age at first marriage, the median age of mothers at first birth, female labour force participation, educational attainment, the HDB resale price index, household income, the share of never-married residents, birth order, and patterns following the Chinese Zodiac. For each, we examined how the series moved over time relative to fertility and judged whether the data was available over a sufficiently long and consistent period. From this, we selected the dimensions that combine the greatest explanatory weight with usable data and that can coexist in one readable figure. The dimensions chosen are AGe Specific Fertility Rate (ASFR), Female Labour Force Participation (FLFP), and the percentage of single women aged 25-39. It is supported by two contextual layers, the Chinese zodiac and population policies introduced by the government.
+
+The policies are visualised to show the effects of each policy introduced by the government. From there, we can assess and see how well these policies worked overtime, giving us more insight into real driving forces behind Singapore's declining fertility rate.
+
+We chose the FLFP and numner of single women dimensions to show the cultural shift in Singaporean attitudes towards bearing children. As Singapore modernised, women began attaining higher levels of education and becoming part of the workforce, hence decreasing the number of women having children. Furthermore, with more people spending longer time studying and establishing careers in their twenties, it results in people having kids at a later age. Additionally, more women are choosing to be single so they can focus on their careers instead. This exacerbates the low fertility problem.
+
+
+On top of that, we also intend to look at things from a cultural angle. Singapore have many traditions and beliefs deeply rooted in superstitution passed down from our ancestors. We wanted to see if the Chinese Zodiac had any particular effect on birth rates for particular years. Any observable patterns can confirm if our hypothesis is correct. 
+
+The data is drawn from official sources and imported directly into R. Births and age-specific fertility rates, and the proportion of singles by age and sex, are downloaded as CSV files from the Singapore Department of Statistics and read in with readr. Female labour force participation is obtained more cleanly through the WDI package, which queries the World Bank's World Development Indicators and retrieves the national-estimate series for Singapore directly from the World Bank's interface into a tidy data frame. This avoids any manual download, keeps the series reproducible, and is used because it extends the participation figures back to 1970, whereas the local survey series begins only around 1991.
+
+Each source requires preparation before it can be combined. The SingStat tables are stored in wide form with one column per year and several rows of metadata, so we skip the metadata, reshape the tables to long form, extract the year and the age band from the labels, and convert the values to numeric. The singles table is hierarchical, with male and female rows nested beneath each age group, so we carry the age group down and tag each row by sex before filtering to the female rows. For the marriage measure we aggregate the never-married rates for the 25 to 29, 30 to 34 and 35 to 39 bands into a single prime-age series. We also remove the 1999 and 2000 participation values, where a change in the source's methodology produces a step that is an artefact rather than real movement. The cleaned series are joined on year, and because the two driver series are percentages while the bars are rates, we rescale the percentages onto the fertility axis so they can be shown on one shared secondary axis.
+
+The figure is built as a single layered chart rather than a dashboard, on one shared time axis, so that every series can be compared directly. We use a stacked bar chart for fertility because it carries two messages in one geometry: the total height shows the overall decline, while the coloured segments show the changing age composition, which a single fertility line could not convey. The two drivers are drawn as lines, since a line is the clearest way to read a continuous trend and its slope, and they sit on a secondary percentage axis because they share a common unit. The Chinese zodiac is shown as small triangles below the bars, a discrete marker suited to discrete annual events, with upward triangles for Dragon years and downward triangles for Tiger years to encode the expected direction of effect. Policy is shown in two ways: the background is shaded to separate the anti-natalist era from the pro-natalist era, and individual measures are marked with vertical lines, dotted for the anti-natalist policy and dashed for the pro-natalist ones.
+
+In summary, the year forms the horizontal axis; the age-specific fertility rate is the height of the stacked bars, with the mother's age group encoded by colour; female labour force participation and the prime-age single rate are lines on the right-hand percentage axis; the Chinese zodiac is the row of triangles beneath the bars; and population policy is encoded by the shaded eras and the vertical policy lines. Together these allow the reader to see the decline, its shift into older ages, its co-movement with rising participation and singlehood, the periodic zodiac effect, and the asymmetry between policy that curbed births and policy that could not restore them.
+
+# Work Distribution
+
+::: callout-note
+## To be finalized
+
+Roles below are placeholders pending team confirmation — assign concrete tasks (e.g. data sourcing, cleaning/joining, specific chart panels, write-up, rendering/QA) once the workflow and analysis sections are locked.
+:::
+
+| Member        | Planned responsibilities |
+|---------------|--------------------------|
+| Angel Zhang   | *TBD*                    |
+| Sophia Gador  | *TBD*                    |
+| Damien Tan    | *TBD*                    |
+| Levl Lim      | *TBD*                    |
+| Yap Suen Hong | *TBD*                    |
+
+------------------------------------------------------------------------
