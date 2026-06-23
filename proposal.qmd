@@ -3,19 +3,6 @@ title: "Re-examining Singapore's Declining Fertility"
 subtitle: "AAI1001 Data Engineering & Visualization — Project Proposal"
 author: "Team 11 — Angel, Sophia, Damien, Levl, Suen Hong"
 date: last-modified
-format:
-  html:
-    toc: true
-    toc-depth: 3
-    toc-location: left
-    toc-title: "Contents"
-    number-sections: true
-    theme: cosmo
-    code-fold: true
-    code-summary: "Show code"
-    embed-resources: true
-    fig-cap-location: bottom
-    smooth-scroll: true
 editor: visual
 ---
 
@@ -25,17 +12,71 @@ editor: visual
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 ```
 
-# Chosen Visualization
+# Team Information
 
-**Source:** [Channel NewsAsia — *Marriage, birth rate, fertility, ageing population, immigration (2022)*](https://www.channelnewsasia.com/singapore/marriage-birth-rate-fertility-ageing-population-immigration2022-3807991)
+| **Name**                           | **Student ID** |
+|:-----------------------------------|:---------------|
+| Angel Zhang XinYu                  | 2503541        |
+| Damien Tan Qing Xun (Chen QingXun) | 2503046        |
+| Levl Lim Jing Qiang                | 2501118        |
+| Yap Suen Hong                      | 2500770        |
+| Gador Sophia Helen                 | 2503845        |
+
+# Introduction and Project Overview
+
+## Our Project's Aim (TBC)
+
+Singapore has experienced a sustained decline in fertility over the past several decades despite numerous policy interventions aimed at encouraging marriage and parenthood. While declining birth counts are frequently reported in the media, such figures describe the outcome rather than the broader demographic, social, and economic changes that may be associated with it.
+
+This project aims to re-examine Singapore's declining fertility by moving beyond annual birth counts and incorporating additional contextual dimensions. Specifically, we investigate how fertility trends have evolved alongside changes in female labour-force participation, female singlehood during prime childbearing ages, population policies, and selected cultural factors. Rather than attempting to establish direct causal relationships, the project seeks to identify long-term patterns and co-movements that may help explain the persistence of low fertility in Singapore.
+
+Through an improved multi-dimensional visualization, the project aims to transform a simple descriptive chart into a richer analytical representation of Singapore's demographic transition.
+
+## Source & Context
+
+The original visualization was published by Channel NewsAsia (CNA) in an article titled *"Record number of marriages, drop in Singaporean births in 2022"* (September 2023), available at:
+
+> <https://www.channelnewsasia.com/singapore/marriage-birth-rate-fertility-ageing-population-immigration-2022-3807991>
+
+It discusses Singapore’s marriage trends, birth rates, fertility decline, ageing population, and immigration policies. The chart was produced using data from the **National Population and Talent Division (NPTD)** and focuses on the number of Singapore citizen births between 2012 and 2022.
+
+The topic is highly relevant to Singapore’s long-term demographic challenges. Fertility rates have remained below the replacement level of 2.1 for several decades, contributing to an ageing population, slower natural population growth, and increasing concerns about future workforce sustainability. The visualization was created to support CNA’s discussion of declining births and their implications for Singapore’s population structure.
+
+## Our Chosen Visualization
 
 ![Original CNA visualization: *Drop in Singapore citizen births in 2022* (Infographic: Clara Ho; Source: National Population and Talent Division, Prime Minister's Office).](images/cna_birth_chart.png){#fig-original width="80%"}
 
-## What CNA Tells
+### Visualization Structure and Design
 
-The original visualisation shows the annual number of Singapore citizen births from 2012 to 2022, highlighting a decline from an average of 32.7k births (2013–2017) to 31.8k births (2018–2022). It shows the downward trend in births and raises concerns regarding Singapore's low fertility rate and ageing population.
+The original visualization selected is a **single-panel vertical bar chart** titled *"Drop in Singapore Citizen Births in 2022"*. The chart displays the annual number of Singapore citizen births between 2012 and 2022 and is designed to highlight changes in birth counts over time.
 
-The original chart measures citizen birth counts, whereas our redesign uses resident fertility and singlehood measures together with a national female labour-force participation estimate. These measures do not share an identical population base; they are combined to examine broad long-term patterns rather than to imply a direct one-to-one statistical decomposition of citizen births.
+The visualization encodes information using two primary dimensions:
+
+1.  **Year** — Annual observations from 2012 to 2022 displayed along the horizontal axis.
+
+2.  **Number of Singapore Citizen Births** — Annual birth counts represented by the height of each vertical bar.
+
+In addition to the two core dimensions, the chart incorporates several supporting design elements:
+
+- **Period grouping** — The years are visually divided into two periods, 2013–2017 and 2018–2022, through the use of different colour shades.
+
+- **Average birth annotations** — Average birth counts for each five-year period are displayed above the bars to facilitate comparison between the two periods.
+
+- **Direct value labels** — Exact annual birth counts are shown above each bar, reducing the need for readers to estimate values from the vertical scale.
+
+### The Story It Tells
+
+The visualization communicates a gradual decline in Singapore citizen births over the period shown. Several observations emerge from analysing the bar chart.
+
+**Birth counts remain relatively stable throughout most of the period.** Annual citizen births fluctuate within a narrow range of approximately 31,000 to 34,000 births, indicating that year-to-year variations are generally modest.
+
+**The average number of births decreased between the two highlighted periods.** The chart emphasises a decline from an average of 32.7 thousand births during 2013–2017 to 31.8 thousand births during 2018–2022, suggesting a downward shift in birth counts in the later period.
+
+**2022 records the lowest birth count in the series.** With approximately 30.4 thousand citizen births, 2022 stands out as the lowest value among all years displayed, reinforcing the chart's message of declining births.
+
+**The decline appears gradual rather than abrupt.** While annual fluctuations are present, the overall pattern suggests a slow downward movement across the period rather than a sudden change occurring in a single year.
+
+The chart's use of period averages and colour grouping directs attention towards comparing broader trends between the two five-year periods, rather than focusing solely on individual yearly variations.
 
 ## Our Story
 
@@ -47,14 +88,18 @@ Singapore experienced a post-war baby boom before introducing increasingly stron
 
 This contrast between sustained policy intervention and persistently low fertility provides the analytical focus of the project. The visualization will not treat policy, employment, or marriage patterns as proven causes. Instead, it will examine how fertility has changed alongside broader structural and cultural developments. Rising female labour-force participation and a growing proportion of women remaining single during prime childbearing ages may be associated with delayed family formation and a shorter period available for having children. Age-specific fertility rates can additionally show whether childbearing has shifted from younger to older maternal age groups. Bringing these measures together allows the project to investigate how Singapore's fertility decline relates to changes in women's employment, singlehood, maternal age, policy context, and selected cultural patterns.
 
-# Strengths of the Original Visualization
+# Critical Analysis of Original Visualization
+
+## Strengths and Weaknesses of the Original Visualization
+
+## Strengths of the Original Visualization
 
 1.  **Honest baseline scaling.** The vertical axis correctly begins at 0. In bar charts, readers judge magnitude by the physical length of the bars, so starting at 0 avoids artificially exaggerating the drop in births.
 2.  **Direct value labeling.** Every bar displays its exact value at the top, removing the need for readers to trace lines back to the axis to estimate the number.
 3.  **Multi-level comparison.** The chart combines annual bars with five-year block averages, smoothing short-term spikes or dips (e.g. 2013 and 2022) and helping readers see the broader 10-year downward trend. These averages provide a useful high-level summary, although the selected grouping should still be interpreted alongside the annual variation.
 4.  **Clear and direct title.** The title *"Drop in Singapore citizen births in 2022"* communicates the key message within seconds.
 
-# Weaknesses of the Original Visualization
+## Weaknesses of the Original Visualization
 
 Each weakness is stated with an explanation and a justification.
 
@@ -161,7 +206,7 @@ Dragon and Tiger years may be marked with distinct symbols, provisionally upward
 The proposed visualization is planned to cover approximately **1960–2025**, subject to the final availability and consistency of each series. It combines fertility outcomes with demographic, economic, policy, and cultural context through the seven dimensions or analytical layers shown below.
 
 | Dimension / layer | Variable used | Unit | Planned visual encoding |
-|----|----|----|----|
+|------------------|------------------|------------------|------------------|
 | Time | Year | Calendar year | Horizontal axis |
 | Fertility | Age-specific fertility rate (ASFR) | Births per 1,000 women | Stacked-bar height |
 | Fertility composition | Mother's age group | Seven five-year age groups | Bar fill colour |
@@ -197,7 +242,7 @@ Female LFPR will be retrieved from the [World Bank World Development Indicators]
 The policy annotations will be entered as a small table based on the team's background research. The initial annotation plan includes the following selected events:
 
 | Year / period | Event | Planned encoding |
-|----|----|----|
+|------------------------|------------------------|------------------------|
 | 1972 | Stop at Two campaign | Provisional event annotation |
 | 1987 | “Have Three or More, If You Can Afford It” policy reversal | Provisional event annotation |
 | 2001 | Baby Bonus Scheme | Provisional event annotation |
@@ -211,7 +256,7 @@ The zodiac table will identify the Dragon and Tiger years within the study perio
 The raw sources are not immediately ready for plotting. The main structural issues and planned treatments are:
 
 | Raw-data issue | Planned treatment |
-|----|----|
+|------------------------------------|------------------------------------|
 | The fertility CSV stores data series in rows and years in columns, ordered from newest to oldest. | Select the required TFR and ASFR rows, then reshape the year columns into a long `year` variable. |
 | ASFR age labels contain indentation, spaces, and the word “Years.” | Remove extra whitespace and standardize labels to `15-19`, `20-24`, ..., `45-49`. |
 | ASFR for ages 45–49 is unavailable before 1980. | Preserve these observations as `NA`; unavailable values will not be converted to zero. |
@@ -276,7 +321,7 @@ Before plotting, the pipeline will check that year and age-group keys are unique
 The completed pipeline will produce the following visualization-ready datasets:
 
 | Dataset | Structure | Main fields | Purpose |
-|----|----|----|----|
+|------------------|------------------|------------------|------------------|
 | Fertility data | One row per year × age group | Year, maternal age group, ASFR | Stacked fertility bars |
 | TFR validation data | One row per year | Year, published TFR, derived TFR, difference | Check the ASFR transformation |
 | Annual driver data | One row per year | Year, female LFPR, mean female singlehood rate | Contextual trend lines |
