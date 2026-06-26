@@ -19,32 +19,19 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 
 # Team Information
 
-<table class="custom-table">
-  <tr>
-    <th>Name</th>
-    <th>Student ID</th>
-  </tr>
-  <tr>
-    <td>Angel Zhang XinYu</td>
-    <td>2503541</td>
-  </tr>
-  <tr>
-    <td>Damien Tan Qing Xun (Chen QingXun) </td>
-    <td>2503046</td>
-  </tr>
-  <tr>
-    <td>Levl Lim Jing Qiang </td>
-    <td>2501118</td>
-  </tr>
-  <tr>
-    <td>Yap Suen Hong </td>
-    <td>2500770</td>
-  </tr>
-  <tr>
-    <td>Gador Sophia Helen Santiago </td>
-    <td>2503845 </td>
-  </tr>
-</table>
++------------------------------------+------------+
+| Name                               | Student ID |
++====================================+============+
+| Angel Zhang XinYu                  | 2503541    |
++------------------------------------+------------+
+| Damien Tan Qing Xun (Chen QingXun) | 2503046    |
++------------------------------------+------------+
+| Levl Lim Jing Qiang                | 2501118    |
++------------------------------------+------------+
+| Yap Suen Hong                      | 2500770    |
++------------------------------------+------------+
+| Gador Sophia Helen Santiago        | 2503845    |
++------------------------------------+------------+
 
 # 1. Introduction and Project Overview
 
@@ -118,8 +105,7 @@ This contrast between sustained policy intervention and persistently low fertili
 
 1.  **Honest baseline scaling.** The vertical axis correctly begins at 0. In bar charts, readers judge magnitude by the physical length of the bars, so starting at 0 avoids artificially exaggerating the drop in births.
 2.  **Direct value labeling.** Every bar displays its exact value at the top, removing the need for readers to trace lines back to the axis to estimate the number.
-3.  **Multi-level comparison.** The chart combines annual bars with five-year block averages, smoothing short-term spikes or dips (e.g. 2013 and 2022) and helping readers see the broader 10-year downward trend. These averages provide a useful high-level summary, although the selected grouping should still be interpreted alongside the annual variation.
-4.  **Clear and direct title.** The title *"Drop in Singapore citizen births in 2022"* communicates the key message within seconds.
+3.  **Clear and direct title.** The title *"Drop in Singapore citizen births in 2022"* communicates the key message within seconds.
 
 ## 2.2 Weaknesses of the Original Visualization
 
@@ -133,31 +119,28 @@ Each weakness is stated with an explanation and a justification.
 
 **Explanation:** The graph plots absolute raw volume rather than scaling counts against Singapore's changing demographic structure. **Justification:** Raw births depend on the size of the reproductive group. If the population of women in prime childbearing ages shrank over the decade, births could fall even if individual fertility behaviour stayed constant or rose. Without normalising the counts into fertility rates, the chart cannot distinguish changes in fertility behaviour from changes in the size and age structure of the female population.
 
-### 2.2.3 W3 — Limited temporal and compositional encoding
+### 2.2.3 W3 — Limited compositional breakdown by maternal age
 
-**Explanation:** The chart uses one undivided bar for each year, so it shows annual totals but not how the demographic composition of fertility changes over time. **Justification:** Readers can compare bar heights, but they cannot identify which maternal age groups contribute to the decline or relate the annual changes to longer-term explanatory trends. Adding meaningful segments and continuous contextual lines would make both composition and direction of change easier to interpret.
+**Explanation:** The chart uses one undivided bar for each year, so it shows annual totals but not how the demographic composition of fertility changes over time, and gives no breakdown by maternal age group. 
+**Justification:** Readers can compare bar heights, but they cannot identify which maternal age groups contribute to the decline. Adding meaningful age-group segments would shift the visualization from a single total towards a multidimensional account of where the decline is concentrated.
 
-### 2.2.4 W4 — Limited data dimensionality
-
-**Explanation:** Only total citizen births per year are shown, with no breakdown by maternal age group and no accompanying demographic or socioeconomic variables. **Justification:** The chart confirms a decline but cannot explain where it is concentrated or which broader changes are associated with it. Adding age-specific fertility and contextual variables would shift the visualization from a single total towards a multidimensional account of the decline.
-
-### 2.2.5 W5 — Short time horizon
+### 2.2.4 W4 — Short time horizon
 
 **Explanation:** Birth data is shown only from 2012 to 2022 — roughly an 11-year window. **Justification:** This captures recent change but not the multi-decade demographic trends shaping Singapore's fertility landscape. Long-run developments — including rising female education and labour-force participation, as well as major population policies such as the 1984 Graduate Mothers Scheme — predate this window and are invisible here.
 
-### 2.2.6 W6 — Lack of explicit axis labels and legend
+### 2.2.5 W5 — Lack of explicit axis labels and legend
 
 **Explanation:** Neither axis is explicitly labelled, and there is no legend explaining the colour variations. **Justification:** Readers must infer that the y-axis is citizen births and that colour marks time periods. Effective visualizations should be self-contained; explicit labels such as "Number of Citizen Births" and "Year" would reduce ambiguity for readers viewing the chart apart from the article.
 
-### 2.2.7 W7 — Absence of explanatory variables
+### 2.2.6 W6 — Absence of explanatory variables
 
-**Explanation:** The chart presents a single descriptive metric — births per year — with no variables that could account for the decline. **Justification:** A single-variable chart answers *what* happened, not *why*. The causes of declining births are multi-factorial (behavioural, structural, economic). Without an explanatory layer, the chart is a diagnostic snapshot rather than an analytical tool. *(Overlaps with W4.)*
+**Explanation:** The chart presents a single descriptive metric — births per year — with no variables that could account for the decline. **Justification:** A single-variable chart answers *what* happened, not *why*. The causes of declining births are multi-factorial (behavioural, structural, economic). Without an explanatory layer, the chart is a diagnostic snapshot rather than an analytical tool.
 
-### 2.2.8 W8 — Compressed variation on the raw-count scale
+### 2.2.7 W7 — Compressed variation on the raw-count scale
 
 **Explanation:** The y-axis correctly begins at zero, but the annual birth counts occupy only the narrow 30.4k–33.7k range near the top of the scale. **Justification:** Retaining a zero baseline is appropriate for bars, yet the combination of raw counts and a 0–35k axis makes the year-to-year variation difficult to distinguish. Replacing the count-only view with age-specific fertility rates and meaningful stacked segments can reveal changes without truncating the bar-chart baseline.
 
-### 2.2.9 W9 — Arbitrary period averaging
+### 2.2.8 W8 — Arbitrary period averaging
 
 **Explanation:** Eleven individual years are collapsed into two 5-year block averages (32.7k vs 31.8k), presenting a 0.9k gap as the headline. **Justification:** The two-period split is an arbitrary editorial choice, and the 0.9k gap is shown without any measure of variability. Individual years complicate the implied narrative — 2019 (32.8k) exceeds several years in the supposedly higher 2013–2017 block. The averaging produces a cleaner narrative than the annual variation alone supports.
 
@@ -169,39 +152,35 @@ Each improvement targets one or more weaknesses above.
 
 We plan to replace the count-only view with **age-specific fertility rates (ASFR)** for the seven maternal age groups from 15–19 to 45–49, while retaining published total fertility rate (TFR) as a summary and validation measure. Rates relate births to the relevant female population, separating fertility behaviour from changes in the size of the reproductive-age population.
 
-### I2 — Make colour carry meaning → *addresses W1, W4*
+### I2 — Use stacked bars with colour mapped to age group → *addresses W1, W3*
 
-We propose assigning each of the seven maternal age groups a distinct and consistently ordered colour. Colour would therefore identify age composition rather than editorial time blocks, allowing readers to see whether fertility is shifting from younger to older age groups without implying that darker periods necessarily have larger values.
+The initial design uses **stacked annual bars** with year on the x-axis, ASFR on the left y-axis, and maternal age group represented by coloured segments, using a distinct and consistently ordered colour for each of the seven age groups. The combined height summarises the annual level across age-specific fertility rates, while the segments show how each age group contributes, and because colour now maps to age group rather than to editorial time blocks, it no longer implies that the more saturated years are larger simply because they are darker. Continuous contextual variables are provisionally represented as lines so that their direction and long-term movement remain easy to follow.
 
-### I3 — Show annual change and age composition together → *addresses W3, W4*
-
-The initial design uses **stacked annual bars** with year on the x-axis, ASFR on the left y-axis, and maternal age group represented by coloured segments. The combined height would summarise the annual level across age-specific fertility rates, while the segments would show how each age group contributes. Continuous contextual variables are provisionally represented as lines so that their direction and long-term movement remain easy to follow.
-
-### I4 — Add labels, legend, and annotations → *addresses W6*
+### I3 — Add labels, legend, and annotations → *addresses W5*
 
 The visualization will include explicit axis titles for **Year**, **ASFR (births per 1,000 women)**, and **Percent (%)**, together with legends for maternal age groups and the contextual variables. Any policy labels, line styles, background shading, and zodiac markers retained in the final design will also be explained so the visualization remains interpretable without the original article.
 
-### I5 — Add female LFPR and singlehood trends → *addresses W7*
+### I4 — Add female LFPR and singlehood trends → *addresses W6*
 
 We plan to overlay female labour-force participation rate and the mean proportion of single women across ages 25–39, initially as lines on a shared secondary percentage axis. These variables add socioeconomic and demographic context, allowing their long-term movement to be compared descriptively with the fertility trend.
 
-### I6 — Add population-policy context → *addresses W7*
+### I5 — Add population-policy context → *addresses W6*
 
 The initial annotation plan marks the 1972 *Stop at Two* campaign, the 1987 policy reversal, the 2001 Baby Bonus Scheme, and the 2023 TFR-below-1.0 milestone. The pro-natalist period beginning in 1987 may also be distinguished through background shading. The final annotation style will be refined for readability. These annotations support before-and-after descriptive comparisons without claiming that the visualization alone proves a causal policy effect.
 
-### I7 — Extend the historical time horizon → *addresses W5*
+### I6 — Extend the historical time horizon → *addresses W4*
 
 We plan to extend the analysis period from 2012–2022 to roughly **1960–2025**, subject to the final availability and consistency of each series. A longer horizon distinguishes temporary fluctuations from long-run trends and situates the decline against major policy shifts: the anti-natalist *Stop at Two* campaign (1972), the 1987 policy reversal, and the Baby Bonus Scheme (2001), alongside long-run changes in female labour-force participation and singlehood.
 
-### I8 — Replace arbitrary period averages with an annual series → *addresses W9*
+### I7 — Replace arbitrary period averages with an annual series → *addresses W8*
 
 Where data is available, the redesign will display annual observations using a consistent structure instead of dividing the data into arbitrary five-year editorial blocks. This preserves annual variation and allows readers to assess long-term patterns without relying on two selected averages.
 
-### I9 — Use appropriate zero-based rate and percentage scales → *addresses W8*
+### I8 — Use appropriate zero-based rate and percentage scales → *addresses W7*
 
 The current plan uses a zero-based ASFR axis for the fertility bars and a clearly labelled secondary percentage axis for female LFPR and singlehood. The precise scales will be refined during implementation, and the transformation and units for both axes will be stated explicitly so readers do not compare the line heights directly with ASFR values. Age-group stacking can make changes in fertility composition visible while preserving an honest zero baseline for the bars.
 
-### I10 — Add Chinese zodiac context → *addresses W7*
+### I9 — Add Chinese zodiac context → *addresses W6*
 
 Dragon and Tiger years may be marked with distinct symbols, provisionally upward and downward triangles beneath the annual bars. This adds a discrete cultural layer that can be compared with short-term fertility changes while keeping it visually separate from the continuous numerical series.
 
@@ -212,13 +191,12 @@ Dragon and Tiger years may be marked with distinct symbols, provisionally upward
 |------------------------------------------------|--------------|
 | W1 Colour saturation illusion                  | I2           |
 | W2 Lack of demographic scaling                 | I1           |
-| W3 Limited temporal and compositional encoding | I3           |
-| W4 Limited dimensionality                      | I2, I3       |
-| W5 Short time horizon                          | I7           |
-| W6 Missing labels / legend                     | I4           |
-| W7 No explanatory variables                    | I5, I6, I10  |
-| W8 Compressed variation on the raw-count scale | I1, I9       |
-| W9 Arbitrary period averaging                  | I8           |
+| W3 Limited compositional breakdown by maternal age | I2           |
+| W4 Short time horizon                          | I6           |
+| W5 Missing labels / legend                     | I3           |
+| W6 Absence of explanatory variables            | I4, I5, I9  |
+| W7 Compressed variation on the raw-count scale | I1, I8       |
+| W8 Arbitrary period averaging                  | I7           |
 :::
 
 # 4. Data Engineering Workflow (Raw → Visualization-Ready)
@@ -227,15 +205,23 @@ Dragon and Tiger years may be marked with distinct symbols, provisionally upward
 
 The proposed visualization is planned to cover approximately **1960–2025**, subject to the final availability and consistency of each series. It combines fertility outcomes with demographic, economic, policy, and cultural context through the seven dimensions or analytical layers shown below.
 
-| Dimension / layer | Variable used | Unit | Planned visual encoding |
-|------------------|------------------|------------------|------------------|
-| Time | Year | Calendar year | Horizontal axis |
-| Fertility | Age-specific fertility rate (ASFR) | Births per 1,000 women | Stacked-bar height |
-| Fertility composition | Mother's age group | Seven five-year age groups | Bar fill colour |
-| Labour-market context | Female labour-force participation rate (LFPR) | Percent | Contextual line on a percentage axis |
-| Singlehood context | Mean female singlehood rate across ages 25–39 | Percent | Contextual line on a percentage axis |
-| Policy context | Selected population policies and fertility milestone | Event year / policy era | Annotations and possible background shading |
-| Cultural context | Dragon and Tiger years | Zodiac category | Distinct event symbols |
++-----------------------+------------------------------------------------------+----------------------------+---------------------------------------------+
+| Dimension / layer     | Variable used                                        | Unit                       | Planned visual encoding                     |
++=======================+======================================================+============================+=============================================+
+| Time                  | Year                                                 | Calendar year              | Horizontal axis                             |
++-----------------------+------------------------------------------------------+----------------------------+---------------------------------------------+
+| Fertility             | Age-specific fertility rate (ASFR)                   | Births per 1,000 women     | Stacked-bar height                          |
++-----------------------+------------------------------------------------------+----------------------------+---------------------------------------------+
+| Fertility composition | Mother's age group                                   | Seven five-year age groups | Bar fill colour                             |
++-----------------------+------------------------------------------------------+----------------------------+---------------------------------------------+
+| Labour-market context | Female labour-force participation rate (LFPR)        | Percent                    | Contextual line on a percentage axis        |
++-----------------------+------------------------------------------------------+----------------------------+---------------------------------------------+
+| Singlehood context    | Mean female singlehood rate across ages 25–39        | Percent                    | Contextual line on a percentage axis        |
++-----------------------+------------------------------------------------------+----------------------------+---------------------------------------------+
+| Policy context        | Selected population policies and fertility milestone | Event year / policy era    | Annotations and possible background shading |
++-----------------------+------------------------------------------------------+----------------------------+---------------------------------------------+
+| Cultural context      | Dragon and Tiger years                               | Zodiac category            | Distinct event symbols                      |
++-----------------------+------------------------------------------------------+----------------------------+---------------------------------------------+
 
 The seven maternal age groups are **15–19, 20–24, 25–29, 30–34, 35–39, 40–44, and 45–49**. Total fertility rate (TFR) is retained as a published summary measure and as a validation variable. It is related to the age-specific rates by the approximation
 
@@ -263,13 +249,19 @@ Female LFPR will be retrieved from the [World Bank World Development Indicators]
 
 The policy annotations will be entered as a small table based on the team's background research. The initial annotation plan includes the following selected events:
 
-| Year / period | Event | Planned encoding |
-|------------------------|------------------------|------------------------|
-| 1972 | Stop at Two campaign | Provisional event annotation |
-| 1987 | “Have Three or More, If You Can Afford It” policy reversal | Provisional event annotation |
-| 2001 | Baby Bonus Scheme | Provisional event annotation |
-| 2023 | Resident TFR fell below 1.0 | Provisional milestone annotation |
-| 1987–2025 | Pro-natalist policy era | Possible background shading |
++----------------------+------------------------------------------------------------+----------------------------------+
+| Year / period        | Event                                                      | Planned encoding                 |
++======================+============================================================+==================================+
+| 1972                 | Stop at Two campaign                                       | Provisional event annotation     |
++----------------------+------------------------------------------------------------+----------------------------------+
+| 1987                 | “Have Three or More, If You Can Afford It” policy reversal | Provisional event annotation     |
++----------------------+------------------------------------------------------------+----------------------------------+
+| 2001                 | Baby Bonus Scheme                                          | Provisional event annotation     |
++----------------------+------------------------------------------------------------+----------------------------------+
+| 2023                 | Resident TFR fell below 1.0                                | Provisional milestone annotation |
++----------------------+------------------------------------------------------------+----------------------------------+
+| 1987–2025            | Pro-natalist policy era                                    | Possible background shading      |
++----------------------+------------------------------------------------------------+----------------------------------+
 
 The zodiac table will identify the Dragon and Tiger years within the study period. Dragon years (1964, 1976, 1988, 2000, 2012, and 2024) and Tiger years (1962, 1974, 1986, 1998, 2010, and 2022) will be represented using distinct symbols; upward and downward triangles are the current provisional choice. These markers allow possible short-term cultural effects to be compared against the fertility bars without treating zodiac years as a continuous numerical variable.
 
@@ -277,16 +269,25 @@ The zodiac table will identify the Dragon and Tiger years within the study perio
 
 The raw sources are not immediately ready for plotting. The main structural issues and planned treatments are:
 
-| Raw-data issue | Planned treatment |
-|------------------------------------|------------------------------------|
-| The fertility CSV stores data series in rows and years in columns, ordered from newest to oldest. | Select the required TFR and ASFR rows, then reshape the year columns into a long `year` variable. |
-| ASFR age labels contain indentation, spaces, and the word “Years.” | Remove extra whitespace and standardize labels to `15-19`, `20-24`, ..., `45-49`. |
-| ASFR for ages 45–49 is unavailable before 1980. | Preserve these observations as `NA`; unavailable values will not be converted to zero. |
-| M810581 contains metadata and footnote rows above and below the data table. | Import the data section only or remove non-data rows after import. |
++-----------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------+
+| Raw-data issue                                                                                      | Planned treatment                                                                                              |
++=====================================================================================================+================================================================================================================+
+| The fertility CSV stores data series in rows and years in columns, ordered from newest to oldest.   | Select the required TFR and ASFR rows, then reshape the year columns into a long `year` variable.              |
++-----------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------+
+| ASFR age labels contain indentation, spaces, and the word “Years.”                                  | Remove extra whitespace and standardize labels to `15-19`, `20-24`, ..., `45-49`.                              |
++-----------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------+
+| ASFR for ages 45–49 is unavailable before 1980.                                                     | Preserve these observations as `NA`; unavailable values will not be converted to zero.                         |
++-----------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------+
+| M810581 contains metadata and footnote rows above and below the data table.                         | Import the data section only or remove non-data rows after import.                                             |
++-----------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------+
 | M810581 uses a hierarchical layout in which Male and Female rows appear beneath each age-group row. | Carry the age-group label down to its sex rows, label the sex explicitly, and retain Female observations only. |
-| M810581 has no observations for 1981 and 1982. | Preserve these years as `NA`; do not replace them with zero or interpolate them without justification. |
-| The numerical sources begin and end in different years. | Create a complete 1960–2025 year index and retain missing values outside each source's coverage. |
-| ASFR and the two contextual lines use different units. | Retain the original values and create separate transformed plotting coordinates for the secondary axis. |
++-----------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------+
+| M810581 has no observations for 1981 and 1982.                                                      | Preserve these years as `NA`; do not replace them with zero or interpolate them without justification.         |
++-----------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------+
+| The numerical sources begin and end in different years.                                             | Create a complete 1960–2025 year index and retain missing values outside each source's coverage.               |
++-----------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------+
+| ASFR and the two contextual lines use different units.                                              | Retain the original values and create separate transformed plotting coordinates for the secondary axis.        |
++-----------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------+
 
 In all sources, `NA` represents an unavailable observation and is distinct from an observed value of zero. No missing observations will be automatically imputed.
 
@@ -342,13 +343,19 @@ Before plotting, the pipeline will check that year and age-group keys are unique
 
 The completed pipeline will produce the following visualization-ready datasets:
 
-| Dataset | Structure | Main fields | Purpose |
-|------------------|------------------|------------------|------------------|
-| Fertility data | One row per year × age group | Year, maternal age group, ASFR | Stacked fertility bars |
-| TFR validation data | One row per year | Year, published TFR, derived TFR, difference | Check the ASFR transformation |
-| Annual driver data | One row per year | Year, female LFPR, mean female singlehood rate | Contextual trend lines |
-| Policy and milestone data | One row per event or policy era | Year or period, label, event type | Policy lines, labels, and shading |
-| Zodiac data | One row per selected zodiac year | Year, Dragon or Tiger category | Cultural-context markers |
++---------------------------+----------------------------------+------------------------------------------------+-----------------------------------+
+| Dataset                   | Structure                        | Main fields                                    | Purpose                           |
++===========================+==================================+================================================+===================================+
+| Fertility data            | One row per year × age group     | Year, maternal age group, ASFR                 | Stacked fertility bars            |
++---------------------------+----------------------------------+------------------------------------------------+-----------------------------------+
+| TFR validation data       | One row per year                 | Year, published TFR, derived TFR, difference   | Check the ASFR transformation     |
++---------------------------+----------------------------------+------------------------------------------------+-----------------------------------+
+| Annual driver data        | One row per year                 | Year, female LFPR, mean female singlehood rate | Contextual trend lines            |
++---------------------------+----------------------------------+------------------------------------------------+-----------------------------------+
+| Policy and milestone data | One row per event or policy era  | Year or period, label, event type              | Policy lines, labels, and shading |
++---------------------------+----------------------------------+------------------------------------------------+-----------------------------------+
+| Zodiac data               | One row per selected zodiac year | Year, Dragon or Tiger category                 | Cultural-context markers          |
++---------------------------+----------------------------------+------------------------------------------------+-----------------------------------+
 
 This structure keeps measured variables, derived variables, and contextual annotations separate while providing all fields required to reproduce the proposed single-layered visualization.
 
