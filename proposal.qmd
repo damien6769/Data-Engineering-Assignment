@@ -46,9 +46,9 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
   </tr>
 </table>
 
-# Introduction and Project Overview
+# 1. Introduction and Project Overview
 
-## Our Project's Aim (TBC)
+## 1.1 Our Project's Aim (TBC)
 
 Singapore has experienced a sustained decline in fertility over the past several decades despite numerous policy interventions aimed at encouraging marriage and parenthood. While declining birth counts are frequently reported in the media, such figures describe the outcome rather than the broader demographic, social, and economic changes that may be associated with it.
 
@@ -56,7 +56,7 @@ This project aims to re-examine Singapore's declining fertility by moving beyond
 
 Through an improved multi-dimensional visualization, the project aims to transform a simple descriptive chart into a richer analytical representation of Singapore's demographic transition.
 
-## Source & Context
+## 1.2 Source & Context
 
 The original visualization was published by Channel News Asia (CNA) in an article titled *"Record number of marriages, drop in Singaporean births in 2022"* (September 2023), available at:
 
@@ -66,11 +66,11 @@ It discusses Singapore’s marriage trends, birth rates, fertility decline, agei
 
 The topic is highly relevant to Singapore’s long-term demographic challenges. Fertility rates have remained below the replacement level of 2.1 for several decades, contributing to an ageing population, slower natural population growth, and increasing concerns about future workforce sustainability. The visualization was created to support CNA’s discussion of declining births and their implications for Singapore’s population structure.
 
-## Our Chosen Visualization
+## 1.3 Our Chosen Visualization
 
 ![Original CNA visualization: *Drop in Singapore citizen births in 2022* (Infographic: Clara Ho; Source: National Population and Talent Division, Prime Minister's Office).](images/cna_birth_chart.png){#fig-original width="80%"}
 
-### Visualization Structure and Design
+### 1.3.1 Visualization Structure and Design
 
 The original visualization selected is a **single-panel vertical bar chart** titled *"Drop in Singapore Citizen Births in 2022"*. The chart displays the annual number of Singapore citizen births between 2012 and 2022 and is designed to highlight changes in birth counts over time.
 
@@ -88,7 +88,7 @@ In addition to the two core dimensions, the chart incorporates several supportin
 
 - **Direct value labels** — Exact annual birth counts are shown above each bar, reducing the need for readers to estimate values from the vertical scale.
 
-### The Story It Tells
+### 1.3.2 The Story It Tells
 
 The visualization communicates a gradual decline in Singapore citizen births over the period shown. Several observations emerge from analysing the bar chart.
 
@@ -102,7 +102,7 @@ The visualization communicates a gradual decline in Singapore citizen births ove
 
 The chart's use of period averages and colour grouping directs attention towards comparing broader trends between the two five-year periods, rather than focusing solely on individual yearly variations.
 
-## Our Story
+## 1.4 Our Story
 
 > **Which demographic, social, and economic factors are associated with Singapore's declining fertility?**
 
@@ -112,58 +112,56 @@ Singapore experienced a post-war baby boom before introducing increasingly stron
 
 This contrast between sustained policy intervention and persistently low fertility provides the analytical focus of the project. The visualization will not treat policy, employment, or marriage patterns as proven causes. Instead, it will examine how fertility has changed alongside broader structural and cultural developments. Rising female labour-force participation and a growing proportion of women remaining single during prime childbearing ages may be associated with delayed family formation and a shorter period available for having children. Age-specific fertility rates can additionally show whether childbearing has shifted from younger to older maternal age groups. Bringing these measures together allows the project to investigate how Singapore's fertility decline relates to changes in women's employment, singlehood, maternal age, policy context, and selected cultural patterns.
 
-# Critical Analysis of Original Visualization
+# 2. Critical Analysis of Original Visualization
 
-## Strengths and Weaknesses of the Original Visualization
-
-## Strengths of the Original Visualization
+## 2.1 Strengths of the Original Visualization
 
 1.  **Honest baseline scaling.** The vertical axis correctly begins at 0. In bar charts, readers judge magnitude by the physical length of the bars, so starting at 0 avoids artificially exaggerating the drop in births.
 2.  **Direct value labeling.** Every bar displays its exact value at the top, removing the need for readers to trace lines back to the axis to estimate the number.
 3.  **Multi-level comparison.** The chart combines annual bars with five-year block averages, smoothing short-term spikes or dips (e.g. 2013 and 2022) and helping readers see the broader 10-year downward trend. These averages provide a useful high-level summary, although the selected grouping should still be interpreted alongside the annual variation.
 4.  **Clear and direct title.** The title *"Drop in Singapore citizen births in 2022"* communicates the key message within seconds.
 
-## Weaknesses of the Original Visualization
+## 2.2 Weaknesses of the Original Visualization
 
 Each weakness is stated with an explanation and a justification.
 
-### W1 — Colour saturation illusion
+### 2.2.1 W1 — Colour saturation illusion
 
 **Explanation:** The chart uses colour value categorically — a lighter shade for 2013–2017, a deeper purple for 2018–2022, and an even lighter tone for 2012, visually isolating it from both groups. **Justification:** The darker, more saturated bars attract greater visual attention and may be interpreted as more important or larger, even though they represent the lower-birth period of 2018–2022. The distinctly light 2012 bar reads as a low-value outlier, yet its 33.2k figure is higher than every bar in the darker 2018–2022 block. The intent was categorical, but the execution introduces a potentially misleading visual emphasis.
 
-### W2 — Lack of demographic scaling
+### 2.2.2 W2 — Lack of demographic scaling
 
 **Explanation:** The graph plots absolute raw volume rather than scaling counts against Singapore's changing demographic structure. **Justification:** Raw births depend on the size of the reproductive group. If the population of women in prime childbearing ages shrank over the decade, births could fall even if individual fertility behaviour stayed constant or rose. Without normalising the counts into fertility rates, the chart cannot distinguish changes in fertility behaviour from changes in the size and age structure of the female population.
 
-### W3 — Limited temporal and compositional encoding
+### 2.2.3 W3 — Limited temporal and compositional encoding
 
 **Explanation:** The chart uses one undivided bar for each year, so it shows annual totals but not how the demographic composition of fertility changes over time. **Justification:** Readers can compare bar heights, but they cannot identify which maternal age groups contribute to the decline or relate the annual changes to longer-term explanatory trends. Adding meaningful segments and continuous contextual lines would make both composition and direction of change easier to interpret.
 
-### W4 — Limited data dimensionality
+### 2.2.4 W4 — Limited data dimensionality
 
 **Explanation:** Only total citizen births per year are shown, with no breakdown by maternal age group and no accompanying demographic or socioeconomic variables. **Justification:** The chart confirms a decline but cannot explain where it is concentrated or which broader changes are associated with it. Adding age-specific fertility and contextual variables would shift the visualization from a single total towards a multidimensional account of the decline.
 
-### W5 — Short time horizon
+### 2.2.5 W5 — Short time horizon
 
 **Explanation:** Birth data is shown only from 2012 to 2022 — roughly an 11-year window. **Justification:** This captures recent change but not the multi-decade demographic trends shaping Singapore's fertility landscape. Long-run developments — including rising female education and labour-force participation, as well as major population policies such as the 1984 Graduate Mothers Scheme — predate this window and are invisible here.
 
-### W6 — Lack of explicit axis labels and legend
+### 2.2.6 W6 — Lack of explicit axis labels and legend
 
 **Explanation:** Neither axis is explicitly labelled, and there is no legend explaining the colour variations. **Justification:** Readers must infer that the y-axis is citizen births and that colour marks time periods. Effective visualizations should be self-contained; explicit labels such as "Number of Citizen Births" and "Year" would reduce ambiguity for readers viewing the chart apart from the article.
 
-### W7 — Absence of explanatory variables
+### 2.2.7 W7 — Absence of explanatory variables
 
 **Explanation:** The chart presents a single descriptive metric — births per year — with no variables that could account for the decline. **Justification:** A single-variable chart answers *what* happened, not *why*. The causes of declining births are multi-factorial (behavioural, structural, economic). Without an explanatory layer, the chart is a diagnostic snapshot rather than an analytical tool. *(Overlaps with W4.)*
 
-### W8 — Compressed variation on the raw-count scale
+### 2.2.8 W8 — Compressed variation on the raw-count scale
 
 **Explanation:** The y-axis correctly begins at zero, but the annual birth counts occupy only the narrow 30.4k–33.7k range near the top of the scale. **Justification:** Retaining a zero baseline is appropriate for bars, yet the combination of raw counts and a 0–35k axis makes the year-to-year variation difficult to distinguish. Replacing the count-only view with age-specific fertility rates and meaningful stacked segments can reveal changes without truncating the bar-chart baseline.
 
-### W9 — Arbitrary period averaging
+### 2.2.9 W9 — Arbitrary period averaging
 
 **Explanation:** Eleven individual years are collapsed into two 5-year block averages (32.7k vs 31.8k), presenting a 0.9k gap as the headline. **Justification:** The two-period split is an arbitrary editorial choice, and the 0.9k gap is shown without any measure of variability. Individual years complicate the implied narrative — 2019 (32.8k) exceeds several years in the supposedly higher 2013–2017 block. The averaging produces a cleaner narrative than the annual variation alone supports.
 
-# Proposed Improvements (Plan Only)
+# 3. Proposed Improvements (Plan Only)
 
 Each improvement targets one or more weaknesses above.
 
@@ -223,9 +221,9 @@ Dragon and Tiger years may be marked with distinct symbols, provisionally upward
 | W9 Arbitrary period averaging                  | I8           |
 :::
 
-# Data Engineering Workflow (Raw → Visualization-Ready)
+# 4. Data Engineering Workflow (Raw → Visualization-Ready)
 
-## Data Requirements and Dimensions
+## 4.1 Data Requirements and Dimensions
 
 The proposed visualization is planned to cover approximately **1960–2025**, subject to the final availability and consistency of each series. It combines fertility outcomes with demographic, economic, policy, and cultural context through the seven dimensions or analytical layers shown below.
 
@@ -245,23 +243,23 @@ The seven maternal age groups are **15–19, 20–24, 25–29, 30–34, 35–39,
 
 because each ASFR represents a five-year age band. In the initial design, TFR is not plotted as a separate line; the stacked bars show the age-specific components underlying the overall fertility level. This treatment may be refined if another representation communicates the relationship more clearly.
 
-## Data Sources
+## 4.2 Data Sources
 
 The workflow uses three numerical data sources together with manually curated policy and zodiac annotation tables.
 
-### Births and Fertility Rates
+### 4.2.1 Births and Fertility Rates
 
 The primary dataset is the Singapore Department of Statistics (SingStat) **Births and Fertility Rates, Annual** CSV file (\[official SingStat table link to be inserted\]). It provides annual observations from **1960 to 2025**, including published TFR and ASFR for the seven maternal age groups. ASFR is measured as births per 1,000 women in each age group. The published TFR series will be retained for comparison with the value derived from the seven ASFR groups.
 
-### Proportion of Singles
+### 4.2.2 Proportion of Singles
 
 The second SingStat dataset is table **M810581, “Proportion of Singles Among Resident Population by Selected Age Group and Sex, Annual”** (\[official SingStat table link to be inserted\]). The table measures the proportion of the resident population who are **never married**. Resident population includes Singapore citizens and permanent residents. The current plan uses female observations for ages **25–29, 30–34, and 35–39**. Available observations cover 1980 and 1983–2024; values for 1981 and 1982 are unavailable.
 
-### Female Labour-Force Participation
+### 4.2.3 Female Labour-Force Participation
 
 Female LFPR will be retrieved from the [World Bank World Development Indicators](https://data.worldbank.org/indicator/SL.TLF.CACT.FE.NE.ZS?locations=SG) using indicator **`SL.TLF.CACT.FE.NE.ZS`**, “Labour force participation rate, female (% of female population ages 15+) (national estimate).” The national-estimate series is selected because it covers **1970–2024**, matching the long historical period required by the visualization. The series is measured as a percentage.
 
-### Policy and Zodiac Annotations
+### 4.2.4 Policy and Zodiac Annotations
 
 The policy annotations will be entered as a small table based on the team's background research. The initial annotation plan includes the following selected events:
 
@@ -275,7 +273,7 @@ The policy annotations will be entered as a small table based on the team's back
 
 The zodiac table will identify the Dragon and Tiger years within the study period. Dragon years (1964, 1976, 1988, 2000, 2012, and 2024) and Tiger years (1962, 1974, 1986, 1998, 2010, and 2022) will be represented using distinct symbols; upward and downward triangles are the current provisional choice. These markers allow possible short-term cultural effects to be compared against the fertility bars without treating zodiac years as a continuous numerical variable.
 
-## Raw Data Structure and Known Challenges
+## 4.3 Raw Data Structure and Known Challenges
 
 The raw sources are not immediately ready for plotting. The main structural issues and planned treatments are:
 
