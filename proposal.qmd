@@ -7,7 +7,8 @@ editor: visual
 toc: true
 format:
   html:
-    theme: sandstone
+    theme: cosmo
+    css: style.css
 ---
 
 ```{r}
@@ -18,13 +19,32 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 
 # Team Information
 
-| **Name**                           | **Student ID** |
-|:-----------------------------------|:---------------|
-| Angel Zhang XinYu                  | 2503541        |
-| Damien Tan Qing Xun (Chen QingXun) | 2503046        |
-| Levl Lim Jing Qiang                | 2501118        |
-| Yap Suen Hong                      | 2500770        |
-| Gador Sophia Helen Santiago        | 2503845        |
+<table class="custom-table">
+  <tr>
+    <th>Name</th>
+    <th>Student ID</th>
+  </tr>
+  <tr>
+    <td>Angel Zhang XinYu</td>
+    <td>2503541</td>
+  </tr>
+  <tr>
+    <td>Damien Tan Qing Xun (Chen QingXun) </td>
+    <td>2503046</td>
+  </tr>
+  <tr>
+    <td>Levl Lim Jing Qiang </td>
+    <td>2501118</td>
+  </tr>
+  <tr>
+    <td>Yap Suen Hong </td>
+    <td>2500770</td>
+  </tr>
+  <tr>
+    <td>Gador Sophia Helen Santiago </td>
+    <td>2503845 </td>
+  </tr>
+</table>
 
 # Introduction and Project Overview
 
