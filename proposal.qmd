@@ -4,6 +4,10 @@ subtitle: "AAI1001 Data Engineering & Visualization — Project Proposal"
 author: "Team 11 — Angel, Sophia, Damien, Levl, Suen Hong"
 date: last-modified
 editor: visual
+toc: true
+format:
+  html:
+    theme: sandstone
 ---
 
 ```{r}
@@ -20,7 +24,7 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 | Damien Tan Qing Xun (Chen QingXun) | 2503046        |
 | Levl Lim Jing Qiang                | 2501118        |
 | Yap Suen Hong                      | 2500770        |
-| Gador Sophia Helen                 | 2503845        |
+| Gador Sophia Helen Santiago        | 2503845        |
 
 # Introduction and Project Overview
 
@@ -34,7 +38,7 @@ Through an improved multi-dimensional visualization, the project aims to transfo
 
 ## Source & Context
 
-The original visualization was published by Channel NewsAsia (CNA) in an article titled *"Record number of marriages, drop in Singaporean births in 2022"* (September 2023), available at:
+The original visualization was published by Channel News Asia (CNA) in an article titled *"Record number of marriages, drop in Singaporean births in 2022"* (September 2023), available at:
 
 > <https://www.channelnewsasia.com/singapore/marriage-birth-rate-fertility-ageing-population-immigration-2022-3807991>
 
