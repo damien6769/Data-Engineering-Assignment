@@ -3,9 +3,15 @@ body {
   background-color: #fcfcfc;  /* sandy */
 }
 
-/* ===== Headers: serif font ===== */
+/* ===== Headers: serif font & colours ===== */
 h1, h2, h3, h4, h5, h6 {
   font-family: "Georgia", "Times New Roman", serif;
+}
+h1 {
+  color: #0f3a66;
+}
+h2 {
+  color: #1a5a8a;
 }
 
 /* ===== Custom table styling ===== */
@@ -37,4 +43,18 @@ h1, h2, h3, h4, h5, h6 {
 
 .custom-table tr:nth-child(odd) {
   background-color: #ffffff;
+}
+
+.stage-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: #1a5a8a;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  margin-right: 8px;
 }

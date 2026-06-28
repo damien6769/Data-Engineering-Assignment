@@ -160,28 +160,46 @@ window.Quarto = {
   <li><a href="#data-requirements-and-dimensions" id="toc-data-requirements-and-dimensions" class="nav-link" data-scroll-target="#data-requirements-and-dimensions">4.1 Data Requirements and Dimensions</a></li>
   <li><a href="#data-sources" id="toc-data-sources" class="nav-link" data-scroll-target="#data-sources">4.2 Data Sources</a>
   <ul class="collapse">
-  <li><a href="#births-and-fertility-rates" id="toc-births-and-fertility-rates" class="nav-link" data-scroll-target="#births-and-fertility-rates">4.2.1 Births and Fertility Rates</a></li>
-  <li><a href="#proportion-of-singles" id="toc-proportion-of-singles" class="nav-link" data-scroll-target="#proportion-of-singles">4.2.2 Proportion of Singles</a></li>
-  <li><a href="#female-labour-force-participation" id="toc-female-labour-force-participation" class="nav-link" data-scroll-target="#female-labour-force-participation">4.2.3 Female Labour-Force Participation</a></li>
-  <li><a href="#policy-and-zodiac-annotations" id="toc-policy-and-zodiac-annotations" class="nav-link" data-scroll-target="#policy-and-zodiac-annotations">4.2.4 Policy and Zodiac Annotations</a></li>
+  <li><a href="#births-and-fertility-rates" id="toc-births-and-fertility-rates" class="nav-link" data-scroll-target="#births-and-fertility-rates">Births and Fertility Rates</a></li>
+  <li><a href="#proportion-of-singles" id="toc-proportion-of-singles" class="nav-link" data-scroll-target="#proportion-of-singles">Proportion of Singles</a></li>
+  <li><a href="#female-labour-force-participation" id="toc-female-labour-force-participation" class="nav-link" data-scroll-target="#female-labour-force-participation">Female Labour-Force Participation</a></li>
+  <li><a href="#policy-and-zodiac-annotations" id="toc-policy-and-zodiac-annotations" class="nav-link" data-scroll-target="#policy-and-zodiac-annotations">Policy and Zodiac Annotations</a></li>
   </ul></li>
   <li><a href="#raw-data-structure-and-known-challenges" id="toc-raw-data-structure-and-known-challenges" class="nav-link" data-scroll-target="#raw-data-structure-and-known-challenges">4.3 Raw Data Structure and Known Challenges</a></li>
-  <li><a href="#planned-data-engineering-pipeline" id="toc-planned-data-engineering-pipeline" class="nav-link" data-scroll-target="#planned-data-engineering-pipeline">Planned Data Engineering Pipeline</a>
+  <li><a href="#planned-data-engineering-pipeline" id="toc-planned-data-engineering-pipeline" class="nav-link" data-scroll-target="#planned-data-engineering-pipeline">4.4 Planned Data Engineering Pipeline</a>
   <ul class="collapse">
-  <li><a href="#stage-1-import-the-raw-sources" id="toc-stage-1-import-the-raw-sources" class="nav-link" data-scroll-target="#stage-1-import-the-raw-sources">Stage 1 — Import the Raw Sources</a></li>
-  <li><a href="#stage-2-prepare-asfr-and-tfr" id="toc-stage-2-prepare-asfr-and-tfr" class="nav-link" data-scroll-target="#stage-2-prepare-asfr-and-tfr">Stage 2 — Prepare ASFR and TFR</a></li>
-  <li><a href="#stage-3-prepare-female-singlehood" id="toc-stage-3-prepare-female-singlehood" class="nav-link" data-scroll-target="#stage-3-prepare-female-singlehood">Stage 3 — Prepare Female Singlehood</a></li>
-  <li><a href="#stage-4-prepare-female-lfpr" id="toc-stage-4-prepare-female-lfpr" class="nav-link" data-scroll-target="#stage-4-prepare-female-lfpr">Stage 4 — Prepare Female LFPR</a></li>
-  <li><a href="#stage-5-create-policy-and-zodiac-tables" id="toc-stage-5-create-policy-and-zodiac-tables" class="nav-link" data-scroll-target="#stage-5-create-policy-and-zodiac-tables">Stage 5 — Create Policy and Zodiac Tables</a></li>
-  <li><a href="#stage-6-align-and-join-the-annual-drivers" id="toc-stage-6-align-and-join-the-annual-drivers" class="nav-link" data-scroll-target="#stage-6-align-and-join-the-annual-drivers">Stage 6 — Align and Join the Annual Drivers</a></li>
-  <li><a href="#stage-7-prepare-the-secondary-percentage-axis" id="toc-stage-7-prepare-the-secondary-percentage-axis" class="nav-link" data-scroll-target="#stage-7-prepare-the-secondary-percentage-axis">Stage 7 — Prepare the Secondary Percentage Axis</a></li>
+  <li><a href="#stage-1-import-the-raw-sources" id="toc-stage-1-import-the-raw-sources" class="nav-link" data-scroll-target="#stage-1-import-the-raw-sources"><span class="stage-badge">1</span>Stage 1 — Import the Raw Sources</a></li>
+  <li><a href="#stage-2-prepare-asfr-and-tfr" id="toc-stage-2-prepare-asfr-and-tfr" class="nav-link" data-scroll-target="#stage-2-prepare-asfr-and-tfr"><span class="stage-badge">2</span> Stage 2 — Prepare ASFR and TFR</a></li>
+  <li><a href="#stage-3-prepare-female-singlehood" id="toc-stage-3-prepare-female-singlehood" class="nav-link" data-scroll-target="#stage-3-prepare-female-singlehood"><span class="stage-badge">3</span> Stage 3 — Prepare Female Singlehood</a></li>
+  <li><a href="#stage-4-prepare-female-lfpr" id="toc-stage-4-prepare-female-lfpr" class="nav-link" data-scroll-target="#stage-4-prepare-female-lfpr"><span class="stage-badge">4</span> Stage 4 — Prepare Female LFPR</a></li>
+  <li><a href="#stage-5-create-policy-and-zodiac-tables" id="toc-stage-5-create-policy-and-zodiac-tables" class="nav-link" data-scroll-target="#stage-5-create-policy-and-zodiac-tables"><span class="stage-badge">5</span> Stage 5 — Create Policy and Zodiac Tables</a></li>
+  <li><a href="#stage-6-align-and-join-the-annual-drivers" id="toc-stage-6-align-and-join-the-annual-drivers" class="nav-link" data-scroll-target="#stage-6-align-and-join-the-annual-drivers"><span class="stage-badge">6</span> Stage 6 — Align and Join the Annual Drivers</a></li>
+  <li><a href="#stage-7-prepare-the-secondary-percentage-axis" id="toc-stage-7-prepare-the-secondary-percentage-axis" class="nav-link" data-scroll-target="#stage-7-prepare-the-secondary-percentage-axis"><span class="stage-badge">7</span> Stage 7 — Prepare the Secondary Percentage Axis</a></li>
   </ul></li>
-  <li><a href="#validation-checks" id="toc-validation-checks" class="nav-link" data-scroll-target="#validation-checks">Validation Checks</a></li>
-  <li><a href="#visualization-ready-outputs" id="toc-visualization-ready-outputs" class="nav-link" data-scroll-target="#visualization-ready-outputs">Visualization-Ready Outputs</a></li>
-  <li><a href="#reproducibility" id="toc-reproducibility" class="nav-link" data-scroll-target="#reproducibility">Reproducibility</a></li>
+  <li><a href="#illustrative-code-structure" id="toc-illustrative-code-structure" class="nav-link" data-scroll-target="#illustrative-code-structure">4.5 Illustrative Code Structure</a></li>
+  <li><a href="#validation-checks" id="toc-validation-checks" class="nav-link" data-scroll-target="#validation-checks">4.6 Validation Checks</a></li>
+  <li><a href="#visualization-ready-outputs" id="toc-visualization-ready-outputs" class="nav-link" data-scroll-target="#visualization-ready-outputs">4.7 Visualization-Ready Outputs</a></li>
+  <li><a href="#reproducibility" id="toc-reproducibility" class="nav-link" data-scroll-target="#reproducibility">4.8 Reproducibility</a></li>
   </ul></li>
-  <li><a href="#planned-data-analysis-plan-only" id="toc-planned-data-analysis-plan-only" class="nav-link" data-scroll-target="#planned-data-analysis-plan-only">Planned Data Analysis (Plan Only)</a></li>
-  <li><a href="#work-distribution" id="toc-work-distribution" class="nav-link" data-scroll-target="#work-distribution">Work Distribution</a></li>
+  <li><a href="#planned-data-analysis" id="toc-planned-data-analysis" class="nav-link" data-scroll-target="#planned-data-analysis">5. Planned Data Analysis</a>
+  <ul class="collapse">
+  <li><a href="#what-this-analysis-is-for" id="toc-what-this-analysis-is-for" class="nav-link" data-scroll-target="#what-this-analysis-is-for">5.1 What This Analysis Is For</a></li>
+  <li><a href="#measures-we-will-compute" id="toc-measures-we-will-compute" class="nav-link" data-scroll-target="#measures-we-will-compute">5.2 Measures We Will Compute</a></li>
+  <li><a href="#planned-analyses" id="toc-planned-analyses" class="nav-link" data-scroll-target="#planned-analyses">5.3 Planned Analyses</a>
+  <ul class="collapse">
+  <li><a href="#a1-long-term-fertility-trend-and-age-shift" id="toc-a1-long-term-fertility-trend-and-age-shift" class="nav-link" data-scroll-target="#a1-long-term-fertility-trend-and-age-shift">A1 — Long-term fertility trend and age shift</a></li>
+  <li><a href="#a2-education-and-delayed-fertility" id="toc-a2-education-and-delayed-fertility" class="nav-link" data-scroll-target="#a2-education-and-delayed-fertility">A2 — Education and delayed fertility</a></li>
+  <li><a href="#a3-policy-and-structural-shocks-cultural-beliefs" id="toc-a3-policy-and-structural-shocks-cultural-beliefs" class="nav-link" data-scroll-target="#a3-policy-and-structural-shocks-cultural-beliefs">A3 — Policy and structural shocks / cultural beliefs</a></li>
+  <li><a href="#a4-economic-conditions-and-fertility" id="toc-a4-economic-conditions-and-fertility" class="nav-link" data-scroll-target="#a4-economic-conditions-and-fertility">A4 — Economic conditions and fertility</a></li>
+  </ul></li>
+  <li><a href="#summary-what-we-produce" id="toc-summary-what-we-produce" class="nav-link" data-scroll-target="#summary-what-we-produce">5.4 Summary: What We Produce</a></li>
+  </ul></li>
+  <li><a href="#work-distribution" id="toc-work-distribution" class="nav-link" data-scroll-target="#work-distribution">6. Work Distribution</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">7. References</a>
+  <ul class="collapse">
+  <li><a href="#article-source" id="toc-article-source" class="nav-link" data-scroll-target="#article-source">7.1 Article Source</a></li>
+  <li><a href="#data-sources-1" id="toc-data-sources-1" class="nav-link" data-scroll-target="#data-sources-1">7.2 Data Sources</a></li>
+  </ul></li>
   </ul>
 </nav>
 </div>
@@ -610,19 +628,73 @@ Figure&nbsp;1: Original CNA visualization: <em>Drop in Singapore citizen births 
 <h2 class="anchored" data-anchor-id="data-sources">4.2 Data Sources</h2>
 <p>The workflow uses three numerical data sources together with manually curated policy and zodiac annotation tables.</p>
 <section id="births-and-fertility-rates" class="level3">
-<h3 class="anchored" data-anchor-id="births-and-fertility-rates">4.2.1 Births and Fertility Rates</h3>
+<h3 class="anchored" data-anchor-id="births-and-fertility-rates">Births and Fertility Rates</h3>
 <p>The primary dataset is the Singapore Department of Statistics (SingStat) <strong>Births and Fertility Rates, Annual</strong> CSV file ([official SingStat table link to be inserted]). It provides annual observations from <strong>1960 to 2025</strong>, including published TFR and ASFR for the seven maternal age groups. ASFR is measured as births per 1,000 women in each age group. The published TFR series will be retained for comparison with the value derived from the seven ASFR groups.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>File</code> : [insert file name]<br>
+<code>Publisher</code>:<br>
+<code>Unit</code><br>
+<code>Coverage</code><br>
+<code>We use</code><br>
+<code>col1</code> <code>col2</code> <code>col3</code></p>
+</div>
+</div>
 </section>
 <section id="proportion-of-singles" class="level3">
-<h3 class="anchored" data-anchor-id="proportion-of-singles">4.2.2 Proportion of Singles</h3>
+<h3 class="anchored" data-anchor-id="proportion-of-singles">Proportion of Singles</h3>
 <p>The second SingStat dataset is table <strong>M810581, “Proportion of Singles Among Resident Population by Selected Age Group and Sex, Annual”</strong> ([official SingStat table link to be inserted]). The table measures the proportion of the resident population who are <strong>never married</strong>. Resident population includes Singapore citizens and permanent residents. The current plan uses female observations for ages <strong>25–29, 30–34, and 35–39</strong>. Available observations cover 1980 and 1983–2024; values for 1981 and 1982 are unavailable.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>File</code> : [insert file name]<br>
+<code>Publisher</code>:<br>
+<code>Unit</code><br>
+<code>Coverage</code><br>
+<code>We use</code><br>
+<code>col1</code> <code>col2</code> <code>col3</code></p>
+</div>
+</div>
 </section>
 <section id="female-labour-force-participation" class="level3">
-<h3 class="anchored" data-anchor-id="female-labour-force-participation">4.2.3 Female Labour-Force Participation</h3>
+<h3 class="anchored" data-anchor-id="female-labour-force-participation">Female Labour-Force Participation</h3>
 <p>Female LFPR will be retrieved from the <a href="https://data.worldbank.org/indicator/SL.TLF.CACT.FE.NE.ZS?locations=SG">World Bank World Development Indicators</a> using indicator <strong><code>SL.TLF.CACT.FE.NE.ZS</code></strong>, “Labour force participation rate, female (% of female population ages 15+) (national estimate).” The national-estimate series is selected because it covers <strong>1970–2024</strong>, matching the long historical period required by the visualization. The series is measured as a percentage.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>File</code> : [insert file name]<br>
+<code>Publisher</code>:<br>
+<code>Unit</code><br>
+<code>Coverage</code><br>
+<code>We use</code><br>
+<code>col1</code> <code>col2</code> <code>col3</code></p>
+</div>
+</div>
 </section>
 <section id="policy-and-zodiac-annotations" class="level3">
-<h3 class="anchored" data-anchor-id="policy-and-zodiac-annotations">4.2.4 Policy and Zodiac Annotations</h3>
+<h3 class="anchored" data-anchor-id="policy-and-zodiac-annotations">Policy and Zodiac Annotations</h3>
 <p>The policy annotations will be entered as a small table based on the team’s background research. The initial annotation plan includes the following selected events:</p>
 <div class="custom-table">
 <table class="caption-top table">
@@ -724,19 +796,19 @@ Figure&nbsp;1: Original CNA visualization: <em>Drop in Singapore citizen births 
 <p>In all sources, <code>NA</code> represents an unavailable observation and is distinct from an observed value of zero. No missing observations will be automatically imputed.</p>
 </section>
 <section id="planned-data-engineering-pipeline" class="level2">
-<h2 class="anchored" data-anchor-id="planned-data-engineering-pipeline">Planned Data Engineering Pipeline</h2>
+<h2 class="anchored" data-anchor-id="planned-data-engineering-pipeline">4.4 Planned Data Engineering Pipeline</h2>
 <p>The workflow will be implemented in RStudio as a reproducible sequence of transformations. Raw objects will remain unchanged, and each stage will create a new, clearly named object.</p>
 <section id="stage-1-import-the-raw-sources" class="level3">
-<h3 class="anchored" data-anchor-id="stage-1-import-the-raw-sources">Stage 1 — Import the Raw Sources</h3>
+<h3 class="anchored" data-anchor-id="stage-1-import-the-raw-sources"><span class="stage-badge">1</span>Stage 1 — Import the Raw Sources</h3>
 <p>The two SingStat CSV files will be imported with <code>readr::read_csv()</code>. Female LFPR will be requested directly through <code>WDI::WDI()</code>, using Singapore’s country code <code>SGP</code> and the national-estimate indicator. In the final project repository, file paths will be relative to the RStudio project rather than tied to one team member’s computer.</p>
 </section>
 <section id="stage-2-prepare-asfr-and-tfr" class="level3">
-<h3 class="anchored" data-anchor-id="stage-2-prepare-asfr-and-tfr">Stage 2 — Prepare ASFR and TFR</h3>
+<h3 class="anchored" data-anchor-id="stage-2-prepare-asfr-and-tfr"><span class="stage-badge">2</span> Stage 2 — Prepare ASFR and TFR</h3>
 <p>The fertility table will be filtered to the published TFR row and the seven ASFR rows. <code>pivot_longer()</code> will convert the year columns into observations so that one ASFR row represents one <strong>year × age-group</strong> combination. The year will be converted to an integer, rate values to numeric, and maternal age group to an ordered factor.</p>
 <p>For validation, annual ASFR values will be summed and converted to an approximate TFR. The derived-versus-published comparison will be performed from <strong>1980 onward</strong>, when all seven age-group series are available. Earlier years will retain the published TFR, but the incomplete ASFR coverage for ages 45–49 will be documented and will not be treated as a complete reconstruction. Small differences from 1980 onward may occur because the published rates are rounded.</p>
 </section>
 <section id="stage-3-prepare-female-singlehood" class="level3">
-<h3 class="anchored" data-anchor-id="stage-3-prepare-female-singlehood">Stage 3 — Prepare Female Singlehood</h3>
+<h3 class="anchored" data-anchor-id="stage-3-prepare-female-singlehood"><span class="stage-badge">3</span> Stage 3 — Prepare Female Singlehood</h3>
 <p>The singlehood table will first be separated into age-group blocks. Age-group labels will be filled down to the nested sex rows, after which only Female observations for ages 25–29, 30–34, and 35–39 will be retained. The wide year columns will then be reshaped into long format.</p>
 <p>To reproduce the proposed visualization, the female singlehood measure will be calculated as the unweighted mean of the three published age-specific percentages:</p>
 <p><span class="math display">\[
@@ -749,28 +821,46 @@ Figure&nbsp;1: Original CNA visualization: <em>Drop in Singapore citizen births 
 <p>The resulting variable will therefore initially be described as the <strong>mean proportion of single women across the 25–29, 30–34, and 35–39 age groups</strong>, rather than as a population-weighted percentage of all women aged 25–39. A population-weighted calculation may be considered during implementation if suitable female population data is available.</p>
 </section>
 <section id="stage-4-prepare-female-lfpr" class="level3">
-<h3 class="anchored" data-anchor-id="stage-4-prepare-female-lfpr">Stage 4 — Prepare Female LFPR</h3>
+<h3 class="anchored" data-anchor-id="stage-4-prepare-female-lfpr"><span class="stage-badge">4</span> Stage 4 — Prepare Female LFPR</h3>
 <p>The World Bank result will be reduced to <code>year</code> and the female LFPR value, renamed <code>female_lfpr</code>, and filtered to the available 1970–2024 period. Values will remain in their original percentage unit. No unavailable years will be estimated or replaced with zero.</p>
 </section>
 <section id="stage-5-create-policy-and-zodiac-tables" class="level3">
-<h3 class="anchored" data-anchor-id="stage-5-create-policy-and-zodiac-tables">Stage 5 — Create Policy and Zodiac Tables</h3>
+<h3 class="anchored" data-anchor-id="stage-5-create-policy-and-zodiac-tables"><span class="stage-badge">5</span> Stage 5 — Create Policy and Zodiac Tables</h3>
 <p>Policy events, the 2023 fertility milestone, the pro-natalist era, and zodiac years will be stored in separate annotation tables rather than repeated across every numerical observation. This keeps annotations independent from the measured fertility and percentage variables.</p>
 </section>
 <section id="stage-6-align-and-join-the-annual-drivers" class="level3">
-<h3 class="anchored" data-anchor-id="stage-6-align-and-join-the-annual-drivers">Stage 6 — Align and Join the Annual Drivers</h3>
+<h3 class="anchored" data-anchor-id="stage-6-align-and-join-the-annual-drivers"><span class="stage-badge">6</span> Stage 6 — Align and Join the Annual Drivers</h3>
 <p>A complete year index from 1960 to 2025 will form the left side of the joins. The female LFPR and singlehood tables will be joined by <code>year</code>, producing one annual driver table. This preserves years outside each source’s coverage as <code>NA</code>, including the singlehood gap in 1981–1982. The ASFR table will remain separate and in long format because it contains seven rows per year.</p>
 </section>
 <section id="stage-7-prepare-the-secondary-percentage-axis" class="level3">
-<h3 class="anchored" data-anchor-id="stage-7-prepare-the-secondary-percentage-axis">Stage 7 — Prepare the Secondary Percentage Axis</h3>
+<h3 class="anchored" data-anchor-id="stage-7-prepare-the-secondary-percentage-axis"><span class="stage-badge">7</span> Stage 7 — Prepare the Secondary Percentage Axis</h3>
 <p>ASFR is measured per 1,000 women, whereas female LFPR and singlehood are percentages. The original percentage variables will be retained unchanged. During implementation, a reversible scale transformation will be calculated from the selected primary and secondary axis ranges so that the two percentage series can be displayed alongside ASFR. The final axis limits and scale factor will be determined after testing the readability of the visualization.</p>
 </section>
 </section>
+<section id="illustrative-code-structure" class="level2">
+<h2 class="anchored" data-anchor-id="illustrative-code-structure">4.5 Illustrative Code Structure</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># STAGE 1: Import Raw Sources</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># STAGE 2: Prepare ASFR and TFR</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># STAGE 3: Prepare Female Singlehood</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># STAGE 4: Prepare Female LFPR</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># STAGE 5: Create Policy and Zodiac Tables</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># STAGE 6: Align &amp; Join the Annual Drivers</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># STAGE 7: Prepare the Secondary Percentage Axis</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
 <section id="validation-checks" class="level2">
-<h2 class="anchored" data-anchor-id="validation-checks">Validation Checks</h2>
+<h2 class="anchored" data-anchor-id="validation-checks">4.6 Validation Checks</h2>
 <p>Before plotting, the pipeline will check that year and age-group keys are unique, expected age groups are present, numerical values fall within plausible ranges, missing observations remain correctly identified, and joins do not create duplicate or unintended rows. Approximate TFR derived from ASFR will be compared with the published TFR series from 1980 onward, when all seven maternal age groups are available. Policy and zodiac years will also be checked against the selected visualization period.</p>
 </section>
 <section id="visualization-ready-outputs" class="level2">
-<h2 class="anchored" data-anchor-id="visualization-ready-outputs">Visualization-Ready Outputs</h2>
+<h2 class="anchored" data-anchor-id="visualization-ready-outputs">4.7 Visualization-Ready Outputs</h2>
 <p>The completed pipeline will produce the following visualization-ready datasets:</p>
 <div class="custom-table">
 <table class="caption-top table">
@@ -825,18 +915,18 @@ Figure&nbsp;1: Original CNA visualization: <em>Drop in Singapore citizen births 
 <p>This structure keeps measured variables, derived variables, and contextual annotations separate while providing all fields required to reproduce the proposed single-layered visualization.</p>
 </section>
 <section id="reproducibility" class="level2">
-<h2 class="anchored" data-anchor-id="reproducibility">Reproducibility</h2>
+<h2 class="anchored" data-anchor-id="reproducibility">4.8 Reproducibility</h2>
 <p>The planned implementation will be developed in RStudio and rendered with Quarto. All file paths will be relative to the project directory, raw files will remain unchanged, and all cleaning steps will be recorded in R code. The visualization is expected to be produced with <code>ggplot2</code>; <code>dplyr</code>, <code>tidyr</code>, <code>stringr</code>, <code>readr</code>, <code>WDI</code>, and <code>scales</code> are the currently selected packages for data preparation and formatting. The proposal code is illustrative and is not executed at this stage.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Intended tooling (plan only — not executed in the proposal)</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)  <span class="co"># dplyr, tidyr, readr, stringr, ggplot2</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(WDI)        <span class="co"># World Bank indicator retrieval</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)     <span class="co"># Axis and percentage formatting</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Intended tooling (plan only — not executed in the proposal)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)  <span class="co"># dplyr, tidyr, readr, stringr, ggplot2</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(WDI)        <span class="co"># World Bank indicator retrieval</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)     <span class="co"># Axis and percentage formatting</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 </section>
-<section id="planned-data-analysis-plan-only" class="level1">
-<h1>Planned Data Analysis (Plan Only)</h1>
+<section id="planned-data-analysis" class="level1">
+<h1>5. Planned Data Analysis</h1>
 <p>Singapore’s resident fertility has fallen steeply since 1960, dropping below the replacement rate within about fifteen years and reaching a record low total fertility rate of 0.97 in 2023. The original chart we set out to redesign presents this decline as a simple fall in citizen births, which records the outcome but says nothing about its causes. Our central question is therefore why fertility has fallen, and our aim is to bring the decline and its principal drivers into a single figure so they can be read against one another on a shared timeline.</p>
 <p>We began exploring data by plotting total fertility against a range of drivers drawn from research and official statistics. These included the median age at first marriage, the median age of mothers at first birth, female labour force participation, educational attainment, the HDB resale price index, household income, the share of never-married residents, birth order, and patterns following the Chinese Zodiac. For each, we examined how the series moved over time relative to fertility and judged whether the data was available over a sufficiently long and consistent period. From this, we selected the dimensions that combine the greatest explanatory weight with usable data and that can coexist in one readable figure. The dimensions chosen are AGe Specific Fertility Rate (ASFR), Female Labour Force Participation (FLFP), and the percentage of single women aged 25-39. It is supported by two contextual layers, the Chinese zodiac and population policies introduced by the government.</p>
 <p>The policies are visualised to show the effects of each policy introduced by the government. From there, we can assess and see how well these policies worked overtime, giving us more insight into real driving forces behind Singapore’s declining fertility rate.</p>
@@ -846,9 +936,142 @@ Figure&nbsp;1: Original CNA visualization: <em>Drop in Singapore citizen births 
 <p>Each source requires preparation before it can be combined. The SingStat tables are stored in wide form with one column per year and several rows of metadata, so we skip the metadata, reshape the tables to long form, extract the year and the age band from the labels, and convert the values to numeric. The singles table is hierarchical, with male and female rows nested beneath each age group, so we carry the age group down and tag each row by sex before filtering to the female rows. For the marriage measure we aggregate the never-married rates for the 25 to 29, 30 to 34 and 35 to 39 bands into a single prime-age series. We also remove the 1999 and 2000 participation values, where a change in the source’s methodology produces a step that is an artefact rather than real movement. The cleaned series are joined on year, and because the two driver series are percentages while the bars are rates, we rescale the percentages onto the fertility axis so they can be shown on one shared secondary axis.</p>
 <p>The figure is built as a single layered chart rather than a dashboard, on one shared time axis, so that every series can be compared directly. We use a stacked bar chart for fertility because it carries two messages in one geometry: the total height shows the overall decline, while the coloured segments show the changing age composition, which a single fertility line could not convey. The two drivers are drawn as lines, since a line is the clearest way to read a continuous trend and its slope, and they sit on a secondary percentage axis because they share a common unit. The Chinese zodiac is shown as small triangles below the bars, a discrete marker suited to discrete annual events, with upward triangles for Dragon years and downward triangles for Tiger years to encode the expected direction of effect. Policy is shown in two ways: the background is shaded to separate the anti-natalist era from the pro-natalist era, and individual measures are marked with vertical lines, dotted for the anti-natalist policy and dashed for the pro-natalist ones.</p>
 <p>In summary, the year forms the horizontal axis; the age-specific fertility rate is the height of the stacked bars, with the mother’s age group encoded by colour; female labour force participation and the prime-age single rate are lines on the right-hand percentage axis; the Chinese zodiac is the row of triangles beneath the bars; and population policy is encoded by the shaded eras and the vertical policy lines. Together these allow the reader to see the decline, its shift into older ages, its co-movement with rising participation and singlehood, the periodic zodiac effect, and the asymmetry between policy that curbed births and policy that could not restore them.</p>
+<section id="what-this-analysis-is-for" class="level2">
+<h2 class="anchored" data-anchor-id="what-this-analysis-is-for">5.1 What This Analysis Is For</h2>
+<p>This analysis aims to explain the long-term decline in Singapore’s fertility rate by moving beyond simple descriptive trends to identify and compare key underlying drivers. Rather than only showing how fertility has decreased over time, the goal is to integrate fertility outcomes with demographic, economic, policy, and cultural factors on a shared timeline. This allows us to assess how changes in women’s education and labour participation, partnership formation, housing and social conditions, and government policies may have collectively contributed to declining birth rates. The analysis also explores whether cultural patterns, such as the Chinese Zodiac, show any observable relationship with birth timing.</p>
+</section>
+<section id="measures-we-will-compute" class="level2">
+<h2 class="anchored" data-anchor-id="measures-we-will-compute">5.2 Measures We Will Compute</h2>
+</section>
+<section id="planned-analyses" class="level2">
+<h2 class="anchored" data-anchor-id="planned-analyses">5.3 Planned Analyses</h2>
+<section id="a1-long-term-fertility-trend-and-age-shift" class="level3">
+<h3 class="anchored" data-anchor-id="a1-long-term-fertility-trend-and-age-shift">A1 — Long-term fertility trend and age shift</h3>
+<p><strong>Question</strong>: How has fertility changed over time and across age groups?</p>
+<p><strong>Metric</strong>: ASFR by age group</p>
+<p><strong>Output</strong>: Stacked bar chart of ASFR</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Hypothesis
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>We expect fertility rate to drop over the years and age group to be composed more of the later age groups due to delayed childbirth.</p>
+</div>
+</div>
+</section>
+<section id="a2-education-and-delayed-fertility" class="level3">
+<h3 class="anchored" data-anchor-id="a2-education-and-delayed-fertility">A2 — Education and delayed fertility</h3>
+<p><strong>Question</strong>: Does increased education and career formation correspond to later fertility?</p>
+<p><strong>Metric</strong>: Female LFPR + ASFR</p>
+<p><strong>Output</strong>: Time series comparison + age composition shift</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Hypothesis
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>We expect that as the female LFPR increase, the ASFR decreases due to women choosing to finish their education and build a career before starting a family.</p>
+</div>
+</div>
+</section>
+<section id="a3-policy-and-structural-shocks-cultural-beliefs" class="level3">
+<h3 class="anchored" data-anchor-id="a3-policy-and-structural-shocks-cultural-beliefs">A3 — Policy and structural shocks / cultural beliefs</h3>
+<p><strong>Question</strong>: How do policy changes and economic recessions/ cultural beliefs relate to fertility trends?</p>
+<p><strong>Metric</strong>: Policy Timeline + Recession periods/Zodiac vs ASFR</p>
+<p><strong>Output</strong>: Time series comparison + age composition shift</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Hypothesis
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>We expect the ASFR trend to correspond with the policy changes ie. increase during the pro-natalist era and decrease during the anti-natalist era. In addition, we believe that recession periods/cultural beliefs also affect fertility rate, such that during the dragon year fertility rate would increase, and then decrease in the tiger year. (change accordingly for recession/zodiac)</p>
+</div>
+</div>
+</section>
+<section id="a4-economic-conditions-and-fertility" class="level3">
+<h3 class="anchored" data-anchor-id="a4-economic-conditions-and-fertility">A4 — Economic conditions and fertility</h3>
+<p><strong>Question</strong>: Do rising costs and economic conditions affect fertility rates?</p>
+<p><strong>Metric</strong>:</p>
+<p><strong>Output</strong>:</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Hypothesis
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>We expect ASFR to decrease as the cost of living continues to rise.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="summary-what-we-produce" class="level2">
+<h2 class="anchored" data-anchor-id="summary-what-we-produce">5.4 Summary: What We Produce</h2>
+<div class="custom-table">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 31%">
+<col style="width: 13%">
+<col style="width: 31%">
+<col style="width: 23%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Research Question</th>
+<th>Output</th>
+<th>Insight Supported</th>
+<th>Data Needed</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>How has fertility changed over time?</td>
+<td>ASFR stacked bars</td>
+<td>long-term decline + age shift (?)</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Does education explain delayed fertility / lowered birth rate?</td>
+<td>Female LFPR line plot</td>
+<td>later births due to career building</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Do recessions and policies affect fertility?</td>
+<td>annotated timeline</td>
+<td>policy effects</td>
+<td>Policy + Recession data</td>
+</tr>
+<tr class="even">
+<td>Do economic costs affect fertility rate?</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
 </section>
 <section id="work-distribution" class="level1">
-<h1>Work Distribution</h1>
+<h1>6. Work Distribution</h1>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -894,7 +1117,17 @@ Figure&nbsp;1: Original CNA visualization: <em>Drop in Singapore citizen births 
 </tbody>
 </table>
 </div>
+</section>
+<section id="references" class="level1">
+<h1>7. References</h1>
+<section id="article-source" class="level2">
+<h2 class="anchored" data-anchor-id="article-source">7.1 Article Source</h2>
+<p>Chew H. M., “Record number of marriages, drop in Singaporean births in 2022,” CNA, Sep.&nbsp;29, 2023. <a href="https://www.channelnewsasia.com/singapore/marriage-birth-rate-fertility-ageing-population-immigration-2022-3807991">https://www.channelnewsasia.com/singapore/marriage-birth-rate-fertility-ageing-population-immigration-2022-3807991</a></p>
+</section>
+<section id="data-sources-1" class="level2">
+<h2 class="anchored" data-anchor-id="data-sources-1">7.2 Data Sources</h2>
 <hr>
+</section>
 </section>
 
 </main>
