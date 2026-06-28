@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Team 11 — Angel, Sophia, Damien, Levl, Suen Hong">
-<meta name="dcterms.date" content="2026-06-27">
+<meta name="dcterms.date" content="2026-06-28">
 
 <title>Re-examining Singapore’s Declining Fertility</title>
 <style>
@@ -75,6 +75,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="proposal_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="proposal_files/libs/bootstrap/bootstrap-67270d1595a62d14f123c043d4fb2f18.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="style.css">
 </head>
@@ -104,20 +133,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#strengths-of-the-original-visualization" id="toc-strengths-of-the-original-visualization" class="nav-link" data-scroll-target="#strengths-of-the-original-visualization">2.1 Strengths of the Original Visualization</a></li>
   <li><a href="#weaknesses-of-the-original-visualization" id="toc-weaknesses-of-the-original-visualization" class="nav-link" data-scroll-target="#weaknesses-of-the-original-visualization">2.2 Weaknesses of the Original Visualization</a>
   <ul class="collapse">
-  <li><a href="#w1-colour-saturation-illusion" id="toc-w1-colour-saturation-illusion" class="nav-link" data-scroll-target="#w1-colour-saturation-illusion">2.2.1 W1 — Colour saturation illusion</a></li>
-  <li><a href="#w2-lack-of-demographic-scaling" id="toc-w2-lack-of-demographic-scaling" class="nav-link" data-scroll-target="#w2-lack-of-demographic-scaling">2.2.2 W2 — Lack of demographic scaling</a></li>
-  <li><a href="#w3-limited-compositional-breakdown-by-maternal-age" id="toc-w3-limited-compositional-breakdown-by-maternal-age" class="nav-link" data-scroll-target="#w3-limited-compositional-breakdown-by-maternal-age">2.2.3 W3 — Limited compositional breakdown by maternal age</a></li>
-  <li><a href="#w4-short-time-horizon" id="toc-w4-short-time-horizon" class="nav-link" data-scroll-target="#w4-short-time-horizon">2.2.4 W4 — Short time horizon</a></li>
-  <li><a href="#w5-lack-of-explicit-axis-labels-and-legend" id="toc-w5-lack-of-explicit-axis-labels-and-legend" class="nav-link" data-scroll-target="#w5-lack-of-explicit-axis-labels-and-legend">2.2.5 W5 — Lack of explicit axis labels and legend</a></li>
-  <li><a href="#w6-absence-of-explanatory-variables" id="toc-w6-absence-of-explanatory-variables" class="nav-link" data-scroll-target="#w6-absence-of-explanatory-variables">2.2.6 W6 — Absence of explanatory variables</a></li>
-  <li><a href="#w7-compressed-variation-on-the-raw-count-scale" id="toc-w7-compressed-variation-on-the-raw-count-scale" class="nav-link" data-scroll-target="#w7-compressed-variation-on-the-raw-count-scale">2.2.7 W7 — Compressed variation on the raw-count scale</a></li>
-  <li><a href="#w8-arbitrary-period-averaging" id="toc-w8-arbitrary-period-averaging" class="nav-link" data-scroll-target="#w8-arbitrary-period-averaging">2.2.8 W8 — Arbitrary period averaging</a></li>
+  <li><a href="#w1-colour-saturation-illusion" id="toc-w1-colour-saturation-illusion" class="nav-link" data-scroll-target="#w1-colour-saturation-illusion">W1 — Colour saturation illusion</a></li>
+  <li><a href="#w2-lack-of-demographic-scaling" id="toc-w2-lack-of-demographic-scaling" class="nav-link" data-scroll-target="#w2-lack-of-demographic-scaling">W2 — Lack of demographic scaling</a></li>
+  <li><a href="#w3-limited-compositional-breakdown-by-maternal-age" id="toc-w3-limited-compositional-breakdown-by-maternal-age" class="nav-link" data-scroll-target="#w3-limited-compositional-breakdown-by-maternal-age">W3 — Limited compositional breakdown by maternal age</a></li>
+  <li><a href="#w4-short-time-horizon" id="toc-w4-short-time-horizon" class="nav-link" data-scroll-target="#w4-short-time-horizon">W4 — Short time horizon</a></li>
+  <li><a href="#w5-lack-of-explicit-axis-labels-and-legend" id="toc-w5-lack-of-explicit-axis-labels-and-legend" class="nav-link" data-scroll-target="#w5-lack-of-explicit-axis-labels-and-legend">W5 — Lack of explicit axis labels and legend</a></li>
+  <li><a href="#w6-absence-of-explanatory-variables" id="toc-w6-absence-of-explanatory-variables" class="nav-link" data-scroll-target="#w6-absence-of-explanatory-variables">W6 — Absence of explanatory variables</a></li>
+  <li><a href="#w7-compressed-variation-on-the-raw-count-scale" id="toc-w7-compressed-variation-on-the-raw-count-scale" class="nav-link" data-scroll-target="#w7-compressed-variation-on-the-raw-count-scale">W7 — Compressed variation on the raw-count scale</a></li>
+  <li><a href="#w8-arbitrary-period-averaging" id="toc-w8-arbitrary-period-averaging" class="nav-link" data-scroll-target="#w8-arbitrary-period-averaging">W8 — Arbitrary period averaging</a></li>
   </ul></li>
   </ul></li>
   <li><a href="#proposed-improvements-plan-only" id="toc-proposed-improvements-plan-only" class="nav-link" data-scroll-target="#proposed-improvements-plan-only">3. Proposed Improvements (Plan Only)</a>
   <ul class="collapse">
   <li><a href="#i1-use-fertility-rate-not-just-raw-counts-addresses-w2" id="toc-i1-use-fertility-rate-not-just-raw-counts-addresses-w2" class="nav-link" data-scroll-target="#i1-use-fertility-rate-not-just-raw-counts-addresses-w2">I1 — Use fertility rate, not just raw counts → <em>addresses W2</em></a></li>
-  <li><a href="#i2-use-stacked-bars-with-colour-mapped-to-age-group-addresses-w1-w3" id="toc-i2-use-stacked-bars-with-colour-mapped-to-age-group-addresses-w1-w3" class="nav-link" data-scroll-target="#i2-use-stacked-bars-with-colour-mapped-to-age-group-addresses-w1-w3">I2 — Use stacked bars with colour mapped to age group → addresses W1, W3</a></li>
+  <li><a href="#i2-use-stacked-bars-with-colour-mapped-to-age-group-addresses-w1-w3" id="toc-i2-use-stacked-bars-with-colour-mapped-to-age-group-addresses-w1-w3" class="nav-link" data-scroll-target="#i2-use-stacked-bars-with-colour-mapped-to-age-group-addresses-w1-w3">I2 — Use stacked bars with colour mapped to age group → <em>addresses W1, W3</em></a></li>
   <li><a href="#i3-add-labels-legend-and-annotations-addresses-w5" id="toc-i3-add-labels-legend-and-annotations-addresses-w5" class="nav-link" data-scroll-target="#i3-add-labels-legend-and-annotations-addresses-w5">I3 — Add labels, legend, and annotations → <em>addresses W5</em></a></li>
   <li><a href="#i4-add-female-lfpr-and-singlehood-trends-addresses-w6" id="toc-i4-add-female-lfpr-and-singlehood-trends-addresses-w6" class="nav-link" data-scroll-target="#i4-add-female-lfpr-and-singlehood-trends-addresses-w6">I4 — Add female LFPR and singlehood trends → <em>addresses W6</em></a></li>
   <li><a href="#i5-add-population-policy-context-addresses-w6" id="toc-i5-add-population-policy-context-addresses-w6" class="nav-link" data-scroll-target="#i5-add-population-policy-context-addresses-w6">I5 — Add population-policy context → <em>addresses W6</em></a></li>
@@ -178,7 +207,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">June 27, 2026</p>
+      <p class="date">June 28, 2026</p>
     </div>
   </div>
   
@@ -192,14 +221,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="team-information" class="level1">
 <h1>Team Information</h1>
+<div class="custom-table">
 <table class="caption-top table">
-<colgroup>
-<col style="width: 51%">
-<col style="width: 18%">
-</colgroup>
 <thead>
 <tr class="header">
-<th>Name</th>
+<th>Student Name</th>
 <th>Student ID</th>
 </tr>
 </thead>
@@ -226,6 +252,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 </tbody>
 </table>
+</div>
 </section>
 <section id="introduction-and-project-overview" class="level1">
 <h1>1. Introduction and Project Overview</h1>
@@ -305,35 +332,35 @@ Figure&nbsp;1: Original CNA visualization: <em>Drop in Singapore citizen births 
 <h2 class="anchored" data-anchor-id="weaknesses-of-the-original-visualization">2.2 Weaknesses of the Original Visualization</h2>
 <p>Each weakness is stated with an explanation and a justification.</p>
 <section id="w1-colour-saturation-illusion" class="level3">
-<h3 class="anchored" data-anchor-id="w1-colour-saturation-illusion">2.2.1 W1 — Colour saturation illusion</h3>
+<h3 class="anchored" data-anchor-id="w1-colour-saturation-illusion">W1 — Colour saturation illusion</h3>
 <p><strong>Explanation:</strong> The chart uses colour value categorically — a lighter shade for 2013–2017, a deeper purple for 2018–2022, and an even lighter tone for 2012, visually isolating it from both groups. <strong>Justification:</strong> The darker, more saturated bars attract greater visual attention and may be interpreted as more important or larger, even though they represent the lower-birth period of 2018–2022. The distinctly light 2012 bar reads as a low-value outlier, yet its 33.2k figure is higher than every bar in the darker 2018–2022 block. The intent was categorical, but the execution introduces a potentially misleading visual emphasis.</p>
 </section>
 <section id="w2-lack-of-demographic-scaling" class="level3">
-<h3 class="anchored" data-anchor-id="w2-lack-of-demographic-scaling">2.2.2 W2 — Lack of demographic scaling</h3>
+<h3 class="anchored" data-anchor-id="w2-lack-of-demographic-scaling">W2 — Lack of demographic scaling</h3>
 <p><strong>Explanation:</strong> The graph plots absolute raw volume rather than scaling counts against Singapore’s changing demographic structure. <strong>Justification:</strong> Raw births depend on the size of the reproductive group. If the population of women in prime childbearing ages shrank over the decade, births could fall even if individual fertility behaviour stayed constant or rose. Without normalising the counts into fertility rates, the chart cannot distinguish changes in fertility behaviour from changes in the size and age structure of the female population.</p>
 </section>
 <section id="w3-limited-compositional-breakdown-by-maternal-age" class="level3">
-<h3 class="anchored" data-anchor-id="w3-limited-compositional-breakdown-by-maternal-age">2.2.3 W3 — Limited compositional breakdown by maternal age</h3>
+<h3 class="anchored" data-anchor-id="w3-limited-compositional-breakdown-by-maternal-age">W3 — Limited compositional breakdown by maternal age</h3>
 <p><strong>Explanation:</strong> The chart uses one undivided bar for each year, so it shows annual totals but not how the demographic composition of fertility changes over time, and gives no breakdown by maternal age group. <strong>Justification:</strong> Readers can compare bar heights, but they cannot identify which maternal age groups contribute to the decline. Adding meaningful age-group segments would shift the visualization from a single total towards a multidimensional account of where the decline is concentrated.</p>
 </section>
 <section id="w4-short-time-horizon" class="level3">
-<h3 class="anchored" data-anchor-id="w4-short-time-horizon">2.2.4 W4 — Short time horizon</h3>
+<h3 class="anchored" data-anchor-id="w4-short-time-horizon">W4 — Short time horizon</h3>
 <p><strong>Explanation:</strong> Birth data is shown only from 2012 to 2022 — roughly an 11-year window. <strong>Justification:</strong> This captures recent change but not the multi-decade demographic trends shaping Singapore’s fertility landscape. Long-run developments — including rising female education and labour-force participation, as well as major population policies such as the 1984 Graduate Mothers Scheme — predate this window and are invisible here.</p>
 </section>
 <section id="w5-lack-of-explicit-axis-labels-and-legend" class="level3">
-<h3 class="anchored" data-anchor-id="w5-lack-of-explicit-axis-labels-and-legend">2.2.5 W5 — Lack of explicit axis labels and legend</h3>
+<h3 class="anchored" data-anchor-id="w5-lack-of-explicit-axis-labels-and-legend">W5 — Lack of explicit axis labels and legend</h3>
 <p><strong>Explanation:</strong> Neither axis is explicitly labelled, and there is no legend explaining the colour variations. <strong>Justification:</strong> Readers must infer that the y-axis is citizen births and that colour marks time periods. Effective visualizations should be self-contained; explicit labels such as “Number of Citizen Births” and “Year” would reduce ambiguity for readers viewing the chart apart from the article.</p>
 </section>
 <section id="w6-absence-of-explanatory-variables" class="level3">
-<h3 class="anchored" data-anchor-id="w6-absence-of-explanatory-variables">2.2.6 W6 — Absence of explanatory variables</h3>
+<h3 class="anchored" data-anchor-id="w6-absence-of-explanatory-variables">W6 — Absence of explanatory variables</h3>
 <p><strong>Explanation:</strong> The chart presents a single descriptive metric — births per year — with no variables that could account for the decline. <strong>Justification:</strong> A single-variable chart answers <em>what</em> happened, not <em>why</em>. The causes of declining births are multi-factorial (behavioural, structural, economic). Without an explanatory layer, the chart is a diagnostic snapshot rather than an analytical tool.</p>
 </section>
 <section id="w7-compressed-variation-on-the-raw-count-scale" class="level3">
-<h3 class="anchored" data-anchor-id="w7-compressed-variation-on-the-raw-count-scale">2.2.7 W7 — Compressed variation on the raw-count scale</h3>
+<h3 class="anchored" data-anchor-id="w7-compressed-variation-on-the-raw-count-scale">W7 — Compressed variation on the raw-count scale</h3>
 <p><strong>Explanation:</strong> The y-axis correctly begins at zero, but the annual birth counts occupy only the narrow 30.4k–33.7k range near the top of the scale. <strong>Justification:</strong> Retaining a zero baseline is appropriate for bars, yet the combination of raw counts and a 0–35k axis makes the year-to-year variation difficult to distinguish. Replacing the count-only view with age-specific fertility rates and meaningful stacked segments can reveal changes without truncating the bar-chart baseline.</p>
 </section>
 <section id="w8-arbitrary-period-averaging" class="level3">
-<h3 class="anchored" data-anchor-id="w8-arbitrary-period-averaging">2.2.8 W8 — Arbitrary period averaging</h3>
+<h3 class="anchored" data-anchor-id="w8-arbitrary-period-averaging">W8 — Arbitrary period averaging</h3>
 <p><strong>Explanation:</strong> Eleven individual years are collapsed into two 5-year block averages (32.7k vs 31.8k), presenting a 0.9k gap as the headline. <strong>Justification:</strong> The two-period split is an arbitrary editorial choice, and the 0.9k gap is shown without any measure of variability. Individual years complicate the implied narrative — 2019 (32.8k) exceeds several years in the supposedly higher 2013–2017 block. The averaging produces a cleaner narrative than the annual variation alone supports.</p>
 </section>
 </section>
@@ -343,11 +370,11 @@ Figure&nbsp;1: Original CNA visualization: <em>Drop in Singapore citizen births 
 <p>Each improvement targets one or more weaknesses above.</p>
 <section id="i1-use-fertility-rate-not-just-raw-counts-addresses-w2" class="level3">
 <h3 class="anchored" data-anchor-id="i1-use-fertility-rate-not-just-raw-counts-addresses-w2">I1 — Use fertility rate, not just raw counts → <em>addresses W2</em></h3>
-<p>We plan to replace the count-only view with <strong>age-specific fertility rates (ASFR)</strong> for the seven maternal age groups from 15–19 to 45–49, while retaining published total fertility rate (TFR) as a summary and validation measure. Rates relate births to the relevant female population, separating fertility behaviour from changes in the size of the reproductive-age population.</p>
+<p>We plan to replace the count-only view with <strong>age-specific fertility rates (ASFR)</strong> for the seven maternal age groups from 15–19 to 45–49, while retaining published total fertility rate (TFR) as a summary and validation measure. Rates relate births to the relevant female population, separating fertility behaviour from changes in the size of the reproductive-age population. For example, if the number of births to women aged 30–34 rises over time, this could simply reflect a larger number of women in that age group rather than an actual increase in their likelihood of having children. Using ASFR adjusts for this by measuring births per 1,000 women in that age group, allowing us to determine whether fertility behaviour has truly changed rather than just population structure.</p>
 </section>
 <section id="i2-use-stacked-bars-with-colour-mapped-to-age-group-addresses-w1-w3" class="level3">
-<h3 class="anchored" data-anchor-id="i2-use-stacked-bars-with-colour-mapped-to-age-group-addresses-w1-w3">I2 — Use stacked bars with colour mapped to age group → addresses W1, W3</h3>
-<p>The initial design uses stacked annual bars with year on the x-axis, ASFR on the left y-axis, and maternal age group represented by coloured segments, using a distinct and consistently ordered colour for each of the seven age groups. The combined height summarises the annual level across age-specific fertility rates, while the segments show how each age group contributes, and because colour now maps to age group rather than to editorial time blocks, it no longer implies that the more saturated years are larger simply because they are darker. Continuous contextual variables are provisionally represented as lines so that their direction and long-term movement remain easy to follow.</p>
+<h3 class="anchored" data-anchor-id="i2-use-stacked-bars-with-colour-mapped-to-age-group-addresses-w1-w3">I2 — Use stacked bars with colour mapped to age group → <em>addresses W1, W3</em></h3>
+<p>The initial design uses <strong>stacked annual bars</strong> with year on the x-axis, ASFR on the left y-axis, and maternal age group represented by coloured segments, using a distinct and consistently ordered colour for each of the seven age groups. The combined height summarises the annual level across age-specific fertility rates, while the segments show how each age group contributes, and because colour now maps to age group rather than to editorial time blocks, it no longer implies that the more saturated years are larger simply because they are darker. Continuous contextual variables are provisionally represented as lines so that their direction and long-term movement remain easy to follow.</p>
 </section>
 <section id="i3-add-labels-legend-and-annotations-addresses-w5" class="level3">
 <h3 class="anchored" data-anchor-id="i3-add-labels-legend-and-annotations-addresses-w5">I3 — Add labels, legend, and annotations → <em>addresses W5</em></h3>
@@ -376,6 +403,80 @@ Figure&nbsp;1: Original CNA visualization: <em>Drop in Singapore citizen births 
 <section id="i9-add-chinese-zodiac-context-addresses-w6" class="level3">
 <h3 class="anchored" data-anchor-id="i9-add-chinese-zodiac-context-addresses-w6">I9 — Add Chinese zodiac context → <em>addresses W6</em></h3>
 <p>Dragon and Tiger years may be marked with distinct symbols, provisionally upward and downward triangles beneath the annual bars. This adds a discrete cultural layer that can be compared with short-term fertility changes while keeping it visually separate from the continuous numerical series.</p>
+<div class="custom-table">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Improvement #</th>
+<th>Weakness Addressed</th>
+<th>Improvement</th>
+<th>Method / Technique</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>I1</td>
+<td>W2</td>
+<td>Separate fertility behaviour from population size effects</td>
+<td>Replace count-only view with age-specific fertility rates (ASFR); retain total fertility rate (TFR) as summary and validation measure</td>
+</tr>
+<tr class="even">
+<td>I2</td>
+<td>W1, W3</td>
+<td>Remove misleading colour emphasis and reveal age composition</td>
+<td>Use stacked annual bars; map colour to maternal age groups; include lines for continuous contextual variables</td>
+</tr>
+<tr class="odd">
+<td>I3</td>
+<td>W5</td>
+<td>Improve clarity and self-containment of the visualization</td>
+<td>Add explicit axis titles (Year, ASFR, Percent); include legends for age groups and contextual variables; explain annotations</td>
+</tr>
+<tr class="even">
+<td>I4</td>
+<td>W6</td>
+<td>Provide explanatory context for fertility trends</td>
+<td>Overlay female labour-force participation rate and proportion of single women as lines on a secondary percentage axis</td>
+</tr>
+<tr class="odd">
+<td>I5</td>
+<td>W6</td>
+<td>Situate fertility trends within policy context</td>
+<td>Annotate key policies (1972 Stop at Two, 1987 reversal, 2001 Baby Bonus, 2023 milestone); optionally use background shading</td>
+</tr>
+<tr class="even">
+<td>I6</td>
+<td>W4</td>
+<td>Capture long-run demographic trends</td>
+<td>Extend data range from 2012–2022 to ~1960–2025</td>
+</tr>
+<tr class="odd">
+<td>I7</td>
+<td>W8</td>
+<td>Preserve annual variation and avoid arbitrary aggregation</td>
+<td>Display annual observations instead of five-year block averages</td>
+</tr>
+<tr class="even">
+<td>I8</td>
+<td>W7</td>
+<td>Make variation more interpretable while preserving scale integrity</td>
+<td>Use zero-based ASFR axis; include secondary percentage axis; state units and transformations explicitly; apply age-group stacking</td>
+</tr>
+<tr class="odd">
+<td>I9</td>
+<td>W6</td>
+<td>Incorporate relevant cultural context into interpretation</td>
+<td>Mark Dragon and Tiger years with distinct symbols (e.g., triangles beneath bars)</td>
+</tr>
+</tbody>
+</table>
+</div>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -415,7 +516,7 @@ Figure&nbsp;1: Original CNA visualization: <em>Drop in Singapore citizen births 
 <td>I3</td>
 </tr>
 <tr class="even">
-<td>W6 No explanatory variables</td>
+<td>W6 Absence of explanatory variables</td>
 <td>I4, I5, I9</td>
 </tr>
 <tr class="odd">
@@ -437,12 +538,13 @@ Figure&nbsp;1: Original CNA visualization: <em>Drop in Singapore citizen births 
 <section id="data-requirements-and-dimensions" class="level2">
 <h2 class="anchored" data-anchor-id="data-requirements-and-dimensions">4.1 Data Requirements and Dimensions</h2>
 <p>The proposed visualization is planned to cover approximately <strong>1960–2025</strong>, subject to the final availability and consistency of each series. It combines fertility outcomes with demographic, economic, policy, and cultural context through the seven dimensions or analytical layers shown below.</p>
+<div class="custom-table">
 <table class="caption-top table">
 <colgroup>
-<col style="width: 15%">
-<col style="width: 35%">
-<col style="width: 18%">
-<col style="width: 29%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -497,8 +599,11 @@ Figure&nbsp;1: Original CNA visualization: <em>Drop in Singapore citizen births 
 </tr>
 </tbody>
 </table>
+</div>
 <p>The seven maternal age groups are <strong>15–19, 20–24, 25–29, 30–34, 35–39, 40–44, and 45–49</strong>. Total fertility rate (TFR) is retained as a published summary measure and as a validation variable. It is related to the age-specific rates by the approximation</p>
-<p>[ , ]</p>
+<p><span class="math display">\[
+\text{TFR} \approx \frac{5 \times \sum \text{ASFR}}{1000}
+\]</span></p>
 <p>because each ASFR represents a five-year age band. In the initial design, TFR is not plotted as a separate line; the stacked bars show the age-specific components underlying the overall fertility level. This treatment may be refined if another representation communicates the relationship more clearly.</p>
 </section>
 <section id="data-sources" class="level2">
@@ -519,11 +624,12 @@ Figure&nbsp;1: Original CNA visualization: <em>Drop in Singapore citizen births 
 <section id="policy-and-zodiac-annotations" class="level3">
 <h3 class="anchored" data-anchor-id="policy-and-zodiac-annotations">4.2.4 Policy and Zodiac Annotations</h3>
 <p>The policy annotations will be entered as a small table based on the team’s background research. The initial annotation plan includes the following selected events:</p>
+<div class="custom-table">
 <table class="caption-top table">
 <colgroup>
-<col style="width: 19%">
-<col style="width: 50%">
-<col style="width: 29%">
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -560,16 +666,18 @@ Figure&nbsp;1: Original CNA visualization: <em>Drop in Singapore citizen births 
 </tr>
 </tbody>
 </table>
+</div>
 <p>The zodiac table will identify the Dragon and Tiger years within the study period. Dragon years (1964, 1976, 1988, 2000, 2012, and 2024) and Tiger years (1962, 1974, 1986, 1998, 2010, and 2022) will be represented using distinct symbols; upward and downward triangles are the current provisional choice. These markers allow possible short-term cultural effects to be compared against the fertility bars without treating zodiac years as a continuous numerical variable.</p>
 </section>
 </section>
 <section id="raw-data-structure-and-known-challenges" class="level2">
 <h2 class="anchored" data-anchor-id="raw-data-structure-and-known-challenges">4.3 Raw Data Structure and Known Challenges</h2>
 <p>The raw sources are not immediately ready for plotting. The main structural issues and planned treatments are:</p>
+<div class="custom-table">
 <table class="caption-top table">
 <colgroup>
-<col style="width: 47%">
-<col style="width: 52%">
+<col style="width: 50%">
+<col style="width: 50%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -612,6 +720,7 @@ Figure&nbsp;1: Original CNA visualization: <em>Drop in Singapore citizen births 
 </tr>
 </tbody>
 </table>
+</div>
 <p>In all sources, <code>NA</code> represents an unavailable observation and is distinct from an observed value of zero. No missing observations will be automatically imputed.</p>
 </section>
 <section id="planned-data-engineering-pipeline" class="level2">
@@ -630,7 +739,13 @@ Figure&nbsp;1: Original CNA visualization: <em>Drop in Singapore citizen births 
 <h3 class="anchored" data-anchor-id="stage-3-prepare-female-singlehood">Stage 3 — Prepare Female Singlehood</h3>
 <p>The singlehood table will first be separated into age-group blocks. Age-group labels will be filled down to the nested sex rows, after which only Female observations for ages 25–29, 30–34, and 35–39 will be retained. The wide year columns will then be reshaped into long format.</p>
 <p>To reproduce the proposed visualization, the female singlehood measure will be calculated as the unweighted mean of the three published age-specific percentages:</p>
-<p>[ _{25-39} = . ]</p>
+<p><span class="math display">\[
+\text{Mean single rate}\_{25-39} = \frac{
+\text{Rate}_{25-29}+
+\text{Rate}_{30-34}+
+\text{Rate}_{35-39}
+}{3}.
+\]</span></p>
 <p>The resulting variable will therefore initially be described as the <strong>mean proportion of single women across the 25–29, 30–34, and 35–39 age groups</strong>, rather than as a population-weighted percentage of all women aged 25–39. A population-weighted calculation may be considered during implementation if suitable female population data is available.</p>
 </section>
 <section id="stage-4-prepare-female-lfpr" class="level3">
@@ -657,12 +772,13 @@ Figure&nbsp;1: Original CNA visualization: <em>Drop in Singapore citizen births 
 <section id="visualization-ready-outputs" class="level2">
 <h2 class="anchored" data-anchor-id="visualization-ready-outputs">Visualization-Ready Outputs</h2>
 <p>The completed pipeline will produce the following visualization-ready datasets:</p>
+<div class="custom-table">
 <table class="caption-top table">
 <colgroup>
-<col style="width: 18%">
-<col style="width: 23%">
-<col style="width: 32%">
-<col style="width: 24%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -705,6 +821,7 @@ Figure&nbsp;1: Original CNA visualization: <em>Drop in Singapore citizen births 
 </tr>
 </tbody>
 </table>
+</div>
 <p>This structure keeps measured variables, derived variables, and contextual annotations separate while providing all fields required to reproduce the proposed single-layered visualization.</p>
 </section>
 <section id="reproducibility" class="level2">
@@ -745,6 +862,7 @@ Figure&nbsp;1: Original CNA visualization: <em>Drop in Singapore citizen births 
 <p>Roles below are placeholders pending team confirmation — assign concrete tasks (e.g.&nbsp;data sourcing, cleaning/joining, specific chart panels, write-up, rendering/QA) once the workflow and analysis sections are locked.</p>
 </div>
 </div>
+<div class="custom-table">
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -775,6 +893,7 @@ Figure&nbsp;1: Original CNA visualization: <em>Drop in Singapore citizen births 
 </tr>
 </tbody>
 </table>
+</div>
 <hr>
 </section>
 
