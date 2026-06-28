@@ -19,14 +19,14 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 
 # Team Information
 
-::: {.custom-table}
-| Student Name | Student ID |
-|--------------|-----------|
-| Angel Zhang XinYu    | 2503541   |
-| Damien Tan Qing Xun (Chen QingXun)    | 2503046   |
-| Levl Lim Jing Qiang | 2501118 |
-| Yap Suen Hong | 2500770 |
-| Gador Sophia Helen Santiago | 2503845 |
+::: custom-table
+| Student Name                       | Student ID |
+|------------------------------------|------------|
+| Angel Zhang XinYu                  | 2503541    |
+| Damien Tan Qing Xun (Chen QingXun) | 2503046    |
+| Levl Lim Jing Qiang                | 2501118    |
+| Yap Suen Hong                      | 2500770    |
+| Gador Sophia Helen Santiago        | 2503845    |
 :::
 
 # 1. Introduction and Project Overview
@@ -194,7 +194,7 @@ Dragon and Tiger years may be marked with distinct symbols, provisionally upward
 :::
 
 ::: callout-tip
-## Weakness → Improvement mapping (summary) 
+## Weakness → Improvement mapping (summary)
 
 | Weakness                                           | Addressed by |
 |----------------------------------------------------|--------------|
@@ -214,7 +214,7 @@ Dragon and Tiger years may be marked with distinct symbols, provisionally upward
 
 The proposed visualization is planned to cover approximately **1960–2025**, subject to the final availability and consistency of each series. It combines fertility outcomes with demographic, economic, policy, and cultural context through the seven dimensions or analytical layers shown below.
 
-::: {.custom-table}
+::: custom-table
 | Dimension / layer | Variable used | Unit | Planned visual encoding |
 |------------------|------------------|------------------|------------------|
 | Time | Year | Calendar year | Horizontal axis |
@@ -228,13 +228,12 @@ The proposed visualization is planned to cover approximately **1960–2025**, su
 
 The seven maternal age groups are **15–19, 20–24, 25–29, 30–34, 35–39, 40–44, and 45–49**. Total fertility rate (TFR) is retained as a published summary measure and as a validation variable. It is related to the age-specific rates by the approximation
 
-$$
-\text{TFR} \approx \frac{5 \times \sum \text{ASFR}}{1000}
-$$
+$$\text{TFR} \approx \frac{5 \times \sum \text{ASFR}}{1000}$$
 
 because each ASFR represents a five-year age band. In the initial design, TFR is not plotted as a separate line; the stacked bars show the age-specific components underlying the overall fertility level. This treatment may be refined if another representation communicates the relationship more clearly.
 
-## 4.2 Data Sources 
+## 4.2 Data Sources
+
 The workflow uses three numerical data sources together with manually curated policy and zodiac annotation tables.
 
 ### Births and Fertility Rates
@@ -242,10 +241,10 @@ The workflow uses three numerical data sources together with manually curated po
 The primary dataset is the Singapore Department of Statistics (SingStat) **Births and Fertility Rates, Annual** CSV file (\[official SingStat table link to be inserted\]). It provides annual observations from **1960 to 2025**, including published TFR and ASFR for the seven maternal age groups. ASFR is measured as births per 1,000 women in each age group. The published TFR series will be retained for comparison with the value derived from the seven ASFR groups.
 
 ::: callout-note
-`File` : [insert file name] \
-`Publisher`: \
-`Unit` \
-`Coverage` \
+`File` : \[insert file name\]\
+`Publisher`:\
+`Unit`\
+`Coverage`\
 `We use`\
 `col1` `col2` `col3`
 :::
@@ -255,10 +254,10 @@ The primary dataset is the Singapore Department of Statistics (SingStat) **Birth
 The second SingStat dataset is table **M810581, “Proportion of Singles Among Resident Population by Selected Age Group and Sex, Annual”** (\[official SingStat table link to be inserted\]). The table measures the proportion of the resident population who are **never married**. Resident population includes Singapore citizens and permanent residents. The current plan uses female observations for ages **25–29, 30–34, and 35–39**. Available observations cover 1980 and 1983–2024; values for 1981 and 1982 are unavailable.
 
 ::: callout-note
-`File` : [insert file name] \
-`Publisher`: \
-`Unit` \
-`Coverage` \
+`File` : \[insert file name\]\
+`Publisher`:\
+`Unit`\
+`Coverage`\
 `We use`\
 `col1` `col2` `col3`
 :::
@@ -268,10 +267,10 @@ The second SingStat dataset is table **M810581, “Proportion of Singles Among R
 Female LFPR will be retrieved from the [World Bank World Development Indicators](https://data.worldbank.org/indicator/SL.TLF.CACT.FE.NE.ZS?locations=SG) using indicator **`SL.TLF.CACT.FE.NE.ZS`**, “Labour force participation rate, female (% of female population ages 15+) (national estimate).” The national-estimate series is selected because it covers **1970–2024**, matching the long historical period required by the visualization. The series is measured as a percentage.
 
 ::: callout-note
-`File` : [insert file name] \
-`Publisher`: \
-`Unit` \
-`Coverage` \
+`File` : \[insert file name\]\
+`Publisher`:\
+`Unit`\
+`Coverage`\
 `We use`\
 `col1` `col2` `col3`
 :::
@@ -280,7 +279,7 @@ Female LFPR will be retrieved from the [World Bank World Development Indicators]
 
 The policy annotations will be entered as a small table based on the team's background research. The initial annotation plan includes the following selected events:
 
-::: {.custom-table}
+::: custom-table
 | Year / period | Event | Planned encoding |
 |------------------------|------------------------|------------------------|
 | 1972 | Stop at Two campaign | Provisional event annotation |
@@ -296,7 +295,7 @@ The zodiac table will identify the Dragon and Tiger years within the study perio
 
 The raw sources are not immediately ready for plotting. The main structural issues and planned treatments are:
 
-::: {.custom-table}
+::: custom-table
 | Raw-data issue | Planned treatment |
 |------------------------------------|------------------------------------|
 | The fertility CSV stores data series in rows and years in columns, ordered from newest to oldest. | Select the required TFR and ASFR rows, then reshape the year columns into a long `year` variable. |
@@ -315,45 +314,43 @@ In all sources, `NA` represents an unavailable observation and is distinct from 
 
 The workflow will be implemented in RStudio as a reproducible sequence of transformations. Raw objects will remain unchanged, and each stage will create a new, clearly named object.
 
-### <span class="stage-badge">1</span>Stage 1 — Import the Raw Sources
+### [1]{.stage-badge}Stage 1 — Import the Raw Sources
 
 The two SingStat CSV files will be imported with `readr::read_csv()`. Female LFPR will be requested directly through `WDI::WDI()`, using Singapore's country code `SGP` and the national-estimate indicator. In the final project repository, file paths will be relative to the RStudio project rather than tied to one team member's computer.
 
-### <span class="stage-badge">2</span> Stage 2 — Prepare ASFR and TFR
+### [2]{.stage-badge} Stage 2 — Prepare ASFR and TFR
 
 The fertility table will be filtered to the published TFR row and the seven ASFR rows. `pivot_longer()` will convert the year columns into observations so that one ASFR row represents one **year × age-group** combination. The year will be converted to an integer, rate values to numeric, and maternal age group to an ordered factor.
 
 For validation, annual ASFR values will be summed and converted to an approximate TFR. The derived-versus-published comparison will be performed from **1980 onward**, when all seven age-group series are available. Earlier years will retain the published TFR, but the incomplete ASFR coverage for ages 45–49 will be documented and will not be treated as a complete reconstruction. Small differences from 1980 onward may occur because the published rates are rounded.
 
-### <span class="stage-badge">3</span> Stage 3 — Prepare Female Singlehood
+### [3]{.stage-badge} Stage 3 — Prepare Female Singlehood
 
 The singlehood table will first be separated into age-group blocks. Age-group labels will be filled down to the nested sex rows, after which only Female observations for ages 25–29, 30–34, and 35–39 will be retained. The wide year columns will then be reshaped into long format.
 
 To reproduce the proposed visualization, the female singlehood measure will be calculated as the unweighted mean of the three published age-specific percentages:
 
-$$
-\text{Mean single rate}\_{25-39} = \frac{
+$$\text{Mean single rate}\_{25-39} = \frac{
 \text{Rate}_{25-29}+
 \text{Rate}_{30-34}+
 \text{Rate}_{35-39}
-}{3}. 
-$$
+}{3}. $$
 
 The resulting variable will therefore initially be described as the **mean proportion of single women across the 25–29, 30–34, and 35–39 age groups**, rather than as a population-weighted percentage of all women aged 25–39. A population-weighted calculation may be considered during implementation if suitable female population data is available.
 
-### <span class="stage-badge">4</span> Stage 4 — Prepare Female LFPR
+### [4]{.stage-badge} Stage 4 — Prepare Female LFPR
 
 The World Bank result will be reduced to `year` and the female LFPR value, renamed `female_lfpr`, and filtered to the available 1970–2024 period. Values will remain in their original percentage unit. No unavailable years will be estimated or replaced with zero.
 
-### <span class="stage-badge">5</span> Stage 5 — Create Policy and Zodiac Tables
+### [5]{.stage-badge} Stage 5 — Create Policy and Zodiac Tables
 
 Policy events, the 2023 fertility milestone, the pro-natalist era, and zodiac years will be stored in separate annotation tables rather than repeated across every numerical observation. This keeps annotations independent from the measured fertility and percentage variables.
 
-### <span class="stage-badge">6</span> Stage 6 — Align and Join the Annual Drivers
+### [6]{.stage-badge} Stage 6 — Align and Join the Annual Drivers
 
 A complete year index from 1960 to 2025 will form the left side of the joins. The female LFPR and singlehood tables will be joined by `year`, producing one annual driver table. This preserves years outside each source's coverage as `NA`, including the singlehood gap in 1981–1982. The ASFR table will remain separate and in long format because it contains seven rows per year.
 
-### <span class="stage-badge">7</span> Stage 7 — Prepare the Secondary Percentage Axis
+### [7]{.stage-badge} Stage 7 — Prepare the Secondary Percentage Axis
 
 ASFR is measured per 1,000 women, whereas female LFPR and singlehood are percentages. The original percentage variables will be retained unchanged. During implementation, a reversible scale transformation will be calculated from the selected primary and secondary axis ranges so that the two percentage series can be displayed alongside ASFR. The final axis limits and scale factor will be determined after testing the readability of the visualization.
 
@@ -377,7 +374,6 @@ ASFR is measured per 1,000 women, whereas female LFPR and singlehood are percent
 # STAGE 7: Prepare the Secondary Percentage Axis
 ```
 
-
 ## 4.6 Validation Checks
 
 Before plotting, the pipeline will check that year and age-group keys are unique, expected age groups are present, numerical values fall within plausible ranges, missing observations remain correctly identified, and joins do not create duplicate or unintended rows. Approximate TFR derived from ASFR will be compared with the published TFR series from 1980 onward, when all seven maternal age groups are available. Policy and zodiac years will also be checked against the selected visualization period.
@@ -386,7 +382,7 @@ Before plotting, the pipeline will check that year and age-group keys are unique
 
 The completed pipeline will produce the following visualization-ready datasets:
 
-::: {.custom-table}
+::: custom-table
 | Dataset | Structure | Main fields | Purpose |
 |------------------|------------------|------------------|------------------|
 | Fertility data | One row per year × age group | Year, maternal age group, ASFR | Stacked fertility bars |
@@ -412,14 +408,17 @@ library(scales)     # Axis and percentage formatting
 ```
 
 # 5. Planned Data Analysis
+## 5.1 What This Analysis Is For
+Singapore's resident fertility has fallen steeply since 1960, dropping below the replacement rate within fifteen years and reaching a record low total fertility rate of 0.97 in 2023. The original chart we wanted to redesign only shows the decline in citizen births, but says nothing about its causes. 
 
-Singapore's resident fertility has fallen steeply since 1960, dropping below the replacement rate within about fifteen years and reaching a record low total fertility rate of 0.97 in 2023. The original chart we set out to redesign presents this decline as a simple fall in citizen births, which records the outcome but says nothing about its causes. Our central question is therefore why fertility has fallen, and our aim is to bring the decline and its principal drivers into a single figure so they can be read against one another on a shared timeline.
+This analysis aims to explain the long-term decline in Singapore’s fertility rate by moving beyond simple descriptive trends to identify and compare key underlying drivers. Rather than only showing how fertility has decreased over time, the goal is to integrate fertility outcomes with demographic, economic, policy, and cultural factors on a shared timeline. This allows us to assess how changes in women’s education and labour participation, partnership formation, housing and social conditions, and government policies may have collectively contributed to declining birth rates. The analysis also explores whether cultural patterns, such as the Chinese Zodiac, show any observable relationship with birth timing.
 
+## 5.2 Measures We Will Compute
 We began exploring data by plotting total fertility against a range of drivers drawn from research and official statistics. These included the median age at first marriage, the median age of mothers at first birth, female labour force participation, educational attainment, the HDB resale price index, household income, the share of never-married residents, birth order, and patterns following the Chinese Zodiac. For each, we examined how the series moved over time relative to fertility and judged whether the data was available over a sufficiently long and consistent period. From this, we selected the dimensions that combine the greatest explanatory weight with usable data and that can coexist in one readable figure. The dimensions chosen are AGe Specific Fertility Rate (ASFR), Female Labour Force Participation (FLFP), and the percentage of single women aged 25-39. It is supported by two contextual layers, the Chinese zodiac and population policies introduced by the government.
 
 The policies are visualised to show the effects of each policy introduced by the government. From there, we can assess and see how well these policies worked overtime, giving us more insight into real driving forces behind Singapore's declining fertility rate.
 
-We chose the FLFP and numner of single women dimensions to show the cultural shift in Singaporean attitudes towards bearing children. As Singapore modernised, women began attaining higher levels of education and becoming part of the workforce, hence decreasing the number of women having children. Furthermore, with more people spending longer time studying and establishing careers in their twenties, it results in people having kids at a later age. Additionally, more women are choosing to be single so they can focus on their careers instead. This exacerbates the low fertility problem.
+We chose the FLFP and number of single women dimensions to show the cultural shift in Singaporean attitudes towards bearing children. As Singapore modernised, women began attaining higher levels of education and becoming part of the workforce, hence decreasing the number of women having children. Furthermore, with more people spending longer time studying and establishing careers in their twenties, it results in people having kids at a later age. Additionally, more women are choosing to be single so they can focus on their careers instead. This exacerbates the low fertility problem.
 
 On top of that, we also intend to look at things from a cultural angle. Singapore have many traditions and beliefs deeply rooted in superstitution passed down from our ancestors. We wanted to see if the Chinese Zodiac had any particular effect on birth rates for particular years. Any observable patterns can confirm if our hypothesis is correct.
 
@@ -427,19 +426,16 @@ The data is drawn from official sources and imported directly into R. Births and
 
 Each source requires preparation before it can be combined. The SingStat tables are stored in wide form with one column per year and several rows of metadata, so we skip the metadata, reshape the tables to long form, extract the year and the age band from the labels, and convert the values to numeric. The singles table is hierarchical, with male and female rows nested beneath each age group, so we carry the age group down and tag each row by sex before filtering to the female rows. For the marriage measure we aggregate the never-married rates for the 25 to 29, 30 to 34 and 35 to 39 bands into a single prime-age series. We also remove the 1999 and 2000 participation values, where a change in the source's methodology produces a step that is an artefact rather than real movement. The cleaned series are joined on year, and because the two driver series are percentages while the bars are rates, we rescale the percentages onto the fertility axis so they can be shown on one shared secondary axis.
 
+## 5.3 Planned Analyses
 The figure is built as a single layered chart rather than a dashboard, on one shared time axis, so that every series can be compared directly. We use a stacked bar chart for fertility because it carries two messages in one geometry: the total height shows the overall decline, while the coloured segments show the changing age composition, which a single fertility line could not convey. The two drivers are drawn as lines, since a line is the clearest way to read a continuous trend and its slope, and they sit on a secondary percentage axis because they share a common unit. The Chinese zodiac is shown as small triangles below the bars, a discrete marker suited to discrete annual events, with upward triangles for Dragon years and downward triangles for Tiger years to encode the expected direction of effect. Policy is shown in two ways: the background is shaded to separate the anti-natalist era from the pro-natalist era, and individual measures are marked with vertical lines, dotted for the anti-natalist policy and dashed for the pro-natalist ones.
 
 In summary, the year forms the horizontal axis; the age-specific fertility rate is the height of the stacked bars, with the mother's age group encoded by colour; female labour force participation and the prime-age single rate are lines on the right-hand percentage axis; the Chinese zodiac is the row of triangles beneath the bars; and population policy is encoded by the shaded eras and the vertical policy lines. Together these allow the reader to see the decline, its shift into older ages, its co-movement with rising participation and singlehood, the periodic zodiac effect, and the asymmetry between policy that curbed births and policy that could not restore them.
 
-## 5.1 What This Analysis Is For
-
-This analysis aims to explain the long-term decline in Singapore’s fertility rate by moving beyond simple descriptive trends to identify and compare key underlying drivers. Rather than only showing how fertility has decreased over time, the goal is to integrate fertility outcomes with demographic, economic, policy, and cultural factors on a shared timeline. This allows us to assess how changes in women’s education and labour participation, partnership formation, housing and social conditions, and government policies may have collectively contributed to declining birth rates. The analysis also explores whether cultural patterns, such as the Chinese Zodiac, show any observable relationship with birth timing.
-
-## 5.2 Measures We Will Compute
-
-## 5.3 Planned Analyses
+## 5.4 Summary: What we produce
+This analysis sets out to explain Singapore's long fertility decline, from above replacement in 1960 to a record-low total fertility rate of 0.97 in 2023, by bringing the decline and its main drivers onto a single shared timeline rather than charting births alone. After exploring a wide range of candidate drivers, we selected three substantive measures, the age-specific fertility rate by the mother's age group, the female labour force participation rate, and the prime-age single rate for women aged 25 to 39, supported by two contextual layers, the Chinese zodiac and government population policy. The data comes from official sources, with births and singlehood downloaded as CSV files from the Singapore Department of Statistics and female participation pulled directly through the WDI package from the World Bank, chosen because it reaches back to 1970. After reshaping each table to long form, deriving the prime-age single rate, and rescaling the percentage series onto the fertility axis, we present everything as one layered figure: stacked bars for fertility and its age composition, two lines for the drivers, triangles for Dragon and Tiger years, and shaded eras with marked policy lines. The aim is to let the reader see the decline, its shift into older ages, its co-movement with rising participation and singlehood, the cultural zodiac signal, and the asymmetry between policy that curbed births and policy that could not restore them, while recognising that the figure shows association rather than proven causation.
 
 ### A1 — Long-term fertility trend and age shift
+
 **Question**: How has fertility changed over time and across age groups?
 
 **Metric**: ASFR by age group
@@ -447,25 +443,27 @@ This analysis aims to explain the long-term decline in Singapore’s fertility r
 **Output**: Stacked bar chart of ASFR
 
 ::: callout-note
-
 ## Hypothesis
+
 We expect fertility rate to drop over the years and age group to be composed more of the later age groups due to delayed childbirth.
 :::
 
 ### A2 — Education and delayed fertility
+
 **Question**: Does increased education and career formation correspond to later fertility?
 
-**Metric**: Female LFPR + ASFR 
+**Metric**: Female LFPR + ASFR
 
 **Output**: Time series comparison + age composition shift
 
 ::: callout-note
-
 ## Hypothesis
+
 We expect that as the female LFPR increase, the ASFR decreases due to women choosing to finish their education and build a career before starting a family.
 :::
 
 ### A3 — Policy and structural shocks / cultural beliefs
+
 **Question**: How do policy changes and economic recessions/ cultural beliefs relate to fertility trends?
 
 **Metric**: Policy Timeline + Recession periods/Zodiac vs ASFR
@@ -473,34 +471,34 @@ We expect that as the female LFPR increase, the ASFR decreases due to women choo
 **Output**: Time series comparison + age composition shift
 
 ::: callout-note
-
 ## Hypothesis
+
 We expect the ASFR trend to correspond with the policy changes ie. increase during the pro-natalist era and decrease during the anti-natalist era. In addition, we believe that recession periods/cultural beliefs also affect fertility rate, such that during the dragon year fertility rate would increase, and then decrease in the tiger year. (change accordingly for recession/zodiac)
 :::
 
 ### A4 — Economic conditions and fertility
+
 **Question**: Do rising costs and economic conditions affect fertility rates?
 
-**Metric**: 
+**Metric**:
 
-**Output**: 
+**Output**:
 
 ::: callout-note
-
 ## Hypothesis
+
 We expect ASFR to decrease as the cost of living continues to rise.
 :::
 
 ## 5.4 Summary: What We Produce
 
-::: {.custom-table}
-
-| Research Question | Output | Insight Supported | Data Needed  |
-|-------------------|--------|-------------------|--------------|
-| How has fertility changed over time? | ASFR stacked bars | long-term decline + age shift (?) | |
-| Does education explain delayed fertility / lowered birth rate? | Female LFPR line plot | later births due to career building | |
+::: custom-table
+| Research Question | Output | Insight Supported | Data Needed |
+|------------------|------------------|------------------|------------------|
+| How has fertility changed over time? | ASFR stacked bars | long-term decline + age shift (?) |  |
+| Does education explain delayed fertility / lowered birth rate? | Female LFPR line plot | later births due to career building |  |
 | Do recessions and policies affect fertility? | annotated timeline | policy effects | Policy + Recession data |
-| Do economic costs affect fertility rate? | | | |
+| Do economic costs affect fertility rate? |  |  |  |
 :::
 
 # 6. Work Distribution
@@ -511,7 +509,7 @@ We expect ASFR to decrease as the cost of living continues to rise.
 Roles below are placeholders pending team confirmation — assign concrete tasks (e.g. data sourcing, cleaning/joining, specific chart panels, write-up, rendering/QA) once the workflow and analysis sections are locked.
 :::
 
-::: {.custom-table}
+::: custom-table
 | Member        | Planned responsibilities |
 |---------------|--------------------------|
 | Angel Zhang   | *TBD*                    |
@@ -524,7 +522,8 @@ Roles below are placeholders pending team confirmation — assign concrete tasks
 # 7. References
 
 ## 7.1 Article Source
-Chew H. M., "Record number of marriages, drop in Singaporean births in 2022," CNA, Sep. 29, 2023. [https://www.channelnewsasia.com/singapore/marriage-birth-rate-fertility-ageing-population-immigration-2022-3807991](https://www.channelnewsasia.com/singapore/marriage-birth-rate-fertility-ageing-population-immigration-2022-3807991)
+
+Chew H. M., "Record number of marriages, drop in Singaporean births in 2022," CNA, Sep. 29, 2023. <https://www.channelnewsasia.com/singapore/marriage-birth-rate-fertility-ageing-population-immigration-2022-3807991>
 
 ## 7.2 Data Sources
 
