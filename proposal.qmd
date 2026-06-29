@@ -4,11 +4,13 @@ subtitle: "AAI1001 Data Engineering & Visualization — Project Proposal"
 author: "Team 11 — Angel, Sophia, Damien, Levl, Suen Hong"
 date: last-modified
 editor: visual
-toc: true
 format:
   html:
     theme: cosmo
     css: style.css
+    toc: true
+    toc-location: left
+    toc-float: true
 ---
 
 ```{r}
@@ -183,6 +185,7 @@ The current plan uses a zero-based ASFR axis for the fertility bars and a clearl
 
 Major recession periods are provisionally represented through shaded intervals or concise annotations rather than as another continuous line. This adds economic context that can be compared with short-term fertility changes without overcrowding the two existing LFPR and singlehood lines.
 
+#### Weakness → Improvement Mapping (Summary)
 ::: custom-table
 | Improvement \# | Weakness Addressed | Improvement | Method / Technique |
 |----|----|----|----|
@@ -625,9 +628,18 @@ Chew H. M., "Record number of marriages, drop in Singaporean births in 2022," CN
 
 ## 8.2 Data Sources
 
-Ministry of Trade and Industry, "Employment Trends During Recession: A Comparison From Peak to Trough," *Economic Survey of Singapore 2009*, 2010. <https://www.mti.gov.sg/resources/economic-survey-of-singapore/economic-survey-of-singapore-and-feature-articles/employment-trends-during-recession---a-comparison-from-peak-to-trough/>
+- Ministry of Trade and Industry, "Employment Trends During Recession: A Comparison From Peak to Trough," *Economic Survey of Singapore 2009*, 2010. <https://www.mti.gov.sg/resources/economic-survey-of-singapore/economic-survey-of-singapore-and-feature-articles/employment-trends-during-recession---a-comparison-from-peak-to-trough/>
 
-Ministry of Trade and Industry, "Singapore's GDP Contracted by 3.8 Per Cent in the Fourth Quarter of 2020," Jan. 4, 2021. <https://www.mti.gov.sg/newsroom/singapore-s-gdp-contracted-by-3-8-per-cent-in-the-fourth-quarter-of-2020>
+- Ministry of Trade and Industry, "Singapore's GDP Contracted by 3.8 Per Cent in the Fourth Quarter of 2020," Jan. 4, 2021. <https://www.mti.gov.sg/newsroom/singapore-s-gdp-contracted-by-3-8-per-cent-in-the-fourth-quarter-of-2020>
+
+- Singapore Department of Statistics, "Births And Fertility Rates, Annual," 2026. <https://data.gov.sg/datasets/d_e39eeaeadb571c0d0725ef1eec48d166/view>
+
+- Singapore Department of Statistics, "Consumer Price Index (CPI), 2024 As Base Year, Monthly," 2026. <https://data.gov.sg/datasets/d_e39eeaeadb571c0d0725ef1eec48d166/view>
+
+- Singapore Department of Statistics, "Education Profile Of Singapore Residents Aged 25 Years & Over By Selected Highest Qualification Attained (HQA) (%), Annual," 2026. <https://data.gov.sg/datasets/d_7317a32321dbfad2cbb5b60ca74c9f08/view>
+
+- Singapore Department of Statistics, "Singapore Residents Aged 20 Years & Over By Sex, Age Group And Marital Status, Annual," 2026. <https://data.gov.sg/datasets/d_e39eeaeadb571c0d0725ef1eec48d166/view>
+
 
 ## 8.3 Design References
 
