@@ -33,11 +33,11 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 
 # 1. Introduction and Project Overview
 
-## 1.1 Our Project's Aim 
+## 1.1 Our Project's Aim
 
 Singapore has experienced a sustained decline in fertility over the past several decades despite numerous policy interventions aimed at encouraging marriage and parenthood. While declining birth counts are frequently reported in the media, such figures describe the outcome rather than the broader demographic, social, and economic changes that may be associated with it.
 
-This project aims to re-examine Singapore's declining fertility by moving beyond annual birth counts and incorporating additional contextual dimensions. Specifically, we investigate how fertility trends have evolved alongside changes in female labour-force participation, female singlehood during prime childbearing ages, population policies, and major economic recessions. Rather than attempting to establish direct causal relationships, the project seeks to identify long-term patterns and co-movements that may help explain the persistence of low fertility in Singapore.
+This project aims to re-examine Singapore's declining fertility by moving beyond annual birth counts and incorporating additional contextual dimensions. Specifically, we investigate how fertility trends have evolved alongside changes in female labour-force participation, female singlehood across selected reproductive-age groups, population policies, and major economic recessions. Rather than attempting to establish direct causal relationships, the project seeks to identify long-term patterns and co-movements that may help explain the persistence of low fertility in Singapore.
 
 Through an improved multi-dimensional visualization, the project aims to transform a simple descriptive chart into a richer analytical representation of Singapore's demographic transition.
 
@@ -95,7 +95,7 @@ Over the past two generations, Singapore's demographic priorities have reversed.
 
 Singapore experienced a post-war baby boom before introducing increasingly strong family-planning measures. The *Stop at Two* campaign began in 1972 and formed part of a broader anti-natalist policy environment. TFR fell to around replacement level in 1975, briefly rose to 2.11 in 1976, and remained below replacement level from 1977 onward. By the 1980s, the government had begun reversing its position. The 1983 Great Marriage Debate and the short-lived Graduate Mothers Scheme in 1984 focused public attention on marriage and fertility among university-educated women. In 1987, *Have Three or More, If You Can Afford It* marked a clearer shift towards pro-natalist policy, followed by the Baby Bonus Scheme in 2001 and later expansions of parenthood support. Despite these interventions, fertility remained below replacement level and continued its long-term decline.
 
-This contrast between sustained policy intervention and persistently low fertility provides the analytical focus of the project. The visualization will not treat policy, employment, marriage patterns, or recessions as proven causes. Instead, it will examine how fertility has changed alongside broader structural and economic developments. Rising female labour-force participation and a growing proportion of women remaining single during prime childbearing ages may be associated with delayed family formation and a shorter period available for having children. Age-specific fertility rates can additionally show whether childbearing has shifted from younger to older maternal age groups. Bringing these measures together allows the project to investigate how Singapore's fertility decline relates to changes in women's employment, singlehood, maternal age, policy context, and major economic downturns.
+This contrast between sustained policy intervention and persistently low fertility provides the analytical focus of the project. The visualization will not treat policy, employment, marriage patterns, or recessions as proven causes. Instead, it will examine how fertility has changed alongside broader structural and economic developments. Rising female labour-force participation and a growing proportion of women remaining single across selected reproductive-age groups may be associated with delayed family formation and a shorter period available for having children. Age-specific fertility rates can additionally show whether childbearing has shifted from younger to older maternal age groups. Bringing these measures together allows the project to investigate how Singapore's fertility decline relates to changes in women's employment, singlehood, maternal age, policy context, and major economic downturns.
 
 ------------------------------------------------------------------------
 
@@ -117,7 +117,7 @@ Each weakness is stated with an explanation and a justification.
 
 ### W2 — Lack of demographic scaling
 
-**Explanation:** The graph plots absolute raw volume rather than scaling counts against Singapore's changing demographic structure. **Justification:** Raw births depend on the size of the reproductive group. If the population of women in prime childbearing ages shrank over the decade, births could fall even if individual fertility behaviour stayed constant or rose. Without normalising the counts into fertility rates, the chart cannot distinguish changes in fertility behaviour from changes in the size and age structure of the female population.
+**Explanation:** The graph plots absolute raw volume rather than scaling counts against Singapore's changing demographic structure. **Justification:** Raw births depend on the size of the reproductive group. If the population of women of reproductive age shrank over the decade, births could fall even if individual fertility behaviour stayed constant or rose. Without normalising the counts into fertility rates, the chart cannot distinguish changes in fertility behaviour from changes in the size and age structure of the female population.
 
 ### W3 — Limited compositional breakdown by maternal age
 
@@ -163,7 +163,7 @@ The visualization will include explicit axis titles for **Year**, **ASFR (births
 
 ### I4 — Add female LFPR and singlehood trends → *addresses W6*
 
-We plan to overlay female labour-force participation rate and the mean proportion of single women across ages 25–39, initially as lines on a shared secondary percentage axis. These variables add socioeconomic and demographic context, allowing their long-term movement to be compared descriptively with the fertility trend.
+We plan to overlay the unweighted mean female labour-force participation rate and the unweighted mean proportion of single women across ages 25–49, initially as lines on a shared secondary percentage axis. These variables add socioeconomic and demographic context, allowing their long-term movement to be compared descriptively with the fertility trend while retaining women in the older reproductive-age groups.
 
 ### I5 — Add population-policy context → *addresses W6*
 
@@ -189,7 +189,7 @@ Major recession periods are provisionally represented through shaded intervals o
 
 ::: custom-table
 | Improvement \# | Weakness Addressed | Improvement | Method / Technique |
-|------------------|------------------|------------------|------------------|
+|----|----|----|----|
 | I1 | W2 | Separate fertility behaviour from population size effects | Replace count-only view with age-specific fertility rates (ASFR); retain total fertility rate (TFR) as summary and validation measure |
 | I2 | W1, W3 | Remove misleading colour emphasis and reveal age composition | Use stacked annual bars; map colour to maternal age groups; include lines for continuous contextual variables |
 | I3 | W5 | Improve clarity and self-containment of the visualization | Add explicit axis titles (Year, ASFR, Percent); include legends for age groups and contextual variables; explain annotations |
@@ -242,7 +242,7 @@ The primary dataset is the Singapore Department of Statistics (SingStat) **Birth
 
 ### B. Primary Dataset: Proportion of Singles
 
-The second SingStat dataset is table **M810581, “Proportion of Singles Among Resident Population by Selected Age Group and Sex, Annual”** (<https://data.gov.sg/datasets/d_2552cf03121921d78da5e17004f43e0a/view>). The table measures the proportion of the resident population who are **never married**. Resident population includes Singapore citizens and permanent residents. The current plan uses female observations for ages **25–29, 30–34, and 35–39**. Available observations cover 1980 and 1983–2024; values for 1981 and 1982 are unavailable.
+The second SingStat dataset is table **M810581, “Proportion of Singles Among Resident Population by Selected Age Group and Sex, Annual”** (<https://data.gov.sg/datasets/d_2552cf03121921d78da5e17004f43e0a/view>). The table measures the proportion of the resident population who are **never married**. Resident population includes Singapore citizens and permanent residents. The current plan uses female observations for ages **25–29, 30–34, 35–39, 40–44, and 45–49**. Available observations cover 1980 and 1983–2024; values for 1981 and 1982 are unavailable.
 
 ::: callout-note
 `File` : M810581.csv\
@@ -257,7 +257,11 @@ The second SingStat dataset is table **M810581, “Proportion of Singles Among R
 
 - 35–39
 
-These age groups are averaged to represent female singlehood during the prime childbearing years.
+- 40–44
+
+- 45–49
+
+These five age groups are combined as an unweighted mean representing female singlehood across selected reproductive ages.
 :::
 
 ### C. Primary Dataset: Female Labour-Force Participation
@@ -276,6 +280,10 @@ Female LFPR will use the SingStat Table Builder table **M182201, "Resident Labou
 - 30–34
 
 - 35–39
+
+- 40–44
+
+- 45–49
 :::
 
 ### D. Annotation Dataset: Policy and Recession
@@ -284,7 +292,7 @@ The policy annotations will be entered as a small table based on the team's back
 
 ::: custom-table
 | Year / period | Event | Planned encoding |
-|------------------------|------------------------|------------------------|
+|----|----|----|
 | 1972 | Stop at Two campaign | Provisional event annotation |
 | 1987 | “Have Three or More, If You Can Afford It” policy reversal | Provisional event annotation |
 | 2001 | Baby Bonus Scheme | Provisional event annotation |
@@ -304,11 +312,11 @@ The published **Total Fertility Rate (TFR)** is retained as a summary measure an
 
 ### B. Proportion of Singles
 
-The proportion of single women is included because delayed or reduced marriage formation is closely linked to fertility in Singapore, where most births occur within marriage. The selected female age groups — **25–29, 30–34, and 35–39** — represent key prime childbearing ages. Combining these age groups provides a useful contextual measure of how singlehood patterns have changed during the period when many women would traditionally marry and start families.
+The proportion of single women is included because delayed or reduced marriage formation is closely linked to fertility in Singapore, where most births occur within marriage. The selected female age groups from **25–29 through 45–49** cover a broader span of reproductive ages and retain women aged 40–49, allowing later patterns of marriage and childbearing to remain visible. Their unweighted mean will be treated as a descriptive index in which each five-year age group contributes equally.
 
 ### C. Female Labour-Force Participation
 
-Female LFPR is included as a labour-market context variable because women's workforce participation has changed alongside Singapore's long-term fertility patterns. The current plan compares the mean female labour-force participation rate across ages 25–29, 30–34, and 35–39, the same age groups used for the singlehood measure in B, rather than the all-ages female LFPR. Restricting the measure to prime childbearing ages avoids diluting the comparison with participation trends among teenagers still in education or older women approaching retirement, neither of which bears directly on the project's delayed-childbearing hypothesis. Comparing this prime-age LFPR with TFR and ASFR allows the project to examine whether changes in employment participation coincide with fertility levels and shifts towards later childbearing. The comparison will remain descriptive and will not treat labour-force participation as a direct cause of fertility decline.
+Female LFPR is included as a labour-market context variable because women's workforce participation has changed alongside Singapore's long-term fertility patterns. The current plan compares the unweighted mean female labour-force participation rate across the five age groups from **25–29 through 45–49**, matching the age range used for the singlehood measure. Including women aged 40–49 avoids excluding older reproductive-age groups and supports comparison with possible shifts towards later childbearing. The resulting measure will be interpreted as a mean of age-specific rates rather than as the population-wide LFPR for all women aged 25–49. The comparison will remain descriptive and will not treat labour-force participation as a direct cause of fertility decline.
 
 ### D. Policy and Recession
 
@@ -324,12 +332,12 @@ The proposed visualization is planned to cover approximately **1960–2025**, su
 
 ::: custom-table
 | Dimension / layer | Variable used | Unit | Planned visual encoding |
-|------------------|------------------|------------------|------------------|
+|----|----|----|----|
 | Time | Year | Calendar year | Horizontal axis |
 | Fertility | Age-specific fertility rate (ASFR) | Births per 1,000 women | Stacked-bar height |
 | Fertility composition | Mother's age group | Seven five-year age groups | Bar fill colour |
-| Labour-market context | Mean female labour-force participation rate (LFPR) across ages 25–39 | Percent | Contextual line on a percentage axis |
-| Singlehood context | Mean female singlehood rate across ages 25–39 | Percent | Contextual line on a percentage axis |
+| Labour-market context | Unweighted mean female labour-force participation rate (LFPR) across ages 25–49 | Percent | Contextual line on a percentage axis |
+| Singlehood context | Unweighted mean female singlehood rate across ages 25–49 | Percent | Contextual line on a percentage axis |
 | Policy context | Selected population policies and fertility milestone | Event year / policy era | Annotations and possible background shading |
 | Economic context | Major recession periods | Year / period | Shaded intervals or annotations |
 :::
@@ -346,7 +354,7 @@ The raw sources are not immediately ready for plotting. The main structural issu
 
 ::: custom-table
 | Raw-data issue | Planned treatment |
-|------------------------------------|------------------------------------|
+|----|----|
 | The fertility CSV stores data series in rows and years in columns, ordered from newest to oldest. | Select the required TFR and ASFR rows, then reshape the year columns into a long `year` variable. |
 | ASFR age labels contain indentation, spaces, and the word “Years.” | Remove extra whitespace and standardize labels to `15-19`, `20-24`, ..., `45-49`. |
 | ASFR for ages 45–49 is unavailable before 1980. | Preserve these observations as `NA`; unavailable values will not be converted to zero. |
@@ -355,7 +363,7 @@ The raw sources are not immediately ready for plotting. The main structural issu
 | M810581 has no observations for 1981 and 1982. | Preserve these years as `NA`; do not replace them with zero or interpolate them without justification. |
 | The numerical sources begin and end in different years. | Create a complete 1960–2025 year index and retain missing values outside each source's coverage. |
 | ASFR and the two contextual lines use different units. | Retain the original values and create separate transformed plotting coordinates for the secondary axis. |
-| M182201 stacks three blocks by sex (Total, Male, Female), each containing every age row beneath it, including non-five-year aggregates such as 65 Years & Over, 15–24 Years, and 25–64 Years. | Select only the rows beneath the "Female Resident Participation Rate" heading, then filter by exact label to the 25–29, 30–34, and 35–39 rows specifically. |
+| M182201 stacks three blocks by sex (Total, Male, Female), each containing every age row beneath it, including non-five-year aggregates such as 65 Years & Over, 15–24 Years, and 25–64 Years. | Select only the rows beneath the "Female Resident Participation Rate" heading, then filter by exact label to the 25–29, 30–34, 35–39, 40–44, and 45–49 rows specifically. |
 :::
 
 In all sources, `NA` represents an unavailable observation and is distinct from an observed value of zero. No missing observations will be automatically imputed.
@@ -378,21 +386,23 @@ For validation, annual ASFR values will be summed and converted to an approximat
 
 ### [3]{.stage-badge} Stage 3 — Prepare Female Singlehood
 
-The singlehood table will first be separated into age-group blocks. Age-group labels will be filled down to the nested sex rows, after which only Female observations for ages 25–29, 30–34, and 35–39 will be retained. The wide year columns will then be reshaped into long format.
+The singlehood table will first be separated into age-group blocks. Age-group labels will be filled down to the nested sex rows, after which only Female observations for ages 25–29, 30–34, 35–39, 40–44, and 45–49 will be retained. The wide year columns will then be reshaped into long format.
 
-To reproduce the proposed visualization, the female singlehood measure will be calculated as the unweighted mean of the three published age-specific percentages:
+To reproduce the proposed visualization, the female singlehood measure will be calculated as the unweighted mean of the five published age-specific percentages:
 
-$$\text{Mean single rate}\_{25-39} = \frac{
+$$\text{Mean single rate}\_{25-49} = \frac{
 \text{Rate}_{25-29}+
 \text{Rate}_{30-34}+
-\text{Rate}_{35-39}
-}{3}. $$
+\text{Rate}_{35-39}+
+\text{Rate}_{40-44}+
+\text{Rate}_{45-49}
+}{5}. $$
 
-The resulting variable will therefore initially be described as the **mean proportion of single women across the 25–29, 30–34, and 35–39 age groups**, rather than as a population-weighted percentage of all women aged 25–39. A population-weighted calculation may be considered during implementation if suitable female population data is available.
+The resulting variable will therefore be described as the **unweighted mean proportion of single women across the five age groups from 25–29 through 45–49**, rather than as a population-weighted percentage of all women aged 25–49. Each five-year age group contributes equally to this descriptive index.
 
 ### [4]{.stage-badge} Stage 4 — Prepare Female LFPR
 
-The labour force table will be filtered to the rows beneath the "Female Resident Participation Rate" heading, then filtered again to the 25–29, 30–34, and 35–39 age-band rows specifically, since several broader aggregate rows sit within the same block. The wide year columns will then be reshaped into long format, and the female LFPR measure will be calculated as the unweighted mean of the three age-specific participation rates, renamed `female_lfpr_25_39`. As with the singlehood measure, this is an unweighted mean across the three age groups rather than a population-weighted rate for all women aged 25–39, and may be revisited if suitable female population data becomes available.
+The labour force table will be filtered to the rows beneath the "Female Resident Participation Rate" heading, then filtered again to the 25–29, 30–34, 35–39, 40–44, and 45–49 age-band rows specifically, since several broader aggregate rows sit within the same block. The wide year columns will then be reshaped into long format, and the female LFPR measure will be calculated as the unweighted mean of the five age-specific participation rates, renamed `female_lfpr_25_49`. As with the singlehood measure, this is an unweighted mean in which each age group contributes equally rather than a population-weighted rate for all women aged 25–49.
 
 ### [5]{.stage-badge} Stage 5 — Create Policy and Recession Tables
 
@@ -408,31 +418,86 @@ ASFR is measured per 1,000 women, whereas female LFPR and singlehood are percent
 
 ## 5.2 Planned Cleaning and Transformation Decisions
 
-The main cleaning decisions are to standardise year and age-group fields, reshape the wide annual tables into tidy long form, preserve unavailable observations as `NA`, and avoid automatic interpolation. The three female singlehood age-group percentages will initially be combined using an unweighted mean and labelled accordingly. Each source will retain its published unit, and any secondary-axis transformation will be reversible and used only for plotting.
+The main cleaning decisions are to standardise year and age-group fields, reshape the wide annual tables into tidy long form, preserve unavailable observations as `NA`, and avoid automatic interpolation. The five female singlehood and five female LFPR age-group percentages will be combined using separate unweighted means and labelled accordingly. Each source will retain its published unit, and any secondary-axis transformation will be reversible and used only for plotting.
 
 ## 5.3 Target Output Schema
 
 The engineering workflow will produce separate tables for the long-form ASFR observations, annual TFR validation, annual LFPR and singlehood drivers, policy and fertility milestones, and recession periods. Keeping measured series and contextual annotations separate reduces duplication and allows the final visualization design to be refined without changing the cleaned source values.
 
-## 5.4 Illustrative Code Structure
+## 5.4 Proposed Data Engineering Pseudocode
 
-```{r}
-#| eval: false
+The following pseudocode summarises the planned transformation from the raw sources to the visualization ready outputs.
 
-# STAGE 1: Import Raw Sources
+#### Phase 1: Import and Prepare the Numerical Sources
 
-# STAGE 2: Prepare ASFR and TFR
+The first phase converts each source into a consistent annual structure while preserving the original published values and missing observations.
 
-# STAGE 3: Prepare Female Singlehood
+``` text
+IMPORT fertility, singlehood and LFPR datasets
 
-# STAGE 4: Prepare Female LFPR
+PREPARE fertility data
+    SELECT published TFR and seven ASFR age groups
+    RESHAPE years into long format
+    STANDARDISE year and maternal-age fields
+    RETAIN missing ASFR values as NA
 
-# STAGE 5: Create Policy and Recession Tables
+VALIDATE fertility data
+    FROM 1980 onward
+        CALCULATE approximate TFR from ASFR
+        COMPARE calculated TFR with published TFR
 
-# STAGE 6: Align & Join the Annual Drivers
+PREPARE female singlehood data
+    SELECT female rows aged 25-29 through 45-49
+    RESHAPE years into long format
+    CALCULATE unweighted mean singlehood rate by year
 
-# STAGE 7: Prepare the Secondary Percentage Axis
+PREPARE female LFPR data
+    SELECT female resident participation-rate rows
+    SELECT age groups 25-29 through 45-49
+    RESHAPE years into long format
+    CALCULATE unweighted mean LFPR by year
 ```
+
+------------------------------------------------------------------------
+
+#### Phase 2: Build Contextual Data and Align the Timeline
+
+Policy events and recession periods are prepared separately before the annual driver series are aligned on a common timeline.
+
+``` text
+PREPARE contextual annotations
+    CREATE policy-event table
+    CREATE recession-period table
+
+ALIGN annual data
+    CREATE complete year sequence from 1960 to 2025
+    JOIN LFPR and singlehood by year
+    PRESERVE unavailable observations as NA
+    KEEP ASFR in a separate year-by-age-group table
+```
+
+------------------------------------------------------------------------
+
+#### Phase 3: Prepare Plotting Fields and Validate the Outputs
+
+The final transformation phase creates the fields required for visualization and checks that the resulting tables remain complete and internally consistent.
+
+``` text
+PREPARE plotting fields
+    RETAIN original percentage values
+    CALCULATE reversible secondary-axis coordinates
+
+VALIDATE final outputs
+    APPLY the validation checks described in Section 5.5
+
+OUTPUT visualization-ready tables
+```
+
+::: callout-tip
+## Planned Result
+
+The workflow will produce separate visualization-ready tables for **ASFR**, **TFR validation**, **annual LFPR and singlehood drivers**, **policy milestones**, and **recession periods**.
+:::
 
 ## 5.5 Validation Checks
 
@@ -444,10 +509,10 @@ The completed pipeline will produce the following visualization-ready datasets:
 
 ::: custom-table
 | Dataset | Structure | Main fields | Purpose |
-|------------------|------------------|------------------|------------------|
+|----|----|----|----|
 | Fertility data | One row per year × age group | Year, maternal age group, ASFR | Stacked fertility bars |
 | TFR validation data | One row per year | Year, published TFR, derived TFR, difference | Check the ASFR transformation |
-| Annual driver data | One row per year | Year, mean female LFPR (25–39), mean female singlehood rate (25–39) | Contextual trend lines |
+| Annual driver data | One row per year | Year, unweighted mean female LFPR (25–49), unweighted mean female singlehood rate (25–49) | Contextual trend lines |
 | Policy and milestone data | One row per event or policy era | Year or period, label, event type | Policy lines, labels, and shading |
 | Recession data | One row per selected recession period | Year or period, recession label | Economic-context annotations |
 :::
@@ -472,7 +537,7 @@ library(scales)     # Axis and percentage formatting
 
 ## 6.1 What This Analysis Is For
 
-This analysis examines Singapore’s long-term fertility decline by situating it within broader demographic, social, economic and policy contexts, rather than presenting it as a standalone trend. Using official data, selected indicators—including age-specific fertility rates, female labour-force participation and prime-age female singlehood—are aligned on a shared timeline to explore how fertility patterns co-move with changes in labour participation, partnership formation, policy shifts and economic downturns. The approach is descriptive and comparative, focusing on timing and patterns rather than causation, and is implemented through a reproducible data pipeline in R. The final output is designed as a single layered visualisation that integrates fertility levels, age composition and contextual annotations to provide a more holistic understanding of the observed decline.
+This analysis examines Singapore’s long-term fertility decline by situating it within broader demographic, social, economic and policy contexts, rather than presenting it as a standalone trend. Using official data, selected indicators - including age-specific fertility rates and unweighted mean female labour-force participation and singlehood measures across ages 25–49 - are aligned on a shared timeline to explore how fertility patterns co-move with changes in labour participation, partnership formation, policy shifts and economic downturns. The approach is descriptive and comparative, focusing on timing and patterns rather than causation, and is implemented through a reproducible data pipeline in R. The final output is designed as a single layered visualisation that integrates fertility levels, age composition and contextual annotations to provide a more holistic understanding of the observed decline.
 
 ## 6.2 Measures We Will Compute
 
@@ -494,7 +559,7 @@ We expect overall fertility to decline over time and the relative contribution o
 
 **Question**: How does female labour-force participation relate to fertility levels and maternal-age patterns?
 
-**Metric**: Mean female LFPR across ages 25–29, 30–34 and 35–39, compared with ASFR and TFR.
+**Metric**: Unweighted mean female LFPR across ages 25–29, 30–34, 35–39, 40–44 and 45–49, compared with ASFR and TFR.
 
 **Output**: Time-series comparison of mean female LFPR, overall fertility and maternal-age composition
 
@@ -520,16 +585,16 @@ We expect fertility patterns to differ across major policy periods and around ec
 
 ### A4 - Female singlehood and fertility
 
-**Question**: How does female singlehood during prime childbearing ages relate to fertility trends?
+**Question**: How does female singlehood across selected reproductive-age groups relate to fertility trends?
 
-**Metric**: Mean female singlehood rate across ages 25–29, 30–34 and 35–39, compared with ASFR and TFR
+**Metric**: Unweighted mean female singlehood rate across ages 25–29, 30–34, 35–39, 40–44 and 45–49, compared with ASFR and TFR
 
 **Output**: Time-series comparison of female singlehood and fertility, with an optional descriptive correlation over their overlapping years
 
 ::: callout-note
 ## Hypothesis
 
-A higher proportion of women remaining never married during prime childbearing ages may be associated with lower fertility. This relationship will be interpreted as descriptive rather than causal.
+A higher mean proportion of women remaining never married across the selected reproductive-age groups may be associated with lower fertility. This relationship will be interpreted as descriptive rather than causal.
 :::
 
 ## 6.3 Planned Analyses
@@ -538,15 +603,15 @@ The analysis will use descriptive trend comparisons to examine how Singapore's f
 
 ### Long-term fertility trend and maternal-age shift
 
-Annual TFR and ASFR will be examined across the available study period to identify major turning points and longer-term changes. Where appropriate, changes may also be summarised by decade or selected policy period. The contribution of each maternal age group will be compared over time to determine whether fertility has shifted from younger age groups, particularly ages 20–29, towards older age groups such as 30–39.
+Annual TFR and ASFR will be examined across the available study period to identify major turning points and longer-term changes. Where appropriate, changes may also be summarised by decade or selected policy period. The contribution of each maternal age group will be compared over time to determine whether fertility has shifted from younger age groups, particularly ages 20–29, towards older age groups such as 30–39, while retaining the 40–44 and 45–49 groups to identify any trends in later childbearing.
 
 ### Female LFPR and fertility
 
-The mean female LFPR across ages 25–39 will be compared with fertility over their overlapping years to identify whether rising labour-force participation coincides with lower fertility or a shift towards later maternal ages.
+The unweighted mean female LFPR across ages 25–49 will be compared with fertility over their overlapping years to identify whether changing labour-force participation coincides with lower fertility or a shift towards later maternal ages.
 
 ### Female singlehood and fertility
 
-The mean singlehood rate among women aged 25–39 will be compared with TFR and ASFR. A descriptive correlation may be calculated over the overlapping period, provided that missing years are handled transparently. Correlation will not be interpreted as proof that singlehood caused fertility to decline.
+The unweighted mean singlehood rate across the five female age groups from 25–29 through 45–49 will be compared with TFR and ASFR. A descriptive correlation may be calculated over the overlapping period, provided that missing years are handled transparently. Correlation will not be interpreted as proof that singlehood caused fertility to decline.
 
 ### Policy-period comparison
 
@@ -564,11 +629,11 @@ The analysis will focus on long-term trends, timing, co-movement and descriptive
 
 ::: custom-table
 | Research Question | Output | Insight Supported | Data Needed |
-|------------------|------------------|------------------|------------------|
+|----|----|----|----|
 | How has fertility changed over time and across maternal age groups? | ASFR stacked bars and TFR trend summary | Long-term fertility decline and shift towards older maternal ages | ASFR and TFR data |
 | How does female LFPR relate to fertility levels and maternal-age patterns? | Time-series comparison with age composition | Association between labour-force participation and fertility timing | Female LFPR, ASFR and TFR data |
 | How do recessions and policies relate to fertility? | Annotated timeline with lag comparison | Descriptive timing and co-movement around policies and downturns | Policy, recession, ASFR and TFR data |
-| How does female singlehood relate to fertility? | Time-series comparison and optional descriptive correlation | Association between prime-age singlehood and fertility | Female singlehood, ASFR and TFR data |
+| How does female singlehood relate to fertility? | Time-series comparison and optional descriptive correlation | Association between female singlehood across ages 25–49 and fertility | Female singlehood, ASFR and TFR data |
 :::
 
 ------------------------------------------------------------------------
@@ -612,7 +677,6 @@ Chew H. M., "Record number of marriages, drop in Singaporean births in 2022," CN
 - Singapore Department of Statistics, "Education Profile Of Singapore Residents Aged 25 Years & Over By Selected Highest Qualification Attained (HQA) (%), Annual," 2026. <https://data.gov.sg/datasets/d_7317a32321dbfad2cbb5b60ca74c9f08/view>
 
 - Singapore Department of Statistics, "Proportion Of Singles Among Resident Population By Selected Age Group And Sex, Annual," 2026. <https://data.gov.sg/datasets/d_2552cf03121921d78da5e17004f43e0a/view>
-
 
 ------------------------------------------------------------------------
 
