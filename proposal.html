@@ -654,7 +654,7 @@ Note
 </section>
 <section id="c.-primary-dataset-female-labour-force-participation" class="level3">
 <h3 class="anchored" data-anchor-id="c.-primary-dataset-female-labour-force-participation">C. Primary Dataset: Female Labour-Force Participation</h3>
-<p>Female LFPR will use the <a href="https://data.worldbank.org/indicator/SL.TLF.CACT.FE.ZS?locations=SG">World Bank World Development Indicators</a> indicator <strong><code>SL.TLF.CACT.FE.ZS</code></strong>, “Labour force participation rate, female (% of female population ages 15+) (modelled ILO estimate).” The current downloaded file provides Singapore observations for <strong>1990–2016</strong>. The series is measured as a percentage.</p>
+<p>Female LFPR will use the SingStat Table Builder table <strong>M182201, “Resident Labour Force Participation Rate Aged 15 Years And Over By Age And Sex, End June, Annual”</strong> (<a href="https://tablebuilder.singstat.gov.sg/table/TS/M182201" class="uri">https://tablebuilder.singstat.gov.sg/table/TS/M182201</a>). The table reports the resident female labour-force participation rate by five-year age band, collected via the mid-year Comprehensive Labour Force Survey.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -665,12 +665,16 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><code>File</code> : API_SL.TLF.CACT.FE.ZS_DS25_en_csv_v2_406915.csv<br>
-<code>Publisher</code>: World Bank (ILO Modelled Estimates)<br>
+<p><code>File</code> : M182201.csv<br>
+<code>Publisher</code>: Ministry of Manpower, Singapore Department of Statistics<br>
 <code>Unit:</code>Per cent (%)<br>
-<code>Coverage:</code>1990-2016<br>
-<code>We use:</code>Singapore Female Labour Force Participation Rate<br>
-<code>female LFPR</code> <code>Singapore</code> <code>per</code></p>
+<code>Coverage:</code>1990–2025 (annual, mid-year; 1990, 1995, 2000 and 2005 are Census or General Household Survey years rather than Labour Force Survey years, per the source footnote)<br>
+<code>We use:</code>Female labour force participation rate aged:</p>
+<ul>
+<li><p>25–29</p></li>
+<li><p>30–34</p></li>
+<li><p>35–39</p></li>
+</ul>
 </div>
 </div>
 </section>
@@ -736,7 +740,7 @@ Note
 </section>
 <section id="c.-female-labour-force-participation" class="level3">
 <h3 class="anchored" data-anchor-id="c.-female-labour-force-participation">C. Female Labour-Force Participation</h3>
-<p>Female LFPR is included as a labour-market context variable because women’s workforce participation has changed alongside Singapore’s long-term fertility patterns. Comparing LFPR with TFR and ASFR allows the project to examine whether changes in employment participation coincide with fertility levels and shifts towards later childbearing. The comparison will remain descriptive and will not treat labour-force participation as a direct cause of fertility decline.</p>
+<p>Female LFPR is included as a labour-market context variable because women’s workforce participation has changed alongside Singapore’s long-term fertility patterns. The current plan compares the mean female labour-force participation rate across ages 25–29, 30–34, and 35–39, the same age groups used for the singlehood measure in B, rather than the all-ages female LFPR. Restricting the measure to prime childbearing ages avoids diluting the comparison with participation trends among teenagers still in education or older women approaching retirement, neither of which bears directly on the project’s delayed-childbearing hypothesis. Comparing this prime-age LFPR with TFR and ASFR allows the project to examine whether changes in employment participation coincide with fertility levels and shifts towards later childbearing. The comparison will remain descriptive and will not treat labour-force participation as a direct cause of fertility decline.</p>
 </section>
 <section id="d.-policy-and-recession" class="level3">
 <h3 class="anchored" data-anchor-id="d.-policy-and-recession">D. Policy and Recession</h3>
@@ -785,7 +789,7 @@ Note
 </tr>
 <tr class="even">
 <td>Labour-market context</td>
-<td>Female labour-force participation rate (LFPR)</td>
+<td>Mean female labour-force participation rate (LFPR) across ages 25–39</td>
 <td>Percent</td>
 <td>Contextual line on a percentage axis</td>
 </tr>
@@ -862,6 +866,14 @@ Note
 <td>ASFR and the two contextual lines use different units.</td>
 <td>Retain the original values and create separate transformed plotting coordinates for the secondary axis.</td>
 </tr>
+<tr class="odd">
+<td>M182201 stacks three blocks by sex (Total, Male, Female), each containing every age row beneath it, including non-five-year aggregates such as 65 Years &amp; Over, 15–24 Years, and 25–64 Years.</td>
+<td>Select only the rows beneath the “Female Resident Participation Rate” heading, then filter by exact label to the 25–29, 30–34, and 35–39 rows specifically.</td>
+</tr>
+<tr class="even">
+<td>1990, 1995, 2000, and 2005 are Census or General Household Survey years rather than Labour Force Survey years, and SingStat’s own footnote states they are not directly comparable to the surrounding years.</td>
+<td>Flag these four years in the cleaned data rather than treating the 1990–2025 run as methodologically uniform.</td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -875,7 +887,7 @@ Note
 <p>The workflow will be implemented in RStudio as a reproducible sequence of transformations. Raw objects will remain unchanged, and each stage will create a new, clearly named object.</p>
 <section id="stage-1-import-the-raw-sources" class="level3">
 <h3 class="anchored" data-anchor-id="stage-1-import-the-raw-sources"><span class="stage-badge">1</span>Stage 1 — Import the Raw Sources</h3>
-<p>The two SingStat files and the World Bank female LFPR file will be imported as raw data sources. In the final project repository, file paths will be relative to the RStudio project rather than tied to one team member’s computer.</p>
+<p>All three SingStat files will be imported as raw data sources.. In the final project repository, file paths will be relative to the RStudio project rather than tied to one team member’s computer.</p>
 </section>
 <section id="stage-2-prepare-asfr-and-tfr" class="level3">
 <h3 class="anchored" data-anchor-id="stage-2-prepare-asfr-and-tfr"><span class="stage-badge">2</span> Stage 2 — Prepare ASFR and TFR</h3>
@@ -895,7 +907,7 @@ Note
 </section>
 <section id="stage-4-prepare-female-lfpr" class="level3">
 <h3 class="anchored" data-anchor-id="stage-4-prepare-female-lfpr"><span class="stage-badge">4</span> Stage 4 — Prepare Female LFPR</h3>
-<p>The World Bank table will be filtered to Singapore and reshaped to retain <code>year</code> and the female LFPR value, renamed <code>female_lfpr</code>, for the available 1990–2016 period. Values will remain in their original percentage unit. No unavailable years will be estimated or replaced with zero.</p>
+<p>The labour force table will be filtered to Female observations for ages 25–29, 30–34, and 35–39, then reshaped from wide year columns into long format, following the same treatment as the singlehood table in Stage 3. The female LFPR measure will be calculated as the unweighted mean of the three age-specific participation rates, renamed <code>female_lfpr_25_39</code>. As with the singlehood measure, this is an unweighted mean across the three age groups rather than a population-weighted rate for all women aged 25–39, and may be revisited if suitable female population data becomes available. Values will remain in their original percentage unit, and no unavailable years will be estimated or replaced with zero.</p>
 </section>
 <section id="stage-5-create-policy-and-recession-tables" class="level3">
 <h3 class="anchored" data-anchor-id="stage-5-create-policy-and-recession-tables"><span class="stage-badge">5</span> Stage 5 — Create Policy and Recession Tables</h3>
