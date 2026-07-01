@@ -33,7 +33,7 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 
 # 1. Introduction and Project Overview
 
-## 1.1 Our Project's Aim (TBC)
+## 1.1 Our Project's Aim 
 
 Singapore has experienced a sustained decline in fertility over the past several decades despite numerous policy interventions aimed at encouraging marriage and parenthood. While declining birth counts are frequently reported in the media, such figures describe the outcome rather than the broader demographic, social, and economic changes that may be associated with it.
 
@@ -53,7 +53,7 @@ The topic is highly relevant to Singapore’s long-term demographic challenges. 
 
 ## 1.3 Our Chosen Visualization
 
-![Original CNA visualization: *Drop in Singapore citizen births in 2022* (Infographic: Clara Ho; Source: National Population and Talent Division, Prime Minister's Office).](images/cna_birth_chart.png){#fig-original width="80%"}
+![Original CNA visualization: *Drop in Singapore citizen births in 2022* (Infographic: Clara Ho; Source: National Population and Talent Division, Prime Minister's Office).](images/cna_birth_chart.png){#fig-original width="50%"}
 
 ### 1.3.1 Visualization Structure and Design
 
@@ -211,7 +211,7 @@ The workflow uses three numerical data sources together with manually curated po
 
 ### A. Primary Dataset: Births and Fertility Rates
 
-The primary dataset is the Singapore Department of Statistics (SingStat) **Births and Fertility Rates, Annual** CSV file (\[official SingStat table link to be inserted\]). It provides annual observations from **1960 to 2025**, including published TFR and ASFR for the seven maternal age groups. ASFR is measured as births per 1,000 women in each age group. The published TFR series will be retained for comparison with the value derived from the seven ASFR groups.
+The primary dataset is the Singapore Department of Statistics (SingStat) **Births and Fertility Rates, Annual** CSV file (<https://data.gov.sg/datasets/d_e39eeaeadb571c0d0725ef1eec48d166/view>). It provides annual observations from **1960 to 2025**, including published TFR and ASFR for the seven maternal age groups. ASFR is measured as births per 1,000 women in each age group. The published TFR series will be retained for comparison with the value derived from the seven ASFR groups.
 
 ::: callout-note
 `File` : BirthsAndFertilityRatesAnnual.csv\
@@ -228,9 +228,8 @@ The primary dataset is the Singapore Department of Statistics (SingStat) **Birth
 
 - Birth counts (number of births)
 
-\
-`Coverage: 1960–2025`\
-`We use:`
+`Coverage`: 1960–2025\
+`We use`:
 
 - Total Fertility Rate (TFR)
 
@@ -243,7 +242,7 @@ The primary dataset is the Singapore Department of Statistics (SingStat) **Birth
 
 ### B. Primary Dataset: Proportion of Singles
 
-The second SingStat dataset is table **M810581, “Proportion of Singles Among Resident Population by Selected Age Group and Sex, Annual”** (\[official SingStat table link to be inserted\]). The table measures the proportion of the resident population who are **never married**. Resident population includes Singapore citizens and permanent residents. The current plan uses female observations for ages **25–29, 30–34, and 35–39**. Available observations cover 1980 and 1983–2024; values for 1981 and 1982 are unavailable.
+The second SingStat dataset is table **M810581, “Proportion of Singles Among Resident Population by Selected Age Group and Sex, Annual”** (<https://data.gov.sg/datasets/d_2552cf03121921d78da5e17004f43e0a/view>). The table measures the proportion of the resident population who are **never married**. Resident population includes Singapore citizens and permanent residents. The current plan uses female observations for ages **25–29, 30–34, and 35–39**. Available observations cover 1980 and 1983–2024; values for 1981 and 1982 are unavailable.
 
 ::: callout-note
 `File` : M810581.csv\
@@ -473,25 +472,7 @@ library(scales)     # Axis and percentage formatting
 
 ## 6.1 What This Analysis Is For
 
-Singapore's resident fertility has fallen steeply since 1960, dropping below the replacement rate within fifteen years. The resident total fertility rate first fell below 1.0 in 2023 and declined to a record low of 0.87 in 2025. The original chart selected for redesign shows the decline in citizen births but does not provide the broader context associated with it.
-
-This analysis aims to examine the long-term decline in Singapore's fertility rate by moving beyond simple descriptive trends to identify and compare key associated factors. Rather than only showing how fertility has decreased over time, the goal is to integrate fertility outcomes with demographic, economic, and policy context on a shared timeline. This allows changes in women's labour participation, partnership formation, economic conditions, and government policies to be compared with fertility trends. The analysis also explores whether major recession periods show any observable relationship with short-term fertility patterns.
-
-We began exploring data by plotting total fertility against a range of factors drawn from research and official statistics. These included the median age at first marriage, the median age of mothers at first birth, female labour-force participation, educational attainment, the HDB resale price index, household income, the share of never-married residents, birth order, and major economic downturns. For each, we examined how the series moved over time relative to fertility and judged whether the data was available over a sufficiently long and consistent period. From this, we selected dimensions that combine explanatory relevance with usable data and that can coexist in one readable figure. The selected numerical dimensions are age-specific fertility rate (ASFR), female labour-force participation rate (LFPR), and the mean singlehood rate among women aged 25–39. They are supported by two contextual layers: major population policies and recession periods.
-
-The policy annotations allow fertility patterns before and after major policy changes to be compared descriptively. They provide historical context for the long-term trend but will not be treated as evidence that a policy caused a particular fertility outcome.
-
-We selected female LFPR and female singlehood to examine broader social and labour-market changes associated with delayed family formation. As Singapore modernised, women attained higher levels of education and participated more extensively in the workforce. Longer periods spent studying and establishing careers may coincide with later marriage and childbearing. These relationships will be interpreted as associations rather than direct causal effects.
-
-The project also considers fertility from an economic perspective. Some short-term changes in fertility appear near periods when Singapore experienced major recessions, including a dip across 1998–1999 around the 1998 recession. We therefore plan to annotate major downturns and compare fertility during the recession period and approximately one year afterward. Employment and income uncertainty may influence decisions about marriage and childbearing, but any observed co-movement will be treated as descriptive rather than causal.
-
-The data is drawn from official sources and will be prepared in R. Births and age-specific fertility rates, the proportion of singles by age and sex, and female labour-force participation by age are all obtained from the Singapore Department of Statistics. The selected sources will be imported and transformed reproducibly in the final RStudio project.
-
-Each source requires preparation before it can be combined. The annual tables will be reshaped into long form, year and age-group fields will be standardised, and values will be converted to the appropriate numerical types. The singlehood table is hierarchical, with male and female rows nested beneath each age group, so the age-group labels will be carried down before filtering to female observations. The never-married rates for ages 25–29, 30–34 and 35–39 will be combined into one mean prime-age series. The cleaned series will be aligned by year while retaining unavailable observations as `NA`.
-
-The figure is planned as a single layered chart rather than a dashboard, using one shared time axis so that the series can be compared directly. Stacked bars are proposed for fertility because they carry two messages in one geometry: the combined height summarises the annual fertility level, while the coloured segments show changing age composition. The two continuous contextual variables are provisionally represented as lines on a secondary percentage axis because they share a common unit. Recession periods may be shown through markers or shaded intervals, while population policies may be indicated through labelled vertical lines and background shading. These design choices will be refined during implementation for readability.
-
-In summary, year forms the horizontal axis; ASFR is represented by stacked bars, with maternal age group encoded by colour; female LFPR and the prime-age singlehood rate are contextual series on a percentage axis; recession periods provide economic context; and population policies are represented through annotations. Together, these layers are intended to show the long-term decline, its shift towards older maternal ages, its co-movement with participation and singlehood, and its timing relative to policy changes and economic downturns.
+This analysis examines Singapore’s long-term fertility decline by situating it within broader demographic, social, economic and policy contexts, rather than presenting it as a standalone trend. Using official data, selected indicators—including age-specific fertility rates, female labour-force participation and prime-age female singlehood—are aligned on a shared timeline to explore how fertility patterns co-move with changes in labour participation, partnership formation, policy shifts and economic downturns. The approach is descriptive and comparative, focusing on timing and patterns rather than causation, and is implemented through a reproducible data pipeline in R. The final output is designed as a single layered visualisation that integrates fertility levels, age composition and contextual annotations to provide a more holistic understanding of the observed decline.
 
 ## 6.2 Measures We Will Compute
 
@@ -628,13 +609,10 @@ Chew H. M., "Record number of marriages, drop in Singaporean births in 2022," CN
 
 - Singapore Department of Statistics, "Births And Fertility Rates, Annual," 2026. <https://data.gov.sg/datasets/d_e39eeaeadb571c0d0725ef1eec48d166/view>
 
-- Singapore Department of Statistics, "Consumer Price Index (CPI), 2024 As Base Year, Monthly," 2026. <https://data.gov.sg/datasets/d_e39eeaeadb571c0d0725ef1eec48d166/view>
-
 - Singapore Department of Statistics, "Education Profile Of Singapore Residents Aged 25 Years & Over By Selected Highest Qualification Attained (HQA) (%), Annual," 2026. <https://data.gov.sg/datasets/d_7317a32321dbfad2cbb5b60ca74c9f08/view>
 
-- Singapore Department of Statistics, "Singapore Residents Aged 20 Years & Over By Sex, Age Group And Marital Status, Annual," 2026. <https://data.gov.sg/datasets/d_e39eeaeadb571c0d0725ef1eec48d166/view>
+- Singapore Department of Statistics, "Proportion Of Singles Among Resident Population By Selected Age Group And Sex, Annual," 2026. <https://data.gov.sg/datasets/d_2552cf03121921d78da5e17004f43e0a/view>
 
-## 8.3 Design References
 
 ------------------------------------------------------------------------
 
