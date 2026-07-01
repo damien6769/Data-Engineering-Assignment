@@ -186,9 +186,10 @@ The current plan uses a zero-based ASFR axis for the fertility bars and a clearl
 Major recession periods are provisionally represented through shaded intervals or concise annotations rather than as another continuous line. This adds economic context that can be compared with short-term fertility changes without overcrowding the two existing LFPR and singlehood lines.
 
 #### Weakness → Improvement Mapping (Summary)
+
 ::: custom-table
 | Improvement \# | Weakness Addressed | Improvement | Method / Technique |
-|----|----|----|----|
+|------------------|------------------|------------------|------------------|
 | I1 | W2 | Separate fertility behaviour from population size effects | Replace count-only view with age-specific fertility rates (ASFR); retain total fertility rate (TFR) as summary and validation measure |
 | I2 | W1, W3 | Remove misleading colour emphasis and reveal age composition | Use stacked annual bars; map colour to maternal age groups; include lines for continuous contextual variables |
 | I3 | W5 | Improve clarity and self-containment of the visualization | Add explicit axis titles (Year, ASFR, Percent); include legends for age groups and contextual variables; explain annotations |
@@ -198,21 +199,6 @@ Major recession periods are provisionally represented through shaded intervals o
 | I7 | W8 | Preserve annual variation and avoid arbitrary aggregation | Display annual observations instead of five-year block averages |
 | I8 | W7 | Make variation more interpretable while preserving scale integrity | Use zero-based ASFR axis; include secondary percentage axis; state units and transformations explicitly; apply age-group stacking |
 | I9 | W6 | Incorporate relevant economic context into interpretation | Mark major recession periods with distinct annotations or shaded intervals |
-:::
-
-::: callout-tip
-## Weakness → Improvement mapping (summary)
-
-| Weakness                                           | Addressed by |
-|----------------------------------------------------|--------------|
-| W1 Colour saturation illusion                      | I2           |
-| W2 Lack of demographic scaling                     | I1           |
-| W3 Limited compositional breakdown by maternal age | I2           |
-| W4 Short time horizon                              | I6           |
-| W5 Missing labels / legend                         | I3           |
-| W6 Absence of explanatory variables                | I4, I5, I9   |
-| W7 Compressed variation on the raw-count scale     | I1, I8       |
-| W8 Arbitrary period averaging                      | I7           |
 :::
 
 ------------------------------------------------------------------------
@@ -294,7 +280,7 @@ The policy annotations will be entered as a small table based on the team's back
 
 ::: custom-table
 | Year / period | Event | Planned encoding |
-|----|----|----|
+|------------------------|------------------------|------------------------|
 | 1972 | Stop at Two campaign | Provisional event annotation |
 | 1987 | “Have Three or More, If You Can Afford It” policy reversal | Provisional event annotation |
 | 2001 | Baby Bonus Scheme | Provisional event annotation |
@@ -334,7 +320,7 @@ The proposed visualization is planned to cover approximately **1960–2025**, su
 
 ::: custom-table
 | Dimension / layer | Variable used | Unit | Planned visual encoding |
-|----|----|----|----|
+|------------------|------------------|------------------|------------------|
 | Time | Year | Calendar year | Horizontal axis |
 | Fertility | Age-specific fertility rate (ASFR) | Births per 1,000 women | Stacked-bar height |
 | Fertility composition | Mother's age group | Seven five-year age groups | Bar fill colour |
@@ -356,7 +342,7 @@ The raw sources are not immediately ready for plotting. The main structural issu
 
 ::: custom-table
 | Raw-data issue | Planned treatment |
-|----|----|
+|------------------------------------|------------------------------------|
 | The fertility CSV stores data series in rows and years in columns, ordered from newest to oldest. | Select the required TFR and ASFR rows, then reshape the year columns into a long `year` variable. |
 | ASFR age labels contain indentation, spaces, and the word “Years.” | Remove extra whitespace and standardize labels to `15-19`, `20-24`, ..., `45-49`. |
 | ASFR for ages 45–49 is unavailable before 1980. | Preserve these observations as `NA`; unavailable values will not be converted to zero. |
@@ -453,7 +439,7 @@ The completed pipeline will produce the following visualization-ready datasets:
 
 ::: custom-table
 | Dataset | Structure | Main fields | Purpose |
-|----|----|----|----|
+|------------------|------------------|------------------|------------------|
 | Fertility data | One row per year × age group | Year, maternal age group, ASFR | Stacked fertility bars |
 | TFR validation data | One row per year | Year, published TFR, derived TFR, difference | Check the ASFR transformation |
 | Annual driver data | One row per year | Year, female LFPR, mean female singlehood rate | Contextual trend lines |
@@ -591,7 +577,7 @@ The analysis will focus on long-term trends, timing, co-movement and descriptive
 
 ::: custom-table
 | Research Question | Output | Insight Supported | Data Needed |
-|----|----|----|----|
+|------------------|------------------|------------------|------------------|
 | How has fertility changed over time and across maternal age groups? | ASFR stacked bars and TFR trend summary | Long-term fertility decline and shift towards older maternal ages | ASFR and TFR data |
 | How does female LFPR relate to fertility levels and maternal-age patterns? | Time-series comparison with age composition | Association between labour-force participation and fertility timing | Female LFPR, ASFR and TFR data |
 | How do recessions and policies relate to fertility? | Annotated timeline with lag comparison | Descriptive timing and co-movement around policies and downturns | Policy, recession, ASFR and TFR data |
@@ -639,7 +625,6 @@ Chew H. M., "Record number of marriages, drop in Singaporean births in 2022," CN
 - Singapore Department of Statistics, "Education Profile Of Singapore Residents Aged 25 Years & Over By Selected Highest Qualification Attained (HQA) (%), Annual," 2026. <https://data.gov.sg/datasets/d_7317a32321dbfad2cbb5b60ca74c9f08/view>
 
 - Singapore Department of Statistics, "Singapore Residents Aged 20 Years & Over By Sex, Age Group And Marital Status, Annual," 2026. <https://data.gov.sg/datasets/d_e39eeaeadb571c0d0725ef1eec48d166/view>
-
 
 ## 8.3 Design References
 
