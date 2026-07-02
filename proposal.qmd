@@ -189,7 +189,7 @@ Major recession periods are provisionally represented through shaded intervals o
 
 ::: custom-table
 | Improvement \# | Weakness Addressed | Improvement | Method / Technique |
-|----|----|----|----|
+|--------------|------------------|------------------|-----------------------|
 | I1 | W2 | Separate fertility behaviour from population size effects | Replace count-only view with age-specific fertility rates (ASFR); retain total fertility rate (TFR) as summary and validation measure |
 | I2 | W1, W3 | Remove misleading colour emphasis and reveal age composition | Use stacked annual bars; map colour to maternal age groups; include lines for continuous contextual variables |
 | I3 | W5 | Improve clarity and self-containment of the visualization | Add explicit axis titles (Year, ASFR, Percent); include legends for age groups and contextual variables; explain annotations |
@@ -219,13 +219,7 @@ The primary dataset is the Singapore Department of Statistics (SingStat) **Birth
 `Unit:`
 
 - Age-specific fertility rate (births per 1,000 women)
-
-<!-- -->
-
 - Total fertility rate (children per woman)
-
-<!-- -->
-
 - Birth counts (number of births)
 
 `Coverage`: 1960–2025\
@@ -260,8 +254,6 @@ The second SingStat dataset is table **M810581, “Proportion of Singles Among R
 - 40–44
 
 - 45–49
-
-These five age groups are combined as an unweighted mean representing female singlehood across selected reproductive ages.
 :::
 
 ### C. Primary Dataset: Female Labour-Force Participation
@@ -292,7 +284,7 @@ The policy annotations will be entered as a small table based on the team's back
 
 ::: custom-table
 | Year / period | Event | Planned encoding |
-|----|----|----|
+|--------------|---------------------------|--------------------------------|
 | 1972 | Stop at Two campaign | Provisional event annotation |
 | 1987 | “Have Three or More, If You Can Afford It” policy reversal | Provisional event annotation |
 | 2001 | Baby Bonus Scheme | Provisional event annotation |
@@ -332,7 +324,7 @@ The proposed visualization is planned to cover approximately **1960–2025**, su
 
 ::: custom-table
 | Dimension / layer | Variable used | Unit | Planned visual encoding |
-|----|----|----|----|
+|------------------|------------------|------------------|------------------|
 | Time | Year | Calendar year | Horizontal axis |
 | Fertility | Age-specific fertility rate (ASFR) | Births per 1,000 women | Stacked-bar height |
 | Fertility composition | Mother's age group | Seven five-year age groups | Bar fill colour |
@@ -348,13 +340,85 @@ $$\text{TFR} \approx \frac{5 \times \sum \text{ASFR}}{1000}$$
 
 because each ASFR represents a five-year age band. In the initial design, TFR is not plotted as a separate line; the stacked bars show the age-specific components underlying the overall fertility level. This treatment may be refined if another representation communicates the relationship more clearly.
 
-## 4.4 Raw Data Structure and Known Challenges
+## 4.4 Raw Data Layout
+
+### A. Births and Fertility Rates Raw Layout
+
+The `BirthsAndFertilityRatesAnnual.csv` dataset follows a **single-block wide time-series layout** consisting of **17 rows and 67 columns**. Each row represents a fertility indicator, while yearly observations are stored as separate columns.
+
+``` text
+Row 1      : "Total Fertility Rate (TFR)", 0.87, 0.97, ..., 5.76      ← Overall fertility indicator
+Rows 2–8   : "15 - 19 Years", 1.3, 2.3, ... "45 - 49 Years", 0.5...   ← Seven ASFR age-group rows
+Rows 9–11  : "Chinese", 0.71, ... "Malays", 1.53, ...                 ← Ethnic-specific TFR
+Rows 12–14 : "Gross Reproduction Rate", ... "Crude Birth Rate", ...   ← Other fertility indicators
+Rows 15–17 : "Total Live-Births", 30004, ... "Citizen Live-Births"... ← Birth-count indicators
+
+Columns 2–67 : Year values (2025, 2024, ..., 1960)
+```
+
+### B. Proportion of Singles Raw Layout
+
+The `M810581.csv` dataset uses a **hierarchical multi-block layout** consisting of **43 rows and 44 columns**. Each age group forms a block containing the overall value followed by separate Male and Female rows, while yearly observations are stored as columns.
+
+``` text
+Rows 1–8   : Theme / subject / metadata / units                    ← Metadata, skip
+Row 9      : "Data Series", 2024, 2023, ..., 1980                  ← Year headers
+
+Row 10     : "20–24 Years", 97.9, 97.8, ...                        ← Overall age-group
+Rows 11–12 : "Males", ... / "Females", ...                         ← Sex-specific rows
+
+Row 13     : "25–29 Years", 78.5, 77.1, ...
+Rows 14–15 : "Males", ... / "Females", ...
+
+Row 16     : "30–34 Years", 40.1, 39.3, ...
+Rows 17–18 : "Males", ... / "Females", ...
+
+Row 19     : "35–39 Years", 21.1, 21.1, ...
+Rows 20–21 : "Males", ... / "Females", ...
+
+Row 22     : "40–44 Years", 15.2, 15.9, ...
+Rows 23–24 : "Males", ... / "Females", ...
+
+Row 25     : "45–49 Years", 13.6, 13.8, ...
+Rows 26–27 : "Males", ... / "Females", ...
+
+Rows 28–43 : Definitions, footnotes and notes                      ← Skip
+
+Columns 2–44 : Year values (2024, 2023, ..., 1980)
+```
+
+### C. Female Labour-Force Participation Raw Layout
+
+The `M182201.csv` dataset uses a **three-block wide time-series layout** consisting of **Total, Male, and Female participation-rate blocks**. Each block contains an overall participation-rate row, detailed age-group rows, and broader aggregate age rows, while yearly observations are stored as separate columns.
+
+``` text
+Rows 1–8     : Theme / subject / metadata / units                         ← Metadata, skip
+Row 9        : "Data Series", 2025, 2024, ..., 1990                       ← Year headers
+
+Row 10       : "Total Resident Participation Rate", 67.9, 68.2, ...      ← Total block header
+Rows 11–23   : "15 - 19 Years", 13.4, ... to "75 Years & Over", 15.0 ... ← Detailed age rows
+Rows 24–26   : "65 Years & Over", "15 - 24 Years", "25 - 64 Years"       ← Aggregate rows
+
+Row 27       : "Male Resident Participation Rate", 73.6, 74.0, ...       ← Male block header
+Rows 28–40   : "15 - 19 Years", 16.2, ... to "75 Years & Over", 20.1 ... ← Detailed age rows
+Rows 41–43   : "65 Years & Over", "15 - 24 Years", "25 - 64 Years"       ← Aggregate rows
+
+Row 44       : "Female Resident Participation Rate", 62.5, 62.8, ...     ← Female block header
+Rows 45–57   : "15 - 19 Years", 10.3, ... to "75 Years & Over", 11.1 ... ← Detailed age rows
+Rows 58–60   : "65 Years & Over", "15 - 24 Years", "25 - 64 Years"       ← Aggregate rows
+
+Rows 61 onward : Definitions, footnotes and notes                         ← Skip
+
+Columns 2–37: Year values 2025, 2024, ..., 1990.
+```
+
+## 4.5 Data Quality Challenges
 
 The raw sources are not immediately ready for plotting. The main structural issues and planned treatments are:
 
 ::: custom-table
 | Raw-data issue | Planned treatment |
-|----|----|
+|------------------------------------|------------------------------------|
 | The fertility CSV stores data series in rows and years in columns, ordered from newest to oldest. | Select the required TFR and ASFR rows, then reshape the year columns into a long `year` variable. |
 | ASFR age labels contain indentation, spaces, and the word “Years.” | Remove extra whitespace and standardize labels to `15-19`, `20-24`, ..., `45-49`. |
 | ASFR for ages 45–49 is unavailable before 1980. | Preserve these observations as `NA`; unavailable values will not be converted to zero. |
@@ -509,7 +573,7 @@ The completed pipeline will produce the following visualization-ready datasets:
 
 ::: custom-table
 | Dataset | Structure | Main fields | Purpose |
-|----|----|----|----|
+|------------------|------------------|------------------|------------------|
 | Fertility data | One row per year × age group | Year, maternal age group, ASFR | Stacked fertility bars |
 | TFR validation data | One row per year | Year, published TFR, derived TFR, difference | Check the ASFR transformation |
 | Annual driver data | One row per year | Year, unweighted mean female LFPR (25–49), unweighted mean female singlehood rate (25–49) | Contextual trend lines |
@@ -629,11 +693,11 @@ The analysis will focus on long-term trends, timing, co-movement and descriptive
 
 ::: custom-table
 | ID | Research Question | Output | Insight Supported | Data Needed |
-|---|----|----|----|----|
-|A1| How has fertility changed over time and across maternal age groups? | ASFR stacked bars and TFR trend summary | Long-term fertility decline and shift towards older maternal ages | ASFR and TFR data |
-|A2| How does female LFPR relate to fertility levels and maternal-age patterns? | Time-series comparison with age composition | Association between labour-force participation and fertility timing | Female LFPR, ASFR and TFR data |
-|A3| How do recessions and policies relate to fertility? | Annotated timeline with lag comparison | Descriptive timing and co-movement around policies and downturns | Policy, recession, ASFR and TFR data |
-|A4| How does female singlehood relate to fertility? | Time-series comparison and optional descriptive correlation | Association between female singlehood across ages 25–49 and fertility | Female singlehood, ASFR and TFR data |
+|---------------|---------------|---------------|---------------|---------------|
+| A1 | How has fertility changed over time and across maternal age groups? | ASFR stacked bars and TFR trend summary | Long-term fertility decline and shift towards older maternal ages | ASFR and TFR data |
+| A2 | How does female LFPR relate to fertility levels and maternal-age patterns? | Time-series comparison with age composition | Association between labour-force participation and fertility timing | Female LFPR, ASFR and TFR data |
+| A3 | How do recessions and policies relate to fertility? | Annotated timeline with lag comparison | Descriptive timing and co-movement around policies and downturns | Policy, recession, ASFR and TFR data |
+| A4 | How does female singlehood relate to fertility? | Time-series comparison and optional descriptive correlation | Association between female singlehood across ages 25–49 and fertility | Female singlehood, ASFR and TFR data |
 :::
 
 ------------------------------------------------------------------------
@@ -641,13 +705,13 @@ The analysis will focus on long-term trends, timing, co-movement and descriptive
 # 7. Planned Work Distribution
 
 ::: custom-table
-| Member        | Primary Tasks |
-|---------------|--------------------------|
-| Angel Zhang   |  Map major policies & recession periods to timeline & derive insights for A3                  |
-| Sophia Gador  | Process ASFR/TFR data & derive insights for A1              |
-| Damien Tan    | Combine cleaned datasets, build final plot                   |
-| Levl Lim      | Process singlehood data & derive insights for A4                  |
-| Yap Suen Hong | Process LFPR data & derive insights for A2                    |
+| Member | Primary Tasks |
+|---------------------------|---------------------------------------------|
+| Angel Zhang | Map major policies & recession periods to timeline & derive insights for A3 |
+| Sophia Gador | Process ASFR/TFR data & derive insights for A1 |
+| Damien Tan | Combine cleaned datasets, build final plot |
+| Levl Lim | Process singlehood data & derive insights for A4 |
+| Yap Suen Hong | Process LFPR data & derive insights for A2 |
 | All members | Cross-check each other's parts, work on presentation file together (content & formatting) |
 :::
 
@@ -676,20 +740,20 @@ Chew H. M., "Record number of marriages, drop in Singaporean births in 2022," CN
 ------------------------------------------------------------------------
 
 # 9. Appendix
+
 ::: callout-note
 The data engineering pipeline produces several visualization-ready datasets derived from the original fertility, singlehood, and labour force participation (LFPR) sources. These datasets are structured to support the construction of the final visualization and analysis.
 :::
 
-
-::: {.custom-table}
+::: custom-table
 | Column | Type | Source | Unit / Range | Description | Role in Chart |
-|-------------------|----------|---------------|---------------------------|--------------------------------------------------------------|-----------------------------------|
-| year| integer  |  all dataset to align | 1960–2025  | Calendar year of observation | X-axis |
-| age_group| factor |`BirthsAndFertilityRatesAnnual.csv` | 25–29 to 45–49| Maternal age group | Stacked bar grouping |
-| asfr  | numeric  |`BirthsAndFertilityRatesAnnual.csv`    | Births per 1,000 women | Age-specific fertility rate | Bar height (stacked segments)  |
-| lfpr_mean | numeric  | `M182201.csv` | 0–100 (%) | Mean female labour force participation rate (ages 25–49) | Line plot |
-| singlehood_mean | numeric  |`M810581.csv` | 0–100 (%)| Mean proportion of single females (ages 25–49)     | Line plot |
-| event (policy/recession) | character| Annotated Dataset `D` (4.1)  | Text | Name of policy or recession period| Annotation labels                 |
+|-----------|-----------|-----------|-----------|-------------------|-----------|
+| year | integer | all dataset to align | 1960–2025 | Calendar year of observation | X-axis |
+| age_group | factor | `BirthsAndFertilityRatesAnnual.csv` | 25–29 to 45–49 | Maternal age group | Stacked bar grouping |
+| asfr | numeric | `BirthsAndFertilityRatesAnnual.csv` | Births per 1,000 women | Age-specific fertility rate | Bar height (stacked segments) |
+| lfpr_mean | numeric | `M182201.csv` | 0–100 (%) | Mean female labour force participation rate (ages 25–49) | Line plot |
+| singlehood_mean | numeric | `M810581.csv` | 0–100 (%) | Mean proportion of single females (ages 25–49) | Line plot |
+| event (policy/recession) | character | Annotated Dataset `D` (4.1) | Text | Name of policy or recession period | Annotation labels |
 :::
 
 ------------------------------------------------------------------------

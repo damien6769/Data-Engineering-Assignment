@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Team 11 — Angel, Sophia, Damien, Levl, Suen Hong">
-<meta name="dcterms.date" content="2026-07-02">
+<meta name="dcterms.date" content="2026-07-03">
 
 <title>Re-examining Singapore’s Declining Fertility</title>
 <style>
@@ -172,7 +172,13 @@ window.Quarto = {
   <li><a href="#d.-policy-and-recession" id="toc-d.-policy-and-recession" class="nav-link" data-scroll-target="#d.-policy-and-recession">D. Policy and Recession</a></li>
   </ul></li>
   <li><a href="#data-and-dimensions-required-for-visualisation" id="toc-data-and-dimensions-required-for-visualisation" class="nav-link" data-scroll-target="#data-and-dimensions-required-for-visualisation">4.3 Data and Dimensions Required for Visualisation</a></li>
-  <li><a href="#raw-data-structure-and-known-challenges" id="toc-raw-data-structure-and-known-challenges" class="nav-link" data-scroll-target="#raw-data-structure-and-known-challenges">4.4 Raw Data Structure and Known Challenges</a></li>
+  <li><a href="#raw-data-layout" id="toc-raw-data-layout" class="nav-link" data-scroll-target="#raw-data-layout">4.4 Raw Data Layout</a>
+  <ul class="collapse">
+  <li><a href="#a.-births-and-fertility-rates-raw-layout" id="toc-a.-births-and-fertility-rates-raw-layout" class="nav-link" data-scroll-target="#a.-births-and-fertility-rates-raw-layout">A. Births and Fertility Rates Raw Layout</a></li>
+  <li><a href="#b.-proportion-of-singles-raw-layout" id="toc-b.-proportion-of-singles-raw-layout" class="nav-link" data-scroll-target="#b.-proportion-of-singles-raw-layout">B. Proportion of Singles Raw Layout</a></li>
+  <li><a href="#c.-female-labour-force-participation-raw-layout" id="toc-c.-female-labour-force-participation-raw-layout" class="nav-link" data-scroll-target="#c.-female-labour-force-participation-raw-layout">C. Female Labour-Force Participation Raw Layout</a></li>
+  </ul></li>
+  <li><a href="#data-quality-challenges" id="toc-data-quality-challenges" class="nav-link" data-scroll-target="#data-quality-challenges">4.5 Data Quality Challenges</a></li>
   </ul></li>
   <li><a href="#planned-data-engineering-pipeline" id="toc-planned-data-engineering-pipeline" class="nav-link" data-scroll-target="#planned-data-engineering-pipeline">5. Planned Data Engineering Pipeline</a>
   <ul class="collapse">
@@ -248,7 +254,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">July 2, 2026</p>
+      <p class="date">July 3, 2026</p>
     </div>
   </div>
   
@@ -451,10 +457,10 @@ Figure&nbsp;1: Original CNA visualization: <em>Drop in Singapore citizen births 
 <div class="custom-table">
 <table class="caption-top table">
 <colgroup>
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
+<col style="width: 19%">
+<col style="width: 24%">
+<col style="width: 24%">
+<col style="width: 31%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -549,13 +555,7 @@ Note
 <code>Unit:</code></p>
 <ul>
 <li>Age-specific fertility rate (births per 1,000 women)</li>
-</ul>
-<!-- -->
-<ul>
 <li>Total fertility rate (children per woman)</li>
-</ul>
-<!-- -->
-<ul>
 <li>Birth counts (number of births)</li>
 </ul>
 <p><code>Coverage</code>: 1960–2025<br>
@@ -594,7 +594,6 @@ Note
 <li><p>40–44</p></li>
 <li><p>45–49</p></li>
 </ul>
-<p>These five age groups are combined as an unweighted mean representing female singlehood across selected reproductive ages.</p>
 </div>
 </div>
 </section>
@@ -632,9 +631,9 @@ Note
 <div class="custom-table">
 <table class="caption-top table">
 <colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
+<col style="width: 19%">
+<col style="width: 36%">
+<col style="width: 43%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -766,8 +765,72 @@ Note
 <p><span class="math display">\[\text{TFR} \approx \frac{5 \times \sum \text{ASFR}}{1000}\]</span></p>
 <p>because each ASFR represents a five-year age band. In the initial design, TFR is not plotted as a separate line; the stacked bars show the age-specific components underlying the overall fertility level. This treatment may be refined if another representation communicates the relationship more clearly.</p>
 </section>
-<section id="raw-data-structure-and-known-challenges" class="level2">
-<h2 class="anchored" data-anchor-id="raw-data-structure-and-known-challenges">4.4 Raw Data Structure and Known Challenges</h2>
+<section id="raw-data-layout" class="level2">
+<h2 class="anchored" data-anchor-id="raw-data-layout">4.4 Raw Data Layout</h2>
+<section id="a.-births-and-fertility-rates-raw-layout" class="level3">
+<h3 class="anchored" data-anchor-id="a.-births-and-fertility-rates-raw-layout">A. Births and Fertility Rates Raw Layout</h3>
+<p>The <code>BirthsAndFertilityRatesAnnual.csv</code> dataset follows a <strong>single-block wide time-series layout</strong> consisting of <strong>17 rows and 67 columns</strong>. Each row represents a fertility indicator, while yearly observations are stored as separate columns.</p>
+<pre class="text"><code>Row 1      : "Total Fertility Rate (TFR)", 0.87, 0.97, ..., 5.76      ← Overall fertility indicator
+Rows 2–8   : "15 - 19 Years", 1.3, 2.3, ... "45 - 49 Years", 0.5...   ← Seven ASFR age-group rows
+Rows 9–11  : "Chinese", 0.71, ... "Malays", 1.53, ...                 ← Ethnic-specific TFR
+Rows 12–14 : "Gross Reproduction Rate", ... "Crude Birth Rate", ...   ← Other fertility indicators
+Rows 15–17 : "Total Live-Births", 30004, ... "Citizen Live-Births"... ← Birth-count indicators
+
+Columns 2–67 : Year values (2025, 2024, ..., 1960)</code></pre>
+</section>
+<section id="b.-proportion-of-singles-raw-layout" class="level3">
+<h3 class="anchored" data-anchor-id="b.-proportion-of-singles-raw-layout">B. Proportion of Singles Raw Layout</h3>
+<p>The <code>M810581.csv</code> dataset uses a <strong>hierarchical multi-block layout</strong> consisting of <strong>43 rows and 44 columns</strong>. Each age group forms a block containing the overall value followed by separate Male and Female rows, while yearly observations are stored as columns.</p>
+<pre class="text"><code>Rows 1–8   : Theme / subject / metadata / units                    ← Metadata, skip
+Row 9      : "Data Series", 2024, 2023, ..., 1980                  ← Year headers
+
+Row 10     : "20–24 Years", 97.9, 97.8, ...                        ← Overall age-group
+Rows 11–12 : "Males", ... / "Females", ...                         ← Sex-specific rows
+
+Row 13     : "25–29 Years", 78.5, 77.1, ...
+Rows 14–15 : "Males", ... / "Females", ...
+
+Row 16     : "30–34 Years", 40.1, 39.3, ...
+Rows 17–18 : "Males", ... / "Females", ...
+
+Row 19     : "35–39 Years", 21.1, 21.1, ...
+Rows 20–21 : "Males", ... / "Females", ...
+
+Row 22     : "40–44 Years", 15.2, 15.9, ...
+Rows 23–24 : "Males", ... / "Females", ...
+
+Row 25     : "45–49 Years", 13.6, 13.8, ...
+Rows 26–27 : "Males", ... / "Females", ...
+
+Rows 28–43 : Definitions, footnotes and notes                      ← Skip
+
+Columns 2–44 : Year values (2024, 2023, ..., 1980)</code></pre>
+</section>
+<section id="c.-female-labour-force-participation-raw-layout" class="level3">
+<h3 class="anchored" data-anchor-id="c.-female-labour-force-participation-raw-layout">C. Female Labour-Force Participation Raw Layout</h3>
+<p>The <code>M182201.csv</code> dataset uses a <strong>three-block wide time-series layout</strong> consisting of <strong>Total, Male, and Female participation-rate blocks</strong>. Each block contains an overall participation-rate row, detailed age-group rows, and broader aggregate age rows, while yearly observations are stored as separate columns.</p>
+<pre class="text"><code>Rows 1–8     : Theme / subject / metadata / units                         ← Metadata, skip
+Row 9        : "Data Series", 2025, 2024, ..., 1990                       ← Year headers
+
+Row 10       : "Total Resident Participation Rate", 67.9, 68.2, ...      ← Total block header
+Rows 11–23   : "15 - 19 Years", 13.4, ... to "75 Years &amp; Over", 15.0 ... ← Detailed age rows
+Rows 24–26   : "65 Years &amp; Over", "15 - 24 Years", "25 - 64 Years"       ← Aggregate rows
+
+Row 27       : "Male Resident Participation Rate", 73.6, 74.0, ...       ← Male block header
+Rows 28–40   : "15 - 19 Years", 16.2, ... to "75 Years &amp; Over", 20.1 ... ← Detailed age rows
+Rows 41–43   : "65 Years &amp; Over", "15 - 24 Years", "25 - 64 Years"       ← Aggregate rows
+
+Row 44       : "Female Resident Participation Rate", 62.5, 62.8, ...     ← Female block header
+Rows 45–57   : "15 - 19 Years", 10.3, ... to "75 Years &amp; Over", 11.1 ... ← Detailed age rows
+Rows 58–60   : "65 Years &amp; Over", "15 - 24 Years", "25 - 64 Years"       ← Aggregate rows
+
+Rows 61 onward : Definitions, footnotes and notes                         ← Skip
+
+Columns 2–37: Year values 2025, 2024, ..., 1990.</code></pre>
+</section>
+</section>
+<section id="data-quality-challenges" class="level2">
+<h2 class="anchored" data-anchor-id="data-quality-challenges">4.5 Data Quality Challenges</h2>
 <p>The raw sources are not immediately ready for plotting. The main structural issues and planned treatments are:</p>
 <div class="custom-table">
 <table class="caption-top table">
@@ -1010,9 +1073,9 @@ OUTPUT visualization-ready tables</code></pre>
 <h2 class="anchored" data-anchor-id="reproducibility">5.7 Reproducibility</h2>
 <p>The planned implementation will be developed in RStudio and rendered with Quarto. All file paths will be relative to the project directory, raw files will remain unchanged, and all cleaning steps will be recorded in R code. The visualization is expected to be produced with <code>ggplot2</code>; <code>dplyr</code>, <code>tidyr</code>, <code>stringr</code>, <code>readr</code>, and <code>scales</code> are the currently selected packages for data preparation and formatting. The proposal code is illustrative and is not executed at this stage.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Intended tooling (plan only — not executed in the proposal)</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)  <span class="co"># dplyr, tidyr, readr, stringr, ggplot2</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)     <span class="co"># Axis and percentage formatting</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Intended tooling (plan only — not executed in the proposal)</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)  <span class="co"># dplyr, tidyr, readr, stringr, ggplot2</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)     <span class="co"># Axis and percentage formatting</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <hr>
 </section>
@@ -1135,11 +1198,11 @@ OUTPUT visualization-ready tables</code></pre>
 <div class="custom-table">
 <table class="caption-top table">
 <colgroup>
-<col style="width: 15%">
-<col style="width: 21%">
-<col style="width: 21%">
-<col style="width: 21%">
-<col style="width: 21%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -1190,8 +1253,8 @@ OUTPUT visualization-ready tables</code></pre>
 <div class="custom-table">
 <table class="caption-top table">
 <colgroup>
-<col style="width: 36%">
-<col style="width: 63%">
+<col style="width: 37%">
+<col style="width: 62%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -1266,12 +1329,12 @@ Note
 <div class="custom-table">
 <table class="caption-top table">
 <colgroup>
-<col style="width: 11%">
-<col style="width: 5%">
-<col style="width: 8%">
-<col style="width: 16%">
-<col style="width: 36%">
-<col style="width: 20%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 25%">
+<col style="width: 14%">
 </colgroup>
 <thead>
 <tr class="header">
