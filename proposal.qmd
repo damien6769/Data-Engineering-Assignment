@@ -640,12 +640,6 @@ The analysis will focus on long-term trends, timing, co-movement and descriptive
 
 # 7. Work Distribution
 
-::: callout-note
-## To be finalized
-
-Roles below are placeholders pending team confirmation — assign concrete tasks (e.g. data sourcing, cleaning/joining, specific chart panels, write-up, rendering/QA) once the workflow and analysis sections are locked.
-:::
-
 ::: custom-table
 | Member        | Primary Tasks |
 |---------------|--------------------------|
