@@ -628,12 +628,12 @@ The analysis will focus on long-term trends, timing, co-movement and descriptive
 ## 6.4 Summary: What We Produce
 
 ::: custom-table
-| Research Question | Output | Insight Supported | Data Needed |
-|----|----|----|----|
-| How has fertility changed over time and across maternal age groups? | ASFR stacked bars and TFR trend summary | Long-term fertility decline and shift towards older maternal ages | ASFR and TFR data |
-| How does female LFPR relate to fertility levels and maternal-age patterns? | Time-series comparison with age composition | Association between labour-force participation and fertility timing | Female LFPR, ASFR and TFR data |
-| How do recessions and policies relate to fertility? | Annotated timeline with lag comparison | Descriptive timing and co-movement around policies and downturns | Policy, recession, ASFR and TFR data |
-| How does female singlehood relate to fertility? | Time-series comparison and optional descriptive correlation | Association between female singlehood across ages 25–49 and fertility | Female singlehood, ASFR and TFR data |
+| ID | Research Question | Output | Insight Supported | Data Needed |
+|---|----|----|----|----|
+|A1| How has fertility changed over time and across maternal age groups? | ASFR stacked bars and TFR trend summary | Long-term fertility decline and shift towards older maternal ages | ASFR and TFR data |
+|A2| How does female LFPR relate to fertility levels and maternal-age patterns? | Time-series comparison with age composition | Association between labour-force participation and fertility timing | Female LFPR, ASFR and TFR data |
+|A3| How do recessions and policies relate to fertility? | Annotated timeline with lag comparison | Descriptive timing and co-movement around policies and downturns | Policy, recession, ASFR and TFR data |
+|A4| How does female singlehood relate to fertility? | Time-series comparison and optional descriptive correlation | Association between female singlehood across ages 25–49 and fertility | Female singlehood, ASFR and TFR data |
 :::
 
 ------------------------------------------------------------------------
@@ -647,13 +647,14 @@ Roles below are placeholders pending team confirmation — assign concrete tasks
 :::
 
 ::: custom-table
-| Member        | Planned responsibilities |
+| Member        | Primary Tasks |
 |---------------|--------------------------|
-| Angel Zhang   | *TBD*                    |
-| Sophia Gador  | *TBD*                    |
-| Damien Tan    | *TBD*                    |
-| Levl Lim      | *TBD*                    |
-| Yap Suen Hong | *TBD*                    |
+| Angel Zhang   |  Map major policies & recession periods to timeline & derive insights for A3                  |
+| Sophia Gador  | Process ASFR/TFR data & derive insights for A1              |
+| Damien Tan    | Combine cleaned datasets, build final plot                   |
+| Levl Lim      | Process singlehood data & derive insights for A4                  |
+| Yap Suen Hong | Process LFPR data & derive insights for A2                    |
+| All members | Cross-check each other's parts, work on presentation file together |
 :::
 
 ------------------------------------------------------------------------
