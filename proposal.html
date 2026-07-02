@@ -1263,6 +1263,91 @@ OUTPUT visualization-ready tables</code></pre>
 </section>
 <section id="appendix" class="level1">
 <h1>9. Appendix</h1>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The data engineering pipeline produces several visualization-ready datasets derived from the original fertility, singlehood, and labour force participation (LFPR) sources. These datasets are structured to support the construction of the final visualization and analysis.</p>
+</div>
+</div>
+<div class="custom-table">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 5%">
+<col style="width: 8%">
+<col style="width: 16%">
+<col style="width: 36%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Column</th>
+<th>Type</th>
+<th>Source</th>
+<th>Unit / Range</th>
+<th>Description</th>
+<th>Role in Chart</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>year</td>
+<td>integer</td>
+<td>all dataset to align</td>
+<td>1960–2025</td>
+<td>Calendar year of observation</td>
+<td>X-axis</td>
+</tr>
+<tr class="even">
+<td>age_group</td>
+<td>factor</td>
+<td><code>BirthsAndFertilityRatesAnnual.csv</code></td>
+<td>25–29 to 45–49</td>
+<td>Maternal age group</td>
+<td>Stacked bar grouping</td>
+</tr>
+<tr class="odd">
+<td>asfr</td>
+<td>numeric</td>
+<td><code>BirthsAndFertilityRatesAnnual.csv</code></td>
+<td>Births per 1,000 women</td>
+<td>Age-specific fertility rate</td>
+<td>Bar height (stacked segments)</td>
+</tr>
+<tr class="even">
+<td>lfpr_mean</td>
+<td>numeric</td>
+<td><code>M182201.csv</code></td>
+<td>0–100 (%)</td>
+<td>Mean female labour force participation rate (ages 25–49)</td>
+<td>Line plot</td>
+</tr>
+<tr class="odd">
+<td>singlehood_mean</td>
+<td>numeric</td>
+<td><code>M810581.csv</code></td>
+<td>0–100 (%)</td>
+<td>Mean proportion of single females (ages 25–49)</td>
+<td>Line plot</td>
+</tr>
+<tr class="even">
+<td>event (policy/recession)</td>
+<td>character</td>
+<td>Annotated Dataset <code>D</code> (4.1)</td>
+<td>Text</td>
+<td>Name of policy or recession period</td>
+<td>Annotation labels</td>
+</tr>
+</tbody>
+</table>
+</div>
 <hr>
 </section>
 

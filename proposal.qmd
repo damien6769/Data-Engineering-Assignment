@@ -682,5 +682,20 @@ Chew H. M., "Record number of marriages, drop in Singaporean births in 2022," CN
 ------------------------------------------------------------------------
 
 # 9. Appendix
+::: callout-note
+The data engineering pipeline produces several visualization-ready datasets derived from the original fertility, singlehood, and labour force participation (LFPR) sources. These datasets are structured to support the construction of the final visualization and analysis.
+:::
+
+
+::: {.custom-table}
+| Column | Type | Source | Unit / Range | Description | Role in Chart |
+|-------------------|----------|---------------|---------------------------|--------------------------------------------------------------|-----------------------------------|
+| year| integer  |  all dataset to align | 1960–2025  | Calendar year of observation | X-axis |
+| age_group| factor |`BirthsAndFertilityRatesAnnual.csv` | 25–29 to 45–49| Maternal age group | Stacked bar grouping |
+| asfr  | numeric  |`BirthsAndFertilityRatesAnnual.csv`    | Births per 1,000 women | Age-specific fertility rate | Bar height (stacked segments)  |
+| lfpr_mean | numeric  | `M182201.csv` | 0–100 (%) | Mean female labour force participation rate (ages 25–49) | Line plot |
+| singlehood_mean | numeric  |`M810581.csv` | 0–100 (%)| Mean proportion of single females (ages 25–49)     | Line plot |
+| event (policy/recession) | character| Annotated Dataset `D` (4.1)  | Text | Name of policy or recession period| Annotation labels                 |
+:::
 
 ------------------------------------------------------------------------
