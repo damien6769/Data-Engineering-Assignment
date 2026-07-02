@@ -654,7 +654,7 @@ Roles below are placeholders pending team confirmation — assign concrete tasks
 | Damien Tan    | Combine cleaned datasets, build final plot                   |
 | Levl Lim      | Process singlehood data & derive insights for A4                  |
 | Yap Suen Hong | Process LFPR data & derive insights for A2                    |
-| All members | Cross-check each other's parts, work on presentation file together |
+| All members | Cross-check each other's parts, work on presentation file together (content & formatting) |
 :::
 
 ------------------------------------------------------------------------
