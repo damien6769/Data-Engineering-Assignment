@@ -194,7 +194,7 @@ Major recession periods are provisionally represented through shaded intervals o
 | I2 | W1, W3 | Remove misleading colour emphasis and reveal age composition | Use stacked annual bars; map colour to maternal age groups; include lines for continuous contextual variables |
 | I3 | W5 | Improve clarity and self-containment of the visualization | Add explicit axis titles (Year, ASFR, Percent); include legends for age groups and contextual variables; explain annotations |
 | I4 | W6 | Provide explanatory context for fertility trends | Overlay female labour-force participation rate and proportion of single women as lines on a secondary percentage axis |
-| I5 | W6 | Situate fertility trends within policy context | Annotate key policies (1972 Stop at Two, 1987 reversal, 2001 Baby Bonus, 2023 milestone); optionally use background shading |
+| I5 | W6 | Situate fertility trends within policy context | Annotate key policies (1972 Stop at Two, 1987 reversal, 2001 Baby Bonus, 2023 milestone); use background shading to differentiate periods |
 | I6 | W4 | Capture long-run demographic trends | Extend data range from 2012–2022 to \~1960–2025 |
 | I7 | W8 | Preserve annual variation and avoid arbitrary aggregation | Display annual observations instead of five-year block averages |
 | I8 | W7 | Make variation more interpretable while preserving scale integrity | Use zero-based ASFR axis; include secondary percentage axis; state units and transformations explicitly; apply age-group stacking |
@@ -638,7 +638,7 @@ The analysis will focus on long-term trends, timing, co-movement and descriptive
 
 ------------------------------------------------------------------------
 
-# 7. Work Distribution
+# 7. Planned Work Distribution
 
 ::: custom-table
 | Member        | Primary Tasks |
