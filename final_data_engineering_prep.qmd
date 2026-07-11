@@ -1,0 +1,401 @@
+---
+title: "Final Data Engineering Prep"
+subtitle: "Re-examining Singapore's Declining Fertility"
+author: "Team 11"
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+## Purpose
+
+This notebook prepares the first working version of the data engineering pipeline for the final submission.
+
+It uses the local datasets already available in the project folder and reshapes them into visualization-ready tables. Each section can be run one by one in RStudio.
+
+## 1. Setup
+
+```{r}
+library(tidyverse)
+```
+
+## 2. File paths
+
+```{r}
+data_dir <- file.path("proposal_files", "datasets")
+
+fertility_file <- file.path(data_dir, "BirthsAndFertilityRatesAnnual.csv")
+singlehood_file <- file.path(data_dir, "M810581.csv")
+lfpr_file <- file.path(data_dir, "M182201.csv")
+
+tibble(
+  dataset = c("Births and fertility", "Singlehood", "Female LFPR"),
+  file_path = c(fertility_file, singlehood_file, lfpr_file),
+  file_exists = file.exists(c(fertility_file, singlehood_file, lfpr_file))
+)
+```
+
+## 3. Helper functions
+
+
+```{r}
+read_singstat_wide <- function(path) {
+  lines <- readLines(path, warn = FALSE)
+  header_index <- which(stringr::str_detect(lines, "^Data\\s*Series\\s*,"))[1]
+
+  if (is.na(header_index)) {
+    stop("Could not find a 'Data Series' or 'DataSeries' header in: ", path)
+  }
+
+  raw_data <- readr::read_csv(
+    path,
+    skip = header_index - 1,
+    na = c("", "na", "NA", "N.A.", "-"),
+    show_col_types = FALSE
+  ) |>
+    rename_with(trimws)
+
+  names(raw_data)[1] <- "data_series"
+
+  raw_data |>
+    mutate(
+      row_id = row_number(),
+      data_series_raw = data_series,
+      data_series = stringr::str_squish(data_series)
+    ) |>
+    filter(!is.na(data_series), data_series != "")
+}
+
+to_long_years <- function(data) {
+  year_cols <- names(data)[stringr::str_detect(names(data), "^\\d{4}$")]
+
+  data |>
+    pivot_longer(
+      cols = all_of(year_cols),
+      names_to = "year",
+      values_to = "value"
+    ) |>
+    mutate(
+      year = as.integer(year),
+      value = readr::parse_number(as.character(value))
+    ) |>
+    filter(!is.na(year))
+}
+
+standardise_age_group <- function(x) {
+  x |>
+    stringr::str_squish() |>
+    stringr::str_replace_all("\\s*-\\s*", "-")
+}
+
+is_age_group <- function(x) {
+  stringr::str_detect(
+    x,
+    "^\\d{2}\\s*-\\s*\\d{2}\\s*Years$|^\\d{2}\\s*Years & Over$|^\\d{2}\\s*Years And Over$"
+  )
+}
+```
+
+## 4. Shared age-group definitions
+
+```{r}
+asfr_age_groups <- c(
+  "15-19 Years",
+  "20-24 Years",
+  "25-29 Years",
+  "30-34 Years",
+  "35-39 Years",
+  "40-44 Years",
+  "45-49 Years"
+)
+
+driver_age_groups <- c(
+  "25-29 Years",
+  "30-34 Years",
+  "35-39 Years",
+  "40-44 Years",
+  "45-49 Years"
+)
+
+tibble(
+  purpose = c(rep("ASFR", length(asfr_age_groups)), rep("Drivers", length(driver_age_groups))),
+  age_group = c(asfr_age_groups, driver_age_groups)
+)
+```
+
+## 5. Births and fertility rates
+
+```{r}
+fertility_wide <- read_singstat_wide(fertility_file)
+
+fertility_wide |>
+  select(row_id, data_series) |>
+  slice_head(n = 10)
+```
+
+```{r}
+tfr_annual <- fertility_wide |>
+  filter(data_series == "Total Fertility Rate (TFR)") |>
+  to_long_years() |>
+  transmute(
+    year,
+    tfr = value
+  )
+
+tfr_annual |>
+  arrange(year) |>
+  slice_head(n = 10)
+```
+
+```{r}
+asfr_by_age <- fertility_wide |>
+  mutate(age_group = standardise_age_group(data_series)) |>
+  filter(age_group %in% asfr_age_groups) |>
+  to_long_years() |>
+  transmute(
+    year,
+    age_group = factor(age_group, levels = asfr_age_groups),
+    asfr = value
+  ) |>
+  arrange(year, age_group)
+
+asfr_by_age |>
+  slice_head(n = 14)
+```
+
+## 6. Female singlehood by age group
+
+```{r}
+singlehood_wide <- read_singstat_wide(singlehood_file)
+
+singlehood_wide |>
+  select(row_id, data_series) |>
+  slice_head(n = 20)
+```
+
+```{r}
+singlehood_tagged <- singlehood_wide |>
+  mutate(
+    age_group = if_else(
+      is_age_group(data_series),
+      standardise_age_group(data_series),
+      NA_character_
+    ),
+    sex = case_when(
+      data_series == "Males" ~ "Male",
+      data_series == "Females" ~ "Female",
+      TRUE ~ "Total"
+    )
+  ) |>
+  tidyr::fill(age_group, .direction = "down")
+
+singlehood_tagged |>
+  select(row_id, data_series, age_group, sex) |>
+  slice_head(n = 20)
+```
+
+```{r}
+singlehood_female_by_age <- singlehood_tagged |>
+  filter(sex == "Female", age_group %in% driver_age_groups) |>
+  to_long_years() |>
+  transmute(
+    year,
+    age_group = factor(age_group, levels = driver_age_groups),
+    single_female_pct = value
+  ) |>
+  arrange(year, age_group)
+
+singlehood_female_by_age |>
+  slice_head(n = 15)
+```
+
+```{r}
+singlehood_female_25_49 <- singlehood_female_by_age |>
+  group_by(year) |>
+  summarise(
+    single_female_25_49_pct = mean(single_female_pct, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+singlehood_female_25_49 |>
+  arrange(year) |>
+  slice_head(n = 10)
+```
+
+## 7. Female labour-force participation rate by age group
+
+```{r}
+lfpr_wide <- read_singstat_wide(lfpr_file)
+
+lfpr_wide |>
+  select(row_id, data_series) |>
+  slice_head(n = 25)
+```
+
+```{r}
+lfpr_tagged <- lfpr_wide |>
+  mutate(
+    sex_section = case_when(
+      data_series == "Total Resident Participation Rate" ~ "Total",
+      data_series == "Male Resident Participation Rate" ~ "Male",
+      data_series == "Female Resident Participation Rate" ~ "Female",
+      TRUE ~ NA_character_
+    ),
+    age_group = if_else(
+      is_age_group(data_series),
+      standardise_age_group(data_series),
+      NA_character_
+    )
+  ) |>
+  tidyr::fill(sex_section, .direction = "down")
+
+lfpr_tagged |>
+  select(row_id, data_series, sex_section, age_group) |>
+  filter(sex_section == "Female") |>
+  slice_head(n = 20)
+```
+
+```{r}
+lfpr_female_by_age <- lfpr_tagged |>
+  filter(sex_section == "Female", age_group %in% driver_age_groups) |>
+  to_long_years() |>
+  transmute(
+    year,
+    age_group = factor(age_group, levels = driver_age_groups),
+    female_lfpr_pct = value
+  ) |>
+  arrange(year, age_group)
+
+lfpr_female_by_age |>
+  slice_head(n = 15)
+```
+
+```{r}
+lfpr_female_25_49 <- lfpr_female_by_age |>
+  group_by(year) |>
+  summarise(
+    female_lfpr_25_49_pct = mean(female_lfpr_pct, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+lfpr_female_25_49 |>
+  arrange(year) |>
+  slice_head(n = 10)
+```
+
+## 8. Editable context tables
+
+These policy and recession rows are working annotations for now. We can update them later after the team confirms the final story and references.
+
+```{r}
+policy_events <- tribble(
+  ~year, ~event_type, ~event_label,
+  1972, "policy", "Stop at Two campaign",
+  1987, "policy", "Have Three or More if You Can Afford It",
+  2001, "policy", "Baby Bonus introduced",
+  2013, "policy", "Marriage and Parenthood package enhancement"
+)
+
+recession_events <- tribble(
+  ~year, ~event_type, ~event_label,
+  1985, "recession", "1985 recession",
+  1998, "recession", "Asian financial crisis",
+  2001, "recession", "2001 downturn",
+  2009, "recession", "Global financial crisis",
+  2020, "recession", "COVID-19 recession"
+)
+
+context_events <- bind_rows(policy_events, recession_events)
+
+context_events
+```
+
+## 9. Visualization-ready tables
+
+```{r}
+annual_drivers <- tibble(year = 1960:2025) |>
+  left_join(tfr_annual, by = "year") |>
+  left_join(singlehood_female_25_49, by = "year") |>
+  left_join(lfpr_female_25_49, by = "year") |>
+  arrange(year)
+
+annual_drivers |>
+  slice_head(n = 15)
+```
+
+```{r}
+asfr_visualization_ready <- asfr_by_age |>
+  left_join(annual_drivers, by = "year") |>
+  arrange(year, age_group)
+
+asfr_visualization_ready |>
+  slice_head(n = 20)
+```
+
+## 10. Validation checks
+
+```{r}
+validation_summary <- list(
+  tfr_year_range = range(tfr_annual$year, na.rm = TRUE),
+  asfr_year_range = range(asfr_by_age$year, na.rm = TRUE),
+  singlehood_year_range = range(singlehood_female_by_age$year, na.rm = TRUE),
+  lfpr_year_range = range(lfpr_female_by_age$year, na.rm = TRUE),
+  asfr_age_groups = levels(asfr_by_age$age_group),
+  driver_age_groups = driver_age_groups,
+  missing_annual_drivers = annual_drivers |>
+    summarise(
+      missing_tfr = sum(is.na(tfr)),
+      missing_singlehood = sum(is.na(single_female_25_49_pct)),
+      missing_lfpr = sum(is.na(female_lfpr_25_49_pct))
+    )
+)
+
+validation_summary
+```
+
+```{r}
+annual_drivers |>
+  summarise(
+    min_year = min(year),
+    max_year = max(year),
+    tfr_available = sum(!is.na(tfr)),
+    singlehood_available = sum(!is.na(single_female_25_49_pct)),
+    lfpr_available = sum(!is.na(female_lfpr_25_49_pct))
+  )
+```
+
+## 11. Quick draft chart for checking
+
+This is only a rough check that the cleaned data behaves as expected. We can design the final visualization later.
+
+```{r}
+annual_drivers |>
+  ggplot(aes(x = year)) +
+  geom_line(aes(y = tfr), linewidth = 1, colour = "#1f77b4") +
+  labs(
+    title = "Draft check: Total Fertility Rate over time",
+    x = "Year",
+    y = "TFR"
+  ) +
+  theme_minimal()
+```
+
+```{r}
+asfr_by_age |>
+  ggplot(aes(x = year, y = asfr, fill = age_group)) +
+  geom_col() +
+  labs(
+    title = "Draft check: ASFR by mother's age group",
+    x = "Year",
+    y = "ASFR",
+    fill = "Mother's age group"
+  ) +
+  theme_minimal()
+```
+
