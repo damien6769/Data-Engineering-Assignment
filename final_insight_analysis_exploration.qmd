@@ -1,0 +1,930 @@
+---
+title: "Final Insight and Analysis Exploration"
+subtitle: "Candidate supporting analyses for Singapore fertility story"
+author: "Team 11"
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+## Purpose
+
+This notebook creates supporting plots for the final presentation. The goal is not to treat every plot as a separate insight. The team can combine plots where one insight needs more than one view.
+
+Recommended final choice for now:
+
+1. Policy context: TFR around major fertility policies and before-vs-after comparison
+2. Delayed family formation: LFPR/singlehood bubble scatter and ASFR decade heatmap
+3. Smaller completed family size: family-size trend among ever-married women aged 40 to 49 and survey reasons for not wanting children or more children
+
+The recession event-window plot was removed from the main flow because it gives a weaker and less consistent explanation of the long-term fertility decline. Recession can remain as a contextual annotation in the final visual if needed.
+
+## 1. Setup
+
+```{r}
+library(tidyverse)
+```
+
+## 2. Read and clean the local datasets
+
+```{r}
+data_dir <- file.path("proposal_files", "datasets")
+
+fertility_file <- file.path(data_dir, "BirthsAndFertilityRatesAnnual.csv")
+singlehood_file <- file.path(data_dir, "M810581.csv")
+lfpr_file <- file.path(data_dir, "M182201.csv")
+family_size_file <- "ResidentEverMarriedFemalesByAgeGroupAndNumberOfChildrenBornAnnual.csv"
+birth_order_file <- "LiveBirthsByBirthOrderAnnual.csv"
+
+tibble(
+  dataset = c(
+    "Births and fertility",
+    "Singlehood",
+    "Female LFPR",
+    "Ever-married females by children born",
+    "Live births by birth order"
+  ),
+  file_path = c(
+    fertility_file,
+    singlehood_file,
+    lfpr_file,
+    family_size_file,
+    birth_order_file
+  ),
+  file_exists = file.exists(c(
+    fertility_file,
+    singlehood_file,
+    lfpr_file,
+    family_size_file,
+    birth_order_file
+  ))
+)
+```
+
+```{r}
+read_singstat_wide <- function(path) {
+  lines <- readLines(path, warn = FALSE)
+  header_index <- which(stringr::str_detect(lines, "^Data\\s*Series\\s*,"))[1]
+
+  if (is.na(header_index)) {
+    stop("Could not find a 'Data Series' or 'DataSeries' header in: ", path)
+  }
+
+  raw_data <- readr::read_csv(
+    path,
+    skip = header_index - 1,
+    na = c("", "na", "NA", "N.A.", "-"),
+    show_col_types = FALSE
+  ) |>
+    rename_with(trimws)
+
+  names(raw_data)[1] <- "data_series"
+
+  raw_data |>
+    mutate(
+      row_id = row_number(),
+      data_series_raw = data_series,
+      data_series = stringr::str_squish(data_series)
+    ) |>
+    filter(!is.na(data_series), data_series != "")
+}
+
+to_long_years <- function(data) {
+  year_cols <- names(data)[stringr::str_detect(names(data), "^\\d{4}$")]
+
+  data |>
+    pivot_longer(
+      cols = all_of(year_cols),
+      names_to = "year",
+      values_to = "value"
+    ) |>
+    mutate(
+      year = as.integer(year),
+      value = readr::parse_number(as.character(value))
+    ) |>
+    filter(!is.na(year))
+}
+
+standardise_age_group <- function(x) {
+  x |>
+    stringr::str_squish() |>
+    stringr::str_replace_all("\\s*-\\s*", "-")
+}
+
+is_age_group <- function(x) {
+  stringr::str_detect(
+    x,
+    "^\\d{2}\\s*-\\s*\\d{2}\\s*Years$|^\\d{2}\\s*Years & Over$|^\\d{2}\\s*Years And Over$"
+  )
+}
+```
+
+```{r}
+asfr_age_groups <- c(
+  "15-19 Years",
+  "20-24 Years",
+  "25-29 Years",
+  "30-34 Years",
+  "35-39 Years",
+  "40-44 Years",
+  "45-49 Years"
+)
+
+driver_age_groups <- c(
+  "25-29 Years",
+  "30-34 Years",
+  "35-39 Years",
+  "40-44 Years",
+  "45-49 Years"
+)
+
+age_palette <- c(
+  "15-19 Years" = "#4C78A8",
+  "20-24 Years" = "#F28E5C",
+  "25-29 Years" = "#F2D98D",
+  "30-34 Years" = "#FFF8B5",
+  "35-39 Years" = "#DDEB8C",
+  "40-44 Years" = "#A7D39A",
+  "45-49 Years" = "#C94B55"
+)
+
+children_born_levels <- c(
+  "None",
+  "1 Child",
+  "2 Children",
+  "3 Children",
+  "4 Or More Children"
+)
+
+children_born_palette <- c(
+  "None" = "#6B7280",
+  "1 Child" = "#7BC8A4",
+  "2 Children" = "#F2D98D",
+  "3 Children" = "#F28E5C",
+  "4 Or More Children" = "#C94B55"
+)
+```
+
+## 3. Build analysis-ready tables
+
+```{r}
+fertility_wide <- read_singstat_wide(fertility_file)
+
+tfr_annual <- fertility_wide |>
+  filter(data_series == "Total Fertility Rate (TFR)") |>
+  to_long_years() |>
+  transmute(year, tfr = value)
+
+asfr_by_age <- fertility_wide |>
+  mutate(age_group = standardise_age_group(data_series)) |>
+  filter(age_group %in% asfr_age_groups) |>
+  to_long_years() |>
+  transmute(
+    year,
+    age_group = factor(age_group, levels = asfr_age_groups),
+    asfr = value
+  ) |>
+  arrange(year, age_group)
+```
+
+```{r}
+singlehood_wide <- read_singstat_wide(singlehood_file)
+
+singlehood_tagged <- singlehood_wide |>
+  mutate(
+    age_group = if_else(
+      is_age_group(data_series),
+      standardise_age_group(data_series),
+      NA_character_
+    ),
+    sex = case_when(
+      data_series == "Males" ~ "Male",
+      data_series == "Females" ~ "Female",
+      TRUE ~ "Total"
+    )
+  ) |>
+  tidyr::fill(age_group, .direction = "down")
+
+singlehood_female_by_age <- singlehood_tagged |>
+  filter(sex == "Female", age_group %in% driver_age_groups) |>
+  to_long_years() |>
+  transmute(
+    year,
+    age_group = factor(age_group, levels = driver_age_groups),
+    single_female_pct = value
+  ) |>
+  arrange(year, age_group)
+
+singlehood_female_25_49 <- singlehood_female_by_age |>
+  group_by(year) |>
+  summarise(
+    single_female_25_49_pct = mean(single_female_pct, na.rm = TRUE),
+    .groups = "drop"
+  )
+```
+
+```{r}
+lfpr_wide <- read_singstat_wide(lfpr_file)
+
+lfpr_tagged <- lfpr_wide |>
+  mutate(
+    sex_section = case_when(
+      data_series == "Total Resident Participation Rate" ~ "Total",
+      data_series == "Male Resident Participation Rate" ~ "Male",
+      data_series == "Female Resident Participation Rate" ~ "Female",
+      TRUE ~ NA_character_
+    ),
+    age_group = if_else(
+      is_age_group(data_series),
+      standardise_age_group(data_series),
+      NA_character_
+    )
+  ) |>
+  tidyr::fill(sex_section, .direction = "down")
+
+lfpr_female_by_age <- lfpr_tagged |>
+  filter(sex_section == "Female", age_group %in% driver_age_groups) |>
+  to_long_years() |>
+  transmute(
+    year,
+    age_group = factor(age_group, levels = driver_age_groups),
+    female_lfpr_pct = value
+  ) |>
+  arrange(year, age_group)
+
+lfpr_female_25_49 <- lfpr_female_by_age |>
+  group_by(year) |>
+  summarise(
+    female_lfpr_25_49_pct = mean(female_lfpr_pct, na.rm = TRUE),
+    .groups = "drop"
+  )
+```
+
+```{r}
+annual_drivers <- tibble(year = 1960:2025) |>
+  left_join(tfr_annual, by = "year") |>
+  left_join(singlehood_female_25_49, by = "year") |>
+  left_join(lfpr_female_25_49, by = "year") |>
+  mutate(
+    decade = paste0(floor(year / 10) * 10, "s")
+  )
+
+annual_drivers |>
+  summarise(
+    min_year = min(year),
+    max_year = max(year),
+    tfr_available = sum(!is.na(tfr)),
+    singlehood_available = sum(!is.na(single_female_25_49_pct)),
+    lfpr_available = sum(!is.na(female_lfpr_25_49_pct))
+  )
+```
+
+```{r}
+family_size_wide <- read_singstat_wide(family_size_file)
+
+family_size_tagged <- family_size_wide |>
+  mutate(
+    age_group = if_else(
+      is_age_group(data_series),
+      standardise_age_group(data_series),
+      NA_character_
+    ),
+    children_born = if_else(
+      data_series %in% c("None", "1 Child", "2 Children", "3 Children", "4 Or More Children"),
+      data_series,
+      NA_character_
+    )
+  ) |>
+  tidyr::fill(age_group, .direction = "down")
+
+family_size_40_49 <- family_size_tagged |>
+  filter(age_group == "40-49 Years", children_born %in% children_born_levels) |>
+  to_long_years() |>
+  transmute(
+    year,
+    children_born = factor(children_born, levels = children_born_levels),
+    females = value
+  ) |>
+  group_by(year) |>
+  mutate(
+    total_females = sum(females, na.rm = TRUE),
+    share_pct = females / total_females * 100
+  ) |>
+  ungroup() |>
+  arrange(year, children_born)
+
+family_size_40_49 |>
+  summarise(
+    first_year = min(year),
+    latest_year = max(year),
+    rows = n(),
+    categories = n_distinct(children_born)
+  )
+```
+
+## 4. Insight 1: did fertility policies visibly change the TFR trend?
+
+### Why this is useful
+
+For the final insight section, it is clearer to show what happened to TFR before and after each major policy.
+
+This section uses two policy-focused plots:
+
+1. Actual TFR around each policy year
+2. Five-year before-vs-after average TFR change
+
+Definitions:
+
+- Anti-natalist means policy that discourages higher fertility. Example: Stop at Two.
+- Pro-natalist means policy that encourages higher fertility. Examples: Have Three or More, Baby Bonus, Marriage and Parenthood package.
+- These plots show timing and association. They do not prove direct causality.
+
+```{r}
+policy_events <- tribble(
+  ~event_year, ~event_label, ~policy_stance,
+  1972, "Stop at Two", "Anti-natalist",
+  1987, "Have Three or More", "Pro-natalist",
+  2001, "Baby Bonus", "Pro-natalist",
+  2013, "Marriage and Parenthood package", "Pro-natalist"
+)
+
+policy_window <- policy_events |>
+  crossing(relative_year = -5:10) |>
+  mutate(year = event_year + relative_year) |>
+  left_join(tfr_annual, by = "year") |>
+  group_by(event_year, event_label, policy_stance) |>
+  mutate(
+    event_tfr = tfr[relative_year == 0][1],
+    tfr_change_from_event = tfr - event_tfr,
+    event_label = factor(
+      event_label,
+      levels = c("Stop at Two", "Have Three or More", "Baby Bonus", "Marriage and Parenthood package")
+    )
+  ) |>
+  ungroup()
+
+policy_window |>
+  filter(relative_year %in% c(-5, 0, 5, 10)) |>
+  select(event_label, policy_stance, relative_year, year, tfr, tfr_change_from_event)
+```
+
+### Plot 1A: actual TFR before and after each policy
+
+```{r}
+ggplot(policy_window, aes(x = relative_year, y = tfr, colour = policy_stance)) +
+  geom_vline(xintercept = 0, linetype = "dashed", colour = "grey35") +
+  geom_line(linewidth = 1.1) +
+  geom_point(size = 2.4) +
+  facet_wrap(~ event_label, scales = "free_y", ncol = 2) +
+  scale_colour_manual(
+    values = c(
+      "Anti-natalist" = "#d95f02",
+      "Pro-natalist" = "#1b9e77"
+    )
+  ) +
+  scale_x_continuous(breaks = c(-5, 0, 5, 10)) +
+  labs(
+    title = "TFR around major fertility policies",
+    subtitle = "Dashed line marks the policy year. X-axis is years from that policy.",
+    x = "Years from policy",
+    y = "TFR",
+    colour = "Policy stance",
+    caption = "Note: this shows timing around policy events, not causal proof."
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    legend.position = "bottom",
+    plot.title = element_text(face = "bold"),
+    strip.text = element_text(face = "bold")
+  )
+```
+
+### Plot 1B: five-year before-vs-after policy dumbbell comparison
+
+```{r}
+policy_before_after <- policy_events |>
+  mutate(
+    before_years = map(event_year, ~ (.x - 5):(.x - 1)),
+    after_years = map(event_year, ~ (.x + 1):(.x + 5))
+  ) |>
+  unnest_longer(before_years, values_to = "before_year") |>
+  left_join(tfr_annual |> rename(before_tfr = tfr), by = c("before_year" = "year")) |>
+  group_by(event_year, event_label, policy_stance) |>
+  summarise(before_mean_tfr = mean(before_tfr, na.rm = TRUE), .groups = "drop") |>
+  left_join(
+    policy_events |>
+      mutate(after_years = map(event_year, ~ (.x + 1):(.x + 5))) |>
+      unnest_longer(after_years, values_to = "after_year") |>
+      left_join(tfr_annual |> rename(after_tfr = tfr), by = c("after_year" = "year")) |>
+      group_by(event_year, event_label, policy_stance) |>
+      summarise(after_mean_tfr = mean(after_tfr, na.rm = TRUE), .groups = "drop"),
+    by = c("event_year", "event_label", "policy_stance")
+  ) |>
+  mutate(
+    five_year_change = after_mean_tfr - before_mean_tfr,
+    change_direction = if_else(five_year_change >= 0, "Higher after policy", "Lower after policy"),
+    change_label = paste0(if_else(five_year_change >= 0, "+", ""), sprintf("%.2f", five_year_change)),
+    label_x = pmax(before_mean_tfr, after_mean_tfr) + 0.05,
+    event_label = factor(
+      event_label,
+      levels = rev(c("Stop at Two", "Have Three or More", "Baby Bonus", "Marriage and Parenthood package"))
+    )
+  )
+
+policy_before_after
+```
+
+```{r}
+policy_before_after_long <- policy_before_after |>
+  select(event_label, policy_stance, before_mean_tfr, after_mean_tfr, five_year_change, change_label, label_x) |>
+  pivot_longer(
+    cols = c(before_mean_tfr, after_mean_tfr),
+    names_to = "period",
+    values_to = "mean_tfr"
+  ) |>
+  mutate(
+    period = recode(
+      period,
+      before_mean_tfr = "5 years before",
+      after_mean_tfr = "5 years after"
+    ),
+    period = factor(period, levels = c("5 years before", "5 years after"))
+  )
+
+ggplot(policy_before_after, aes(y = event_label)) +
+  geom_segment(
+    aes(x = before_mean_tfr, xend = after_mean_tfr, yend = event_label, colour = change_direction),
+    linewidth = 1.3
+  ) +
+  geom_point(
+    data = policy_before_after_long,
+    aes(x = mean_tfr, shape = period),
+    size = 3.4,
+    colour = "grey15"
+  ) +
+  geom_text(
+    aes(x = label_x, label = change_label),
+    hjust = 0,
+    colour = "grey20",
+    size = 3.8,
+    fontface = "bold"
+  ) +
+  scale_colour_manual(
+    values = c(
+      "Higher after policy" = "#1b9e77",
+      "Lower after policy" = "#d95f02"
+    )
+  ) +
+  coord_cartesian(clip = "off") +
+  labs(
+    title = "Only the 1987 policy shift shows a higher short-term average TFR",
+    subtitle = "Circle = 5 years before. Triangle = 5 years after. Label = after minus before.",
+    x = "Average TFR",
+    y = NULL,
+    colour = NULL,
+    shape = NULL,
+    caption = "Positive change means average TFR was higher after the policy. This is descriptive, not causal proof."
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    legend.position = "bottom",
+    panel.grid.major.y = element_blank(),
+    plot.title = element_text(face = "bold"),
+    plot.margin = margin(5.5, 35, 5.5, 5.5)
+  )
+```
+
+### Detailed analysis for understanding
+
+- This policy insight asks a more direct question: after a major fertility policy, did TFR visibly rise, fall, or stay flat?
+- The anti-natalist Stop at Two period is followed by continued decline. This fits the historical context because the policy direction was to reduce fertility.
+- The 1987 pro-natalist shift is the only policy point in this comparison where the five-year after average is higher than the five-year before average. This suggests a short-term improvement or stabilisation after the policy reversal.
+- However, the later pro-natalist policies do not show the same clear rebound. Baby Bonus and the Marriage and Parenthood package happen when TFR is already low, and the after-policy average does not show a strong recovery.
+- This does not mean those policies failed completely. They may have slowed decline, supported families, or prevented an even lower TFR. The plot only shows that they did not create a large sustained increase in TFR.
+- Main interpretation: policy matters, but policy alone does not explain Singapore's fertility trend. Earlier anti-natalist policy aligns with fertility reduction, while later pro-natalist policies appear unable to fully reverse deeper social and demographic changes.
+
+## 5. Insight 2: delayed family formation
+
+### Why this is useful
+
+This insight combines two related views instead of treating them as separate findings.
+
+The first view shows the outcome: childbearing has shifted from younger age groups toward older age groups. The second view shows the wider social context: lower fertility happened alongside higher female labour-force participation and higher singlehood.
+
+This should be framed carefully. The point is not that women working directly caused fertility to fall. The safer interpretation is that fertility decline developed together with broader changes in education, work, marriage timing, and family formation.
+
+### Plot 2A: ASFR decade heatmap
+
+```{r}
+asfr_decade <- asfr_by_age |>
+  mutate(
+    decade_start = floor(year / 10) * 10,
+    decade = case_when(
+      decade_start == 2020 ~ "2020s",
+      TRUE ~ paste0(decade_start, "s")
+    )
+  ) |>
+  group_by(decade, age_group) |>
+  summarise(mean_asfr = mean(asfr, na.rm = TRUE), .groups = "drop") |>
+  mutate(
+    decade = factor(decade, levels = c("1960s", "1970s", "1980s", "1990s", "2000s", "2010s", "2020s")),
+    label_asfr = if_else(is.na(mean_asfr), "", as.character(round(mean_asfr, 0)))
+  )
+
+asfr_decade |>
+  arrange(decade, age_group)
+```
+
+```{r}
+ggplot(asfr_decade, aes(x = decade, y = age_group, fill = mean_asfr)) +
+  geom_tile(colour = "white", linewidth = 0.8) +
+  geom_text(aes(label = label_asfr), size = 3.6) +
+  scale_fill_gradient(low = "#fff7bc", high = "#d95f0e", na.value = "grey95") +
+  labs(
+    title = "Childbearing shifted from the 20s toward the 30s",
+    subtitle = "Average births per 1,000 women by age group and decade. Darker cells mean higher fertility intensity.",
+    x = "Decade",
+    y = "Mother's age group",
+    fill = "Mean ASFR\n(births per 1,000)"
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    legend.position = "right",
+    panel.grid = element_blank(),
+    plot.title = element_text(face = "bold"),
+    axis.text.x = element_text(angle = 0, hjust = 0.5)
+  )
+```
+
+### Detailed analysis for understanding
+
+- The heatmap shows fertility intensity by age group and decade. Darker cells mean that age group had more births per 1,000 women.
+- In the 1960s, fertility was high across several younger age groups. The strongest group was 25 to 29, with mean ASFR around 272.
+- The 20 to 24 group was also very high in the 1960s, around 218. By the 2020s, it fell to around 11. This is one of the clearest signs that younger childbearing has collapsed.
+- The 25 to 29 group also fell strongly, from around 272 in the 1960s to around 47 in the 2020s.
+- The 30 to 34 group also declined in absolute terms, but it became the highest recent age group. In other words, fertility fell overall, but the centre of childbearing shifted older.
+- The 35 to 39 group became relatively more important in recent decades. This supports the idea that more childbearing is happening later.
+- Main interpretation: Singapore's fertility decline is not only a drop in the number of children women have. It is also a timing shift, where births are delayed from the 20s toward the 30s.
+- Why this matters: if first births happen later, there is less time for second or third births. This can help explain why TFR remains low even if some women still eventually have children.
+
+### Plot 2B: work and marriage context
+
+### Why this is useful
+
+This plot adds context to the ASFR heatmap. If the heatmap shows that childbearing moved later, the bubble plot shows that this happened during a period when female labour-force participation and singlehood were also rising.
+
+This should be framed carefully. The plot does not mean women working causes fertility to fall. It shows that lower fertility happened alongside changes in work and marriage patterns.
+
+```{r}
+bubble_data <- annual_drivers |>
+  filter(
+    !is.na(tfr),
+    !is.na(single_female_25_49_pct),
+    !is.na(female_lfpr_25_49_pct)
+  ) |>
+  mutate(
+    decade = factor(decade),
+    label_year = case_when(
+      year == min(year) ~ paste0(year, " start"),
+      year == max(year) ~ paste0(year, " latest"),
+      TRUE ~ NA_character_
+    )
+  )
+
+bubble_data |>
+  summarise(
+    first_year = min(year),
+    last_year = max(year),
+    tfr_first = tfr[which.min(year)],
+    tfr_last = tfr[which.max(year)],
+    singlehood_first = single_female_25_49_pct[which.min(year)],
+    singlehood_last = single_female_25_49_pct[which.max(year)],
+    lfpr_first = female_lfpr_25_49_pct[which.min(year)],
+    lfpr_last = female_lfpr_25_49_pct[which.max(year)]
+  )
+```
+
+```{r}
+ggplot(
+  bubble_data,
+  aes(
+    x = female_lfpr_25_49_pct,
+    y = single_female_25_49_pct,
+    size = tfr,
+    colour = decade
+  )
+) +
+  geom_path(aes(group = 1), colour = "grey65", linewidth = 0.8, alpha = 0.8) +
+  geom_point(alpha = 0.85) +
+  geom_text(
+    data = bubble_data |> filter(!is.na(label_year)),
+    aes(label = label_year),
+    nudge_y = 0.6,
+    size = 3.8,
+    fontface = "bold",
+    show.legend = FALSE
+  ) +
+  scale_size_continuous(range = c(2.5, 9)) +
+  scale_colour_brewer(palette = "Dark2") +
+  labs(
+    title = "Lower fertility sits alongside higher LFPR and higher singlehood",
+    subtitle = "Each bubble is a year. Movement toward the upper-right occurs while TFR bubbles get smaller.",
+    x = "Female LFPR, ages 25 to 49 (%)",
+    y = "Single women, ages 25 to 49 (%)",
+    size = "TFR",
+    colour = "Decade",
+    caption = "Note: this is descriptive association, not causal proof."
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    legend.position = "bottom",
+    plot.title = element_text(face = "bold")
+  )
+```
+
+```{r}
+driver_correlations <- bubble_data |>
+  summarise(
+    correlation_lfpr_tfr = cor(female_lfpr_25_49_pct, tfr, use = "complete.obs"),
+    correlation_singlehood_tfr = cor(single_female_25_49_pct, tfr, use = "complete.obs")
+  )
+
+driver_correlations
+```
+
+### Combined analysis for understanding
+
+- Each bubble represents one year.
+- The x-axis shows female labour-force participation, ages 25 to 49.
+- The y-axis shows the percentage of single women, ages 25 to 49.
+- Bubble size represents TFR. Larger bubbles mean higher TFR. Smaller bubbles mean lower TFR.
+- Over time, the points move from the lower-left to the upper-right. This means female LFPR and female singlehood both increased.
+- At the same time, the bubbles become smaller. This means TFR declined while LFPR and singlehood rose.
+- This supports a social-context explanation: fertility decline is linked to later or less frequent family formation.
+- A likely mechanism is that higher education and work participation can change life priorities and timing. If marriage happens later, first birth may also happen later. If first birth happens later, there is less time for larger families.
+- The singlehood variable is especially important in Singapore's context because marriage and childbearing are closely connected. Higher singlehood at ages 25 to 49 means fewer women are in the typical married-parenthood pathway during those years.
+- The descriptive correlations are strongly negative in this dataset: about -0.95 for LFPR and TFR, and about -0.89 for singlehood and TFR.
+- Interpretation caution: correlation is not causality. This plot does not prove that LFPR or singlehood directly caused lower fertility. It shows that low fertility developed alongside broader changes in work and marriage patterns.
+- The ASFR heatmap strengthens this insight because it shows the actual fertility timing shift. Fertility in the 20 to 24 and 25 to 29 age groups fell sharply, while the 30 to 34 age group became the main recent childbearing age group.
+- Main interpretation: policy alone cannot fully explain persistent low fertility. Social changes in work and marriage help explain why TFR remained low even after Singapore shifted toward pro-natalist policy, because family formation is happening later and the window for having multiple children becomes shorter.
+
+## 6. Insight 3: smaller family size among ever-married women
+
+### Why this is useful
+
+Insight 2 explains delayed family formation. Insight 3 answers a different question: after women marry, are family sizes also becoming smaller, and what practical constraints may help explain this?
+
+This section uses two supporting plots:
+
+1. A family-size trend among ever-married women aged 40 to 49. This shows the outcome.
+2. Survey reasons from the 2021 Marriage and Parenthood Survey. This gives context for why married respondents may not want children or more children.
+
+The family-size dataset is stronger than birth-order data for this specific insight because it looks at ever-married women and the number of children they have had. The clearest group to focus on is women aged 40 to 49, because they are closer to the end of their childbearing years. This makes the family-size interpretation more defensible.
+
+### Plot 3A: family-size trend among ever-married women aged 40 to 49
+
+```{r}
+family_size_summary <- family_size_40_49 |>
+  mutate(
+    family_size_group = case_when(
+      children_born == "None" ~ "None",
+      children_born == "1 Child" ~ "1 child",
+      children_born == "2 Children" ~ "2 children",
+      children_born %in% c("3 Children", "4 Or More Children") ~ "3 or more children",
+      TRUE ~ NA_character_
+    )
+  ) |>
+  filter(!is.na(family_size_group)) |>
+  group_by(year, family_size_group) |>
+  summarise(share_pct = sum(share_pct, na.rm = TRUE), .groups = "drop") |>
+  mutate(
+    family_size_group = factor(
+      family_size_group,
+      levels = c("None", "1 child", "2 children", "3 or more children")
+    )
+  )
+
+family_size_latest <- family_size_summary |>
+  filter(year == max(year)) |>
+  mutate(
+    label = paste0(family_size_group, ": ", round(share_pct, 1), "%"),
+    label_y = case_when(
+      family_size_group == "None" ~ share_pct - 1.4,
+      family_size_group == "1 child" ~ share_pct + 1.0,
+      family_size_group == "2 children" ~ share_pct - 1.0,
+      family_size_group == "3 or more children" ~ share_pct + 1.4,
+      TRUE ~ share_pct
+    )
+  )
+
+ggplot(family_size_summary, aes(x = year, y = share_pct, colour = family_size_group)) +
+  geom_line(linewidth = 1.2) +
+  geom_point(size = 2.2) +
+  geom_text(
+    data = family_size_latest,
+    aes(y = label_y, label = label),
+    hjust = 0,
+    nudge_x = 0.6,
+    size = 3.5,
+    fontface = "bold",
+    show.legend = FALSE
+  ) +
+  scale_y_continuous(labels = scales::label_percent(scale = 1)) +
+  scale_x_continuous(breaks = seq(1980, 2025, 5)) +
+  scale_colour_manual(
+    values = c(
+      "None" = "#6B7280",
+      "1 child" = "#7BC8A4",
+      "2 children" = "#F2D98D",
+      "3 or more children" = "#C94B55"
+    )
+  ) +
+  coord_cartesian(xlim = c(1980, 2029), clip = "off") +
+  labs(
+    title = "Childlessness and one-child families rose as larger families declined",
+    subtitle = "Ever-married resident females aged 40 to 49, grouped by number of children born.",
+    x = "Year",
+    y = "Share of ever-married women aged 40 to 49",
+    colour = "Family size",
+    caption = "This measures near-completed family size, not annual birth order."
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    legend.position = "bottom",
+    plot.title = element_text(face = "bold"),
+    plot.margin = margin(5.5, 85, 5.5, 5.5)
+  )
+```
+
+### Plot 3B: reasons married respondents do not want children or more children
+
+```{r}
+survey_reasons_no_more_children <- tribble(
+  ~reason, ~pct_2016, ~pct_2021,
+  "Financial cost", 61, 64,
+  "Already have enough children", 55, 50,
+  "Raising children in Singapore is too stressful", 56, 49,
+  "Difficult to manage work and family demands", 33, 34,
+  "Lack of good caregiving arrangements", 19, 17,
+  "Difficulty conceiving", 13, 14
+) |>
+  mutate(
+    reason_wrapped = stringr::str_wrap(reason, width = 34),
+    reason_wrapped = factor(reason_wrapped, levels = reason_wrapped[order(pct_2021)]),
+    label_x = pmax(pct_2016, pct_2021) + 2,
+    label_2021 = paste0(pct_2021, "%")
+  )
+
+survey_reasons_long <- survey_reasons_no_more_children |>
+  select(reason_wrapped, pct_2016, pct_2021) |>
+  pivot_longer(
+    cols = c(pct_2016, pct_2021),
+    names_to = "year",
+    values_to = "pct"
+  ) |>
+  mutate(
+    year = recode(year, pct_2016 = "2016", pct_2021 = "2021"),
+    year = factor(year, levels = c("2016", "2021"))
+  )
+
+ggplot(survey_reasons_no_more_children, aes(y = reason_wrapped)) +
+  geom_segment(
+    aes(x = pct_2016, xend = pct_2021, yend = reason_wrapped),
+    linewidth = 1.4,
+    colour = "#B8C2CC"
+  ) +
+  geom_point(
+    data = survey_reasons_long,
+    aes(x = pct, fill = year),
+    shape = 21,
+    size = 5.5,
+    colour = "white",
+    stroke = 0.8
+  ) +
+  geom_text(
+    aes(x = label_x, label = label_2021),
+    hjust = 0,
+    size = 3.8,
+    fontface = "bold"
+  ) +
+  scale_x_continuous(
+    labels = scales::label_percent(scale = 1),
+    breaks = seq(0, 70, 10),
+    expand = expansion(mult = c(0, 0.08))
+  ) +
+  scale_fill_manual(
+    values = c("2016" = "#D7DEE8", "2021" = "#4C78A8")
+  ) +
+  coord_cartesian(xlim = c(0, 72), clip = "off") +
+  labs(
+    title = "Cost remains the top barrier to having more children",
+    subtitle = "Married respondents who do not want children or more children. Labels show 2021 values.",
+    x = "Selected reason among top three",
+    y = NULL,
+    fill = NULL,
+    caption = "Source: Marriage and Parenthood Survey 2021, Annex B, Table 3. Respondents could choose up to three reasons."
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    legend.position = "bottom",
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor = element_blank(),
+    plot.title = element_text(face = "bold"),
+    plot.margin = margin(5.5, 40, 5.5, 5.5)
+  )
+```
+
+### Detailed analysis for understanding
+
+- This insight is about family size after marriage, not only whether people are single or whether childbirth is delayed.
+- The family-size trend focuses on women aged 40 to 49 because most have either completed or nearly completed childbearing. This makes the chart more suitable for discussing completed family size.
+- In earlier years, larger families were more common among ever-married women aged 40 to 49.
+- Over time, the share with no children increases and the share with one child also increases. These are related but should not be treated as the same outcome.
+- The share with three or more children declines sharply, showing that larger families have become much less common.
+- The survey plot adds an explanation layer. Among married respondents who did not want children or more children, the most common reasons in 2021 were financial cost, already having enough children, stress from raising children in Singapore, and difficulty managing work and family demands.
+- This supports a stronger version of the fertility story: Singapore's decline is not only caused by fewer people starting families. Even among ever-married women, family size has become smaller, and survey evidence suggests practical constraints may make additional children harder.
+- This connects back to Insight 2. If marriage and first birth happen later, couples may have less time, energy, or financial capacity to have a second or third child.
+- Main interpretation: persistent low fertility is partly a family-size issue. It is not only "nobody having children"; it is also more one-child families, fewer larger families, and practical barriers to having additional children.
+
+## 7. Recommended final insight package
+
+Use three insight sections. Some insights use two plots because one plot alone does not fully explain the story.
+
+### Insight 1: Policy shifts did not create a sustained fertility rebound
+
+Use:
+
+- TFR around major fertility policies
+- Five-year before-vs-after policy dumbbell comparison
+
+Core message:
+
+- The anti-natalist Stop at Two policy aligns with continued fertility decline.
+- The 1987 pro-natalist shift shows the clearest short-term improvement or stabilisation.
+- Later pro-natalist policies do not show a large sustained rebound in TFR.
+- This does not mean policy is irrelevant. It means policy is only one part of the fertility story.
+- Use careful wording: policy timing aligns with changes in the TFR trend, but the chart does not prove causality.
+
+### Insight 2: Delayed family formation sits alongside changing work and marriage patterns
+
+Use:
+
+- ASFR decade heatmap
+- LFPR and singlehood bubble scatter
+
+Core message:
+
+- The ASFR heatmap shows that childbearing shifted from the 20s toward the 30s.
+- Over the same period, Singapore moves toward higher female LFPR and higher female singlehood, while TFR becomes smaller.
+- This supports the broader story that fertility decline happened alongside delayed family formation and changes in work and marriage patterns.
+- Use careful wording: this is descriptive association, not proof that LFPR or singlehood directly caused fertility decline.
+
+### Insight 3: Smaller family size makes low fertility harder to reverse
+
+Use:
+
+- Family-size trend among ever-married women aged 40 to 49
+- Survey reasons for not wanting children or more children
+
+Core message:
+
+- Among ever-married women aged 40 to 49, both childlessness and one-child families have increased.
+- The share with three or more children has declined.
+- Survey evidence suggests financial cost, stress, and work-family demands are key barriers to having additional children.
+- This supports the idea that Singapore's fertility decline is not only about fewer people starting families. Even among women who marry, family size has become smaller, and practical constraints may limit progression to larger families.
+
+### How to frame the "snowball" idea safely
+
+The snowball idea is useful, but it should be worded carefully.
+
+What is safe to say:
+
+- Low fertility can become entrenched over time.
+- Later marriage and later first births reduce the time window for having second or third children.
+- Fewer births today also affect future population structure, because smaller cohorts eventually enter family-forming ages.
+- This means recovery can become harder even if later policies encourage childbearing.
+
+What not to overclaim:
+
+- Do not say fewer babies directly causes TFR to fall later. TFR is a rate, while total births also depend on population size and age structure.
+- Without female population-by-age data, we should present the snowball effect as interpretation, not as a measured result.
+
+Better conclusion wording:
+
+Singapore's fertility decline appears to be an entrenched structural issue rather than a one-year shock. Policy changes matter, but the data suggests that delayed marriage, later childbearing, changing work patterns, and smaller family sizes make fertility harder to reverse once low fertility becomes established.
+
+### Final recommendation
+
+For the final presentation, use these supporting plots as three insight packages:
+
+1. Policy package: TFR around major fertility policies and five-year before-vs-after comparison
+2. Delayed family formation package: ASFR decade heatmap and LFPR/singlehood bubble scatter
+3. Smaller family size package: family-size trend for ever-married women aged 40 to 49 and survey reasons for not wanting children or more children
+
+Skip the recession event-window plot for the main analysis. Recessions can remain as light annotations in the main final visual, but they do not give the clearest explanation of the long-term decline.
