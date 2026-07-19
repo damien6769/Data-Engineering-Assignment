@@ -29,6 +29,8 @@ The recession event-window plot was removed from the main flow because it gives 
 
 ```{r}
 library(tidyverse)
+library(broom)
+library(patchwork)
 ```
 
 ## 2. Read and clean the local datasets
@@ -327,6 +329,51 @@ family_size_40_49 |>
     categories = n_distinct(children_born)
   )
 ```
+
+```{r}
+# Midpoint of each five-year age band, used to weight the mean age of childbearing.
+asfr_midpoints <- tibble(
+  age_group = factor(asfr_age_groups, levels = asfr_age_groups),
+  midpoint  = c(17.5, 22.5, 27.5, 32.5, 37.5, 42.5, 47.5)
+)
+
+# The 45-49 row is missing before 1980. Its ASFR is under 1 per 1,000 in every year
+# where it does exist, so we treat it as zero and verify below that this creates no break.
+asfr_complete <- asfr_by_age |>
+  mutate(asfr = coalesce(asfr, 0)) |>
+  left_join(asfr_midpoints, by = "age_group")
+```
+
+### Validation checks
+
+```{r}
+# Check 1: rebuilding TFR from the age-specific rates should reproduce the published TFR.
+# TFR = 5 * sum(ASFR) / 1000, because each band spans five single years of age.
+tfr_reconstruction <- asfr_complete |>
+  group_by(year) |>
+  summarise(tfr_rebuilt = sum(asfr) * 5 / 1000, .groups = "drop") |>
+  left_join(tfr_annual, by = "year") |>
+  mutate(difference = tfr_rebuilt - tfr)
+
+tfr_reconstruction |>
+  summarise(
+    years_checked  = n(),
+    max_abs_diff   = max(abs(difference), na.rm = TRUE),
+    mean_abs_diff  = mean(abs(difference), na.rm = TRUE)
+  )
+```
+
+```{r}
+# Check 2: the 45-49 band is missing before 1980 and treated as zero.
+# Confirm this creates no break in the mean age of childbearing at the 1979/1980 boundary.
+asfr_complete |>
+  filter(year %in% 1976:1983) |>
+  group_by(year) |>
+  summarise(mac = sum(midpoint * asfr) / sum(asfr), .groups = "drop") |>
+  mutate(year_on_year_change = round(mac - lag(mac), 4))
+```
+
+---
 
 ## 4. Insight 1: did fertility policies visibly change the TFR trend?
 
@@ -851,6 +898,525 @@ ggplot(survey_reasons_no_more_children, aes(y = reason_wrapped)) +
 - This supports a stronger version of the fertility story: Singapore's decline is not only caused by fewer people starting families. Even among ever-married women, family size has become smaller, and survey evidence suggests practical constraints may make additional children harder.
 - This connects back to Insight 2. If marriage and first birth happen later, couples may have less time, energy, or financial capacity to have a second or third child.
 - Main interpretation: persistent low fertility is partly a family-size issue. It is not only "nobody having children"; it is also more one-child families, fewer larger families, and practical barriers to having additional children.
+
+## 8. Insight 4: childbearing has shifted about four and a half years later
+
+### Purpose of this analysis
+
+The age-specific fertility heatmap in Insight 2 shows that childbearing has shifted towards
+older age groups, but it does so qualitatively. This section converts that observation into
+two measured quantities.
+
+The **mean age of childbearing (MAC)** is the average maternal age implied by a given year's
+fertility schedule, weighting each age band midpoint by its age-specific fertility rate:
+
+$$\text{MAC}_t = \frac{\sum_a m_a \cdot \text{ASFR}_{a,t}}{\sum_a \text{ASFR}_{a,t}}$$
+
+where $m_a$ is the midpoint of age band $a$. MAC is a period measure rather than a cohort
+measure. It describes the timing implied by one year's rates, not the completed experience of
+any real group of women.
+
+The second measure is the share of total fertility contributed by women aged 30 and over.
+It is more readily interpreted by a general audience than MAC and produces a single crossover
+year that can be annotated directly on the chart.
+
+```{r}
+timing_measures <- asfr_complete |>
+  group_by(year) |>
+  summarise(
+    total_asfr    = sum(asfr),
+    mac           = sum(midpoint * asfr) / sum(asfr),
+    share_30_plus = sum(asfr[age_group %in% c("30-34 Years", "35-39 Years",
+                                              "40-44 Years", "45-49 Years")]) / sum(asfr) * 100,
+    .groups = "drop"
+  ) |>
+  filter(total_asfr > 0)
+
+# Year in which women aged 30 and over first contributed more than half of total fertility
+crossover_year <- timing_measures |>
+  filter(share_30_plus > 50) |>
+  slice_min(year, n = 1) |>
+  pull(year)
+
+crossover_year
+
+timing_measures |>
+  filter(year %in% c(1960, 1970, 1980, 1990, 2000, 2010, 2020, 2025)) |>
+  mutate(across(c(mac, share_30_plus), ~ round(.x, 1))) |>
+  select(year, mac, share_30_plus)
+```
+
+### Plot 4A: mean age of childbearing and the share of fertility from women aged 30 and over
+
+```{r}
+#| fig-width: 9
+#| fig-height: 7
+
+timing_latest <- timing_measures |> filter(year == max(year))
+
+panel_share <- ggplot(timing_measures, aes(x = year, y = share_30_plus)) +
+  geom_hline(yintercept = 50, linetype = "dotted", colour = "grey55") +
+  geom_vline(xintercept = crossover_year, linetype = "dashed", colour = "grey35") +
+  geom_line(colour = "#C94B55", linewidth = 1.2) +
+  annotate(
+    "label",
+    x = crossover_year - 2, y = 22,
+    label = paste0("Mothers aged 30+ pass 50%\nof total fertility in ", crossover_year),
+    size = 3.2, hjust = 1, label.size = 0, fill = "white", colour = "grey20"
+  ) +
+  annotate(
+    "text",
+    x = timing_latest$year, y = timing_latest$share_30_plus + 6,
+    label = paste0(round(timing_latest$share_30_plus, 1), "%"),
+    hjust = 1, fontface = "bold", size = 3.8, colour = "#C94B55"
+  ) +
+  scale_x_continuous(breaks = seq(1960, 2025, 10)) +
+  scale_y_continuous(limits = c(0, 85)) +
+  labs(
+    title = "Childbearing has moved roughly four and a half years later since 1980",
+    subtitle = "Mothers aged 30 and over now account for 72.3% of total fertility, up from 33.5% in 1980",
+    x = NULL,
+    y = "Share of total fertility\nfrom mothers aged 30+ (%)"
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    plot.title = element_text(face = "bold"),
+    plot.subtitle = element_text(size = 10),
+    axis.text.x = element_blank()
+  )
+
+panel_mac <- ggplot(timing_measures, aes(x = year, y = mac)) +
+  geom_vline(xintercept = crossover_year, linetype = "dashed", colour = "grey35") +
+  geom_line(colour = "#4C78A8", linewidth = 1.2) +
+  annotate(
+    "text",
+    x = timing_latest$year, y = timing_latest$mac - 0.5,
+    label = paste0(round(timing_latest$mac, 1), " years"),
+    hjust = 1, fontface = "bold", size = 3.8, colour = "#4C78A8"
+  ) +
+  scale_x_continuous(breaks = seq(1960, 2025, 10)) +
+  labs(
+    x = "Year",
+    y = "Mean age of\nchildbearing (years)",
+    caption = "Period measures derived from age-specific fertility rates. Five-year band midpoints used as ages."
+  ) +
+  theme_minimal(base_size = 13)
+
+panel_share / panel_mac + plot_layout(heights = c(1.4, 1))
+```
+
+### Findings
+
+The mean age of childbearing declined through the 1960s and early 1970s, reaching a series
+minimum of 28.1 years in 1976. It has risen almost continuously since, reaching 29.5 in 1990,
+30.9 in 2010 and 32.7 in 2025. The turning point matters for the project's argument: the
+delay in childbearing is a post-1980 development, distinct from the original fertility
+transition that preceded it.
+
+The share of fertility contributed by mothers aged 30 and over followed the same pattern.
+It stood at 33.5 per cent in 1980, crossed 50 per cent for the first time in 2001, and reached
+72.3 per cent in 2025. Fertility in Singapore is now overwhelmingly concentrated among women
+in their thirties.
+
+Taken together, the two measures indicate that childbearing has shifted approximately four and
+a half years later since 1980. This is consequential rather than merely descriptive. A later
+start compresses the interval available for second and third births, which connects this
+finding directly to the family-size results in Insight 3.
+
+::: {.callout-important}
+## Interpretation limits
+
+**These are period measures, not cohort measures.** They describe the timing implied by a
+single year's fertility rates. Where women are steadily postponing births, period MAC rises
+and period TFR is temporarily depressed even if completed family size falls by less. This is
+known as the tempo effect. It means the TFR figures reported throughout this project
+understate completed family size to an unknown degree, and it is the reason this insight is
+presented alongside the completed family size evidence in Insight 3 rather than on its own.
+
+**Age band midpoints are an approximation.** MAC is computed from five-year bands using
+midpoints rather than single years of age. Within-band distributions are not uniform, so the
+level of MAC carries a small bias. The trend over time is unaffected, and only the trend is
+used in the interpretation above.
+
+**The 45 to 49 band is unavailable before 1980** and is treated as zero. The validation check
+in Section 3b confirms this produces a change of 0.002 years across the 1979 to 1980 boundary,
+which is negligible against normal year-to-year movement.
+:::
+
+---
+
+## 9. Insight 5: three quarters of the decline since 1990 comes from women under 30
+
+### Purpose of this analysis
+
+Insight 4 establishes that childbearing has moved later. This section quantifies how much each
+maternal age group contributed to the fall in TFR, and tests whether the increase in fertility
+at older ages is large enough to offset the decline at younger ages.
+
+Because $\text{TFR} = 5 \sum_a \text{ASFR}_a / 1000$, the change in TFR decomposes exactly into
+additive contributions by age group:
+
+$$\Delta \text{TFR} = \sum_a \frac{5 \cdot \Delta \text{ASFR}_a}{1000}$$
+
+No model is fitted and no assumptions are required. The contributions sum to the total change
+by construction, which is what makes a waterfall chart the appropriate representation.
+
+The base year is 1990. TFR had already stabilised near 1.8 by that point, so the comparison
+isolates the modern decline rather than the original demographic transition of the 1960s
+and 1970s.
+
+---
+
+```{r}
+base_year    <- 1990
+compare_year <- 2025
+
+tfr_decomposition <- asfr_complete |>
+  filter(year %in% c(base_year, compare_year)) |>
+  select(year, age_group, asfr) |>
+  pivot_wider(names_from = year, values_from = asfr, names_prefix = "asfr_") |>
+  mutate(
+    asfr_change  = .data[[paste0("asfr_", compare_year)]] - .data[[paste0("asfr_", base_year)]],
+    contribution = asfr_change * 5 / 1000
+  ) |>
+  arrange(age_group)
+
+start_tfr <- tfr_annual |> filter(year == base_year)    |> pull(tfr)
+end_tfr   <- tfr_annual |> filter(year == compare_year) |> pull(tfr)
+
+# Validation: contributions must sum to the observed change (small residual from
+# rounding in the published TFR is expected).
+tibble(
+  sum_of_contributions = sum(tfr_decomposition$contribution),
+  published_change     = end_tfr - start_tfr,
+  residual             = sum(tfr_decomposition$contribution) - (end_tfr - start_tfr)
+)
+
+# Share of the total decline coming from women under 30
+tfr_decomposition |>
+  mutate(under_30 = age_group %in% c("15-19 Years", "20-24 Years", "25-29 Years")) |>
+  group_by(under_30) |>
+  summarise(contribution = sum(contribution), .groups = "drop") |>
+  mutate(share_of_total_change = contribution / sum(contribution) * 100)
+
+tfr_decomposition
+```
+
+### Plot 5A: waterfall of the TFR decline, 1990 to 2025
+
+```{r}
+#| fig-width: 9.5
+#| fig-height: 5.5
+
+steps <- tfr_decomposition |>
+  mutate(
+    cum_end   = start_tfr + cumsum(contribution),
+    cum_start = lag(cum_end, default = start_tfr),
+    label     = as.character(age_group),
+    type      = if_else(contribution < 0, "Reduces TFR", "Raises TFR")
+  )
+
+waterfall_bars <- bind_rows(
+  tibble(label = paste0("TFR ", base_year),
+         ymin = 0, ymax = start_tfr, type = "Total", contribution = NA_real_),
+  steps |> transmute(label,
+                     ymin = pmin(cum_start, cum_end),
+                     ymax = pmax(cum_start, cum_end),
+                     type, contribution),
+  tibble(label = paste0("TFR ", compare_year),
+         ymin = 0, ymax = end_tfr, type = "Total", contribution = NA_real_)
+) |>
+  mutate(
+    index = row_number(),
+    label = factor(label, levels = label),
+    value_label = if_else(
+      is.na(contribution),
+      sprintf("%.2f", ymax),
+      paste0(if_else(contribution >= 0, "+", ""), sprintf("%.3f", contribution))
+    ),
+    label_y = ymax + 0.06
+  )
+
+# Dotted connectors carry the running total from one bar to the next
+carry_levels <- c(start_tfr, steps$cum_end)
+connector_df <- tibble(
+  x    = seq_len(length(carry_levels)) ,
+  xend = seq_len(length(carry_levels)) + 1,
+  y    = carry_levels
+)
+
+ggplot(waterfall_bars) +
+  geom_segment(
+    data = connector_df,
+    aes(x = x + 0.4, xend = xend - 0.4, y = y, yend = y),
+    colour = "grey60", linetype = "dotted"
+  ) +
+  geom_rect(
+    aes(xmin = index - 0.4, xmax = index + 0.4, ymin = ymin, ymax = ymax, fill = type),
+    colour = "white"
+  ) +
+  geom_text(
+    aes(x = index, y = label_y, label = value_label),
+    size = 3.4, fontface = "bold", colour = "grey20"
+  ) +
+  scale_x_continuous(
+    breaks = waterfall_bars$index,
+    labels = str_replace(as.character(waterfall_bars$label), " Years", "")
+  ) +
+  scale_fill_manual(
+    values = c("Total" = "#4C78A8", "Reduces TFR" = "#C94B55", "Raises TFR" = "#7BC8A4")
+  ) +
+  labs(
+    title = "Women under 30 account for about four fifths of the fall in TFR since 1990",
+    subtitle = paste0("Contribution of each maternal age group to the change in TFR from ",
+                      base_year, " to ", compare_year, ". Contributions sum exactly to the total change."),
+    x = "Mother's age group",
+    y = "Total Fertility Rate",
+    fill = NULL,
+    caption = "Contribution = 5 x change in age-specific fertility rate / 1,000. Arithmetic decomposition, no model fitted."
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    legend.position = "bottom",
+    panel.grid.major.x = element_blank(),
+    plot.title = element_text(face = "bold"),
+    plot.subtitle = element_text(size = 10)
+  )
+```
+
+### Findings
+
+TFR fell by 0.96 between 1990 and 2025, from 1.83 to 0.87.
+
+The 25 to 29 age group alone contributes -0.488, roughly half of the entire decline. The
+20 to 24 group contributes -0.250 and the 30 to 34 group -0.204. Teenage fertility, already
+low in 1990, contributes only -0.035.
+
+The 35 to 39, 40 to 44 and 45 to 49 groups together contribute +0.023. Fertility at older ages
+has risen, but the gain is roughly one thirtieth of the size of the loss below age 30.
+
+Combined, women under 30 account for 81.0 per cent of the total decline.
+
+The interpretation is that postponed births are not being recovered. If the shift observed in
+Insight 4 were purely a matter of timing, losses below age 30 would be offset by comparable
+gains after 35. They are not. Births are being delayed and then largely forgone, which is why
+a change in timing translates into a sustained fall in the rate rather than a temporary dip.
+
+::: {.callout-important}
+## Robustness and limits
+
+**Single-year comparison.** The decomposition compares two individual years. Repeating it with
+three-year averages centred on 1990 and 2024 gives a total change of -0.834 and an
+under-30 share of 86.2 per cent, so the finding strengthens rather than weakens under
+averaging. The 81 per cent figure quoted above is therefore the conservative estimate.
+
+**Zodiac effects.** Singapore birth counts respond measurably to the Chinese zodiac cycle,
+with Dragon years elevated and Tiger years depressed. Both 1990 and 2025 are ordinary years in
+this respect, but the averaged version above provides additional protection against this.
+
+**Residual from rounding.** Contributions sum to -0.955 against a published change of -0.960.
+The residual of 0.005 arises from rounding in the published TFR series and is reported in the
+validation output above.
+
+**Composition, not causation.** This is an accounting identity. It shows where the decline
+occurred, not why. It cannot distinguish a woman who never had children from one who had
+her first child at 34 rather than 27.
+:::
+
+---
+
+## 10. Insight 6: the decline is not uniform across ethnic groups
+
+### Purpose of this analysis
+
+All residents of Singapore are subject to the same national fertility policy, the same public
+housing system and the same labour market. If policy were the dominant driver of fertility,
+broadly similar outcomes across resident groups would be expected. The data does not show this.
+
+This section examines total fertility rates disaggregated by the three main resident ethnic
+groups from 1960 to 2025, together with the changing spread between them.
+
+::: {.callout-important}
+## How this section should be read
+
+Ethnicity is used here as an official statistical category published by SingStat. It stands in
+for underlying differences in age at first marriage, educational attainment, household income,
+religious practice and household composition, none of which this project measures directly.
+
+This analysis describes a statistical pattern in those categories. It makes no claim about the
+groups themselves and offers no explanation located in ethnicity as such. The appropriate
+follow-up would be to compare median age at first marriage and educational attainment across
+groups, which would test whether the divergence disappears once those factors are controlled
+for. That data is available from SingStat but falls outside the scope of this project.
+:::
+
+---
+
+```{r}
+ethnic_tfr <- fertility_wide |>
+  filter(data_series %in% c("Chinese", "Malays", "Indians")) |>
+  to_long_years() |>
+  transmute(
+    year,
+    ethnic_group = factor(data_series, levels = c("Malays", "Indians", "Chinese")),
+    tfr = value
+  ) |>
+  filter(!is.na(tfr))
+
+ethnic_tfr |>
+  filter(year %in% c(1960, 1980, 1990, 2000, 2010, 2020, 2025)) |>
+  pivot_wider(names_from = ethnic_group, values_from = tfr) |>
+  left_join(tfr_annual |> rename(`All residents` = tfr), by = "year") |>
+  mutate(`Malay minus Chinese gap` = round(Malays - Chinese, 2))
+```
+
+```{r}
+# How far each group has fallen, indexed to 1980
+ethnic_tfr |>
+  filter(year %in% c(1980, 2025)) |>
+  pivot_wider(names_from = year, values_from = tfr, names_prefix = "y") |>
+  mutate(
+    absolute_change = y2025 - y1980,
+    percent_change  = (y2025 / y1980 - 1) * 100
+  )
+```
+
+### Plot 6A: total fertility rate by ethnic group, 1960 to 2025
+
+```{r}
+#| fig-width: 9.5
+#| fig-height: 5.5
+
+ethnic_palette <- c(
+  "Malays"  = "#F28E5C",
+  "Indians" = "#7BC8A4",
+  "Chinese" = "#4C78A8"
+)
+
+ethnic_latest <- ethnic_tfr |>
+  filter(year == max(year)) |>
+  mutate(label = paste0(ethnic_group, ": ", sprintf("%.2f", tfr)))
+
+ggplot(ethnic_tfr, aes(x = year, y = tfr, colour = ethnic_group)) +
+  geom_hline(yintercept = 2.1, linetype = "dashed", colour = "grey45") +
+  annotate("text", x = 1985, y = 2.32, label = "Replacement level (2.1)",
+           hjust = 0, size = 3.2, colour = "grey35") +
+  geom_line(
+    data = tfr_annual |> filter(!is.na(tfr)),
+    aes(x = year, y = tfr), inherit.aes = FALSE,
+    colour = "grey55", linewidth = 0.9, linetype = "22"
+  ) +
+  annotate("text", x = 2004, y = 1.10, label = "All residents",
+           size = 3.2, colour = "grey40", fontface = "italic") +
+  geom_line(linewidth = 1.2) +
+  geom_text(
+    data = ethnic_latest,
+    aes(label = label),
+    hjust = 0, nudge_x = 0.8, size = 3.5, fontface = "bold", show.legend = FALSE
+  ) +
+  scale_colour_manual(values = ethnic_palette) +
+  scale_x_continuous(breaks = seq(1960, 2025, 10)) +
+  scale_y_continuous(breaks = seq(0, 7, 1)) +
+  coord_cartesian(xlim = c(1960, 2038), clip = "off") +
+  labs(
+    title = "One policy environment, three different fertility outcomes",
+    subtitle = "Total fertility rate by ethnic group. Every group fell sharply, but the spread between them is wider today than in 1980.",
+    x = "Year",
+    y = "Total Fertility Rate",
+    colour = "Ethnic group",
+    caption = "Ethnicity here proxies differences in marriage timing, education, income and household composition. Descriptive only."
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    legend.position = "bottom",
+    plot.title = element_text(face = "bold"),
+    plot.subtitle = element_text(size = 10),
+    plot.margin = margin(5.5, 60, 5.5, 5.5)
+  )
+```
+
+### Plot 6B: the gap between the highest and lowest group
+
+```{r}
+#| fig-width: 9
+#| fig-height: 3.6
+
+ethnic_gap <- ethnic_tfr |>
+  pivot_wider(names_from = ethnic_group, values_from = tfr) |>
+  mutate(gap = Malays - Chinese) |>
+  filter(!is.na(gap))
+
+ggplot(ethnic_gap, aes(x = year, y = gap)) +
+  geom_hline(yintercept = 0, colour = "grey70") +
+  geom_area(fill = "#F28E5C", alpha = 0.25) +
+  geom_line(colour = "#d95f02", linewidth = 1.2) +
+  annotate("segment", x = 1976, xend = 1976, y = 0.35, yend = 0.02,
+           colour = "grey40", linewidth = 0.4,
+           arrow = arrow(length = unit(0.15, "cm"))) +
+  annotate("text", x = 1976, y = 0.45,
+           label = "Gap closes to zero in 1976,\nthe peak of Stop at Two",
+           size = 3.1, colour = "grey25", hjust = 0.5) +
+  annotate("text", x = 2001, y = 1.42,
+           label = "Secondary peak, 2001",
+           size = 3.1, colour = "grey25") +
+  scale_x_continuous(breaks = seq(1960, 2025, 10)) +
+  scale_y_continuous(limits = c(-0.4, 2.4)) +
+  labs(
+    title = "The gap between groups closed under Stop at Two, then reopened",
+    subtitle = "Malay TFR minus Chinese TFR, in births per woman. The spread is 0.82 in 2025 against 0.47 in 1980.",
+    x = "Year",
+    y = "Difference in TFR"
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(plot.title = element_text(face = "bold"),
+        plot.subtitle = element_text(size = 10))
+```
+
+### Findings
+
+In 1980 the three groups recorded total fertility rates of 1.73 (Chinese), 2.03 (Indians) and
+2.20 (Malays), a spread of 0.47 between highest and lowest. By 2025 the figures were 0.71,
+0.92 and 1.53, a spread of 0.82. Every group fell substantially over the period, so this is
+not a case of one group being exempt from the national decline.
+
+The relative falls differ sharply. Measured from 1980, Chinese fertility fell 59.0 per cent and
+Indian fertility 54.7 per cent, while Malay fertility fell 30.5 per cent. Chinese resident TFR
+now stands at 0.71, a level comparable to the lowest national rates recorded anywhere.
+
+The spread between groups has not moved in one direction. It stood at 1.75 in 1960, collapsed
+to approximately zero in 1976 during the most intensive period of anti-natalist policy, widened
+steadily through the 1980s to a secondary peak of 1.24 in 2001, and has narrowed to 0.82 since.
+The convergence of the mid-1970s is notable in its own right: it coincides with the period in
+which fertility policy was applied most forcefully and uniformly across the population.
+
+The interpretation is that a single national policy environment has been compatible with
+persistently different fertility outcomes across resident groups for more than four decades.
+Where those outcomes converged, they did so under the most aggressive policy regime in the
+series, and they diverged again once that regime was reversed. This supports the project's
+reading of the decline as structural, driven by household-level factors operating beneath the
+policy layer, rather than as a direct response to policy.
+
+::: {.callout-important}
+## Limits of this comparison
+
+**The spread has not widened monotonically.** It is larger in 2025 than in 1980 but smaller
+than in 1960, and it has been narrowing since 2001. Any claim in the presentation must be
+anchored to a stated base year rather than asserted in general terms.
+
+**Group sizes differ substantially.** Chinese residents form the large majority of the resident
+population, so the all-resident TFR tracks the Chinese series closely by construction. The
+apparent agreement between the two lines in the chart is arithmetic, not evidence.
+
+**Composition changes over time.** Immigration and naturalisation alter the composition of each
+resident group across the period. A shift in the educational or age profile within a group can
+move its TFR without any change in individual behaviour.
+
+**The claim about international comparison requires a source.** The statement that Chinese
+resident TFR is comparable to the lowest national rates anywhere should be cited to a
+specific published figure, or removed. It is not supported by the datasets used here.
+:::
+
+---
 
 ## 7. Recommended final insight package
 
