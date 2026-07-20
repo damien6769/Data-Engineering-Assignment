@@ -1,0 +1,239 @@
+---
+title: "Re-examining Singapore's Declining Fertility"
+subtitle: "AAI1001 – Data Engineering & Visualization | Final Project"
+author:
+  - name: "Team 11"
+  - name: "Levl (ID)"
+  - name: "Damien (ID)"
+  - name: "Hong (ID)"
+  - name: "Angel (ID)"
+  - name: "Sophia (2503845)"
+format: 
+  revealjs:
+    theme: serif
+    slide-number: true
+    width: 1280
+    height: 720
+    embed-resources: true
+    fontsize: 28px
+---
+
+# Content
+<hr>
+1. The Story
+2. Original Visualisation & Critique
+3. Proposed Improvements
+4. Improved Visualisation
+5. Insights & Analysis
+6. Limitations
+7. Conclusion
+8. References
+
+# The Story 
+
+# Background
+<hr>
+::: {.fragment}
+Singapore has experienced a **sustained decline in fertility** over the past several decades. 
+:::
+
+::: {.fragment .callout-important}
+# Key Question
+What are the broader demographic, social, and economic changes that drive this trend?
+:::
+
+# Project Aim
+<hr>
+
+::: {.fragment}
+This project aims to re-examine Singapore's declining fertility by moving beyond annual birth counts and incorporating additional contextual dimensions: 
+:::
+
+::: {.fragment}
+- How fertility trends have evolved over the years
+:::
+::: {.fragment}
+- Changes in female labour-force participation
+:::
+::: {.fragment}
+- Changes in female singlehood across selected reproductive-age groups
+:::
+::: {.fragment}
+- Sociopolitical factors such as population policies and major recession periods.
+:::
+::: {.fragment}
+The project seeks to identify long-term patterns and co-movements that may help explain the persistence of low fertility in Singapore.
+:::
+
+# Original Visualisation & Critique
+
+# Original Visual
+<hr>
+
+<div class="columns">
+
+<div class="column" style="width:50%;">
+<img src="images/cna_birth_chart.png" style="width:100%;">
+<p style="font-size:12px;">*Source: Drop in Singapore citizen births in 2022 (Infographic: Clara Ho; Source: National Population and Talent Division, Prime Minister's Office).*</p>
+</div>
+
+<div class="column" style="width:50%;">
+**2 Primary Dimensions:**
+
+1. Year — Annual observations from 2012 to 2022 displayed along the horizontal axis.
+
+2. Number of Singapore Citizen Births — Annual birth counts represented by the height of each vertical bar.
+</div>
+
+</div>
+
+# Original Visual
+<hr>
+
+<div class="columns">
+
+<div class="column" style="width:50%;">
+<img src="images/cna_birth_chart.png" style="width:100%;">
+<p style="font-size:12px;">*Source: Drop in Singapore citizen births in 2022 (Infographic: Clara Ho; Source: National Population and Talent Division, Prime Minister's Office).*</p>
+</div>
+
+<div class="column" style="width:50%;">
+**Supporting Design Elements:**
+
+1.Period grouping — The years are visually divided into two periods, 2013–2017 and 2018–2022, through the use of different colour shades.
+
+2. Average birth annotations — Average birth counts for each five-year period are displayed above the bars to facilitate comparison between the two periods.
+
+3. Direct value labels — Exact annual birth counts are shown above each bar, reducing the need for readers to estimate values from the vertical scale.
+</div>
+
+</div>
+
+# Original Visual
+<hr>
+
+<div class="columns">
+
+<div class="column" style="width:50%;">
+<img src="images/cna_birth_chart.png" style="width:100%;">
+<p style="font-size:12px;">*Source: Drop in Singapore citizen births in 2022 (Infographic: Clara Ho; Source: National Population and Talent Division, Prime Minister's Office).*</p>
+</div>
+
+<div class="column" style="width:50%;">
+**The Story It Tells**
+
+1. Birth counts remain relatively stable throughout most of the period. Annual citizen births fluctuate within a narrow range, indicating that year-to-year variations are generally modest.
+
+2. The average number of births decreased between the two highlighted periods. The chart shows a downward shift in birth counts in the later period.
+
+3. 2022 records the lowest birth count in the series. 
+
+4. The decline appears gradual rather than abrupt. The overall pattern suggests a slow downward movement across the period rather than a sudden change occurring in a single year.
+</div>
+
+</div>
+
+# Strengths
+
+<div class="columns">
+
+<div class="column fragment" style="width:33%;">
+<div style="border:1px solid #ccc; padding:20px; border-radius:10px;">
+
+<b>Strength 1</b>
+<br>
+Body text explaining the first point.
+</div>
+</div>
+
+<div class="column fragment" style="width:33%;">
+<div style="border:1px solid #ccc; padding:20px; border-radius:10px;">
+
+<b>Strength 2</b>
+<br>
+Body text explaining the second point.
+</div>
+</div>
+
+
+<div class="column fragment" style="width:33%;">
+<div style="border:1px solid #ccc; padding:20px; border-radius:10px;">
+
+<b>Strength 3</b>
+<br>
+Body text explaining the third point.
+</div>
+</div>
+
+</div>
+
+
+# Weaknesses
+
+<div class="columns">
+
+<div class="column fragment" style="width:33%;">
+<div style="border:1px solid #ccc; padding:20px; border-radius:10px;">
+
+<b>Weakness 1</b>
+<br>
+Body text explaining the first point.
+</div>
+</div>
+
+<div class="column fragment" style="width:33%;">
+<div style="border:1px solid #ccc; padding:20px; border-radius:10px;">
+
+<b>Weakness 2</b>
+<br>
+Body text explaining the second point.
+</div>
+</div>
+
+
+<div class="column fragment" style="width:33%;">
+<div style="border:1px solid #ccc; padding:20px; border-radius:10px;">
+
+<b>Weakness 3</b>
+<br>
+Body text explaining the third point.
+</div>
+</div>
+
+</div>
+
+# Proposed Improvements
+
+# Proposed Improvements
+
+<div class="columns">
+
+<div class="column fragment" style="width:33%;">
+<div style="border:1px solid #ccc; padding:20px; border-radius:10px;">
+
+<b>Proposed Improvement 1</b>
+<br>
+Body text explaining the first point.
+</div>
+</div>
+
+<div class="column fragment" style="width:33%;">
+<div style="border:1px solid #ccc; padding:20px; border-radius:10px;">
+
+<b>Proposed Improvement 2</b>
+<br>
+Body text explaining the second point.
+</div>
+</div>
+
+
+<div class="column fragment" style="width:33%;">
+<div style="border:1px solid #ccc; padding:20px; border-radius:10px;">
+
+<b>Proposed Improvement 3</b>
+<br>
+Body text explaining the third point.
+</div>
+</div>
+
+</div>
