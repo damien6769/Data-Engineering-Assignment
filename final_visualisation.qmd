@@ -1,0 +1,411 @@
+---
+title: "Singapore Fertility, Female LFPR and Recessions"
+subtitle: "An integrated age-group view, 1980-2025"
+author: "Team 11"
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    embed-resources: true
+    fig-width: 15
+    fig-height: 9
+execute:
+  echo: true
+  warning: false
+  message: false
+editor:
+  markdown:
+    wrap: 72
+---
+
+## Purpose
+
+This visualisation combines five dimensions in one aligned figure:
+
+- **Year** on the horizontal axis
+- **Age-specific fertility rate (ASFR)** through stacked bar height
+- **Female age group** through bar fill colour
+- **Female labour-force participation rate (LFPR)** through matching dashed lines
+- **Economic recessions** through vertical grey bands
+
+The stacked bars show how each age group contributes to fertility, while
+matching dashed lines show female LFPR for the same age groups.
+
+## 1. Setup
+
+```{r}
+library(tidyverse)
+library(scales)
+```
+
+## 2. Paths and helper functions
+
+```{r}
+data_dir <- file.path("proposal_files", "datasets")
+
+fertility_file <- file.path(data_dir, "BirthsAndFertilityRatesAnnual.csv")
+lfpr_file      <- file.path(data_dir, "M182201.csv")
+
+read_singstat_wide <- function(path) {
+  lines <- readLines(path, warn = FALSE)
+
+  header_index <- which(
+    stringr::str_detect(lines, "^Data\\s*Series\\s*,")
+  )[1]
+
+  if (is.na(header_index)) {
+    stop("No 'Data Series' header found in: ", path)
+  }
+
+  raw <- readr::read_csv(
+    path,
+    skip = header_index - 1,
+    na = c("", "na", "NA", "N.A.", "-"),
+    show_col_types = FALSE
+  )
+
+  raw <- dplyr::rename_with(raw, trimws)
+  names(raw)[1] <- "data_series"
+
+  raw |>
+    mutate(data_series = stringr::str_squish(data_series)) |>
+    filter(!is.na(data_series), data_series != "")
+}
+
+to_long_years <- function(data) {
+  year_cols <- names(data)[
+    stringr::str_detect(names(data), "^\\d{4}$")
+  ]
+
+  data |>
+    pivot_longer(
+      cols = all_of(year_cols),
+      names_to = "year",
+      values_to = "value"
+    ) |>
+    mutate(
+      year = as.integer(year),
+      value = readr::parse_number(as.character(value))
+    ) |>
+    filter(!is.na(year))
+}
+
+standardise_age_group <- function(x) {
+  x |>
+    stringr::str_squish() |>
+    stringr::str_replace_all("\\s*-\\s*", "-")
+}
+
+age_groups <- c(
+  "15-19 Years",
+  "20-24 Years",
+  "25-29 Years",
+  "30-34 Years",
+  "35-39 Years",
+  "40-44 Years",
+  "45-49 Years"
+)
+```
+
+## 3. Build the cleaned tables
+
+```{r}
+# --- Fertility source table ---
+fertility_raw <- read_singstat_wide(fertility_file)
+
+# ASFR by mother's age group
+asfr_by_age <- fertility_raw |>
+  mutate(age_group = standardise_age_group(data_series)) |>
+  filter(age_group %in% age_groups) |>
+  to_long_years() |>
+  transmute(
+    year,
+    age_group = factor(age_group, levels = age_groups),
+    asfr = value
+  ) |>
+  filter(year >= 1980, !is.na(asfr)) |>
+  arrange(age_group, year)
+
+# --- Female LFPR by age group (SingStat M182201) ---
+lfpr_female <- read_singstat_wide(lfpr_file) |>
+  mutate(
+    section = case_when(
+      data_series == "Female Resident Participation Rate" ~ "Female",
+      data_series %in% c(
+        "Total Resident Participation Rate",
+        "Male Resident Participation Rate"
+      ) ~ "Other",
+      TRUE ~ NA_character_
+    )
+  ) |>
+  tidyr::fill(section, .direction = "down") |>
+  filter(
+    section == "Female",
+    data_series != "Female Resident Participation Rate"
+  ) |>
+  mutate(age_group = standardise_age_group(data_series)) |>
+  filter(age_group %in% age_groups) |>
+  to_long_years() |>
+  transmute(
+    year,
+    age_group = factor(age_group, levels = age_groups),
+    female_lfpr_pct = value
+  ) |>
+  filter(year >= 1990, !is.na(female_lfpr_pct)) |>
+  arrange(age_group, year)
+
+# Combine age-specific fertility and female LFPR
+age_group_data <- asfr_by_age |>
+  inner_join(
+    lfpr_female,
+    by = c("year", "age_group")
+  ) |>
+  arrange(age_group, year)
+
+# Recession periods used in the visualisation
+recession_events <- tibble(
+  recession = c(
+    "1985 Singapore recession",
+    "Asian Financial Crisis",
+    "Global Financial Crisis",
+    "COVID-19 recession"
+  ),
+  year = c(1985, 1998, 2009, 2020)
+) |>
+  mutate(
+    xmin = year - 0.55,
+    xmax = year + 0.55
+  )
+
+# Major pro-natalist policy milestones within the displayed period
+birth_policy_events <- tibble(
+  year = c(1984, 1987, 2001, 2004, 2008, 2013),
+  policy = c(
+    "Graduate Mothers Scheme",
+    "Have Three or More policy",
+    "Baby Bonus",
+    "Marriage & Parenthood (M&P) Package",
+    "Enhanced M&P Package",
+    "Enhanced M&P Package"
+  ),
+  label_level = c(1, 2, 1, 2, 1, 2)
+)
+```
+
+## 4. Data checks
+
+```{r}
+stopifnot(nrow(age_group_data) > 0)
+
+age_group_data |>
+  summarise(
+    first_year = min(year),
+    last_year = max(year),
+    age_groups = n_distinct(age_group),
+    observations = n()
+  )
+```
+
+## 5. Integrated visualisation
+
+```{r}
+#| label: integrated-figure
+#| fig-width: 15
+#| fig-height: 9
+#| dpi: 150
+
+common_x_scale <- scale_x_continuous(
+  limits = c(1980, 2025.6),
+  breaks = seq(1980, 2025, 5),
+  expand = expansion(mult = c(0.005, 0.005))
+)
+
+# Main panel: stacked ASFR bars with LFPR lines
+
+age_group_colours <- c(
+  "15-19 Years" = "#D73027",
+  "20-24 Years" = "#FC8D59",
+  "25-29 Years" = "#FEE08B",
+  "30-34 Years" = "#91CF60",
+  "35-39 Years" = "#1A9850",
+  "40-44 Years" = "#4575B4",
+  "45-49 Years" = "#7B3294"
+)
+
+# Scale LFPR percentages onto the ASFR axis.
+# The secondary axis reverses this exact transformation.
+asfr_total_by_year <- asfr_by_age |>
+  group_by(year) |>
+  summarise(total_asfr = sum(asfr, na.rm = TRUE), .groups = "drop")
+
+asfr_max <- max(asfr_total_by_year$total_asfr, na.rm = TRUE)
+lfpr_scale <- asfr_max / 100
+
+lfpr_line <- lfpr_female |>
+  mutate(age_group = factor(age_group, levels = age_groups)) |>
+  filter(
+    year >= min(asfr_by_age$year),
+    year <= max(asfr_by_age$year)
+  )
+
+p_age <- ggplot() +
+  geom_rect(
+    data = recession_events,
+    aes(xmin = xmin, xmax = xmax, ymin = -Inf, ymax = Inf),
+    inherit.aes = FALSE,
+    fill = "gray60",
+    alpha = 0.4
+  ) +
+  # Recession names are placed inside the shaded bands.
+  geom_text(
+    data = recession_events,
+    aes(
+      x = year,
+      y = Inf,
+      label = recession
+    ),
+    inherit.aes = FALSE,
+    angle = 90,
+    vjust = 1.35,
+    hjust = 1,
+    size = 3.5,
+    fontface = "bold",
+    colour = "red2"
+  ) +
+  # Dotted lines mark major birth-policy introductions or enhancements.
+  geom_vline(
+    data = birth_policy_events,
+    aes(xintercept = year),
+    inherit.aes = FALSE,
+    linetype = "dotted",
+    linewidth = 0.75,
+    colour = "black",
+    alpha = 1
+  ) +
+  geom_text(
+    data = birth_policy_events,
+    aes(
+      x = year,
+      y = Inf,
+      label = paste0(year, ": ", policy),
+      vjust = if_else(label_level == 1, 1.25, 2.65)
+    ),
+    inherit.aes = FALSE,
+    angle = 90,
+    hjust = 1,
+    size = 3.3,
+    colour = "black"
+  ) +
+  geom_col(
+    data = asfr_by_age,
+    aes(
+      x = year,
+      y = asfr,
+      fill = age_group
+    ),
+    width = 0.82,
+    alpha = 0.68
+  ) +
+  # White underlay keeps LFPR lines visible over similarly coloured bars.
+  geom_line(
+    data = lfpr_line,
+    aes(
+      x = year,
+      y = female_lfpr_pct * lfpr_scale,
+      group = age_group
+    ),
+    colour = "ghostwhite",
+    linewidth = 2.2,
+    alpha = 1,
+    lineend = "round"
+  ) +
+  geom_line(
+    data = lfpr_line,
+    aes(
+      x = year,
+      y = female_lfpr_pct * lfpr_scale,
+      colour = age_group,
+      group = age_group
+    ),
+    linewidth = 1.2,
+    linetype = "dashed",
+    alpha = 0.98,
+    lineend = "round"
+  ) +
+  common_x_scale +
+  scale_y_continuous(
+    name = "Age-specific fertility rate\n(births per 1,000 women)",
+    sec.axis = sec_axis(
+      ~ . / lfpr_scale,
+      name = "Female labour-force participation rate (%)",
+      breaks = seq(0, 100, 20)
+    ),
+    expand = expansion(mult = c(0, 0.40))
+  ) +
+  scale_fill_manual(
+    values = age_group_colours,
+    name = "Age group",
+    labels = function(x) str_remove(x, " Years")
+  ) +
+  scale_colour_manual(
+    values = age_group_colours,
+    name = "Age group",
+    labels = function(x) str_remove(x, " Years")
+  ) +
+  labs(
+    x = "Year",
+    caption = paste0(
+      "Stacked bars = ASFR contribution by age group; dashed lines = female LFPR ",
+      "using the same age-group colours. Shaded bands identify recessions; ",
+      "dotted vertical lines identify major birth-policy milestones. ",
+      "Associations shown, not causation."
+    )
+  ) +
+  guides(
+    fill = guide_legend(
+      title = "Age group",
+      order = 1,
+      nrow = 1
+    ),
+    colour = "none"
+  ) +
+  theme_minimal(base_size = 11) +
+  theme(
+    panel.grid.minor = element_blank(),
+    panel.grid.major.x = element_blank(),
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    axis.title.y.left = element_text(margin = margin(r = 10)),
+    axis.title.y.right = element_text(margin = margin(l = 10)),
+    plot.caption = element_text(size = 8, colour = "grey40"),
+    legend.position = "bottom",
+    legend.box = "horizontal",
+    plot.margin = margin(0, 10, 8, 10)
+  )
+
+p_age +
+  labs(
+    title = "Singapore fertility and female labour-force participation by age group",
+    subtitle = paste0(
+      "Stacked bars show age-specific fertility rates; dashed lines show female LFPR. ",
+      "Shaded bands mark recessions, including Singapore's 1985 recession; dotted lines mark major birth-policy milestones."
+    )
+  ) +
+  theme(
+    plot.title = element_text(face = "bold", size = 15),
+    plot.subtitle = element_text(size = 10)
+  )
+```
+
+## 6. Interpretation guide
+
+- Compare the stacked bar segments to see which age groups contributed most to
+  changes in fertility.
+- Each bar segment represents the ASFR contribution of one age group.
+- The dashed line for each matching colour represents female LFPR for that age
+  group on the right-hand percentage axis.
+- Shaded recession bands allow the timing of fertility and labour-market changes
+  to be compared with major economic downturns.
+- Dotted vertical lines mark major pro-natalist policy introductions or
+  enhancements during the displayed period.
+- The chart shows temporal association only. It does not prove that LFPR,
+  recessions, or policy changes caused changes in fertility.
