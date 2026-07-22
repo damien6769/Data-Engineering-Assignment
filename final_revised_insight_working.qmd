@@ -1,0 +1,955 @@
+---
+title: "Final Insight Plot Testing"
+subtitle: "Singapore fertility visualisation working plots"
+author: "Team 11"
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+## 1. Setup and data engineering
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+data_dir <- file.path("proposal_files", "datasets")
+
+fertility_file <- file.path(data_dir, "BirthsAndFertilityRatesAnnual.csv")
+singlehood_file <- file.path(data_dir, "M810581.csv")
+lfpr_file <- file.path(data_dir, "M182201.csv")
+family_size_file <- file.path(data_dir, "ResidentEverMarriedFemalesByAgeGroupAndNumberOfChildrenBornAnnual.csv")
+first_marriage_file <- file.path(data_dir, "MedianAgeAtFirstMarriageOfResidentCitizenGroomsAndBridesAnnual.csv")
+first_birth_file <- file.path(data_dir, "MedianAgeOfMothersAtFirstBirthAnnual.csv")
+cpi_file <- file.path(data_dir, "ConsumerPriceIndexCPI2024AsBaseYearMonthly.csv")
+education_file <- file.path(data_dir, "M850581.csv")
+occupation_file <- file.path(data_dir, "EmployedResidentsAged15YearsAndOverByOccupationAndAgeGroupJuneAnnual.csv")
+
+tibble(
+  dataset = c(
+    "fertility",
+    "singlehood",
+    "female_lfpr",
+    "family_size",
+    "first_marriage",
+    "first_birth",
+    "cpi",
+    "education",
+    "occupation"
+  ),
+  file = c(
+    fertility_file,
+    singlehood_file,
+    lfpr_file,
+    family_size_file,
+    first_marriage_file,
+    first_birth_file,
+    cpi_file,
+    education_file,
+    occupation_file
+  ),
+  exists = file.exists(c(
+    fertility_file,
+    singlehood_file,
+    lfpr_file,
+    family_size_file,
+    first_marriage_file,
+    first_birth_file,
+    cpi_file,
+    education_file,
+    occupation_file
+  ))
+)
+```
+
+```{r}
+survey_barriers_2021 <- tribble(
+  ~reason, ~share_pct,
+  "Financial cost", 64,
+  "Already have enough children", 50,
+  "Raising children in Singapore is too stressful", 49,
+  "Difficult to manage work and family demands", 34,
+  "Lack of good caregiving arrangements", 17,
+  "Difficulty conceiving", 14
+) |>
+  mutate(
+    reason = factor(reason, levels = rev(reason)),
+    barrier_type = if_else(
+      reason %in% c("Financial cost", "Raising children in Singapore is too stressful"),
+      "Cost or stress",
+      "Other reason"
+    )
+  )
+```
+
+```{r}
+cpi_monthly <- readr::read_csv(
+  cpi_file,
+  na = c("", "na", "NA", "N.A.", "-"),
+  show_col_types = FALSE
+) |>
+  rename(data_series = DataSeries) |>
+  mutate(data_series = stringr::str_squish(data_series)) |>
+  filter(data_series == "All Items") |>
+  pivot_longer(
+    cols = -data_series,
+    names_to = "month_code",
+    values_to = "cpi_index"
+  ) |>
+  mutate(
+    year = as.integer(stringr::str_sub(month_code, 1, 4)),
+    month = match(stringr::str_sub(month_code, 5, 7), month.abb),
+    cpi_index = readr::parse_number(as.character(cpi_index))
+  ) |>
+  filter(!is.na(year), !is.na(month), !is.na(cpi_index))
+
+cpi_annual <- cpi_monthly |>
+  filter(year >= 1990, year <= 2025) |>
+  group_by(year) |>
+  summarise(cpi_index = mean(cpi_index, na.rm = TRUE), .groups = "drop") |>
+  mutate(
+    cpi_1990_100 = cpi_index / cpi_index[year == 1990] * 100
+  )
+```
+
+```{r}
+read_singstat_wide <- function(path) {
+  lines <- readLines(path, warn = FALSE)
+  header_index <- which(stringr::str_detect(lines, "^Data\\s*Series\\s*,"))[1]
+
+  if (is.na(header_index)) {
+    stop("Could not find a Data Series header in: ", path)
+  }
+
+  raw_data <- readr::read_csv(
+    path,
+    skip = header_index - 1,
+    na = c("", "na", "NA", "N.A.", "-"),
+    show_col_types = FALSE
+  ) |>
+    rename_with(trimws)
+
+  names(raw_data)[1] <- "data_series"
+
+  raw_data |>
+    mutate(
+      row_id = row_number(),
+      data_series_raw = data_series,
+      data_series = stringr::str_squish(data_series)
+    ) |>
+    filter(!is.na(data_series), data_series != "")
+}
+
+to_long_years <- function(data) {
+  year_cols <- names(data)[stringr::str_detect(names(data), "^\\d{4}$")]
+
+  data |>
+    pivot_longer(
+      cols = all_of(year_cols),
+      names_to = "year",
+      values_to = "value"
+    ) |>
+    mutate(
+      year = as.integer(year),
+      value = readr::parse_number(as.character(value))
+    ) |>
+    filter(!is.na(year))
+}
+
+standardise_age_group <- function(x) {
+  x |>
+    stringr::str_squish() |>
+    stringr::str_replace_all("\\s*-\\s*", "-")
+}
+
+is_age_group <- function(x) {
+  stringr::str_detect(
+    x,
+    "^\\d{2}\\s*-\\s*\\d{2}\\s*Years$|^\\d{2}\\s*Years & Over$|^\\d{2}\\s*Years And Over$"
+  )
+}
+```
+
+```{r}
+asfr_age_groups <- c(
+  "15-19 Years", "20-24 Years", "25-29 Years", "30-34 Years",
+  "35-39 Years", "40-44 Years", "45-49 Years"
+)
+
+driver_age_groups <- c(
+  "25-29 Years", "30-34 Years", "35-39 Years", "40-44 Years", "45-49 Years"
+)
+
+children_born_levels <- c(
+  "None", "1 Child", "2 Children", "3 Children", "4 Or More Children"
+)
+```
+
+```{r}
+fertility_wide <- read_singstat_wide(fertility_file)
+
+tfr_annual <- fertility_wide |>
+  filter(data_series == "Total Fertility Rate (TFR)") |>
+  to_long_years() |>
+  transmute(year, tfr = value)
+
+asfr_by_age <- fertility_wide |>
+  mutate(age_group = standardise_age_group(data_series)) |>
+  filter(age_group %in% asfr_age_groups) |>
+  to_long_years() |>
+  transmute(
+    year,
+    age_group = factor(age_group, levels = asfr_age_groups),
+    asfr = value
+  )
+```
+
+```{r}
+singlehood_wide <- read_singstat_wide(singlehood_file)
+
+singlehood_tagged <- singlehood_wide |>
+  mutate(
+    age_group = if_else(is_age_group(data_series), standardise_age_group(data_series), NA_character_),
+    sex = case_when(
+      data_series == "Males" ~ "Male",
+      data_series == "Females" ~ "Female",
+      TRUE ~ "Total"
+    )
+  ) |>
+  tidyr::fill(age_group, .direction = "down")
+
+singlehood_female_25_49 <- singlehood_tagged |>
+  filter(sex == "Female", age_group %in% driver_age_groups) |>
+  to_long_years() |>
+  group_by(year) |>
+  summarise(single_female_25_49_pct = mean(value, na.rm = TRUE), .groups = "drop")
+```
+
+```{r}
+lfpr_wide <- read_singstat_wide(lfpr_file)
+
+lfpr_tagged <- lfpr_wide |>
+  mutate(
+    sex_section = case_when(
+      data_series == "Total Resident Participation Rate" ~ "Total",
+      data_series == "Male Resident Participation Rate" ~ "Male",
+      data_series == "Female Resident Participation Rate" ~ "Female",
+      TRUE ~ NA_character_
+    ),
+    age_group = if_else(is_age_group(data_series), standardise_age_group(data_series), NA_character_)
+  ) |>
+  tidyr::fill(sex_section, .direction = "down")
+
+lfpr_female_25_49 <- lfpr_tagged |>
+  filter(sex_section == "Female", age_group %in% driver_age_groups) |>
+  to_long_years() |>
+  group_by(year) |>
+  summarise(female_lfpr_25_49_pct = mean(value, na.rm = TRUE), .groups = "drop")
+```
+
+```{r}
+education_wide <- read_singstat_wide(education_file)
+
+female_total_25_49 <- education_wide |>
+  filter(
+    row_id > row_id[data_series == "Total Females"][1],
+    row_id < row_id[data_series == "Total Females - Below Secondary"][1],
+    standardise_age_group(data_series) %in% driver_age_groups
+  ) |>
+  mutate(age_group = standardise_age_group(data_series)) |>
+  to_long_years() |>
+  group_by(year) |>
+  summarise(female_total_25_49 = sum(value, na.rm = TRUE), .groups = "drop")
+
+female_university_25_49 <- education_wide |>
+  filter(
+    row_id > row_id[data_series == "Total Females - University"][1],
+    standardise_age_group(data_series) %in% driver_age_groups
+  ) |>
+  mutate(age_group = standardise_age_group(data_series)) |>
+  to_long_years() |>
+  group_by(year) |>
+  summarise(female_university_25_49 = sum(value, na.rm = TRUE), .groups = "drop")
+
+female_university_share_25_49 <- female_total_25_49 |>
+  left_join(female_university_25_49, by = "year") |>
+  mutate(
+    female_university_25_49_pct = female_university_25_49 / female_total_25_49 * 100
+  )
+```
+
+```{r}
+occupation_wide <- read_singstat_wide(occupation_file)
+
+pmet_series <- c(
+  "Managers & Administrators (Including Working Proprietors)",
+  "Professionals",
+  "Associate Professionals & Technicians"
+)
+
+pmet_share <- occupation_wide |>
+  filter(
+    row_id < row_id[data_series == "Employed Residents Aged 15 - 19 Years"][1],
+    data_series %in% c("All Occupation Groups, (Total Employed Residents)", pmet_series)
+  ) |>
+  to_long_years() |>
+  mutate(
+    occupation_group = case_when(
+      data_series == "All Occupation Groups, (Total Employed Residents)" ~ "Total employed residents",
+      data_series %in% pmet_series ~ "PMET",
+      TRUE ~ NA_character_
+    )
+  ) |>
+  group_by(year, occupation_group) |>
+  summarise(employed_residents = sum(value, na.rm = TRUE), .groups = "drop") |>
+  pivot_wider(names_from = occupation_group, values_from = employed_residents) |>
+  mutate(
+    pmet_share_pct = PMET / `Total employed residents` * 100
+  ) |>
+  filter(year >= 2000, year <= 2025)
+```
+
+```{r}
+annual_drivers <- tibble(year = 1960:2025) |>
+  left_join(tfr_annual, by = "year") |>
+  left_join(singlehood_female_25_49, by = "year") |>
+  left_join(lfpr_female_25_49, by = "year") |>
+  mutate(decade = paste0(floor(year / 10) * 10, "s"))
+```
+
+```{r}
+family_size_wide <- read_singstat_wide(family_size_file)
+
+family_size_tagged <- family_size_wide |>
+  mutate(
+    age_group = if_else(is_age_group(data_series), standardise_age_group(data_series), NA_character_),
+    children_born = if_else(data_series %in% children_born_levels, data_series, NA_character_)
+  ) |>
+  tidyr::fill(age_group, .direction = "down")
+
+family_size_40_49 <- family_size_tagged |>
+  filter(age_group == "40-49 Years", children_born %in% children_born_levels) |>
+  to_long_years() |>
+  transmute(
+    year,
+    children_born = factor(children_born, levels = children_born_levels),
+    females = value
+  ) |>
+  group_by(year) |>
+  mutate(
+    total_females = sum(females, na.rm = TRUE),
+    share_pct = females / total_females * 100
+  ) |>
+  ungroup()
+```
+
+```{r}
+first_marriage_wide <- read_singstat_wide(first_marriage_file)
+
+resident_brides_first_marriage <- first_marriage_wide |>
+  filter(data_series == "Resident Brides") |>
+  to_long_years() |>
+  transmute(
+    year,
+    median_age_first_marriage = value
+  )
+```
+
+```{r}
+first_birth_wide <- read_singstat_wide(first_birth_file)
+
+resident_first_birth_age <- first_birth_wide |>
+  filter(data_series == "Median Age Of Mothers At First Birth For Resident Births") |>
+  to_long_years() |>
+  transmute(
+    year,
+    median_age_first_birth = value
+  )
+```
+
+## 2. Insight 1 plot: did policies and recessions explain sustained fertility changes?
+
+```{r}
+policy_events <- tribble(
+  ~event_year, ~event_label, ~policy_stance,
+  1972, "Stop at Two", "Anti-natalist",
+  1987, "Have Three or More", "Pro-natalist",
+  2001, "Baby Bonus", "Pro-natalist",
+  2013, "Marriage and Parenthood package", "Pro-natalist"
+)
+
+economic_shocks <- tribble(
+  ~shock_year, ~shock_label, ~severity, ~quarters_below_peak,
+  1985, "1985", "Severe", 6,
+  1998, "1998", "Severe", 6,
+  2001, "2001", "Moderate", 5,
+  2009, "2009", "Most severe", 6,
+  2020, "2020", "Most severe", 4
+)
+
+policy_window <- policy_events |>
+  crossing(relative_year = -5:10) |>
+  mutate(year = event_year + relative_year) |>
+  left_join(tfr_annual, by = "year") |>
+  mutate(
+    event_label = factor(
+      event_label,
+      levels = c("Stop at Two", "Have Three or More", "Baby Bonus", "Marriage and Parenthood package")
+    )
+  )
+
+shock_window <- policy_events |>
+  crossing(economic_shocks) |>
+  mutate(
+    relative_year = shock_year - event_year,
+    recovery_years = quarters_below_peak / 4,
+    relative_recovery_end = relative_year + recovery_years,
+    event_label = factor(
+      event_label,
+      levels = c("Stop at Two", "Have Three or More", "Baby Bonus", "Marriage and Parenthood package")
+    )
+  ) |>
+  filter(relative_year <= 10, relative_recovery_end >= -5) |>
+  mutate(
+    xmin = pmax(relative_year, -5),
+    xmax = pmin(relative_recovery_end, 10)
+  )
+
+ggplot(policy_window, aes(x = relative_year, y = tfr, colour = policy_stance)) +
+  geom_rect(
+    data = shock_window,
+    aes(
+      xmin = xmin,
+      xmax = xmax,
+      ymin = -Inf,
+      ymax = Inf,
+      fill = severity
+    ),
+    inherit.aes = FALSE,
+    alpha = 0.24
+  ) +
+  geom_vline(xintercept = 0, linetype = "dashed", colour = "grey35") +
+  geom_line(linewidth = 1.1) +
+  geom_point(size = 2.3) +
+  geom_label(
+    data = shock_window,
+    aes(x = (xmin + xmax) / 2, y = Inf, label = shock_label),
+    inherit.aes = FALSE,
+    vjust = 1.2,
+    size = 2.8,
+    label.size = 0.15,
+    fill = "white",
+    colour = "grey35"
+  ) +
+  facet_wrap(~ event_label, scales = "free_y", ncol = 2) +
+  scale_colour_manual(values = c("Anti-natalist" = "#D95F02", "Pro-natalist" = "#1B9E77")) +
+  scale_fill_manual(
+    values = c(
+      "Most severe" = "#B2182B",
+      "Severe" = "#8073AC",
+      "Moderate" = "#D8DAEB"
+    )
+  ) +
+  scale_x_continuous(breaks = c(-5, 0, 5, 10)) +
+  labs(
+    title = "Did policies and recessions explain sustained fertility changes?",
+    subtitle = "Dashed line = policy year. Shaded bands show economic recovery duration, with warmer colours indicating higher severity.",
+    x = "Years from policy",
+    y = "TFR",
+    colour = "Policy stance",
+    fill = "Economic shock severity",
+    caption = "Band width is based on quarters below the previous GDP peak. Timing is context only, not causal proof."
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    legend.position = "bottom",
+    plot.title = element_text(face = "bold"),
+    strip.text = element_text(face = "bold")
+  )
+```
+
+## 3. Insight 2 plot: did female LFPR rise with demand for professional work?
+
+```{r}
+pmet_lfpr <- pmet_share |>
+  left_join(lfpr_female_25_49, by = "year") |>
+  filter(
+    year >= 2000,
+    year <= 2025,
+    !is.na(pmet_share_pct),
+    !is.na(female_lfpr_25_49_pct)
+  ) |>
+  mutate(decade = paste0(floor(year / 10) * 10, "s"))
+
+pmet_lfpr_labels <- pmet_lfpr |>
+  filter(year %in% c(2000, 2010, 2020, 2025))
+
+ggplot(
+  pmet_lfpr,
+  aes(
+    x = pmet_share_pct,
+    y = female_lfpr_25_49_pct,
+    colour = year
+  )
+) +
+  geom_path(aes(group = 1), colour = "grey65", linewidth = 0.9, alpha = 0.85) +
+  geom_point(size = 4.6, alpha = 0.95) +
+  geom_label(
+    data = pmet_lfpr_labels,
+    aes(label = year),
+    nudge_y = 1.0,
+    size = 3.5,
+    fontface = "bold",
+    label.size = 0.18,
+    fill = "white",
+    show.legend = FALSE
+  ) +
+  scale_x_continuous(
+    labels = scales::label_percent(scale = 1),
+    limits = c(40, 70),
+    breaks = seq(40, 70, 5)
+  ) +
+  scale_y_continuous(
+    labels = scales::label_percent(scale = 1),
+    limits = c(65, 90),
+    breaks = seq(65, 90, 5)
+  ) +
+  scale_colour_gradient(
+    low = "#9ECAE1",
+    high = "#08519C",
+    breaks = c(2000, 2010, 2020, 2025)
+  ) +
+  labs(
+    title = "Did female LFPR rise with demand for professional work?",
+    subtitle = "Moving right = higher PMET share. Moving up = higher female LFPR among women aged 25 to 49.",
+    x = "PMET share of employed residents",
+    y = "Resident female LFPR, ages 25 to 49",
+    colour = "Year",
+    caption = "PMET refers to managers, professionals, associate professionals and technicians. This is descriptive context, not causal proof."
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    legend.position = "bottom",
+    plot.title = element_text(face = "bold"),
+    panel.grid.minor = element_blank()
+  )
+```
+
+## 4. Insight 3 plot A: did higher female education coincide with fewer births in the early twenties?
+
+```{r}
+asfr_20_24 <- asfr_by_age |>
+  filter(age_group == "20-24 Years") |>
+  transmute(year, asfr_20_24 = asfr)
+
+education_timing <- female_university_share_25_49 |>
+  left_join(asfr_20_24, by = "year") |>
+  left_join(resident_brides_first_marriage, by = "year") |>
+  left_join(resident_first_birth_age, by = "year") |>
+  filter(
+    year >= 2000,
+    year <= 2025,
+    !is.na(female_university_25_49_pct)
+  ) |>
+  mutate(decade = paste0(floor(year / 10) * 10, "s"))
+
+education_asfr <- education_timing |>
+  filter(!is.na(asfr_20_24))
+
+education_asfr_labels <- education_asfr |>
+  filter(year %in% c(2000, 2010, 2020, 2025))
+
+ggplot(
+  education_asfr,
+  aes(
+    x = female_university_25_49_pct,
+    y = asfr_20_24,
+    colour = year
+  )
+) +
+  geom_path(aes(group = 1), colour = "grey65", linewidth = 0.9, alpha = 0.85) +
+  geom_point(size = 4.6, alpha = 0.95) +
+  geom_label(
+    data = education_asfr_labels,
+    aes(label = year),
+    nudge_y = 8,
+    size = 3.5,
+    fontface = "bold",
+    label.size = 0.18,
+    fill = "white",
+    show.legend = FALSE
+  ) +
+  scale_x_continuous(
+    labels = scales::label_percent(scale = 1),
+    breaks = seq(15, 60, 5)
+  ) +
+  scale_y_continuous(
+    breaks = seq(0, 80, 10),
+    expand = expansion(mult = c(0.05, 0.15))
+  ) +
+  scale_colour_gradient(
+    low = "#FDD49E",
+    high = "#D95F0E",
+    breaks = c(2000, 2010, 2020, 2025)
+  ) +
+  labs(
+    title = "Did higher female education coincide with fewer births in the early twenties?",
+    subtitle = "Moving right = higher female university share. Moving down = lower ASFR among women aged 20 to 24.",
+    x = "Female university share, ages 25 to 49",
+    y = "ASFR, women aged 20 to 24",
+    colour = "Year",
+    caption = "ASFR means age-specific fertility rate. This supports the timing-shift story, not direct causal proof."
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    legend.position = "bottom",
+    plot.title = element_text(face = "bold"),
+    panel.grid.minor = element_blank()
+  )
+```
+
+## 5. Insight 3 plot B: did demand for professional work rise alongside female education?
+
+```{r}
+education_pmet <- pmet_share |>
+  left_join(female_university_share_25_49, by = "year") |>
+  filter(
+    year >= 2000,
+    year <= 2025,
+    !is.na(pmet_share_pct),
+    !is.na(female_university_25_49_pct)
+  )
+
+education_pmet_labels <- education_pmet |>
+  filter(year %in% c(2000, 2010, 2020, 2025))
+
+ggplot(
+  education_pmet,
+  aes(
+    x = pmet_share_pct,
+    y = female_university_25_49_pct,
+    colour = year
+  )
+) +
+  geom_path(aes(group = 1), colour = "grey65", linewidth = 0.9, alpha = 0.85) +
+  geom_point(size = 4.6, alpha = 0.95) +
+  geom_label(
+    data = education_pmet_labels,
+    aes(label = year),
+    nudge_y = 2.0,
+    size = 3.5,
+    fontface = "bold",
+    label.size = 0.18,
+    fill = "white",
+    show.legend = FALSE
+  ) +
+  scale_x_continuous(
+    labels = scales::label_percent(scale = 1),
+    limits = c(40, 70),
+    breaks = seq(40, 70, 5)
+  ) +
+  scale_y_continuous(
+    labels = scales::label_percent(scale = 1),
+    breaks = seq(15, 60, 5),
+    expand = expansion(mult = c(0.05, 0.15))
+  ) +
+  scale_colour_gradient(
+    low = "#BFD3E6",
+    high = "#08519C",
+    breaks = c(2000, 2010, 2020, 2025)
+  ) +
+  labs(
+    title = "Did demand for professional work rise alongside female education?",
+    subtitle = "Moving right = higher PMET share. Moving up = higher female university share among women aged 25 to 49.",
+    x = "PMET share of employed residents",
+    y = "Female university share, ages 25 to 49",
+    colour = "Year",
+    caption = "PMET share is used as a proxy for a more professional labour market. This is descriptive context, not causal proof."
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    legend.position = "bottom",
+    plot.title = element_text(face = "bold"),
+    panel.grid.minor = element_blank()
+  )
+```
+
+## 6. Insight 3 plot C: did higher female education coincide with later marriage and first birth?
+
+```{r}
+education_timing_long <- bind_rows(
+  education_timing |>
+    transmute(
+      year,
+      female_university_25_49_pct,
+      measure = "First marriage age",
+      median_age = median_age_first_marriage
+    ),
+  education_timing |>
+    transmute(
+      year,
+      female_university_25_49_pct,
+      measure = "First birth age",
+      median_age = median_age_first_birth
+    )
+) |>
+  filter(!is.na(median_age), !is.na(female_university_25_49_pct)) |>
+  mutate(
+    measure = factor(measure, levels = c("First marriage age", "First birth age"))
+  )
+
+education_timing_labels <- education_timing_long |>
+  group_by(measure) |>
+  filter(year %in% c(min(year), max(year))) |>
+  ungroup() |>
+  mutate(
+    label = paste0(year, ": ", round(median_age, 1)),
+    label_y = if_else(measure == "First birth age", median_age + 0.18, median_age - 0.18),
+    hjust_label = if_else(year == min(year), 1.08, -0.08)
+  )
+
+ggplot(
+  education_timing_long,
+  aes(
+    x = female_university_25_49_pct,
+    y = median_age,
+    colour = measure
+  )
+) +
+  geom_path(aes(group = measure), linewidth = 1.15, alpha = 0.9) +
+  geom_point(size = 3.4, alpha = 0.95) +
+  geom_label(
+    data = education_timing_labels,
+    aes(y = label_y, label = label, hjust = hjust_label),
+    size = 3.3,
+    fontface = "bold",
+    label.size = 0.18,
+    fill = "white",
+    show.legend = FALSE
+  ) +
+  scale_x_continuous(
+    labels = scales::label_percent(scale = 1),
+    breaks = seq(15, 60, 5),
+    expand = expansion(mult = c(0.18, 0.18))
+  ) +
+  scale_y_continuous(
+    breaks = seq(25, 33, 1),
+    expand = expansion(mult = c(0.08, 0.12))
+  ) +
+  scale_colour_manual(
+    values = c("First marriage age" = "#2F4B7C", "First birth age" = "#7A5195")
+  ) +
+  labs(
+    title = "Did higher female education coincide with later marriage and first birth?",
+    subtitle = "Moving right = higher female university share. Moving up = later family formation.",
+    x = "Female university share, ages 25 to 49",
+    y = "Median age",
+    colour = NULL,
+    caption = "This describes timing patterns. It does not prove education directly caused later marriage or birth."
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    legend.position = "bottom",
+    plot.title = element_text(face = "bold"),
+    panel.grid.minor = element_blank()
+  )
+```
+
+## 7. Insight 4 plot A: did family formation shift later while large families became less common?
+
+```{r}
+large_family_share <- family_size_40_49 |>
+  mutate(
+    family_size_group = case_when(
+      children_born %in% c("3 Children", "4 Or More Children") ~ "3 or more children",
+      TRUE ~ "Other"
+    )
+  ) |>
+  filter(family_size_group == "3 or more children") |>
+  group_by(year) |>
+  summarise(large_family_share_pct = sum(share_pct, na.rm = TRUE), .groups = "drop")
+
+family_formation_timeline <- bind_rows(
+  resident_brides_first_marriage |>
+    filter(year >= 1990, year <= 2025) |>
+    transmute(
+      year,
+      indicator = "First marriage age",
+      value = median_age_first_marriage,
+      unit = "years"
+    ),
+  resident_first_birth_age |>
+    filter(year >= 1990, year <= 2025) |>
+    transmute(
+      year,
+      indicator = "First birth age",
+      value = median_age_first_birth,
+      unit = "years"
+    ),
+  singlehood_female_25_49 |>
+    filter(year >= 1990, year <= 2025) |>
+    transmute(
+      year,
+      indicator = "Single women aged 25 to 49",
+      value = single_female_25_49_pct,
+      unit = "%"
+    ),
+  large_family_share |>
+    filter(year >= 1990, year <= 2025) |>
+    transmute(
+      year,
+      indicator = "Ever-married women aged 40 to 49 with 3+ children",
+      value = large_family_share_pct,
+      unit = "%"
+    )
+) |>
+  mutate(
+    indicator = factor(
+      indicator,
+      levels = c(
+        "First marriage age",
+        "First birth age",
+        "Single women aged 25 to 49",
+        "Ever-married women aged 40 to 49 with 3+ children"
+      )
+    ),
+    direction = if_else(
+      indicator == "Ever-married women aged 40 to 49 with 3+ children",
+      "Larger families became less common",
+      "Family formation shifted later"
+    )
+  )
+
+timeline_labels <- family_formation_timeline |>
+  group_by(indicator) |>
+  filter(year == max(year)) |>
+  ungroup() |>
+  mutate(
+    label = if_else(
+      unit == "%",
+      paste0(round(value, 1), "%"),
+      paste0(round(value, 1), " yrs")
+    ),
+    label = paste0(year, ": ", label),
+    label_y = case_when(
+      indicator == "First marriage age" ~ value + 0.28,
+      indicator == "First birth age" ~ value - 0.28,
+      indicator == "Single women aged 25 to 49" ~ value + 0.85,
+      indicator == "Ever-married women aged 40 to 49 with 3+ children" ~ value + 1.25,
+      TRUE ~ value
+    )
+  )
+
+ggplot(family_formation_timeline, aes(x = year, y = value, colour = direction)) +
+  geom_line(linewidth = 1.15) +
+  geom_point(
+    data = timeline_labels,
+    fill = "white",
+    shape = 21,
+    size = 3.3,
+    stroke = 1
+  ) +
+  geom_text(
+    data = timeline_labels,
+    aes(y = label_y, label = label),
+    hjust = 0,
+    nudge_x = 0.35,
+    size = 3.3,
+    fontface = "bold",
+    colour = "grey25",
+    show.legend = FALSE
+  ) +
+  facet_wrap(~ indicator, scales = "free_y", ncol = 1) +
+  scale_colour_manual(
+    values = c(
+      "Family formation shifted later" = "#2F4B7C",
+      "Larger families became less common" = "#C94B55"
+    )
+  ) +
+  scale_x_continuous(
+    breaks = seq(1990, 2025, 5),
+    expand = expansion(mult = c(0.04, 0.18))
+  ) +
+  labs(
+    title = "Did family formation shift later while large families became less common?",
+    subtitle = "All panels use the same time axis. Values use separate y-scales because the units differ.",
+    x = "Year",
+    y = NULL,
+    colour = NULL,
+    caption = "The timeline shows connected descriptive patterns, not direct causality."
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    legend.position = "none",
+    strip.text = element_text(face = "bold", hjust = 0),
+    plot.title = element_text(face = "bold"),
+    panel.grid.minor = element_blank()
+  )
+```
+
+## 8. Insight 4 plot B: which family sizes became more or less common?
+
+```{r}
+family_change <- family_size_40_49 |>
+  mutate(
+    family_size_group = case_when(
+      children_born == "None" ~ "None",
+      children_born == "1 Child" ~ "1 child",
+      children_born == "2 Children" ~ "2 children",
+      children_born %in% c("3 Children", "4 Or More Children") ~ "3 or more children",
+      TRUE ~ NA_character_
+    )
+  ) |>
+  filter(!is.na(family_size_group), year %in% c(1980, 2025)) |>
+  group_by(year, family_size_group) |>
+  summarise(share_pct = sum(share_pct, na.rm = TRUE), .groups = "drop") |>
+  pivot_wider(names_from = year, values_from = share_pct, names_prefix = "share_") |>
+  mutate(
+    change_pp = share_2025 - share_1980,
+    direction = if_else(change_pp >= 0, "Became more common", "Became less common"),
+    label = paste0(if_else(change_pp >= 0, "+", ""), round(change_pp, 1), " pp"),
+    family_size_group = factor(
+      family_size_group,
+      levels = c("None", "1 child", "2 children", "3 or more children")
+    )
+  )
+
+ggplot(family_change, aes(x = change_pp, y = family_size_group, fill = direction)) +
+  geom_vline(xintercept = 0, colour = "grey45") +
+  geom_col(width = 0.66) +
+  geom_text(
+    aes(
+      label = label,
+      hjust = if_else(change_pp >= 0, -0.12, 1.12)
+    ),
+    size = 3.8,
+    fontface = "bold",
+    colour = "grey20"
+  ) +
+  scale_x_continuous(
+    labels = function(x) paste0(x, " pp"),
+    expand = expansion(mult = c(0.18, 0.18))
+  ) +
+  scale_fill_manual(values = c("Became more common" = "#1B9E77", "Became less common" = "#C94B55")) +
+  labs(
+    title = "Which family sizes became more or less common?",
+    subtitle = "Change in share of ever-married resident females aged 40 to 49, 1980 to 2025.",
+    x = "Change in share, percentage points",
+    y = "Number of children born",
+    fill = NULL,
+    caption = "This measures near-completed family size."
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    legend.position = "bottom",
+    panel.grid.major.y = element_blank(),
+    plot.title = element_text(face = "bold")
+  )
+```
