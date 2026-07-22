@@ -1,239 +1,701 @@
 ---
-title: "Re-examining Singapore's Declining Fertility"
-subtitle: "AAI1001 – Data Engineering & Visualization | Final Project"
-author:
-  - name: "Team 11"
-  - name: "Levl (ID)"
-  - name: "Damien (ID)"
-  - name: "Hong (ID)"
-  - name: "Angel (ID)"
-  - name: "Sophia (2503845)"
-format: 
+format:
   revealjs:
     theme: serif
+    css: style.css
     slide-number: true
     width: 1280
     height: 720
+    margin: 0.06
+    center: false
     embed-resources: true
     fontsize: 28px
+    transition: fade
+    background-transition: fade
+    preview-links: false
+    footer: AAI1001 · Data Engineering & Visualization · Team 11
+    html-table-processing: none
+editor:
+  markdown:
+    wrap: 72
 ---
 
-# Content
-<hr>
-1. The Story
-2. Original Visualisation & Critique
-3. Proposed Improvements
-4. Improved Visualisation
-5. Insights & Analysis
-6. Limitations
-7. Conclusion
-8. References
-
-# The Story 
-
-# Background
-<hr>
-::: {.fragment}
-Singapore has experienced a **sustained decline in fertility** over the past several decades. 
-:::
-
-::: {.fragment .callout-important}
-# Key Question
-What are the broader demographic, social, and economic changes that drive this trend?
-:::
-
-# Project Aim
-<hr>
-
-::: {.fragment}
-This project aims to re-examine Singapore's declining fertility by moving beyond annual birth counts and incorporating additional contextual dimensions: 
-:::
-
-::: {.fragment}
-- How fertility trends have evolved over the years
-:::
-::: {.fragment}
-- Changes in female labour-force participation
-:::
-::: {.fragment}
-- Changes in female singlehood across selected reproductive-age groups
-:::
-::: {.fragment}
-- Sociopolitical factors such as population policies and major recession periods.
-:::
-::: {.fragment}
-The project seeks to identify long-term patterns and co-movements that may help explain the persistence of low fertility in Singapore.
-:::
-
-# Original Visualisation & Critique
-
-# Original Visual
-<hr>
-
-<div class="columns">
-
-<div class="column" style="width:50%;">
-<img src="images/cna_birth_chart.png" style="width:100%;">
-<p style="font-size:12px;">*Source: Drop in Singapore citizen births in 2022 (Infographic: Clara Ho; Source: National Population and Talent Division, Prime Minister's Office).*</p>
-</div>
-
-<div class="column" style="width:50%;">
-**2 Primary Dimensions:**
-
-1. Year — Annual observations from 2012 to 2022 displayed along the horizontal axis.
-
-2. Number of Singapore Citizen Births — Annual birth counts represented by the height of each vertical bar.
-</div>
-
-</div>
-
-# Original Visual
-<hr>
-
-<div class="columns">
-
-<div class="column" style="width:50%;">
-<img src="images/cna_birth_chart.png" style="width:100%;">
-<p style="font-size:12px;">*Source: Drop in Singapore citizen births in 2022 (Infographic: Clara Ho; Source: National Population and Talent Division, Prime Minister's Office).*</p>
-</div>
-
-<div class="column" style="width:50%;">
-**Supporting Design Elements:**
-
-1.Period grouping — The years are visually divided into two periods, 2013–2017 and 2018–2022, through the use of different colour shades.
-
-2. Average birth annotations — Average birth counts for each five-year period are displayed above the bars to facilitate comparison between the two periods.
-
-3. Direct value labels — Exact annual birth counts are shown above each bar, reducing the need for readers to estimate values from the vertical scale.
-</div>
-
-</div>
-
-# Original Visual
-<hr>
-
-<div class="columns">
-
-<div class="column" style="width:50%;">
-<img src="images/cna_birth_chart.png" style="width:100%;">
-<p style="font-size:12px;">*Source: Drop in Singapore citizen births in 2022 (Infographic: Clara Ho; Source: National Population and Talent Division, Prime Minister's Office).*</p>
-</div>
-
-<div class="column" style="width:50%;">
-**The Story It Tells**
-
-1. Birth counts remain relatively stable throughout most of the period. Annual citizen births fluctuate within a narrow range, indicating that year-to-year variations are generally modest.
-
-2. The average number of births decreased between the two highlighted periods. The chart shows a downward shift in birth counts in the later period.
-
-3. 2022 records the lowest birth count in the series. 
-
-4. The decline appears gradual rather than abrupt. The overall pattern suggests a slow downward movement across the period rather than a sudden change occurring in a single year.
-</div>
-
-</div>
-
-# Strengths
-
-<div class="columns">
-
-<div class="column fragment" style="width:33%;">
-<div style="border:1px solid #ccc; padding:20px; border-radius:10px;">
-
-<b>Strength 1</b>
-<br>
-Body text explaining the first point.
-</div>
-</div>
-
-<div class="column fragment" style="width:33%;">
-<div style="border:1px solid #ccc; padding:20px; border-radius:10px;">
-
-<b>Strength 2</b>
-<br>
-Body text explaining the second point.
-</div>
-</div>
+## Cover {.cover-slide background-image="images/cover-bg.jpg" background-size="cover" background-position="center" background-opacity="0.4"}
 
 
-<div class="column fragment" style="width:33%;">
-<div style="border:1px solid #ccc; padding:20px; border-radius:10px;">
 
-<b>Strength 3</b>
-<br>
-Body text explaining the third point.
-</div>
-</div>
+<div class="cover-content">
+
+<div class="cover-kicker">AAI1001 · DATA ENGINEERING &amp; VISUALIZATION</div>
+
+<div class="cover-title">Re-examining Singapore's<br><span>Declining Fertility</span></div>
+
+<div class="cover-subtitle">Beyond birth counts: tracing changes in fertility timing, family formation and family size.</div>
 
 </div>
 
 
-# Weaknesses
 
-<div class="columns">
 
-<div class="column fragment" style="width:33%;">
-<div style="border:1px solid #ccc; padding:20px; border-radius:10px;">
 
-<b>Weakness 1</b>
-<br>
-Body text explaining the first point.
+<div class="cover-team">
+  <strong>Team 11</strong><br>
+  Levl Lim Jing Qiang (2501118) · Damien Tan Qing Xun (2503046)<br> 
+  Angel Zhang XinYu (2503541) · Gador Sophia Helen Santiago (2503845) · Yap Suen Hong (2500770)<br> 
+</div>
+
+<div class="cover-stat">
+  <div class="cover-stat-number">1960-2025</div>
+  <div class="cover-stat-label">65 years of Singapore’s fertility change</div>
+</div>
+
+---
+
+## Contents {.toc-slide}
+
+<div class="contents-wrapper">
+
+<div class="contents-heading">
+<div class="contents-kicker">Presentation Roadmap</div>
+<div class="contents-title">Our journey through the data</div>
+<div class="contents-subtitle">
+From a simple birth-count chart to a deeper investigation of Singapore's changing fertility patterns.
 </div>
 </div>
 
-<div class="column fragment" style="width:33%;">
-<div style="border:1px solid #ccc; padding:20px; border-radius:10px;">
+<div class="toc-timeline">
 
-<b>Weakness 2</b>
-<br>
-Body text explaining the second point.
+<div class="timeline-item" onclick="window.location.hash='/the-story'">
+<div class="timeline-number">01</div>
+<div class="timeline-text">
+<div class="timeline-title">The Story</div>
+<div class="timeline-description">Why fertility decline matters</div>
+</div>
+</div>
+
+<div class="timeline-item" onclick="window.location.hash='/original-visualisation'">
+<div class="timeline-number">02</div>
+<div class="timeline-text">
+<div class="timeline-title">Original Visualisation &amp; Critique</div>
+<div class="timeline-description">What CNA showed — and what it missed</div>
+</div>
+</div>
+
+<div class="timeline-item" onclick="window.location.hash='/proposed-improvements'">
+<div class="timeline-number">03</div>
+<div class="timeline-text">
+<div class="timeline-title">Proposed Improvements</div>
+<div class="timeline-description">Moving beyond annual birth counts</div>
+</div>
+</div>
+
+<div class="timeline-item" onclick="window.location.hash='/data-sources'">
+<div class="timeline-number">04</div>
+<div class="timeline-text">
+<div class="timeline-title">Data Sources</div>
+<div class="timeline-description">Fertility, singlehood, employment and family-size data</div>
+</div>
+</div>
+
+<div class="timeline-item" onclick="window.location.hash='/engineering-workflow'">
+<div class="timeline-number">05</div>
+<div class="timeline-text">
+<div class="timeline-title">Data Engineering Workflow</div>
+<div class="timeline-description">Raw data → cleaned → transformed → validated</div>
+</div>
+</div>
+
+<div class="timeline-item" onclick="window.location.hash='/final-visualisation'">
+<div class="timeline-number">06</div>
+<div class="timeline-text">
+<div class="timeline-title">Final Improved Visualisation</div>
+<div class="timeline-description">Placeholder text</div>
 </div>
 </div>
 
 
-<div class="column fragment" style="width:33%;">
-<div style="border:1px solid #ccc; padding:20px; border-radius:10px;">
-
-<b>Weakness 3</b>
-<br>
-Body text explaining the third point.
+<div class="timeline-item timeline-final" onclick="window.location.hash='/insights-analysis'">
+<div class="timeline-number">07</div>
+<div class="timeline-text">
+<div class="timeline-title">Insights & Analysis Insights</div>
+<div class="timeline-description">Placeholder text</div>
 </div>
 </div>
 
 </div>
-
-# Proposed Improvements
-
-# Proposed Improvements
-
-<div class="columns">
-
-<div class="column fragment" style="width:33%;">
-<div style="border:1px solid #ccc; padding:20px; border-radius:10px;">
-
-<b>Proposed Improvement 1</b>
-<br>
-Body text explaining the first point.
-</div>
-</div>
-
-<div class="column fragment" style="width:33%;">
-<div style="border:1px solid #ccc; padding:20px; border-radius:10px;">
-
-<b>Proposed Improvement 2</b>
-<br>
-Body text explaining the second point.
-</div>
 </div>
 
 
-<div class="column fragment" style="width:33%;">
-<div style="border:1px solid #ccc; padding:20px; border-radius:10px;">
+---
 
-<b>Proposed Improvement 3</b>
-<br>
-Body text explaining the third point.
+## The Story {#the-story .section-divider background-image="images/story-bg.jpg" background-size="cover" background-position="center" background-opacity="0.5"}
+
+<div class="section-number">01</div>
+
+<div class="divider-title">The Story</div>
+
+<div class="divider-subtitle">
+  Why Singapore's low fertility is not just a headline about fewer babies, but a long-term demographic shift.
 </div>
+
+---
+
+## Birth counts show the drop — but not the reason {.story-slide}
+
+<div class="kicker">Starting point</div>
+
+<div class="story-big">
+Singapore's fertility decline is not just about <span>fewer births</span>.
 </div>
+
+<div class="story-sub">
+The bigger question is what changed beneath the numbers: family timing, marriage patterns, work-life pressures and family size.
+</div>
+
+<div class="story-question">
+<strong>Key question:</strong> What demographic and social changes are associated with Singapore's persistently low fertility?
+</div>
+
+---
+
+## From “how many births?” to “what changed?” {.lens-slide}
+
+<div class="kicker">Our analytical lens</div>
+
+<div class="lens-grid">
+
+<div class="lens-card">
+  <div class="lens-num">01</div>
+  <strong>Fertility timing</strong>
+  <small>Are births shifting from women in their 20s toward women in their 30s?</small>
+</div>
+
+<div class="lens-card">
+  <div class="lens-num">02</div>
+  <strong>Family formation</strong>
+  <small>Are marriage and parenthood happening later, reducing time for larger families?</small>
+</div>
+
+<div class="lens-card">
+  <div class="lens-num">03</div>
+  <strong>Family size</strong>
+  <small>Even after marriage, are completed family sizes becoming smaller?</small>
+</div>
+
+<div class="lens-card">
+  <div class="lens-num">04</div>
+  <strong>Policy context</strong>
+  <small>Did policy shifts coincide with sustained fertility recovery?</small>
+</div>
+
+</div>
+
+---
+
+## Original Visualisation & Critique {#original-visualisation .section-divider background-image="images/critique-bg.jpg" background-size="cover" background-position="center" background-opacity="0.5"}
+
+<div class="section-number">02</div>
+
+<div class="divider-title">Original Visualisation & Critique</div>
+
+<div class="divider-subtitle">
+  We start from an online news media visualisation, then evaluate what it communicates well and what it leaves unexplained.
+</div>
+
+---
+
+## The original CNA visualisation {.clean-slide}
+
+<div class="two-col">
+
+<div class="image-frame">
+  <img src="images/cna_birth_chart.png" alt="CNA birth chart">
+  <div class="caption">Source: CNA, “Drop in Singapore citizen births in 2022”; National Population and Talent Division.</div>
+</div>
+
+<div class="side-note">
+  <div class="kicker">What it shows</div>
+  <h3>Annual Singapore citizen births, 2012–2022</h3>
+  <p>The chart uses vertical bars to compare birth counts across years, with two five-year average annotations to highlight the decline between 2013–2017 and 2018–2022.</p>
+  <p><strong>Core message:</strong> citizen births fell to 30.4k in 2022, the lowest value shown in the chart.</p>
+</div>
+
+</div>
+
+---
+
+## Strengths: why the chart works {.clean-slide}
+
+<div class="kicker">Visual critique</div>
+<h2>Clear, readable and fast to understand</h2>
+<div class="hr-accent"></div>
+
+<div class="card-grid-3">
+
+<div class="info-card good">
+  <div class="num">01</div>
+  <h3>Direct message</h3>
+  <p>The title and value labels make the intended takeaway obvious: Singapore citizen births dropped in 2022.</p>
+</div>
+
+<div class="info-card good">
+  <div class="num">02</div>
+  <h3>Simple encoding</h3>
+  <p>Vertical bars are easy to compare, especially because every bar has a direct birth-count label.</p>
+</div>
+
+<div class="info-card good">
+  <div class="num">03</div>
+  <h3>Period comparison</h3>
+  <p>The two colour groups and average annotations help readers compare two broad periods instead of only individual years.</p>
+</div>
+
+</div>
+
+---
+
+## Weaknesses: what the chart cannot explain {.clean-slide}
+
+<div class="kicker">Visual critique</div>
+<h2>The chart describes the outcome, not the drivers</h2>
+<div class="hr-accent"></div>
+
+<div class="card-grid-3">
+
+<div class="info-card bad">
+  <div class="num">01</div>
+  <h3>Birth counts only</h3>
+  <p>Raw birth counts are affected by population size and age structure, so they do not directly show fertility behaviour.</p>
+</div>
+
+<div class="info-card bad">
+  <div class="num">02</div>
+  <h3>Short time horizon</h3>
+  <p>The 2012–2022 range is useful for news reporting but too short for understanding Singapore's long-term fertility transition.</p>
+</div>
+
+<div class="info-card bad">
+  <div class="num">03</div>
+  <h3>No age or context</h3>
+  <p>The chart does not show whether births shifted by maternal age, nor how fertility changed alongside policy, singlehood or employment patterns.</p>
+</div>
+
+</div>
+
+---
+
+## Proposed Improvements {#proposed-improvements .section-divider background-image="images/improvements-bg.jpg" background-size="cover" background-position="center" background-opacity="0.5"}
+<div class="section-number">03</div>
+
+<div class="divider-title">Proposed Improvements</div>
+
+<div class="divider-subtitle">
+  Our redesign keeps the original story, but expands it from a one-dimensional birth-count chart into a richer fertility analysis.
+</div>
+
+---
+
+## From birth counts to a multidimensional fertility story {.clean-slide}
+
+<div class="transform-map">
+
+<div class="transform-box">
+  <div class="kicker">Original visual</div>
+  <h3>What CNA gives us</h3>
+  <ul>
+    <li>Citizen birth counts only</li>
+    <li>Short 2012–2022 window</li>
+    <li>Limited demographic context</li>
+    <li>No insight into maternal age or family-size changes</li>
+  </ul>
+</div>
+
+<div class="transform-arrow">→</div>
+
+<div class="transform-box">
+  <div class="kicker">Improved project direction</div>
+  <h3>What we add</h3>
+  <ul>
+    <li>Age-specific fertility rates</li>
+    <li>Longer 1960–2025 trend</li>
+    <li>Policy and recession context</li>
+    <li>Singlehood, LFPR and family-size indicators</li>
+    <li>Analysis of timing shifts and smaller family sizes</li>
+  </ul>
+</div>
+
+</div>
+
+---
+
+## Planned changes versus final direction {.clean-slide}
+
+<div class="kicker">Scope refinement</div>
+<h2>Proposal as a guide, not a cage</h2>
+<div class="hr-accent"></div>
+
+<div class="two-col equal">
+
+<div class="side-note">
+  <h3>Original proposal direction</h3>
+  <p>We initially planned a broad contextual dashboard with stacked ASFR bars, female LFPR, singlehood, policy periods and recession annotations.</p>
+</div>
+
+<div class="side-note">
+  <h3>Final direction</h3>
+  <p>As analysis developed, the stronger story shifted toward delayed childbearing, age-group contributions to the TFR decline, and smaller completed family sizes.</p>
+</div>
+
+</div>
+
+<div class="story-question">
+<strong>Presentation logic:</strong> we will briefly explain any major pivot so the final work remains self-contained, coherent and justified.
+</div>
+
+---
+
+## Data Sources {#data-sources .section-divider background-image="images/datasource-bg.jpg" background-size="cover" background-position="center" background-opacity="0.5"}
+<div class="section-number">04</div>
+
+<div class="divider-title">Data Sources</div>
+
+<div class="divider-subtitle">
+  We curate official datasets and supporting survey evidence to move from “birth counts” to fertility timing and family-size analysis.
+</div>
+
+---
+
+## Core datasets used {.clean-slide}
+
+<div class="kicker">Data curation</div>
+<h2>Official time series plus supporting annotation tables</h2>
+<div class="hr-accent"></div>
+
+<div class="source-grid">
+
+<div class="source-tile">
+  <span class="label">SINGSTAT</span>
+  <h3>Births & fertility rates</h3>
+  <p>TFR, ASFR by maternal age group and birth counts, covering 1960–2025.</p>
+</div>
+
+<div class="source-tile">
+  <span class="label">SINGSTAT</span>
+  <h3>Proportion of singles</h3>
+  <p>Female singlehood rates for selected reproductive-age groups.</p>
+</div>
+
+<div class="source-tile">
+  <span class="label">SINGSTAT / MOM</span>
+  <h3>Female LFPR</h3>
+  <p>Resident female labour-force participation by age group and year.</p>
+</div>
+
+<div class="source-tile">
+  <span class="label">SINGSTAT</span>
+  <h3>Completed family size</h3>
+  <p>Ever-married resident females by age group and number of children born.</p>
+</div>
+
+<div class="source-tile">
+  <span class="label">MANUAL</span>
+  <h3>Policy & recession annotations</h3>
+  <p>Selected population policy events and major economic downturn periods.</p>
+</div>
+
+<div class="source-tile">
+  <span class="label">SURVEY</span>
+  <h3>Marriage & Parenthood Survey</h3>
+  <p>Reasons for not wanting children or more children, used as context for interpretation.</p>
+</div>
+
+</div>
+
+---
+
+## Raw layout snapshots {.clean-slide}
+
+<div class="kicker">Data structure</div>
+<h2>Most sources are wide-format files, but their row structures differ</h2>
+<div class="hr-accent"></div>
+
+<table class="custom-table">
+  <thead>
+    <tr>
+      <th>Dataset</th>
+      <th>Raw layout</th>
+      <th>Main cleaning need</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Births & fertility</td>
+      <td>Single-block wide table: data series in rows, years 2025 → 1960 in columns</td>
+      <td>Filter ASFR/TFR rows and reshape year columns to long format</td>
+    </tr>
+    <tr>
+      <td>Singlehood</td>
+      <td>Metadata rows + hierarchical age group / male / female rows</td>
+      <td>Remove metadata, fill age groups, keep female rows, reshape to long</td>
+    </tr>
+    <tr>
+      <td>Female LFPR</td>
+      <td>Total, male and female blocks with detailed and aggregate age rows</td>
+      <td>Extract female resident participation rows and selected age groups</td>
+    </tr>
+    <tr>
+      <td>Policy / recession</td>
+      <td>Manual annotation tables</td>
+      <td>Keep separate from numerical datasets for labels and shading only</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## Data Engineering Workflow {#engineering-workflow .section-divider background-image="images/workflow-bg.jpg" background-size="cover" background-position="center" background-opacity="0.5"}
+
+<div class="section-number">05</div>
+
+<div class="divider-title">Data Engineering Workflow</div>
+
+<div class="divider-subtitle">
+  The pipeline standardises multiple raw layouts into consistent, analysis-ready tables while preserving missing-value meaning and source traceability.
+</div>
+
+---
+
+## Raw → clean → analysis-ready {.clean-slide}
+
+<div class="kicker">Pipeline overview</div>
+<h2>One reproducible workflow for all datasets</h2>
+<div class="hr-accent"></div>
+
+<div class="pipeline">
+
+<div class="pipe-step">
+  <div class="step-id">STEP 01</div>
+  <h3>Import</h3>
+  <p>Read raw CSV files and identify where the true table header begins.</p>
+</div>
+
+<div class="pipe-step">
+  <div class="step-id">STEP 02</div>
+  <h3>Clean</h3>
+  <p>Remove metadata rows, standardise labels and convert values to numeric.</p>
+</div>
+
+<div class="pipe-step">
+  <div class="step-id">STEP 03</div>
+  <h3>Reshape</h3>
+  <p>Convert year columns into long format using a consistent year variable.</p>
+</div>
+
+<div class="pipe-step">
+  <div class="step-id">STEP 04</div>
+  <h3>Derive</h3>
+  <p>Calculate indicators such as mean singlehood, mean LFPR and fertility timing metrics.</p>
+</div>
+
+<div class="pipe-step">
+  <div class="step-id">STEP 05</div>
+  <h3>Validate</h3>
+  <p>Check expected year ranges, age groups and reconstructed TFR values.</p>
+</div>
+
+</div>
+
+---
+
+## Cleaning decisions {.clean-slide}
+
+<div class="kicker">Transformation choices</div>
+<h2>Key decisions that protect interpretability</h2>
+<div class="hr-accent"></div>
+
+<table class="custom-table">
+  <thead>
+    <tr>
+      <th>Issue</th>
+      <th>Decision</th>
+      <th>Why it matters</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Years stored as columns</td>
+      <td>Use long format with one row per year-variable observation</td>
+      <td>Required for joining, plotting and time-series analysis</td>
+    </tr>
+    <tr>
+      <td>Different coverage periods</td>
+      <td>Preserve unavailable values as <code>NA</code></td>
+      <td>Missing data is not the same as zero</td>
+    </tr>
+    <tr>
+      <td>Different units</td>
+      <td>Keep ASFR, TFR and percentages as separate measures</td>
+      <td>Prevents misleading dual-axis interpretation</td>
+    </tr>
+    <tr>
+      <td>Annotation events</td>
+      <td>Store policy and recession periods in separate lookup tables</td>
+      <td>Avoids duplicating contextual events into every yearly row</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## Target output schema {.clean-slide}
+
+<div class="kicker">Final data structure</div>
+<h2>Cleaned tables prepared for visualisation and analysis</h2>
+<div class="hr-accent"></div>
+
+<div class="schema-grid">
+
+<div class="schema-card">
+  <h3><code>fertility_by_age</code></h3>
+  <p>One row per year × maternal age group, containing ASFR and derived TFR contribution.</p>
+</div>
+
+<div class="schema-card">
+  <h3><code>annual_context</code></h3>
+  <p>One row per year, containing TFR, mean female singlehood and mean female LFPR indicators.</p>
+</div>
+
+<div class="schema-card">
+  <h3><code>family_size_40_49</code></h3>
+  <p>Family-size distribution among ever-married resident females aged 40–49.</p>
+</div>
+
+<div class="schema-card">
+  <h3><code>policy_annotations</code></h3>
+  <p>Selected population policy events and demographic milestones for timeline labels.</p>
+</div>
+
+<div class="schema-card">
+  <h3><code>recession_annotations</code></h3>
+  <p>Economic downturn periods for optional contextual shading and interpretation boundaries.</p>
+</div>
+
+<div class="schema-card">
+  <h3><code>survey_reasons</code></h3>
+  <p>Marriage and Parenthood Survey indicators used to support practical-constraint interpretation.</p>
+</div>
+
+</div>
+
+---
+
+## Final Improved Visualisation {#final-visualisation .section-divider background-image="images/finalvis-bg.jpg" background-size="cover" background-position="center" background-opacity="0.5"}
+
+<div class="section-number">06</div>
+
+<div class="divider-title">Final Improved Visualisation</div>
+
+<div class="divider-subtitle">
+  Placeholder section: insert the final hero visual and insight plots after the analysis is frozen.
+</div>
+
+---
+
+## Placeholder: final hero visual {.clean-slide}
+
+
+---
+
+## Insights & Analysis {#insights-analysis .section-divider background-image="images/insightsanalysis-bg.jpg" background-size="cover" background-position="center" background-opacity="0.5"}
+<div class="section-number">07</div>
+
+<div class="divider-title">Insights & Analysis</div>
+
+<div class="divider-subtitle">
+  Placeholder section: these slides should be updated with final plots and speaker notes after the final analysis is selected.
+</div>
+
+---
+
+## Insight package placeholders {.clean-slide}
+
+<div class="card-grid-3">
+
+<div class="info-card blue">
+  <div class="num">INSIGHT 01</div>
+  <h3>Later, but not recovered</h3>
+  <p>Childbearing moved towards older ages, but later-age gains did not fully offset younger-age losses.</p>
+</div>
+
+<div class="info-card blue">
+  <div class="num">INSIGHT 02</div>
+  <h3>Smaller families after marriage</h3>
+  <p>Among ever-married women aged 40–49, larger families became less common over time.</p>
+</div>
+
+<div class="info-card blue">
+  <div class="num">INSIGHT 03</div>
+  <h3>Practical constraints</h3>
+  <p>Survey evidence can explain why preferred family size may differ from realised family size.</p>
+</div>
+
+</div>
+
+---
+
+## Limitations {.clean-slide}
+
+<div class="kicker">Interpretation boundaries</div>
+<h2>What our analysis can and cannot claim</h2>
+<div class="hr-accent"></div>
+
+<div class="limit-grid">
+
+<div class="limit-card">
+  <h3>Correlation ≠ causation</h3>
+  <p>We identify patterns and co-movements, not direct causal effects of any single factor.</p>
+</div>
+
+<div class="limit-card">
+  <h3>Period measures</h3>
+  <p>TFR and ASFR describe fertility in a given year, not the completed experience of one cohort.</p>
+</div>
+
+<div class="limit-card">
+  <h3>Data comparability</h3>
+  <p>Some series use census, survey and administrative sources, so methodology notes must be retained.</p>
+</div>
+
+</div>
+
+---
+
+## Conclusion {#conclusion .clean-slide}
+
+<div class="kicker">Final takeaway</div>
+
+<div class="conclusion-big">
+Singapore's fertility decline appears to be an <span>entrenched structural issue</span>: policy matters, but delayed family formation and smaller realised family sizes make low fertility harder to reverse.
+</div>
+
+<div class="story-question">
+Final sentence to refine after plots are finalised: low fertility is not only about fewer births in one year, but about how the pathway into parenthood has changed over decades.
+</div>
+
+---
+
+## References {.clean-slide}
+
+<div class="kicker">Sources to keep / update</div>
+
+<div class="references-list">
+
+<p>PUT THE PROPER AND ACTUAL COMPILED LIST OF REFERENCES Channel NewsAsia. “Record number of marriages, drop in Singaporean births in 2022.” Original news visualisation used for critique.</p>
+<p>Singapore Department of Statistics. Births and Fertility Rates, Annual.</p>
+<p>Singapore Department of Statistics. Proportion of Singles Among Resident Population by Selected Age Group and Sex, Annual.</p>
+<p>Ministry of Manpower & Singapore Department of Statistics. Resident Labour Force Participation Rate by Age and Sex, Annual.</p>
+<p>Singapore Department of Statistics. Resident Ever-Married Females by Age Group and Number of Children Born, Annual.</p>
+<p>National Population and Talent Division. Marriage and Parenthood Survey 2021.</p>
+<p>Additional sources and final plot citations to be updated after the analysis is finalised.</p>
 
 </div>
