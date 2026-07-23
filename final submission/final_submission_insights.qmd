@@ -1,0 +1,824 @@
+---
+title: "Final Submission Insights"
+subtitle: "Singapore fertility decline: four supporting insight plots"
+author: "Team 11"
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    embed-resources: true
+    fig-width: 12
+    fig-height: 7.5
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+## Purpose
+
+This file combines the four insight plots selected for the final submission.
+It is kept separate from the earlier working files so the original exploration
+QMDs remain untouched.
+
+```{r}
+#| label: setup
+library(tidyverse)
+library(scales)
+
+data_dir <- "datasets"
+```
+
+```{r}
+#| label: shared-helpers
+read_singstat_wide <- function(path) {
+  lines <- readLines(path, warn = FALSE)
+
+  header_index <- which(
+    stringr::str_detect(lines, "^Data\\s*Series\\s*,")
+  )[1]
+
+  if (is.na(header_index)) {
+    stop("No 'Data Series' header found in: ", path)
+  }
+
+  raw <- readr::read_csv(
+    path,
+    skip = header_index - 1,
+    na = c("", "na", "NA", "N.A.", "-"),
+    show_col_types = FALSE
+  )
+
+  raw <- dplyr::rename_with(raw, trimws)
+  names(raw)[1] <- "data_series"
+
+  raw |>
+    dplyr::mutate(data_series = stringr::str_squish(data_series)) |>
+    dplyr::filter(!is.na(data_series), data_series != "")
+}
+
+to_long_years <- function(data) {
+  data |>
+    dplyr::mutate(dplyr::across(dplyr::matches("^\\d{4}$"), as.character)) |>
+    tidyr::pivot_longer(
+      cols = dplyr::matches("^\\d{4}$"),
+      names_to = "year",
+      values_to = "value"
+    ) |>
+    dplyr::mutate(
+      year = as.integer(year),
+      value = readr::parse_number(as.character(value))
+    ) |>
+    dplyr::filter(!is.na(year))
+}
+```
+
+---
+
+## Main visualisation: Singapore fertility, female LFPR and policy context
+
+This is the main visual that the supporting insights are meant to explain. It shows the long-term fertility decline, the age groups contributing to births, female LFPR by age group, major recessions and key birth-policy milestones in one view.
+
+```{r}
+#| label: main-visualisation-data
+fertility_main_wide <- read_singstat_wide(file.path(data_dir, "BirthsAndFertilityRatesAnnual.csv"))
+lfpr_main_wide <- read_singstat_wide(file.path(data_dir, "M182201.csv"))
+
+standardise_age_group <- function(x) {
+  x |>
+    stringr::str_squish() |>
+    stringr::str_replace_all("\\s*-\\s*", "-")
+}
+
+main_age_groups <- c(
+  "15-19 Years",
+  "20-24 Years",
+  "25-29 Years",
+  "30-34 Years",
+  "35-39 Years",
+  "40-44 Years",
+  "45-49 Years"
+)
+
+asfr_by_age_main <- fertility_main_wide |>
+  mutate(age_group = standardise_age_group(data_series)) |>
+  filter(age_group %in% main_age_groups) |>
+  to_long_years() |>
+  transmute(
+    year,
+    age_group = factor(age_group, levels = main_age_groups),
+    asfr = value
+  ) |>
+  filter(year >= 1980, !is.na(asfr)) |>
+  arrange(age_group, year)
+
+lfpr_female_main <- lfpr_main_wide |>
+  mutate(
+    section = case_when(
+      data_series == "Female Resident Participation Rate" ~ "Female",
+      data_series %in% c(
+        "Total Resident Participation Rate",
+        "Male Resident Participation Rate"
+      ) ~ "Other",
+      TRUE ~ NA_character_
+    )
+  ) |>
+  tidyr::fill(section, .direction = "down") |>
+  filter(
+    section == "Female",
+    data_series != "Female Resident Participation Rate"
+  ) |>
+  mutate(age_group = standardise_age_group(data_series)) |>
+  filter(age_group %in% main_age_groups) |>
+  to_long_years() |>
+  transmute(
+    year,
+    age_group = factor(age_group, levels = main_age_groups),
+    female_lfpr_pct = value
+  ) |>
+  filter(year >= 1990, !is.na(female_lfpr_pct)) |>
+  arrange(age_group, year)
+
+recession_events_main <- tibble(
+  recession = c(
+    "1985 recession",
+    "Asian Financial Crisis",
+    "Global Financial Crisis",
+    "COVID-19 recession"
+  ),
+  year = c(1985, 1998, 2009, 2020)
+) |>
+  mutate(
+    xmin = year - 0.55,
+    xmax = year + 0.55
+  )
+
+birth_policy_events_main <- tibble(
+  year = c(1984, 1987, 2001, 2004, 2008, 2013),
+  policy = c(
+    "Graduate Mothers Scheme",
+    "Have Three or More policy",
+    "Baby Bonus",
+    "M&P Package",
+    "Enhanced M&P Package",
+    "Enhanced M&P Package"
+  ),
+  label_level = c(1, 2, 1, 2, 1, 2)
+)
+
+main_age_group_colours <- c(
+  "15-19 Years" = "#D73027",
+  "20-24 Years" = "#FC8D59",
+  "25-29 Years" = "#FEE08B",
+  "30-34 Years" = "#91CF60",
+  "35-39 Years" = "#1A9850",
+  "40-44 Years" = "#4575B4",
+  "45-49 Years" = "#7B3294"
+)
+
+asfr_total_by_year_main <- asfr_by_age_main |>
+  group_by(year) |>
+  summarise(total_asfr = sum(asfr, na.rm = TRUE), .groups = "drop")
+
+asfr_max_main <- max(asfr_total_by_year_main$total_asfr, na.rm = TRUE)
+lfpr_scale_main <- asfr_max_main / 100
+
+lfpr_line_main <- lfpr_female_main |>
+  mutate(age_group = factor(age_group, levels = main_age_groups)) |>
+  filter(
+    year >= min(asfr_by_age_main$year),
+    year <= max(asfr_by_age_main$year)
+  )
+```
+
+```{r}
+#| label: main-visualisation-figure
+#| fig-width: 15
+#| fig-height: 9
+#| dpi: 150
+
+ggplot() +
+  geom_rect(
+    data = recession_events_main,
+    aes(xmin = xmin, xmax = xmax, ymin = -Inf, ymax = Inf),
+    inherit.aes = FALSE,
+    fill = "grey60",
+    alpha = 0.4
+  ) +
+  geom_text(
+    data = recession_events_main,
+    aes(x = year, y = Inf, label = recession),
+    inherit.aes = FALSE,
+    angle = 90,
+    vjust = 1.35,
+    hjust = 1,
+    size = 3.5,
+    fontface = "bold",
+    colour = "red2"
+  ) +
+  geom_vline(
+    data = birth_policy_events_main,
+    aes(xintercept = year),
+    inherit.aes = FALSE,
+    linetype = "dotted",
+    linewidth = 0.75,
+    colour = "black"
+  ) +
+  geom_text(
+    data = birth_policy_events_main,
+    aes(
+      x = year,
+      y = Inf,
+      label = paste0(year, ": ", policy),
+      vjust = if_else(label_level == 1, 1.25, 2.65)
+    ),
+    inherit.aes = FALSE,
+    angle = 90,
+    hjust = 1,
+    size = 3.3,
+    colour = "black"
+  ) +
+  geom_col(
+    data = asfr_by_age_main,
+    aes(x = year, y = asfr, fill = age_group),
+    width = 0.82,
+    alpha = 0.68
+  ) +
+  geom_line(
+    data = lfpr_line_main,
+    aes(x = year, y = female_lfpr_pct * lfpr_scale_main, group = age_group),
+    colour = "ghostwhite",
+    linewidth = 2.2,
+    lineend = "round"
+  ) +
+  geom_line(
+    data = lfpr_line_main,
+    aes(
+      x = year,
+      y = female_lfpr_pct * lfpr_scale_main,
+      colour = age_group,
+      group = age_group
+    ),
+    linewidth = 1.2,
+    linetype = "dashed",
+    alpha = 0.98,
+    lineend = "round"
+  ) +
+  scale_x_continuous(
+    limits = c(1980, 2025.6),
+    breaks = seq(1980, 2025, 5),
+    expand = expansion(mult = c(0.005, 0.005))
+  ) +
+  scale_y_continuous(
+    name = "Age-specific fertility rate\n(births per 1,000 women)",
+    sec.axis = sec_axis(
+      ~ . / lfpr_scale_main,
+      name = "Female labour-force participation rate (%)",
+      breaks = seq(0, 100, 20)
+    ),
+    expand = expansion(mult = c(0, 0.40))
+  ) +
+  scale_fill_manual(
+    values = main_age_group_colours,
+    name = "Age group",
+    labels = function(x) str_remove(x, " Years")
+  ) +
+  scale_colour_manual(
+    values = main_age_group_colours,
+    name = "Age group",
+    labels = function(x) str_remove(x, " Years")
+  ) +
+  guides(
+    fill = guide_legend(title = "Age group", order = 1, nrow = 1),
+    colour = "none"
+  ) +
+  labs(
+    title = "Singapore fertility and female labour-force participation by age group",
+    subtitle = paste0(
+      "Stacked bars show age-specific fertility rates; dashed lines show female LFPR. ",
+      "Shaded bands mark recessions; dotted lines mark major birth-policy milestones."
+    ),
+    x = "Year",
+    caption = "Stacked bars = ASFR contribution by age group. Dashed lines = female LFPR using the same age-group colours. Associations shown, not causation."
+  ) +
+  theme_minimal(base_size = 11) +
+  theme(
+    panel.grid.minor = element_blank(),
+    panel.grid.major.x = element_blank(),
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    axis.title.y.left = element_text(margin = margin(r = 10)),
+    axis.title.y.right = element_text(margin = margin(l = 10)),
+    plot.title = element_text(face = "bold", size = 15),
+    plot.subtitle = element_text(size = 10),
+    plot.caption = element_text(size = 8, colour = "grey40"),
+    legend.position = "bottom",
+    legend.box = "horizontal",
+    plot.margin = margin(0, 10, 8, 10)
+  )
+```
+
+---
+
+## Insight 1: Female university attainment, LFPR and first-birth timing
+
+**Question:** Did female university attainment rise alongside higher female labour-force participation and later first birth?
+
+**Datasets used:**
+
+| Dataset | File | Source | Range |
+|---|---|---|---|
+| Female university-qualified residents 25+ | `M850581_female_university_qualified.csv` | SingStat M850581 | 1990 to 2025 |
+| Female LFPR, aggregate 15+ | `M182201_female_lfpr_aggregate.csv` | SingStat M182201 | 1990 to 2025 |
+| Median age of resident mothers at first birth | `M810741_median_age_first_birth.csv` | SingStat M810741 | 1990 to 2025 |
+
+**Reading the plot:** The line shows growth in female university-qualified residents. Larger points mean higher female LFPR. Point colour shows the median age at first birth.
+
+```{r}
+#| label: insight-1-data
+grads <- readr::read_csv(file.path(data_dir, "M850581_female_university_qualified.csv"))
+lfpr <- readr::read_csv(file.path(data_dir, "M182201_female_lfpr_aggregate.csv"))
+birthage <- readr::read_csv(file.path(data_dir, "M810741_median_age_first_birth.csv"))
+
+insight1_data <- grads |>
+  left_join(lfpr, by = "year") |>
+  left_join(birthage, by = "year")
+```
+
+```{r}
+#| label: insight-1-colour-scale
+age_band_stops <- tibble(
+  midpoint = c(17, 22, 27, 32, 37, 42, 47),
+  colour = c("#D73027", "#FC8D59", "#FEE08B", "#A6D96A", "#1A9850", "#4575B4", "#762A83")
+)
+
+age_colour_ramp <- colorRamp(age_band_stops$colour, space = "Lab")
+
+birth_age_to_colour <- function(age) {
+  t <- approx(
+    age_band_stops$midpoint,
+    seq(0, 1, length.out = nrow(age_band_stops)),
+    xout = age,
+    rule = 2
+  )$y
+  cols <- age_colour_ramp(t)
+  rgb(cols[, 1], cols[, 2], cols[, 3], maxColorValue = 255)
+}
+
+insight1_data <- insight1_data |>
+  mutate(point_colour = birth_age_to_colour(median_age_first_birth))
+
+insight1_legend_ages <- c(28, 29, 30, 31, 32)
+insight1_legend_colours <- birth_age_to_colour(insight1_legend_ages)
+```
+
+```{r}
+#| label: insight-1-figure
+ggplot(insight1_data, aes(x = year, y = female_university_qualified)) +
+  geom_line(colour = "#c3c2b7", linewidth = 0.6) +
+  geom_point(aes(size = female_lfpr_pct, colour = point_colour), alpha = 0.85) +
+  scale_size(name = "Female LFPR (%)\n(point size)", range = c(3, 18)) +
+  scale_colour_identity(
+    name = "Median age at\nfirst birth",
+    breaks = insight1_legend_colours,
+    labels = paste0(insight1_legend_ages, " yrs"),
+    guide = "legend"
+  ) +
+  scale_x_continuous(breaks = scales::breaks_pretty(n = 8)) +
+  scale_y_continuous(
+    name = "Female residents 25+, university-qualified",
+    labels = scales::label_number(scale_cut = scales::cut_short_scale())
+  ) +
+  labs(
+    title = "Female University Attainment, Labour Participation, and Birth Timing",
+    subtitle = "Point size: female LFPR. Point colour: median age at first birth, using the same age-band palette as the main fertility figure.",
+    x = NULL,
+    caption = "Sources: SingStat M850581, M182201 and M810741. Associations shown, not causation."
+  ) +
+  theme_minimal(base_size = 11) +
+  theme(
+    panel.grid.minor = element_blank(),
+    plot.title = element_text(face = "bold", size = 13),
+    plot.caption = element_text(size = 7.5, colour = "grey40"),
+    legend.position = "right"
+  )
+```
+
+---
+
+## Insight 2: Literacy, schooling duration and youth labour withdrawal
+
+**Question:** Did young adulthood shift toward longer schooling while younger female LFPR fell?
+
+**Datasets used:**
+
+| Dataset | File | Source | Range |
+|---|---|---|---|
+| Female literacy rate, 15+ | `M850001_female_literacy_rate.csv` | SingStat M850001 | used from 1960 |
+| Female mean years of schooling, 25+ | `M850591_female_mean_years_schooling.csv` | SingStat M850591 | 1980 to 2024 |
+| Female LFPR by age, 15 to 19 and 20 to 24 | `M182201_female_lfpr_by_age_15_24.csv` | SingStat M182201 | 1990 to 2025 |
+
+**Reading the plot:** The purple background shows female literacy from 1960. The brown bars and younger female LFPR lines start later where those datasets are available, so the pre-1980 blank areas are honest data gaps.
+
+```{r}
+#| label: insight-2-data
+literacy <- readr::read_csv(file.path(data_dir, "M850001_female_literacy_rate.csv"))
+schooling <- readr::read_csv(file.path(data_dir, "M850591_female_mean_years_schooling.csv"))
+lfpr_age <- readr::read_csv(file.path(data_dir, "M182201_female_lfpr_by_age_15_24.csv")) |>
+  mutate(age_group = factor(age_group, levels = c("15-19", "20-24")))
+
+schooling_5yr <- schooling |>
+  filter(year %in% c(1980, 1985, 1990, 1995, 2000, 2005, 2010, 2015, 2020, 2024))
+
+policy_markers <- tribble(
+  ~year, ~label,
+  1994, "1994: curriculum unified\nfor both sexes"
+)
+```
+
+```{r}
+#| label: insight-2-figure
+yr_scale <- 100 / 15
+
+ggplot() +
+  geom_area(
+    data = literacy,
+    aes(x = year, y = female_literacy_pct),
+    fill = "#4a3aa7",
+    alpha = 0.15
+  ) +
+  geom_line(
+    data = literacy,
+    aes(x = year, y = female_literacy_pct),
+    colour = "#4a3aa7",
+    linewidth = 0.7,
+    alpha = 0.6
+  ) +
+  geom_col(
+    data = schooling_5yr,
+    aes(x = year, y = mean_years_schooling * yr_scale),
+    fill = "#c47a2c",
+    colour = "#8a561c",
+    width = 3
+  ) +
+  geom_text(
+    data = schooling_5yr,
+    aes(x = year, y = mean_years_schooling * yr_scale, label = mean_years_schooling),
+    vjust = -0.6,
+    size = 5,
+    colour = "#8a561c"
+  ) +
+  geom_vline(
+    data = policy_markers,
+    aes(xintercept = year),
+    linetype = "dashed",
+    colour = "grey30",
+    linewidth = 1
+  ) +
+  geom_text(
+    data = policy_markers,
+    aes(x = year, y = 102, label = label),
+    hjust = 0,
+    vjust = 1,
+    size = 4,
+    colour = "grey20",
+    lineheight = 0.9
+  ) +
+  geom_line(
+    data = lfpr_age,
+    aes(x = year, y = lfpr_pct, colour = age_group),
+    linewidth = 2,
+    na.rm = TRUE
+  ) +
+  scale_colour_manual(
+    name = "Female LFPR",
+    values = c("15-19" = "#D73027", "20-24" = "#FC8D59")
+  ) +
+  scale_x_continuous(breaks = seq(1960, 2025, 10), limits = c(1960, 2026)) +
+  scale_y_continuous(
+    name = "Percent (%)",
+    sec.axis = sec_axis(~ . / yr_scale, name = "Mean years of schooling"),
+    limits = c(0, 105),
+    expand = c(0, 0)
+  ) +
+  labs(
+    title = "Literacy, Schooling Duration, and Youth Labour Withdrawal",
+    subtitle = "Background: female literacy from 1960. Columns and lines begin later where those datasets are available.",
+    x = NULL,
+    caption = "Sources: SingStat M850001, M850591 and M182201. Pre-1980 gaps reflect unavailable schooling and age-specific LFPR data, not removed observations."
+  ) +
+  theme_minimal(base_size = 11) +
+  theme(
+    panel.grid.minor = element_blank(),
+    plot.title = element_text(face = "bold", size = 13),
+    plot.caption = element_text(size = 7.5, colour = "grey40"),
+    legend.position = "top"
+  )
+```
+
+---
+
+## Insight 3: Later family formation and smaller completed families
+
+**Question:** Did later marriage and later first birth coincide with smaller completed families?
+
+**Datasets used:**
+
+| Dataset | File | Source | Range |
+|---|---|---|---|
+| Median age at first marriage, resident brides | `MedianAgeAtFirstMarriageOfResidentCitizenGroomsAndBridesAnnual.csv` | SingStat | 1984 to 2024 |
+| Median age at first birth, resident births | `MedianAgeOfMothersAtFirstBirthAnnual.csv` | SingStat | 1990 to 2025 |
+| Ever-married resident females aged 40 to 49 by children born | `ResidentEverMarriedFemalesByAgeGroupAndNumberOfChildrenBornAnnual.csv` | SingStat | 1980 to 2025 |
+
+**Reading the plots:** Plot A shows timing moving later. Plot B shows completed family size shifting away from 3 or more children.
+
+```{r}
+#| label: insight-3-data
+first_marriage_wide <- read_singstat_wide(file.path(data_dir, "MedianAgeAtFirstMarriageOfResidentCitizenGroomsAndBridesAnnual.csv"))
+first_birth_wide <- read_singstat_wide(file.path(data_dir, "MedianAgeOfMothersAtFirstBirthAnnual.csv"))
+family_size_wide <- read_singstat_wide(file.path(data_dir, "ResidentEverMarriedFemalesByAgeGroupAndNumberOfChildrenBornAnnual.csv"))
+
+resident_brides_first_marriage <- first_marriage_wide |>
+  filter(data_series == "Resident Brides") |>
+  to_long_years() |>
+  transmute(year, median_age_first_marriage = value)
+
+resident_first_birth_age <- first_birth_wide |>
+  filter(data_series == "Median Age Of Mothers At First Birth For Resident Births") |>
+  to_long_years() |>
+  transmute(year, median_age_first_birth = value)
+
+family_timing <- bind_rows(
+  resident_brides_first_marriage |>
+    filter(year >= 1990, year <= 2024) |>
+    transmute(year, milestone = "First marriage", median_age = median_age_first_marriage),
+  resident_first_birth_age |>
+    filter(year >= 1990, year <= 2024) |>
+    transmute(year, milestone = "First birth", median_age = median_age_first_birth)
+) |>
+  mutate(milestone = factor(milestone, levels = c("First marriage", "First birth")))
+
+family_timing_labels <- family_timing |>
+  group_by(milestone) |>
+  filter(year %in% c(min(year), max(year))) |>
+  ungroup() |>
+  mutate(
+    label = paste0(year, ": ", round(median_age, 1)),
+    label_x = if_else(year == min(year), year - 0.8, year + 0.45),
+    label_y = case_when(
+      milestone == "First marriage" & year == min(year) ~ median_age - 0.25,
+      milestone == "First birth" & year == min(year) ~ median_age + 0.25,
+      milestone == "First marriage" ~ median_age - 0.18,
+      TRUE ~ median_age + 0.18
+    ),
+    hjust_label = if_else(year == min(year), 1, 0)
+  )
+
+family_timing_note <- family_timing |>
+  group_by(milestone) |>
+  summarise(
+    start_age = median_age[year == min(year)],
+    end_age = median_age[year == max(year)],
+    change_years = end_age - start_age,
+    .groups = "drop"
+  ) |>
+  mutate(label = paste0(milestone, " shifted +", round(change_years, 1), " years")) |>
+  summarise(note = paste(label, collapse = "\n")) |>
+  mutate(year = 1991, median_age = 32.3)
+
+family_size_tagged <- family_size_wide |>
+  mutate(
+    age_group = if_else(str_detect(data_series, "^\\d+\\s*-\\s*\\d+\\s+Years$"), data_series, NA_character_),
+    children_born = case_when(
+      data_series == "None" ~ "None",
+      data_series == "1 Child" ~ "1 child",
+      data_series == "2 Children" ~ "2 children",
+      data_series %in% c("3 Children", "4 Or More Children", "3 Or More Children") ~ "3 or more children",
+      TRUE ~ NA_character_
+    )
+  ) |>
+  tidyr::fill(age_group, .direction = "down")
+
+family_size_40_49 <- family_size_tagged |>
+  filter(str_detect(age_group, "^40\\s*-\\s*49"), !is.na(children_born)) |>
+  to_long_years() |>
+  transmute(year, children_born, females = value) |>
+  group_by(year) |>
+  mutate(
+    total_females = sum(females, na.rm = TRUE),
+    share_pct = females / total_females * 100
+  ) |>
+  ungroup()
+
+family_size_selected <- family_size_40_49 |>
+  filter(year %in% c(1990, 2000, 2010, 2020, 2025)) |>
+  group_by(year, children_born) |>
+  summarise(share_pct = sum(share_pct, na.rm = TRUE), .groups = "drop") |>
+  mutate(
+    children_born = factor(
+      children_born,
+      levels = c("3 or more children", "2 children", "1 child", "None")
+    ),
+    label = if_else(share_pct >= 7, paste0(round(share_pct, 0), "%"), "")
+  )
+```
+
+```{r}
+#| label: insight-3-plot-a
+ggplot(family_timing, aes(x = year, y = median_age, colour = milestone)) +
+  geom_line(linewidth = 1.25) +
+  geom_point(data = family_timing_labels, size = 3.4, show.legend = FALSE) +
+  geom_label(
+    data = family_timing_labels,
+    aes(x = label_x, y = label_y, label = label, hjust = hjust_label),
+    size = 3.4,
+    fontface = "bold",
+    label.size = 0.18,
+    fill = "white",
+    show.legend = FALSE
+  ) +
+  geom_text(
+    data = family_timing_note,
+    aes(x = year, y = median_age, label = note),
+    inherit.aes = FALSE,
+    hjust = 0,
+    size = 3.5,
+    fontface = "bold",
+    colour = "grey25"
+  ) +
+  scale_colour_manual(values = c("First marriage" = "#2F4B7C", "First birth" = "#7A5195")) +
+  scale_x_continuous(breaks = seq(1990, 2025, 5), expand = expansion(mult = c(0.09, 0.16))) +
+  scale_y_continuous(breaks = seq(25, 33, 1), limits = c(24.7, 32.7)) +
+  labs(
+    title = "Did marriage and first birth shift later?",
+    subtitle = "Median ages for resident brides and resident births, 1990 to 2024.",
+    x = "Year",
+    y = "Median age",
+    colour = NULL,
+    caption = "The two medians describe population timing. They do not track the same individuals."
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    legend.position = "bottom",
+    plot.title = element_text(face = "bold"),
+    panel.grid.minor = element_blank()
+  )
+```
+
+```{r}
+#| label: insight-3-plot-b
+ggplot(family_size_selected, aes(x = factor(year), y = share_pct, fill = children_born)) +
+  geom_col(width = 0.72, colour = "white", linewidth = 0.5) +
+  geom_text(
+    aes(label = label),
+    position = position_stack(vjust = 0.5),
+    size = 3.6,
+    fontface = "bold",
+    colour = "grey20"
+  ) +
+  scale_y_continuous(
+    labels = scales::label_percent(scale = 1),
+    breaks = seq(0, 100, 25),
+    expand = expansion(mult = c(0, 0.02))
+  ) +
+  scale_fill_manual(
+    values = c(
+      "3 or more children" = "#C94B55",
+      "2 children" = "#F2D98D",
+      "1 child" = "#74C69D",
+      "None" = "#6B7280"
+    )
+  ) +
+  labs(
+    title = "Did completed family size shift smaller?",
+    subtitle = "Share of ever-married resident females aged 40 to 49 by number of children born.",
+    x = "Year",
+    y = "Share of women aged 40 to 49",
+    fill = "Children born",
+    caption = "Selected benchmark years are shown to keep the family-size shift readable."
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    legend.position = "bottom",
+    panel.grid.major.x = element_blank(),
+    plot.title = element_text(face = "bold")
+  )
+```
+
+---
+
+## Insight 4: Recessions and policies as timing context
+
+**Question:** Did recessions and fertility policies explain sustained fertility changes?
+
+**Dataset used:**
+
+| Dataset | File | Source | Range |
+|---|---|---|---|
+| Total fertility rate | `BirthsAndFertilityRatesAnnual.csv` | SingStat | main view uses 1980 to 2025 |
+| Policy and recession markers | manual annotation table in this QMD | Team research | selected events |
+
+**Reading the plot:** The dashed line marks each policy year. Shaded bands show recession recovery windows within each policy panel. These markers give context only and should not be read as causal proof.
+
+```{r}
+#| label: insight-4-data
+fertility_wide <- read_singstat_wide(file.path(data_dir, "BirthsAndFertilityRatesAnnual.csv"))
+
+tfr_annual <- fertility_wide |>
+  filter(data_series == "Total Fertility Rate (TFR)") |>
+  to_long_years() |>
+  transmute(year, tfr = value)
+
+policy_events <- tribble(
+  ~event_year, ~event_label, ~policy_stance,
+  1972, "Stop at Two", "Anti-natalist",
+  1987, "Have Three or More", "Pro-natalist",
+  2001, "Baby Bonus", "Pro-natalist",
+  2013, "Marriage and Parenthood package", "Pro-natalist"
+)
+
+economic_shocks <- tribble(
+  ~shock_year, ~shock_label, ~severity, ~quarters_below_peak,
+  1985, "1985", "Severe", 6,
+  1998, "1998", "Severe", 6,
+  2001, "2001", "Moderate", 5,
+  2009, "2009", "Most severe", 6,
+  2020, "2020", "Most severe", 4
+)
+
+policy_window <- policy_events |>
+  crossing(relative_year = -5:10) |>
+  mutate(year = event_year + relative_year) |>
+  left_join(tfr_annual, by = "year") |>
+  mutate(
+    event_label = factor(
+      event_label,
+      levels = c("Stop at Two", "Have Three or More", "Baby Bonus", "Marriage and Parenthood package")
+    )
+  )
+
+shock_window <- policy_events |>
+  crossing(economic_shocks) |>
+  mutate(
+    relative_year = shock_year - event_year,
+    recovery_years = quarters_below_peak / 4,
+    relative_recovery_end = relative_year + recovery_years,
+    event_label = factor(
+      event_label,
+      levels = c("Stop at Two", "Have Three or More", "Baby Bonus", "Marriage and Parenthood package")
+    )
+  ) |>
+  filter(relative_year <= 10, relative_recovery_end >= -5) |>
+  mutate(
+    xmin = pmax(relative_year, -5),
+    xmax = pmin(relative_recovery_end, 10)
+  )
+```
+
+```{r}
+#| label: insight-4-figure
+ggplot(policy_window, aes(x = relative_year, y = tfr, colour = policy_stance)) +
+  geom_rect(
+    data = shock_window,
+    aes(xmin = xmin, xmax = xmax, ymin = -Inf, ymax = Inf, fill = severity),
+    inherit.aes = FALSE,
+    alpha = 0.24
+  ) +
+  geom_vline(xintercept = 0, linetype = "dashed", colour = "grey35") +
+  geom_line(linewidth = 1.1) +
+  geom_point(size = 2.3) +
+  geom_label(
+    data = shock_window,
+    aes(x = (xmin + xmax) / 2, y = Inf, label = shock_label),
+    inherit.aes = FALSE,
+    vjust = 1.2,
+    size = 2.8,
+    label.size = 0.15,
+    fill = "white",
+    colour = "grey35"
+  ) +
+  facet_wrap(~ event_label, scales = "free_y", ncol = 2) +
+  scale_colour_manual(values = c("Anti-natalist" = "#D95F02", "Pro-natalist" = "#1B9E77")) +
+  scale_fill_manual(
+    values = c(
+      "Most severe" = "#B2182B",
+      "Severe" = "#8073AC",
+      "Moderate" = "#D8DAEB"
+    )
+  ) +
+  scale_x_continuous(breaks = c(-5, 0, 5, 10)) +
+  labs(
+    title = "Did recessions and policies explain fertility changes?",
+    subtitle = "Dashed line = policy year. Shaded bands show economic recovery duration, with warmer colours indicating higher severity.",
+    x = "Years from policy",
+    y = "TFR",
+    colour = "Policy stance",
+    fill = "Economic shock severity",
+    caption = "Policy and recession markers provide context only. Timing is not causal proof."
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    legend.position = "bottom",
+    plot.title = element_text(face = "bold"),
+    strip.text = element_text(face = "bold")
+  )
+```
