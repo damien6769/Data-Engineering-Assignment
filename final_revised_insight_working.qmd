@@ -374,7 +374,562 @@ resident_first_birth_age <- first_birth_wide |>
   )
 ```
 
-## 2. Insight 1 plot: did policies and recessions explain sustained fertility changes?
+## 2. Insight 1 plot A: what reasons did couples give for not having more children?
+
+```{r}
+ggplot(survey_barriers_2021, aes(x = share_pct, y = reason, fill = barrier_type)) +
+  geom_col(width = 0.64) +
+  geom_text(
+    aes(label = paste0(share_pct, "%")),
+    hjust = -0.12,
+    size = 3.8,
+    fontface = "bold",
+    colour = "grey20"
+  ) +
+  scale_x_continuous(
+    labels = scales::label_percent(scale = 1),
+    limits = c(0, 72),
+    breaks = seq(0, 70, 10),
+    expand = expansion(mult = c(0, 0.02))
+  ) +
+  scale_fill_manual(
+    values = c("Cost or stress" = "#C94B55", "Other reason" = "#5A8BB8")
+  ) +
+  labs(
+    title = "What reasons did couples give for not having more children?",
+    subtitle = "Married respondents who do not want children or more children, 2021.",
+    x = "Selected reason among top three",
+    y = NULL,
+    fill = NULL,
+    caption = "Source: Marriage and Parenthood Survey 2021, Annex B, Table 3. Respondents could choose up to three reasons."
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    legend.position = "bottom",
+    panel.grid.major.y = element_blank(),
+    plot.title = element_text(face = "bold")
+  )
+```
+
+## 3. Insight 1 plot B: did cost, female LFPR and singlehood rise together?
+
+```{r}
+insight1_path <- cpi_annual |>
+  select(year, cpi_1990_100) |>
+  left_join(lfpr_female_25_49, by = "year") |>
+  left_join(singlehood_female_25_49, by = "year") |>
+  filter(
+    year >= 1990,
+    year <= 2025,
+    !is.na(cpi_1990_100),
+    !is.na(female_lfpr_25_49_pct),
+    !is.na(single_female_25_49_pct)
+  )
+
+insight1_path_labels <- insight1_path |>
+  filter(year %in% c(1990, 2000, 2010, 2020, 2025)) |>
+  mutate(
+    label_x = case_when(
+      year == 2000 ~ cpi_1990_100 - 1.3,
+      TRUE ~ cpi_1990_100
+    ),
+    label_y = case_when(
+      year == 2000 ~ female_lfpr_25_49_pct + 3.0,
+      TRUE ~ female_lfpr_25_49_pct + 2.2
+    )
+  )
+
+ggplot(
+  insight1_path,
+  aes(
+    x = cpi_1990_100,
+    y = female_lfpr_25_49_pct,
+    colour = single_female_25_49_pct
+  )
+) +
+  geom_path(aes(group = 1), colour = "grey65", linewidth = 1.0, alpha = 0.85) +
+  geom_point(size = 4.8, alpha = 0.95) +
+  geom_label(
+    data = insight1_path_labels,
+    aes(x = label_x, y = label_y, label = year),
+    size = 3.5,
+    fontface = "bold",
+    label.size = 0.18,
+    fill = "white",
+    show.legend = FALSE
+  ) +
+  scale_colour_gradient(
+    low = "#D8BFD8",
+    high = "#6A51A3",
+    labels = function(x) paste0(round(x, 1), "%")
+  ) +
+  scale_x_continuous(
+    breaks = seq(100, 220, 20),
+    expand = expansion(mult = c(0.05, 0.08))
+  ) +
+  scale_y_continuous(
+    labels = scales::label_percent(scale = 1),
+    breaks = seq(55, 90, 5),
+    expand = expansion(mult = c(0.05, 0.12))
+  ) +
+  labs(
+    title = "Did cost, female LFPR and singlehood move together?",
+    subtitle = "Moving right = higher CPI. Moving up = higher female LFPR. Darker points = higher singlehood.",
+    x = "Cost of living index, 1990 = 100",
+    y = "Female LFPR, ages 25 to 49",
+    colour = "Single women,\nages 25 to 49",
+    caption = "CPI is indexed to 1990 = 100. LFPR and singlehood are shown in their original percentage units. This shows co-movement, not causal proof."
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    legend.position = "bottom",
+    plot.title = element_text(face = "bold"),
+    panel.grid.minor = element_blank()
+  )
+```
+
+## 4. Insight 2 plot A: did births among younger women fall sharply?
+
+```{r}
+young_asfr_decade <- asfr_by_age |>
+  filter(age_group %in% c("15-19 Years", "20-24 Years", "25-29 Years")) |>
+  mutate(
+    decade_start = floor(year / 10) * 10,
+    decade = paste0(decade_start, "s")
+  ) |>
+  filter(decade_start >= 1960, decade_start <= 2020) |>
+  group_by(decade, decade_start, age_group) |>
+  summarise(mean_asfr = mean(asfr, na.rm = TRUE), .groups = "drop") |>
+  mutate(
+    age_group = factor(age_group, levels = rev(c("15-19 Years", "20-24 Years", "25-29 Years"))),
+    label = round(mean_asfr, 0)
+  )
+
+ggplot(young_asfr_decade, aes(x = decade, y = age_group, fill = mean_asfr)) +
+  geom_tile(colour = "white", linewidth = 0.8) +
+  geom_text(
+    aes(label = label),
+    size = 4,
+    fontface = "bold",
+    colour = "grey20"
+  ) +
+  scale_fill_gradient(
+    low = "#FFF7BC",
+    high = "#D95F0E",
+    labels = scales::label_number()
+  ) +
+  labs(
+    title = "Did births among younger women fall sharply?",
+    subtitle = "Average ASFR by decade. Darker cells mean higher fertility intensity.",
+    x = "Decade",
+    y = "Mother's age group",
+    fill = "Mean ASFR",
+    caption = "ASFR means age-specific fertility rate, measured as births per 1,000 women in that age group."
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    legend.position = "bottom",
+    panel.grid = element_blank(),
+    plot.title = element_text(face = "bold"),
+    axis.text.x = element_text(face = "bold"),
+    axis.text.y = element_text(face = "bold")
+  )
+```
+
+## 5. Insight 2 plot B: did professional work and female education rise as young births fell?
+
+```{r}
+asfr_15_19 <- asfr_by_age |>
+  filter(age_group == "15-19 Years") |>
+  transmute(year, asfr_15_19 = asfr)
+
+asfr_20_24 <- asfr_by_age |>
+  filter(age_group == "20-24 Years") |>
+  transmute(year, asfr_20_24 = asfr)
+
+insight2_change <- pmet_share |>
+  left_join(female_university_share_25_49, by = "year") |>
+  left_join(asfr_15_19, by = "year") |>
+  left_join(asfr_20_24, by = "year") |>
+  filter(year %in% c(2000, 2010, 2020, 2025)) |>
+  select(
+    year,
+    pmet_share_pct,
+    female_university_25_49_pct,
+    asfr_15_19,
+    asfr_20_24
+  ) |>
+  pivot_longer(
+    cols = -year,
+    names_to = "measure",
+    values_to = "value"
+  ) |>
+  mutate(
+    measure = recode(
+      measure,
+      pmet_share_pct = "PMET share",
+      female_university_25_49_pct = "Female university share",
+      asfr_15_19 = "ASFR, age 15 to 19",
+      asfr_20_24 = "ASFR, age 20 to 24"
+    ),
+    direction = if_else(
+      measure %in% c("PMET share", "Female university share"),
+      "Labour and education increased",
+      "Young-age births decreased"
+    ),
+    value_label = if_else(
+      measure %in% c("PMET share", "Female university share"),
+      paste0(round(value, 0), "%"),
+      paste0(round(value, 0))
+    ),
+    measure = factor(
+      measure,
+      levels = rev(c(
+        "PMET share",
+        "Female university share",
+        "ASFR, age 20 to 24",
+        "ASFR, age 15 to 19"
+      ))
+    )
+  ) |>
+  group_by(measure) |>
+  mutate(
+    base_value = value[year == 2000],
+    change_from_2000 = value - base_value,
+    encoded_change = if_else(
+      direction == "Young-age births decreased",
+      base_value - value,
+      value - base_value
+    )
+  ) |>
+  ungroup() |>
+  mutate(
+    trend_label = case_when(
+      year == 2000 ~ "baseline",
+      direction == "Labour and education increased" ~ paste0("+", round(change_from_2000, 0)),
+      direction == "Young-age births decreased" ~ paste0(round(change_from_2000, 0))
+    )
+  )
+
+ggplot(insight2_change, aes(x = factor(year), y = measure, fill = encoded_change)) +
+  geom_tile(colour = "white", linewidth = 0.8, alpha = 1) +
+  geom_text(
+    aes(label = paste0(value_label, "\n", trend_label)),
+    size = 4,
+    fontface = "bold",
+    colour = "grey15"
+  ) +
+  facet_grid(direction ~ ., scales = "free_y", space = "free_y") +
+  scale_fill_gradient(
+    low = "#DDEAF6",
+    high = "#2B8CBE",
+    labels = scales::label_number()
+  ) +
+  labs(
+    title = "Did labour and education rise while young-age births fell?",
+    subtitle = "Darker cells show larger change from 2000 within each row. Top number = actual value, bottom number = change from 2000.",
+    x = "Year",
+    y = NULL,
+    fill = "Change\nfrom 2000",
+    caption = "PMET and education are percentages. ASFR values are births per 1,000 women. Colour intensity compares change within each row, not equivalent units."
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    legend.position = "bottom",
+    panel.grid = element_blank(),
+    plot.title = element_text(face = "bold"),
+    strip.text.y = element_text(face = "bold", angle = 0),
+    axis.text.x = element_text(face = "bold"),
+    axis.text.y = element_text(face = "bold")
+  )
+```
+
+## 6. Insight 2 plot C: did young adulthood shift toward education and professional work?
+
+```{r}
+insight2_evidence_board <- pmet_share |>
+  left_join(female_university_share_25_49, by = "year") |>
+  left_join(asfr_15_19, by = "year") |>
+  left_join(asfr_20_24, by = "year") |>
+  filter(year >= 2000, year <= 2025) |>
+  select(
+    year,
+    pmet_share_pct,
+    female_university_25_49_pct,
+    asfr_20_24,
+    asfr_15_19
+  ) |>
+  pivot_longer(
+    cols = -year,
+    names_to = "measure",
+    values_to = "value"
+  ) |>
+  filter(!is.na(value)) |>
+  mutate(
+    measure = recode(
+      measure,
+      pmet_share_pct = "Professional jobs increased",
+      female_university_25_49_pct = "Female university attainment increased",
+      asfr_20_24 = "Births age 20 to 24 fell",
+      asfr_15_19 = "Births age 15 to 19 nearly disappeared"
+    ),
+    measure = factor(
+      measure,
+      levels = c(
+        "Professional jobs increased",
+        "Female university attainment increased",
+        "Births age 20 to 24 fell",
+        "Births age 15 to 19 nearly disappeared"
+      )
+    ),
+    group = if_else(
+      measure %in% c("Professional jobs increased", "Female university attainment increased"),
+      "Labour and education",
+      "Young-age births"
+    )
+  )
+
+insight2_evidence_labels <- insight2_evidence_board |>
+  group_by(measure) |>
+  filter(year %in% range(year)) |>
+  ungroup() |>
+  mutate(
+    label = if_else(
+      group == "Labour and education",
+      paste0(round(value, 0), "%"),
+      paste0(round(value, 0))
+    ),
+    label_x = if_else(year == min(year), year - 0.7, year + 0.7),
+    hjust_label = if_else(year == min(year), 1, 0)
+  )
+
+ggplot(insight2_evidence_board, aes(x = year, y = value, fill = group, colour = group)) +
+  geom_area(alpha = 0.28, linewidth = 0) +
+  geom_line(linewidth = 1.15) +
+  geom_point(
+    data = insight2_evidence_labels,
+    size = 2.8,
+    show.legend = FALSE
+  ) +
+  geom_text(
+    data = insight2_evidence_labels,
+    aes(x = label_x, label = label, hjust = hjust_label),
+    size = 3.4,
+    fontface = "bold",
+    colour = "grey20",
+    show.legend = FALSE
+  ) +
+  facet_wrap(~ measure, scales = "free_y", ncol = 2) +
+  scale_x_continuous(
+    breaks = c(2000, 2010, 2020, 2025),
+    expand = expansion(mult = c(0.12, 0.16))
+  ) +
+  scale_fill_manual(
+    values = c("Labour and education" = "#8ECAE6", "Young-age births" = "#FDB863")
+  ) +
+  scale_colour_manual(
+    values = c("Labour and education" = "#2B8CBE", "Young-age births" = "#D95F0E")
+  ) +
+  labs(
+    title = "Did young adulthood shift toward education and professional work?",
+    subtitle = "Each panel keeps its own unit. The top pattern rises while young-age ASFR falls.",
+    x = "Year",
+    y = NULL,
+    fill = NULL,
+    colour = NULL,
+    caption = "PMET and education are percentages. ASFR values are births per 1,000 women."
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    legend.position = "bottom",
+    strip.text = element_text(face = "bold", hjust = 0),
+    plot.title = element_text(face = "bold"),
+    panel.grid.minor = element_blank()
+  )
+```
+
+## 7. Insight 3 plot A: did marriage and first birth shift later?
+
+```{r}
+family_timing <- bind_rows(
+  resident_brides_first_marriage |>
+    filter(year >= 1990, year <= 2024) |>
+    transmute(
+      year,
+      milestone = "First marriage",
+      median_age = median_age_first_marriage
+    ),
+  resident_first_birth_age |>
+    filter(year >= 1990, year <= 2024) |>
+    transmute(
+      year,
+      milestone = "First birth",
+      median_age = median_age_first_birth
+    )
+) |>
+  mutate(
+    milestone = factor(
+      milestone,
+      levels = c("First marriage", "First birth")
+    )
+  )
+
+family_timing_labels <- family_timing |>
+  group_by(milestone) |>
+  filter(year %in% c(min(year), max(year))) |>
+  ungroup() |>
+  mutate(
+    label = paste0(year, ": ", round(median_age, 1)),
+    label_x = case_when(
+      year == min(year) ~ year - 0.8,
+      TRUE ~ year + 0.45
+    ),
+    label_y = case_when(
+      milestone == "First marriage" & year == min(year) ~ median_age - 0.25,
+      milestone == "First birth" & year == min(year) ~ median_age + 0.25,
+      milestone == "First marriage" ~ median_age - 0.18,
+      TRUE ~ median_age + 0.18
+    ),
+    hjust_label = if_else(year == min(year), 1, 0)
+  )
+
+family_timing_change <- family_timing |>
+  group_by(milestone) |>
+  summarise(
+    start_age = median_age[year == min(year)],
+    end_age = median_age[year == max(year)],
+    change_years = end_age - start_age,
+    .groups = "drop"
+  ) |>
+  mutate(
+    label = paste0(milestone, " shifted +", round(change_years, 1), " years")
+  )
+
+family_timing_note <- family_timing_change |>
+  summarise(note = paste(label, collapse = "\n")) |>
+  mutate(
+    year = 1991,
+    median_age = 32.3
+  )
+
+ggplot(family_timing, aes(x = year, y = median_age, colour = milestone)) +
+  geom_line(linewidth = 1.25) +
+  geom_point(
+    data = family_timing_labels,
+    size = 3.4,
+    show.legend = FALSE
+  ) +
+  geom_label(
+    data = family_timing_labels,
+    aes(x = label_x, y = label_y, label = label, hjust = hjust_label),
+    size = 3.4,
+    fontface = "bold",
+    label.size = 0.18,
+    fill = "white",
+    show.legend = FALSE
+  ) +
+  geom_text(
+    data = family_timing_note,
+    aes(x = year, y = median_age, label = note),
+    inherit.aes = FALSE,
+    hjust = 0,
+    size = 3.5,
+    fontface = "bold",
+    colour = "grey25"
+  ) +
+  scale_colour_manual(
+    values = c(
+      "First marriage" = "#2F4B7C",
+      "First birth" = "#7A5195"
+    )
+  ) +
+  scale_x_continuous(
+    breaks = seq(1990, 2025, 5),
+    expand = expansion(mult = c(0.09, 0.16))
+  ) +
+  scale_y_continuous(
+    breaks = seq(25, 33, 1),
+    limits = c(24.7, 32.7)
+  ) +
+  labs(
+    title = "Did marriage and first birth shift later?",
+    subtitle = "Median ages for resident brides and resident births, 1990 to 2024.",
+    x = "Year",
+    y = "Median age",
+    colour = NULL,
+    caption = "The two medians describe population timing. They do not track the same individuals."
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    legend.position = "bottom",
+    plot.title = element_text(face = "bold"),
+    panel.grid.minor = element_blank()
+  )
+```
+
+## 8. Insight 3 plot B: did completed family size shift smaller?
+
+```{r}
+family_size_selected <- family_size_40_49 |>
+  mutate(
+    family_size_group = case_when(
+      children_born == "None" ~ "None",
+      children_born == "1 Child" ~ "1 child",
+      children_born == "2 Children" ~ "2 children",
+      children_born %in% c("3 Children", "4 Or More Children") ~ "3 or more children",
+      TRUE ~ NA_character_
+    )
+  ) |>
+  filter(!is.na(family_size_group), year %in% c(1990, 2000, 2010, 2020, 2025)) |>
+  group_by(year, family_size_group) |>
+  summarise(share_pct = sum(share_pct, na.rm = TRUE), .groups = "drop") |>
+  mutate(
+    family_size_group = factor(
+      family_size_group,
+      levels = c("3 or more children", "2 children", "1 child", "None")
+    ),
+    label = if_else(share_pct >= 7, paste0(round(share_pct, 0), "%"), "")
+  )
+
+ggplot(family_size_selected, aes(x = factor(year), y = share_pct, fill = family_size_group)) +
+  geom_col(width = 0.72, colour = "white", linewidth = 0.5) +
+  geom_text(
+    aes(label = label),
+    position = position_stack(vjust = 0.5),
+    size = 3.6,
+    fontface = "bold",
+    colour = "grey20"
+  ) +
+  scale_y_continuous(
+    labels = scales::label_percent(scale = 1),
+    breaks = seq(0, 100, 25),
+    expand = expansion(mult = c(0, 0.02))
+  ) +
+  scale_fill_manual(
+    values = c(
+      "3 or more children" = "#C94B55",
+      "2 children" = "#F2D98D",
+      "1 child" = "#74C69D",
+      "None" = "#6B7280"
+    )
+  ) +
+  labs(
+    title = "Did completed family size shift smaller?",
+    subtitle = "Share of ever-married resident females aged 40 to 49 by number of children born.",
+    x = "Year",
+    y = "Share of women aged 40 to 49",
+    fill = "Children born",
+    caption = "Selected benchmark years are shown to keep the family-size shift readable."
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    legend.position = "bottom",
+    panel.grid.major.x = element_blank(),
+    plot.title = element_text(face = "bold")
+  )
+```
+
+## 9. Insight 4 plot: did recessions and policies explain fertility changes?
 
 ```{r}
 policy_events <- tribble(
@@ -459,497 +1014,18 @@ ggplot(policy_window, aes(x = relative_year, y = tfr, colour = policy_stance)) +
   ) +
   scale_x_continuous(breaks = c(-5, 0, 5, 10)) +
   labs(
-    title = "Did policies and recessions explain sustained fertility changes?",
+    title = "Did recessions and policies explain fertility changes?",
     subtitle = "Dashed line = policy year. Shaded bands show economic recovery duration, with warmer colours indicating higher severity.",
     x = "Years from policy",
     y = "TFR",
     colour = "Policy stance",
     fill = "Economic shock severity",
-    caption = "Band width is based on quarters below the previous GDP peak. Timing is context only, not causal proof."
+    caption = "Policy and recession markers provide context only. Timing is not causal proof."
   ) +
   theme_minimal(base_size = 13) +
   theme(
     legend.position = "bottom",
     plot.title = element_text(face = "bold"),
     strip.text = element_text(face = "bold")
-  )
-```
-
-## 3. Insight 2 plot: did female LFPR rise with demand for professional work?
-
-```{r}
-pmet_lfpr <- pmet_share |>
-  left_join(lfpr_female_25_49, by = "year") |>
-  filter(
-    year >= 2000,
-    year <= 2025,
-    !is.na(pmet_share_pct),
-    !is.na(female_lfpr_25_49_pct)
-  ) |>
-  mutate(decade = paste0(floor(year / 10) * 10, "s"))
-
-pmet_lfpr_labels <- pmet_lfpr |>
-  filter(year %in% c(2000, 2010, 2020, 2025))
-
-ggplot(
-  pmet_lfpr,
-  aes(
-    x = pmet_share_pct,
-    y = female_lfpr_25_49_pct,
-    colour = year
-  )
-) +
-  geom_path(aes(group = 1), colour = "grey65", linewidth = 0.9, alpha = 0.85) +
-  geom_point(size = 4.6, alpha = 0.95) +
-  geom_label(
-    data = pmet_lfpr_labels,
-    aes(label = year),
-    nudge_y = 1.0,
-    size = 3.5,
-    fontface = "bold",
-    label.size = 0.18,
-    fill = "white",
-    show.legend = FALSE
-  ) +
-  scale_x_continuous(
-    labels = scales::label_percent(scale = 1),
-    limits = c(40, 70),
-    breaks = seq(40, 70, 5)
-  ) +
-  scale_y_continuous(
-    labels = scales::label_percent(scale = 1),
-    limits = c(65, 90),
-    breaks = seq(65, 90, 5)
-  ) +
-  scale_colour_gradient(
-    low = "#9ECAE1",
-    high = "#08519C",
-    breaks = c(2000, 2010, 2020, 2025)
-  ) +
-  labs(
-    title = "Did female LFPR rise with demand for professional work?",
-    subtitle = "Moving right = higher PMET share. Moving up = higher female LFPR among women aged 25 to 49.",
-    x = "PMET share of employed residents",
-    y = "Resident female LFPR, ages 25 to 49",
-    colour = "Year",
-    caption = "PMET refers to managers, professionals, associate professionals and technicians. This is descriptive context, not causal proof."
-  ) +
-  theme_minimal(base_size = 13) +
-  theme(
-    legend.position = "bottom",
-    plot.title = element_text(face = "bold"),
-    panel.grid.minor = element_blank()
-  )
-```
-
-## 4. Insight 3 plot A: did higher female education coincide with fewer births in the early twenties?
-
-```{r}
-asfr_20_24 <- asfr_by_age |>
-  filter(age_group == "20-24 Years") |>
-  transmute(year, asfr_20_24 = asfr)
-
-education_timing <- female_university_share_25_49 |>
-  left_join(asfr_20_24, by = "year") |>
-  left_join(resident_brides_first_marriage, by = "year") |>
-  left_join(resident_first_birth_age, by = "year") |>
-  filter(
-    year >= 2000,
-    year <= 2025,
-    !is.na(female_university_25_49_pct)
-  ) |>
-  mutate(decade = paste0(floor(year / 10) * 10, "s"))
-
-education_asfr <- education_timing |>
-  filter(!is.na(asfr_20_24))
-
-education_asfr_labels <- education_asfr |>
-  filter(year %in% c(2000, 2010, 2020, 2025))
-
-ggplot(
-  education_asfr,
-  aes(
-    x = female_university_25_49_pct,
-    y = asfr_20_24,
-    colour = year
-  )
-) +
-  geom_path(aes(group = 1), colour = "grey65", linewidth = 0.9, alpha = 0.85) +
-  geom_point(size = 4.6, alpha = 0.95) +
-  geom_label(
-    data = education_asfr_labels,
-    aes(label = year),
-    nudge_y = 8,
-    size = 3.5,
-    fontface = "bold",
-    label.size = 0.18,
-    fill = "white",
-    show.legend = FALSE
-  ) +
-  scale_x_continuous(
-    labels = scales::label_percent(scale = 1),
-    breaks = seq(15, 60, 5)
-  ) +
-  scale_y_continuous(
-    breaks = seq(0, 80, 10),
-    expand = expansion(mult = c(0.05, 0.15))
-  ) +
-  scale_colour_gradient(
-    low = "#FDD49E",
-    high = "#D95F0E",
-    breaks = c(2000, 2010, 2020, 2025)
-  ) +
-  labs(
-    title = "Did higher female education coincide with fewer births in the early twenties?",
-    subtitle = "Moving right = higher female university share. Moving down = lower ASFR among women aged 20 to 24.",
-    x = "Female university share, ages 25 to 49",
-    y = "ASFR, women aged 20 to 24",
-    colour = "Year",
-    caption = "ASFR means age-specific fertility rate. This supports the timing-shift story, not direct causal proof."
-  ) +
-  theme_minimal(base_size = 13) +
-  theme(
-    legend.position = "bottom",
-    plot.title = element_text(face = "bold"),
-    panel.grid.minor = element_blank()
-  )
-```
-
-## 5. Insight 3 plot B: did demand for professional work rise alongside female education?
-
-```{r}
-education_pmet <- pmet_share |>
-  left_join(female_university_share_25_49, by = "year") |>
-  filter(
-    year >= 2000,
-    year <= 2025,
-    !is.na(pmet_share_pct),
-    !is.na(female_university_25_49_pct)
-  )
-
-education_pmet_labels <- education_pmet |>
-  filter(year %in% c(2000, 2010, 2020, 2025))
-
-ggplot(
-  education_pmet,
-  aes(
-    x = pmet_share_pct,
-    y = female_university_25_49_pct,
-    colour = year
-  )
-) +
-  geom_path(aes(group = 1), colour = "grey65", linewidth = 0.9, alpha = 0.85) +
-  geom_point(size = 4.6, alpha = 0.95) +
-  geom_label(
-    data = education_pmet_labels,
-    aes(label = year),
-    nudge_y = 2.0,
-    size = 3.5,
-    fontface = "bold",
-    label.size = 0.18,
-    fill = "white",
-    show.legend = FALSE
-  ) +
-  scale_x_continuous(
-    labels = scales::label_percent(scale = 1),
-    limits = c(40, 70),
-    breaks = seq(40, 70, 5)
-  ) +
-  scale_y_continuous(
-    labels = scales::label_percent(scale = 1),
-    breaks = seq(15, 60, 5),
-    expand = expansion(mult = c(0.05, 0.15))
-  ) +
-  scale_colour_gradient(
-    low = "#BFD3E6",
-    high = "#08519C",
-    breaks = c(2000, 2010, 2020, 2025)
-  ) +
-  labs(
-    title = "Did demand for professional work rise alongside female education?",
-    subtitle = "Moving right = higher PMET share. Moving up = higher female university share among women aged 25 to 49.",
-    x = "PMET share of employed residents",
-    y = "Female university share, ages 25 to 49",
-    colour = "Year",
-    caption = "PMET share is used as a proxy for a more professional labour market. This is descriptive context, not causal proof."
-  ) +
-  theme_minimal(base_size = 13) +
-  theme(
-    legend.position = "bottom",
-    plot.title = element_text(face = "bold"),
-    panel.grid.minor = element_blank()
-  )
-```
-
-## 6. Insight 3 plot C: did higher female education coincide with later marriage and first birth?
-
-```{r}
-education_timing_long <- bind_rows(
-  education_timing |>
-    transmute(
-      year,
-      female_university_25_49_pct,
-      measure = "First marriage age",
-      median_age = median_age_first_marriage
-    ),
-  education_timing |>
-    transmute(
-      year,
-      female_university_25_49_pct,
-      measure = "First birth age",
-      median_age = median_age_first_birth
-    )
-) |>
-  filter(!is.na(median_age), !is.na(female_university_25_49_pct)) |>
-  mutate(
-    measure = factor(measure, levels = c("First marriage age", "First birth age"))
-  )
-
-education_timing_labels <- education_timing_long |>
-  group_by(measure) |>
-  filter(year %in% c(min(year), max(year))) |>
-  ungroup() |>
-  mutate(
-    label = paste0(year, ": ", round(median_age, 1)),
-    label_y = if_else(measure == "First birth age", median_age + 0.18, median_age - 0.18),
-    hjust_label = if_else(year == min(year), 1.08, -0.08)
-  )
-
-ggplot(
-  education_timing_long,
-  aes(
-    x = female_university_25_49_pct,
-    y = median_age,
-    colour = measure
-  )
-) +
-  geom_path(aes(group = measure), linewidth = 1.15, alpha = 0.9) +
-  geom_point(size = 3.4, alpha = 0.95) +
-  geom_label(
-    data = education_timing_labels,
-    aes(y = label_y, label = label, hjust = hjust_label),
-    size = 3.3,
-    fontface = "bold",
-    label.size = 0.18,
-    fill = "white",
-    show.legend = FALSE
-  ) +
-  scale_x_continuous(
-    labels = scales::label_percent(scale = 1),
-    breaks = seq(15, 60, 5),
-    expand = expansion(mult = c(0.18, 0.18))
-  ) +
-  scale_y_continuous(
-    breaks = seq(25, 33, 1),
-    expand = expansion(mult = c(0.08, 0.12))
-  ) +
-  scale_colour_manual(
-    values = c("First marriage age" = "#2F4B7C", "First birth age" = "#7A5195")
-  ) +
-  labs(
-    title = "Did higher female education coincide with later marriage and first birth?",
-    subtitle = "Moving right = higher female university share. Moving up = later family formation.",
-    x = "Female university share, ages 25 to 49",
-    y = "Median age",
-    colour = NULL,
-    caption = "This describes timing patterns. It does not prove education directly caused later marriage or birth."
-  ) +
-  theme_minimal(base_size = 13) +
-  theme(
-    legend.position = "bottom",
-    plot.title = element_text(face = "bold"),
-    panel.grid.minor = element_blank()
-  )
-```
-
-## 7. Insight 4 plot A: did family formation shift later while large families became less common?
-
-```{r}
-large_family_share <- family_size_40_49 |>
-  mutate(
-    family_size_group = case_when(
-      children_born %in% c("3 Children", "4 Or More Children") ~ "3 or more children",
-      TRUE ~ "Other"
-    )
-  ) |>
-  filter(family_size_group == "3 or more children") |>
-  group_by(year) |>
-  summarise(large_family_share_pct = sum(share_pct, na.rm = TRUE), .groups = "drop")
-
-family_formation_timeline <- bind_rows(
-  resident_brides_first_marriage |>
-    filter(year >= 1990, year <= 2025) |>
-    transmute(
-      year,
-      indicator = "First marriage age",
-      value = median_age_first_marriage,
-      unit = "years"
-    ),
-  resident_first_birth_age |>
-    filter(year >= 1990, year <= 2025) |>
-    transmute(
-      year,
-      indicator = "First birth age",
-      value = median_age_first_birth,
-      unit = "years"
-    ),
-  singlehood_female_25_49 |>
-    filter(year >= 1990, year <= 2025) |>
-    transmute(
-      year,
-      indicator = "Single women aged 25 to 49",
-      value = single_female_25_49_pct,
-      unit = "%"
-    ),
-  large_family_share |>
-    filter(year >= 1990, year <= 2025) |>
-    transmute(
-      year,
-      indicator = "Ever-married women aged 40 to 49 with 3+ children",
-      value = large_family_share_pct,
-      unit = "%"
-    )
-) |>
-  mutate(
-    indicator = factor(
-      indicator,
-      levels = c(
-        "First marriage age",
-        "First birth age",
-        "Single women aged 25 to 49",
-        "Ever-married women aged 40 to 49 with 3+ children"
-      )
-    ),
-    direction = if_else(
-      indicator == "Ever-married women aged 40 to 49 with 3+ children",
-      "Larger families became less common",
-      "Family formation shifted later"
-    )
-  )
-
-timeline_labels <- family_formation_timeline |>
-  group_by(indicator) |>
-  filter(year == max(year)) |>
-  ungroup() |>
-  mutate(
-    label = if_else(
-      unit == "%",
-      paste0(round(value, 1), "%"),
-      paste0(round(value, 1), " yrs")
-    ),
-    label = paste0(year, ": ", label),
-    label_y = case_when(
-      indicator == "First marriage age" ~ value + 0.28,
-      indicator == "First birth age" ~ value - 0.28,
-      indicator == "Single women aged 25 to 49" ~ value + 0.85,
-      indicator == "Ever-married women aged 40 to 49 with 3+ children" ~ value + 1.25,
-      TRUE ~ value
-    )
-  )
-
-ggplot(family_formation_timeline, aes(x = year, y = value, colour = direction)) +
-  geom_line(linewidth = 1.15) +
-  geom_point(
-    data = timeline_labels,
-    fill = "white",
-    shape = 21,
-    size = 3.3,
-    stroke = 1
-  ) +
-  geom_text(
-    data = timeline_labels,
-    aes(y = label_y, label = label),
-    hjust = 0,
-    nudge_x = 0.35,
-    size = 3.3,
-    fontface = "bold",
-    colour = "grey25",
-    show.legend = FALSE
-  ) +
-  facet_wrap(~ indicator, scales = "free_y", ncol = 1) +
-  scale_colour_manual(
-    values = c(
-      "Family formation shifted later" = "#2F4B7C",
-      "Larger families became less common" = "#C94B55"
-    )
-  ) +
-  scale_x_continuous(
-    breaks = seq(1990, 2025, 5),
-    expand = expansion(mult = c(0.04, 0.18))
-  ) +
-  labs(
-    title = "Did family formation shift later while large families became less common?",
-    subtitle = "All panels use the same time axis. Values use separate y-scales because the units differ.",
-    x = "Year",
-    y = NULL,
-    colour = NULL,
-    caption = "The timeline shows connected descriptive patterns, not direct causality."
-  ) +
-  theme_minimal(base_size = 13) +
-  theme(
-    legend.position = "none",
-    strip.text = element_text(face = "bold", hjust = 0),
-    plot.title = element_text(face = "bold"),
-    panel.grid.minor = element_blank()
-  )
-```
-
-## 8. Insight 4 plot B: which family sizes became more or less common?
-
-```{r}
-family_change <- family_size_40_49 |>
-  mutate(
-    family_size_group = case_when(
-      children_born == "None" ~ "None",
-      children_born == "1 Child" ~ "1 child",
-      children_born == "2 Children" ~ "2 children",
-      children_born %in% c("3 Children", "4 Or More Children") ~ "3 or more children",
-      TRUE ~ NA_character_
-    )
-  ) |>
-  filter(!is.na(family_size_group), year %in% c(1980, 2025)) |>
-  group_by(year, family_size_group) |>
-  summarise(share_pct = sum(share_pct, na.rm = TRUE), .groups = "drop") |>
-  pivot_wider(names_from = year, values_from = share_pct, names_prefix = "share_") |>
-  mutate(
-    change_pp = share_2025 - share_1980,
-    direction = if_else(change_pp >= 0, "Became more common", "Became less common"),
-    label = paste0(if_else(change_pp >= 0, "+", ""), round(change_pp, 1), " pp"),
-    family_size_group = factor(
-      family_size_group,
-      levels = c("None", "1 child", "2 children", "3 or more children")
-    )
-  )
-
-ggplot(family_change, aes(x = change_pp, y = family_size_group, fill = direction)) +
-  geom_vline(xintercept = 0, colour = "grey45") +
-  geom_col(width = 0.66) +
-  geom_text(
-    aes(
-      label = label,
-      hjust = if_else(change_pp >= 0, -0.12, 1.12)
-    ),
-    size = 3.8,
-    fontface = "bold",
-    colour = "grey20"
-  ) +
-  scale_x_continuous(
-    labels = function(x) paste0(x, " pp"),
-    expand = expansion(mult = c(0.18, 0.18))
-  ) +
-  scale_fill_manual(values = c("Became more common" = "#1B9E77", "Became less common" = "#C94B55")) +
-  labs(
-    title = "Which family sizes became more or less common?",
-    subtitle = "Change in share of ever-married resident females aged 40 to 49, 1980 to 2025.",
-    x = "Change in share, percentage points",
-    y = "Number of children born",
-    fill = NULL,
-    caption = "This measures near-completed family size."
-  ) +
-  theme_minimal(base_size = 13) +
-  theme(
-    legend.position = "bottom",
-    panel.grid.major.y = element_blank(),
-    plot.title = element_text(face = "bold")
   )
 ```
