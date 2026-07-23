@@ -684,668 +684,964 @@ p_insight4 <- ggplot(policy_window, aes(x = relative_year, y = tfr, colour = pol
 
 ## Cover {.cover-slide background-image="images/cover-bg.jpg" background-size="cover" background-position="center" background-opacity="0.4"}
 
-<div class="cover-content">
+:::::: cover-content
+::: cover-kicker
+AAI1001 - DATA ENGINEERING & VISUALIZATION
+:::
 
-<div class="cover-kicker">AAI1001 - DATA ENGINEERING &amp; VISUALIZATION</div>
+::: cover-title
+Re-examining Singapore's<br>Declining Fertility
+:::
 
-<div class="cover-title">Re-examining Singapore's<br><span>Declining Fertility</span></div>
+::: cover-subtitle
+A 1980-2025 view of fertility timing, female labour-force participation,
+education, policy context and family formation.
+:::
+::::::
 
-<div class="cover-subtitle">A 1980-2025 view of fertility timing, female labour-force participation, education, policy context and family formation.</div>
+::: cover-team
+<strong>Team 11</strong><br> Levl Lim Jing Qiang (2501118) - Damien Tan
+Qing Xun (2503046)<br> Angel Zhang XinYu (2503541) - Gador Sophia Helen
+Santiago (2503845) - Yap Suen Hong (2500770)<br>
+:::
 
-</div>
+::::: cover-stat
+::: cover-stat-number
+1980-2025
+:::
 
-<div class="cover-team">
-  <strong>Team 11</strong><br>
-  Levl Lim Jing Qiang (2501118) - Damien Tan Qing Xun (2503046)<br>
-  Angel Zhang XinYu (2503541) - Gador Sophia Helen Santiago (2503845) - Yap Suen Hong (2500770)<br>
-</div>
+::: cover-stat-label
+45 years of Singapore fertility change
+:::
+:::::
 
-<div class="cover-stat">
-  <div class="cover-stat-number">1980-2025</div>
-  <div class="cover-stat-label">45 years of Singapore fertility change</div>
-</div>
-
----
+------------------------------------------------------------------------
 
 ## Contents {.toc-slide}
 
-<div class="contents-wrapper">
+::::::::::::::::::::::::::::::::::::::::::: contents-wrapper
+:::::: contents-heading
+::: contents-kicker
+Presentation Roadmap
+:::
 
-<div class="contents-heading">
-<div class="contents-kicker">Presentation Roadmap</div>
-<div class="contents-title">How we explain the decline</div>
-<div class="contents-subtitle">
-We start from the original chart, rebuild the visualisation, then use four focused insights to explain the patterns behind Singapore's fertility decline.
-</div>
-</div>
+::: contents-title
+How we explain the decline
+:::
 
-<div class="toc-timeline">
+::: contents-subtitle
+We start from the original chart, rebuild the visualisation, then use
+four focused insights to explain the patterns behind Singapore's
+fertility decline.
+:::
+::::::
 
-<div class="timeline-item">
-<div class="timeline-number">01</div>
-<div class="timeline-text">
-<div class="timeline-title">Original Visualisation and Story</div>
-<div class="timeline-description">What the CNA chart shows and misses</div>
-</div>
-</div>
+:::::::::::::::::::::::::::::::::::::: toc-timeline
+::::::: timeline-item
+::: timeline-number
+01
+:::
 
-<div class="timeline-item">
-<div class="timeline-number">02</div>
-<div class="timeline-text">
-<div class="timeline-title">Critique and Improvements</div>
-<div class="timeline-description">How we redesigned the scope</div>
-</div>
-</div>
+::::: timeline-text
+::: timeline-title
+Original Visualisation and Story
+:::
 
-<div class="timeline-item">
-<div class="timeline-number">03</div>
-<div class="timeline-text">
-<div class="timeline-title">Data Curation and Sources</div>
-<div class="timeline-description">Official datasets used</div>
-</div>
-</div>
+::: timeline-description
+What the CNA chart shows and misses
+:::
+:::::
+:::::::
 
-<div class="timeline-item">
-<div class="timeline-number">04</div>
-<div class="timeline-text">
-<div class="timeline-title">Data Engineering Workflow</div>
-<div class="timeline-description">Raw data to visualisation-ready tables</div>
-</div>
-</div>
+::::::: timeline-item
+::: timeline-number
+02
+:::
 
-<div class="timeline-item">
-<div class="timeline-number">05</div>
-<div class="timeline-text">
-<div class="timeline-title">Final Improved Visualisation</div>
-<div class="timeline-description">The main 1980-2025 fertility view</div>
-</div>
-</div>
+::::: timeline-text
+::: timeline-title
+Critique and Improvements
+:::
 
-<div class="timeline-item timeline-final">
-<div class="timeline-number">06</div>
-<div class="timeline-text">
-<div class="timeline-title">Data Analysis and Insights</div>
-<div class="timeline-description">Four supporting patterns behind the main visual</div>
-</div>
-</div>
+::: timeline-description
+How we redesigned the scope
+:::
+:::::
+:::::::
 
-<div class="timeline-item timeline-final">
-<div class="timeline-number">07</div>
-<div class="timeline-text">
-<div class="timeline-title">Conclusion</div>
-<div class="timeline-description">What the whole story means for fertility decline</div>
-</div>
-</div>
+::::::: timeline-item
+::: timeline-number
+03
+:::
 
-</div>
-</div>
+::::: timeline-text
+::: timeline-title
+Data Curation and Sources
+:::
 
----
+::: timeline-description
+Official datasets used
+:::
+:::::
+:::::::
+
+::::::: timeline-item
+::: timeline-number
+04
+:::
+
+::::: timeline-text
+::: timeline-title
+Data Engineering Workflow
+:::
+
+::: timeline-description
+Raw data to visualisation-ready tables
+:::
+:::::
+:::::::
+
+::::::: timeline-item
+::: timeline-number
+05
+:::
+
+::::: timeline-text
+::: timeline-title
+Final Improved Visualisation
+:::
+
+::: timeline-description
+The main 1980-2025 fertility view
+:::
+:::::
+:::::::
+
+::::::: {.timeline-item .timeline-final}
+::: timeline-number
+06
+:::
+
+::::: timeline-text
+::: timeline-title
+Data Analysis and Insights
+:::
+
+::: timeline-description
+Four supporting patterns behind the main visual
+:::
+:::::
+:::::::
+
+::::::: {.timeline-item .timeline-final}
+::: timeline-number
+07
+:::
+
+::::: timeline-text
+::: timeline-title
+Conclusion
+:::
+
+::: timeline-description
+What the whole story means for fertility decline
+:::
+:::::
+:::::::
+::::::::::::::::::::::::::::::::::::::
+:::::::::::::::::::::::::::::::::::::::::::
+
+------------------------------------------------------------------------
 
 ## The Story {#the-story .section-divider background-image="images/story-bg.jpg" background-size="cover" background-position="center" background-opacity="0.5"}
 
-<div class="section-number">01</div>
+::: section-number
+01
+:::
 
-<div class="divider-title">The Story</div>
+::: divider-title
+The Story
+:::
 
-<div class="divider-subtitle">
-  Singapore's fertility decline is not only about fewer births. It is also about who is giving birth, when family formation happens and whether policies coincide with recovery.
-</div>
+::: divider-subtitle
+Singapore's fertility decline is not only about fewer births. It is also
+about who is giving birth, when family formation happens and whether
+policies coincide with recovery.
+:::
 
----
+------------------------------------------------------------------------
 
 ## What question are we answering? {.story-slide}
 
-<div class="kicker">Research focus</div>
+::: kicker
+Research focus
+:::
 
-<div class="story-big">
-Why has Singapore's fertility rate kept falling despite policy attention?
-</div>
+::: story-big
+Why has Singapore's fertility rate kept falling despite policy
+attention?
+:::
 
-<div class="story-sub">
-Our answer is descriptive, not causal: the decline appears alongside later family formation, changing education and labour-force patterns, smaller completed families and uneven policy or recession timing.
-</div>
+::: story-sub
+Our answer is descriptive, not causal: the decline appears alongside
+later family formation, changing education and labour-force patterns,
+smaller completed families and uneven policy or recession timing.
+:::
 
-<div class="story-question">
-<strong>Main question:</strong> What demographic and social changes are associated with Singapore's persistently low fertility from 1980 to 2025?
-</div>
+::: story-question
+<strong>Main question:</strong> What demographic and social changes are
+associated with Singapore's persistently low fertility from 1980 to
+2025?
+:::
 
----
+------------------------------------------------------------------------
 
 ## Original Visualisation & Critique {#original-visualisation .section-divider background-image="images/critique-bg.jpg" background-size="cover" background-position="center" background-opacity="0.5"}
 
-<div class="section-number">02</div>
+::: section-number
+02
+:::
 
-<div class="divider-title">Original Visualisation & Critique</div>
+::: divider-title
+Original Visualisation & Critique
+:::
 
-<div class="divider-subtitle">
-  The original CNA chart is clear for a news story, but it cannot explain long-term fertility behaviour.
-</div>
+::: divider-subtitle
+The original CNA chart is clear for a news story, but it cannot explain
+long-term fertility behaviour.
+:::
 
----
+------------------------------------------------------------------------
 
 ## The original CNA visualisation {.clean-slide}
 
-<div class="two-col">
+::::::: two-col
+:::: image-frame
+<img src="images/cna_birth_chart.png" alt="Original CNA birth-count chart"/>
 
-<div class="image-frame">
-  <img src="images/cna_birth_chart.png" alt="Original CNA birth-count chart">
-  <div class="caption">Source: CNA birth-count visualisation on Singapore citizen births.</div>
-</div>
+::: caption
+Source: CNA birth-count visualisation on Singapore citizen births.
+:::
+::::
 
-<div class="side-note">
-  <div class="kicker">Original story</div>
-  <h3>Annual citizen births fell in the recent decade</h3>
-  <p>The chart uses annual birth counts to show that Singapore citizen births dropped, with 2022 highlighted as a low point.</p>
-  <p>It is effective as a news graphic, but it does not explain whether the decline came from fertility timing, age structure, labour-force change or family-size behaviour.</p>
-</div>
+:::: side-note
+::: kicker
+Original story
+:::
 
-</div>
+<h3>Annual citizen births fell in the recent decade</h3>
 
----
+<p>The chart uses annual birth counts to show that Singapore citizen
+births dropped, with 2022 highlighted as a low point.</p>
+
+<p>It is effective as a news graphic, but it does not explain whether
+the decline came from fertility timing, age structure, labour-force
+change or family-size behaviour.</p>
+::::
+:::::::
+
+------------------------------------------------------------------------
 
 ## What the original chart does well {.clean-slide}
 
-<div class="kicker">Visual critique</div>
+::: kicker
+Visual critique
+:::
+
 <h2>It communicates the headline quickly</h2>
-<div class="hr-accent"></div>
 
-<div class="card-grid-4">
+::: hr-accent
+:::
 
-<div class="info-card good">
-  <div class="num">01</div>
-  <h3>Clear message</h3>
-  <p>The reader immediately sees that citizen births declined.</p>
-</div>
+::::::::: card-grid-4
+:::: {.info-card .good}
+::: num
+01
+:::
 
-<div class="info-card good">
-  <div class="num">02</div>
-  <h3>Simple encoding</h3>
-  <p>Bars and direct labels are easy to read.</p>
-</div>
+<h3>Clear message</h3>
 
-<div class="info-card good">
-  <div class="num">03</div>
-  <h3>Useful for news</h3>
-  <p>The short comparison period supports a compact article chart.</p>
-</div>
+<p>The reader immediately sees that citizen births declined.</p>
+::::
 
-</div>
+:::: {.info-card .good}
+::: num
+02
+:::
 
----
+<h3>Simple encoding</h3>
+
+<p>Bars and direct labels are easy to read.</p>
+::::
+
+:::: {.info-card .good}
+::: num
+03
+:::
+
+<h3>Useful for news</h3>
+
+<p>The short comparison period supports a compact article chart.</p>
+::::
+:::::::::
+
+------------------------------------------------------------------------
 
 ## What the original chart cannot explain {.clean-slide}
 
-<div class="kicker">Visual critique</div>
+::: kicker
+Visual critique
+:::
+
 <h2>The chart shows the outcome, not the underlying pattern</h2>
-<div class="hr-accent"></div>
 
-<div class="card-grid-3">
+::: hr-accent
+:::
 
-<div class="info-card bad">
-  <div class="num">01</div>
-  <h3>Birth counts only</h3>
-  <p>Counts are affected by population size and age structure, not only fertility behaviour.</p>
-</div>
+::::::::: card-grid-3
+:::: {.info-card .bad}
+::: num
+01
+:::
 
-<div class="info-card bad">
-  <div class="num">02</div>
-  <h3>Short time horizon</h3>
-  <p>2012-2022 is too short to explain Singapore's longer fertility transition.</p>
-</div>
+<h3>Birth counts only</h3>
 
-<div class="info-card bad">
-  <div class="num">03</div>
-  <h3>No driver context</h3>
-  <p>It does not show maternal age, female LFPR, education, policy timing, recession context or family-size changes.</p>
-</div>
+<p>Counts are affected by population size and age structure, not only
+fertility behaviour.</p>
+::::
 
-</div>
+:::: {.info-card .bad}
+::: num
+02
+:::
 
----
+<h3>Short time horizon</h3>
+
+<p>2012-2022 is too short to explain Singapore's longer fertility
+transition.</p>
+::::
+
+:::: {.info-card .bad}
+::: num
+03
+:::
+
+<h3>No driver context</h3>
+
+<p>It does not show maternal age, female LFPR, education, policy timing,
+recession context or family-size changes.</p>
+::::
+:::::::::
+
+------------------------------------------------------------------------
 
 ## Proposed Improvements {#proposed-improvements .section-divider background-image="images/improvements-bg.jpg" background-size="cover" background-position="center" background-opacity="0.5"}
 
-<div class="section-number">03</div>
+::: section-number
+03
+:::
 
-<div class="divider-title">Proposed Improvements</div>
+::: divider-title
+Proposed Improvements
+:::
 
-<div class="divider-subtitle">
-  We keep the original concern about declining births, but redesign the analysis to explain fertility behaviour more directly.
-</div>
+::: divider-subtitle
+We keep the original concern about declining births, but redesign the
+analysis to explain fertility behaviour more directly.
+:::
 
----
+------------------------------------------------------------------------
 
 ## From birth counts to fertility behaviour {.clean-slide}
 
-<div class="kicker">Redesign logic</div>
+::: kicker
+Redesign logic
+:::
+
 <h2>Each improvement addresses a weakness in the original chart</h2>
-<div class="hr-accent"></div>
 
-<div class="card-grid-3">
+::: hr-accent
+:::
 
-<div class="info-card blue">
-  <div class="num">01</div>
-  <h3>Use ASFR and TFR</h3>
-  <p>Move beyond raw birth counts so the visual better reflects fertility behaviour rather than only population size.</p>
-</div>
+::::::::: card-grid-3
+:::: {.info-card .blue}
+::: num
+01
+:::
 
-<div class="info-card blue">
-  <div class="num">02</div>
-  <h3>Extend the period</h3>
-  <p>Use a 1980-2025 window to show longer fertility transition, not just a short news period.</p>
-</div>
+<h3>Use ASFR and TFR</h3>
 
-<div class="info-card blue">
-  <div class="num">03</div>
-  <h3>Add context</h3>
-  <p>Overlay female LFPR, policy milestones and recessions so the audience can compare fertility movement with key contextual shifts.</p>
-</div>
+<p>Move beyond raw birth counts so the visual better reflects fertility
+behaviour rather than only population size.</p>
+::::
 
-</div>
+:::: {.info-card .blue}
+::: num
+02
+:::
 
-<div class="story-question">
-The improvement is not to add more variables for the sake of it. The goal is to make the main fertility story more explainable and self-contained.
-</div>
+<h3>Extend the period</h3>
 
----
+<p>Use a 1980-2025 window to show longer fertility transition, not just
+a short news period.</p>
+::::
+
+:::: {.info-card .blue}
+::: num
+03
+:::
+
+<h3>Add context</h3>
+
+<p>Overlay female LFPR, policy milestones and recessions so the audience
+can compare fertility movement with key contextual shifts.</p>
+::::
+:::::::::
+
+::: story-question
+The improvement is not to add more variables for the sake of it. The
+goal is to make the main fertility story more explainable and
+self-contained.
+:::
+
+------------------------------------------------------------------------
 
 ## Data Sources {#data-sources .section-divider background-image="images/datasource-bg.jpg" background-size="cover" background-position="center" background-opacity="0.5"}
 
-<div class="section-number">04</div>
+::: section-number
+04
+:::
 
-<div class="divider-title">Data Sources</div>
+::: divider-title
+Data Sources
+:::
 
-<div class="divider-subtitle">
-  We use official SingStat datasets and separate event annotations. The final visualisation window is 1980-2025.
-</div>
+::: divider-subtitle
+We use official SingStat datasets and separate event annotations. The
+final visualisation window is 1980-2025.
+:::
 
----
+------------------------------------------------------------------------
 
 ## Core datasets used {.clean-slide}
 
-<div class="kicker">Data curation</div>
+::: kicker
+Data curation
+:::
+
 <h2>Official datasets used in the final analysis</h2>
-<div class="hr-accent"></div>
 
-<div class="source-grid">
+::: hr-accent
+:::
 
-<div class="source-tile">
-  <span class="label">SINGSTAT</span>
-  <h3>Births and fertility rates</h3>
-  <p>TFR and ASFR by maternal age group. Used for the main visualisation and policy analysis.</p>
-</div>
+::::::::: source-grid
+::: source-tile
+[SINGSTAT]{.label}
 
-<div class="source-tile">
-  <span class="label">SINGSTAT</span>
-  <h3>Female LFPR</h3>
-  <p>Resident female labour-force participation by age group and aggregate rate.</p>
-</div>
+<h3>Births and fertility rates</h3>
 
-<div class="source-tile">
-  <span class="label">SINGSTAT</span>
-  <h3>Education indicators</h3>
-  <p>Female university-qualified residents, literacy and mean years of schooling.</p>
-</div>
+<p>TFR and ASFR by maternal age group. Used for the main visualisation
+and policy analysis.</p>
+:::
 
-<div class="source-tile">
-  <span class="label">SINGSTAT</span>
-  <h3>Family timing</h3>
-  <p>Median age at first marriage and median age of mothers at first birth.</p>
-</div>
+::: source-tile
+[SINGSTAT]{.label}
 
-<div class="source-tile">
-  <span class="label">SINGSTAT</span>
-  <h3>Completed family size</h3>
-  <p>Ever-married resident females aged 40 to 49 by number of children born.</p>
-</div>
+<h3>Female LFPR</h3>
 
-<div class="source-tile">
-  <span class="label">MANUAL</span>
-  <h3>Policy and recession annotations</h3>
-  <p>Used as timing context only, not as causal proof.</p>
-</div>
+<p>Resident female labour-force participation by age group and aggregate
+rate.</p>
+:::
 
-</div>
+::: source-tile
+[SINGSTAT]{.label}
 
----
+<h3>Education indicators</h3>
+
+<p>Female university-qualified residents, literacy and mean years of
+schooling.</p>
+:::
+
+::: source-tile
+[SINGSTAT]{.label}
+
+<h3>Family timing</h3>
+
+<p>Median age at first marriage and median age of mothers at first
+birth.</p>
+:::
+
+::: source-tile
+[SINGSTAT]{.label}
+
+<h3>Completed family size</h3>
+
+<p>Ever-married resident females aged 40 to 49 by number of children
+born.</p>
+:::
+
+::: source-tile
+[MANUAL]{.label}
+
+<h3>Policy and recession annotations</h3>
+
+<p>Used as timing context only, not as causal proof.</p>
+:::
+:::::::::
+
+------------------------------------------------------------------------
 
 ## Dataset inventory {.clean-slide}
 
-<div class="kicker">Data sources</div>
+::: kicker
+Data sources
+:::
+
 <h2>All 11 dataset files used in the final slides</h2>
-<div class="hr-accent"></div>
 
-<table class="custom-table engineering-table">
-  <thead>
-    <tr>
-      <th>Dataset file</th>
-      <th>Main variables used</th>
-      <th>Used for</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>BirthsAndFertilityRatesAnnual.csv</code></td>
-      <td>TFR, ASFR by age group</td>
-      <td>Main visualisation and policy/recession analysis</td>
-    </tr>
-    <tr>
-      <td><code>M182201.csv</code></td>
-      <td>Female LFPR by age group</td>
-      <td>Main visualisation</td>
-    </tr>
-    <tr>
-      <td><code>M182201_female_lfpr_aggregate.csv</code></td>
-      <td>Female LFPR aggregate</td>
-      <td>Insight 1</td>
-    </tr>
-    <tr>
-      <td><code>M182201_female_lfpr_by_age_15_24.csv</code></td>
-      <td>Female LFPR, ages 15-19 and 20-24</td>
-      <td>Insight 2</td>
-    </tr>
-    <tr>
-      <td><code>M850581_female_university_qualified.csv</code></td>
-      <td>Female university-qualified residents</td>
-      <td>Insight 1</td>
-    </tr>
-    <tr>
-      <td><code>M850001_female_literacy_rate.csv</code></td>
-      <td>Female literacy rate</td>
-      <td>Insight 2</td>
-    </tr>
-    <tr>
-      <td><code>M850591_female_mean_years_schooling.csv</code></td>
-      <td>Female mean years of schooling</td>
-      <td>Insight 2</td>
-    </tr>
-    <tr>
-      <td><code>M810741_median_age_first_birth.csv</code></td>
-      <td>Median age at first birth</td>
-      <td>Insight 1</td>
-    </tr>
-    <tr>
-      <td><code>MedianAgeAtFirstMarriageOfResidentCitizenGroomsAndBridesAnnual.csv</code></td>
-      <td>Median age at first marriage</td>
-      <td>Insight 3A</td>
-    </tr>
-    <tr>
-      <td><code>MedianAgeOfMothersAtFirstBirthAnnual.csv</code></td>
-      <td>Median age of mothers at first birth</td>
-      <td>Insight 3A</td>
-    </tr>
-    <tr>
-      <td><code>ResidentEverMarriedFemalesByAgeGroupAndNumberOfChildrenBornAnnual.csv</code></td>
-      <td>Children born by women aged 40 to 49</td>
-      <td>Insight 3B</td>
-    </tr>
-</tbody>
-</table>
+::: hr-accent
+:::
 
----
++-------------------------------------------------------------------------+----------------------+----------------------+
+| Dataset file                                                            | Main variables used  | Used for             |
++=========================================================================+======================+======================+
+| `BirthsAndFertilityRatesAnnual.csv`                                     | TFR, ASFR by age     | Main visualisation   |
+|                                                                         | group                | and policy/recession |
+|                                                                         |                      | analysis             |
++-------------------------------------------------------------------------+----------------------+----------------------+
+| `M182201.csv`                                                           | Female LFPR by age   | Main visualisation   |
+|                                                                         | group                |                      |
++-------------------------------------------------------------------------+----------------------+----------------------+
+| `M182201_female_lfpr_aggregate.csv`                                     | Female LFPR          | Insight 1            |
+|                                                                         | aggregate            |                      |
++-------------------------------------------------------------------------+----------------------+----------------------+
+| `M182201_female_lfpr_by_age_15_24.csv`                                  | Female LFPR, ages    | Insight 2            |
+|                                                                         | 15-19 and 20-24      |                      |
++-------------------------------------------------------------------------+----------------------+----------------------+
+| `M850581_female_university_qualified.csv`                               | Female               | Insight 1            |
+|                                                                         | university-qualified |                      |
+|                                                                         | residents            |                      |
++-------------------------------------------------------------------------+----------------------+----------------------+
+| `M850001_female_literacy_rate.csv`                                      | Female literacy rate | Insight 2            |
++-------------------------------------------------------------------------+----------------------+----------------------+
+| `M850591_female_mean_years_schooling.csv`                               | Female mean years of | Insight 2            |
+|                                                                         | schooling            |                      |
++-------------------------------------------------------------------------+----------------------+----------------------+
+| `M810741_median_age_first_birth.csv`                                    | Median age at first  | Insight 1            |
+|                                                                         | birth                |                      |
++-------------------------------------------------------------------------+----------------------+----------------------+
+| `MedianAgeAtFirstMarriageOfResidentCitizenGroomsAndBridesAnnual.csv`    | Median age at first  | Insight 3A           |
+|                                                                         | marriage             |                      |
++-------------------------------------------------------------------------+----------------------+----------------------+
+| `MedianAgeOfMothersAtFirstBirthAnnual.csv`                              | Median age of        | Insight 3A           |
+|                                                                         | mothers at first     |                      |
+|                                                                         | birth                |                      |
++-------------------------------------------------------------------------+----------------------+----------------------+
+| `ResidentEverMarriedFemalesByAgeGroupAndNumberOfChildrenBornAnnual.csv` | Children born by     | Insight 3B           |
+|                                                                         | women aged 40 to 49  |                      |
++-------------------------------------------------------------------------+----------------------+----------------------+
+
+------------------------------------------------------------------------
 
 ## Dataset source links {.clean-slide}
 
-<div class="kicker">Source crediting</div>
+::: kicker
+Source crediting
+:::
+
 <h2>Official source tables behind the 11 files</h2>
-<div class="hr-accent"></div>
 
-<div class="source-link-grid">
+::: hr-accent
+:::
 
-<div class="source-link-card">
-  <h3>Main visualisation</h3>
-  <p><a href="https://data.gov.sg/datasets/d_e39eeaeadb571c0d0725ef1eec48d166/view">M810091</a> Births and Fertility Rates</p>
-  <p><a href="https://data.gov.sg/datasets/d_465c5bd4a9adae523f9577371daf5e24/view">M182201</a> Resident LFPR by Age and Sex</p>
-</div>
+::::::: source-link-grid
+::: source-link-card
+<h3>Main visualisation</h3>
 
-<div class="source-link-card">
-  <h3>Insight 1</h3>
-  <p><a href="https://tablebuilder.singstat.gov.sg/table/TS/M850581">M850581</a> Highest Qualification Attained</p>
-  <p><a href="https://data.gov.sg/datasets/d_465c5bd4a9adae523f9577371daf5e24/view">M182201</a> Female LFPR aggregate</p>
-  <p><a href="https://data.gov.sg/datasets/d_d032130d8b6425287566bd439f13d21c/view">M810741</a> Median Age of Mothers at First Birth</p>
-</div>
+<p><a href="https://data.gov.sg/datasets/d_e39eeaeadb571c0d0725ef1eec48d166/view">M810091</a>
+Births and Fertility Rates</p>
 
-<div class="source-link-card">
-  <h3>Insight 2</h3>
-  <p><a href="https://data.gov.sg/datasets/d_a98f2ae027bf4442d7250d50505feabe/view">M850001</a> Education and Literacy Indicators</p>
-  <p><a href="https://data.gov.sg/datasets/d_0f8fd20f3aecd9dccd41b9d750e72d4a/view">M850591</a> Mean Years of Schooling</p>
-  <p><a href="https://data.gov.sg/datasets/d_465c5bd4a9adae523f9577371daf5e24/view">M182201</a> Female LFPR, ages 15 to 24</p>
-</div>
+<p><a href="https://data.gov.sg/datasets/d_465c5bd4a9adae523f9577371daf5e24/view">M182201</a>
+Resident LFPR by Age and Sex</p>
+:::
 
-<div class="source-link-card">
-  <h3>Insight 3 and 4</h3>
-  <p><a href="https://tablebuilder.singstat.gov.sg/table/TS/M830182">M830182</a> Median Age at First Marriage</p>
-  <p><a href="https://data.gov.sg/datasets/d_d032130d8b6425287566bd439f13d21c/view">M810741</a> Median Age of Mothers at First Birth</p>
-  <p><a href="https://data.gov.sg/datasets/d_1de45e559613cb1a82b65ca23d9f2ffd/view">M810571</a> Ever-Married Females by Children Born</p>
-  <p><a href="https://data.gov.sg/datasets/d_e39eeaeadb571c0d0725ef1eec48d166/view">M810091</a> TFR for policy/recession windows</p>
-</div>
+::: source-link-card
+<h3>Insight 1</h3>
 
-</div>
+<p><a href="https://tablebuilder.singstat.gov.sg/table/TS/M850581">M850581</a>
+Highest Qualification Attained</p>
 
-<div class="tiny-note source-note">
-M182201 and M810741 are reused in more than one insight. Policy and recession markers are manually curated annotation tables used as context, not measured outcome data.
-</div>
+<p><a href="https://data.gov.sg/datasets/d_465c5bd4a9adae523f9577371daf5e24/view">M182201</a>
+Female LFPR aggregate</p>
 
----
+<p><a href="https://data.gov.sg/datasets/d_d032130d8b6425287566bd439f13d21c/view">M810741</a>
+Median Age of Mothers at First Birth</p>
+:::
+
+::: source-link-card
+<h3>Insight 2</h3>
+
+<p><a href="https://data.gov.sg/datasets/d_a98f2ae027bf4442d7250d50505feabe/view">M850001</a>
+Education and Literacy Indicators</p>
+
+<p><a href="https://data.gov.sg/datasets/d_0f8fd20f3aecd9dccd41b9d750e72d4a/view">M850591</a>
+Mean Years of Schooling</p>
+
+<p><a href="https://data.gov.sg/datasets/d_465c5bd4a9adae523f9577371daf5e24/view">M182201</a>
+Female LFPR, ages 15 to 24</p>
+:::
+
+::: source-link-card
+<h3>Insight 3 and 4</h3>
+
+<p><a href="https://tablebuilder.singstat.gov.sg/table/TS/M830182">M830182</a>
+Median Age at First Marriage</p>
+
+<p><a href="https://data.gov.sg/datasets/d_d032130d8b6425287566bd439f13d21c/view">M810741</a>
+Median Age of Mothers at First Birth</p>
+
+<p><a href="https://data.gov.sg/datasets/d_1de45e559613cb1a82b65ca23d9f2ffd/view">M810571</a>
+Ever-Married Females by Children Born</p>
+
+<p><a href="https://data.gov.sg/datasets/d_e39eeaeadb571c0d0725ef1eec48d166/view">M810091</a>
+TFR for policy/recession windows</p>
+:::
+:::::::
+
+::: {.tiny-note .source-note}
+M182201 and M810741 are reused in more than one insight. Policy and
+recession markers are manually curated annotation tables used as
+context, not measured outcome data.
+:::
+
+------------------------------------------------------------------------
 
 ## Data Engineering Workflow {#engineering-workflow .section-divider background-image="images/workflow-bg.jpg" background-size="cover" background-position="center" background-opacity="0.5"}
 
-<div class="section-number">05</div>
+::: section-number
+05
+:::
 
-<div class="divider-title">Data Engineering Workflow</div>
+::: divider-title
+Data Engineering Workflow
+:::
 
-<div class="divider-subtitle">
-  The workflow standardises raw wide tables into consistent plot-ready datasets.
-</div>
+::: divider-subtitle
+The workflow standardises raw wide tables into consistent plot-ready
+datasets.
+:::
 
----
+------------------------------------------------------------------------
 
 ## Raw to plot-ready {.clean-slide}
 
-<div class="kicker">Pipeline overview</div>
+::: kicker
+Pipeline overview
+:::
+
 <h2>One reproducible workflow across datasets</h2>
-<div class="hr-accent"></div>
 
-<div class="pipeline">
+::: hr-accent
+:::
 
-<div class="pipe-step">
-  <div class="step-id">STEP 01</div>
-  <h3>Import</h3>
-  <p>Read CSV files and locate the true data header.</p>
-</div>
+::::::::::::: pipeline
+:::: pipe-step
+::: step-id
+STEP 01
+:::
 
-<div class="pipe-step">
-  <div class="step-id">STEP 02</div>
-  <h3>Clean</h3>
-  <p>Remove metadata, standardise labels and parse values.</p>
-</div>
+<h3>Import</h3>
 
-<div class="pipe-step">
-  <div class="step-id">STEP 03</div>
-  <h3>Reshape</h3>
-  <p>Convert year columns into long format.</p>
-</div>
+<p>Read CSV files and locate the true data header.</p>
+::::
 
-<div class="pipe-step">
-  <div class="step-id">STEP 04</div>
-  <h3>Join</h3>
-  <p>Combine datasets by year only where units are comparable.</p>
-</div>
+:::: pipe-step
+::: step-id
+STEP 02
+:::
 
-<div class="pipe-step">
-  <div class="step-id">STEP 05</div>
-  <h3>Validate</h3>
-  <p>Check expected year ranges, age groups and missing values.</p>
-</div>
+<h3>Clean</h3>
 
-</div>
+<p>Remove metadata, standardise labels and parse values.</p>
+::::
 
----
+:::: pipe-step
+::: step-id
+STEP 03
+:::
+
+<h3>Reshape</h3>
+
+<p>Convert year columns into long format.</p>
+::::
+
+:::: pipe-step
+::: step-id
+STEP 04
+:::
+
+<h3>Join</h3>
+
+<p>Combine datasets by year only where units are comparable.</p>
+::::
+
+:::: pipe-step
+::: step-id
+STEP 05
+:::
+
+<h3>Validate</h3>
+
+<p>Check expected year ranges, age groups and missing values.</p>
+::::
+:::::::::::::
+
+------------------------------------------------------------------------
 
 ## Raw layouts and cleaning needs {.clean-slide}
 
-<div class="kicker">Data engineering detail</div>
+::: kicker
+Data engineering detail
+:::
+
 <h2>The raw files did not all arrive in analysis-ready form</h2>
-<div class="hr-accent"></div>
 
-<div class="engineering-card-grid">
+::: hr-accent
+:::
 
-<div class="engineering-card">
-  <div class="eng-num">01</div>
-  <h3>Metadata rows</h3>
-  <p><strong>Fix:</strong> detect the true <code>Data Series</code> header before reading.</p>
-  <span>Prevents metadata from becoming fake observations.</span>
-</div>
+::::::::::::::::::: engineering-card-grid
+:::: engineering-card
+::: eng-num
+01
+:::
 
-<div class="engineering-card">
-  <div class="eng-num">02</div>
-  <h3>Wide year columns</h3>
-  <p><strong>Fix:</strong> pivot years into long format.</p>
-  <span>Allows filtering, joining and plotting by year.</span>
-</div>
+<h3>Metadata rows</h3>
 
-<div class="engineering-card">
-  <div class="eng-num">03</div>
-  <h3>Inconsistent labels</h3>
-  <p><strong>Fix:</strong> standardise age groups such as <code>20-24 Years</code>.</p>
-  <span>Ensures ASFR and LFPR age bands match.</span>
-</div>
+<p><strong>Fix:</strong> detect the true <code>Data Series</code> header
+before reading.</p>
 
-<div class="engineering-card">
-  <div class="eng-num">04</div>
-  <h3>Mixed value types</h3>
-  <p><strong>Fix:</strong> parse numeric values after reshaping.</p>
-  <span>Prevents text values from breaking calculations.</span>
-</div>
+Prevents metadata from becoming fake observations.
+::::
 
-<div class="engineering-card">
-  <div class="eng-num">05</div>
-  <h3>Different ranges</h3>
-  <p><strong>Fix:</strong> keep available years and show honest gaps.</p>
-  <span>Avoids inventing observations for missing periods.</span>
-</div>
+:::: engineering-card
+::: eng-num
+02
+:::
 
-<div class="engineering-card">
-  <div class="eng-num">06</div>
-  <h3>Event context</h3>
-  <p><strong>Fix:</strong> create manual policy and recession event tables.</p>
-  <span>Keeps annotations reproducible and separate from measured data.</span>
-</div>
+<h3>Wide year columns</h3>
 
-<div class="engineering-card">
-  <div class="eng-num">07</div>
-  <h3>Different units</h3>
-  <p><strong>Fix:</strong> keep ASFR, TFR, LFPR, ages and percentages clearly separated.</p>
-  <span>Avoids misleading comparisons across incompatible measures.</span>
-</div>
+<p><strong>Fix:</strong> pivot years into long format.</p>
 
-<div class="engineering-card">
-  <div class="eng-num">08</div>
-  <h3>Derived measures</h3>
-  <p><strong>Fix:</strong> compute shares, policy-relative years and visual encodings.</p>
-  <span>Turns raw data into story-ready variables.</span>
-</div>
+Allows filtering, joining and plotting by year.
+::::
 
-</div>
+:::: engineering-card
+::: eng-num
+03
+:::
 
----
+<h3>Inconsistent labels</h3>
+
+<p><strong>Fix:</strong> standardise age groups such as <code>20-24
+Years</code>.</p>
+
+Ensures ASFR and LFPR age bands match.
+::::
+
+:::: engineering-card
+::: eng-num
+04
+:::
+
+<h3>Mixed value types</h3>
+
+<p><strong>Fix:</strong> parse numeric values after reshaping.</p>
+
+Prevents text values from breaking calculations.
+::::
+
+:::: engineering-card
+::: eng-num
+05
+:::
+
+<h3>Different ranges</h3>
+
+<p><strong>Fix:</strong> keep available years and show honest gaps.</p>
+
+Avoids inventing observations for missing periods.
+::::
+
+:::: engineering-card
+::: eng-num
+06
+:::
+
+<h3>Event context</h3>
+
+<p><strong>Fix:</strong> create manual policy and recession event
+tables.</p>
+
+Keeps annotations reproducible and separate from measured data.
+::::
+
+:::: engineering-card
+::: eng-num
+07
+:::
+
+<h3>Different units</h3>
+
+<p><strong>Fix:</strong> keep ASFR, TFR, LFPR, ages and percentages
+clearly separated.</p>
+
+Avoids misleading comparisons across incompatible measures.
+::::
+
+:::: engineering-card
+::: eng-num
+08
+:::
+
+<h3>Derived measures</h3>
+
+<p><strong>Fix:</strong> compute shares, policy-relative years and
+visual encodings.</p>
+
+Turns raw data into story-ready variables.
+::::
+:::::::::::::::::::
+
+------------------------------------------------------------------------
 
 ## Engineering transformations and checks {.clean-slide}
 
-<div class="kicker">Reproducibility and validation</div>
+::: kicker
+Reproducibility and validation
+:::
+
 <h2>Key transformations used before plotting</h2>
-<div class="hr-accent"></div>
 
-<div class="schema-grid">
+::: hr-accent
+:::
 
-<div class="schema-card">
-  <h3>Year alignment</h3>
-  <p>All tables were joined by <code>year</code>. No row was joined by position.</p>
-</div>
+::::::::: schema-grid
+::: schema-card
+<h3>Year alignment</h3>
 
-<div class="schema-card">
-  <h3>Age-group matching</h3>
-  <p>ASFR and LFPR age bands were standardised before plotting together.</p>
-</div>
+<p>All tables were joined by <code>year</code>. No row was joined by
+position.</p>
+:::
 
-<div class="schema-card">
-  <h3>Policy windows</h3>
-  <p>TFR was converted to years before and after policy years for fair comparison.</p>
-</div>
+::: schema-card
+<h3>Age-group matching</h3>
 
-<div class="schema-card">
-  <h3>Family-size shares</h3>
-  <p>Counts of children born were converted into percentages within each year.</p>
-</div>
+<p>ASFR and LFPR age bands were standardised before plotting
+together.</p>
+:::
 
-<div class="schema-card">
-  <h3>Visual encodings</h3>
-  <p>Size, colour and shaded bands were derived from clean numeric variables.</p>
-</div>
+::: schema-card
+<h3>Policy windows</h3>
 
-<div class="schema-card">
-  <h3>Validation checks</h3>
-  <p>Checked expected year ranges, missing values, age groups and percentage totals.</p>
-</div>
+<p>TFR was converted to years before and after policy years for fair
+comparison.</p>
+:::
 
-</div>
+::: schema-card
+<h3>Family-size shares</h3>
 
----
+<p>Counts of children born were converted into percentages within each
+year.</p>
+:::
+
+::: schema-card
+<h3>Visual encodings</h3>
+
+<p>Size, colour and shaded bands were derived from clean numeric
+variables.</p>
+:::
+
+::: schema-card
+<h3>Validation checks</h3>
+
+<p>Checked expected year ranges, missing values, age groups and
+percentage totals.</p>
+:::
+:::::::::
+
+------------------------------------------------------------------------
 
 ## Final plot-ready tables {.clean-slide}
 
-<div class="kicker">Output structure</div>
+::: kicker
+Output structure
+:::
+
 <h2>Cleaned tables prepared for visualisation and analysis</h2>
-<div class="hr-accent"></div>
 
-<div class="schema-grid">
+::: hr-accent
+:::
 
-<div class="schema-card">
-  <h3><code>asfr_by_age</code></h3>
-  <p>Year, maternal age group and ASFR. Used for stacked fertility bars.</p>
-</div>
+::::::::: schema-grid
+::: schema-card
+<h3><code>asfr_by_age</code></h3>
 
-<div class="schema-card">
-  <h3><code>lfpr_female</code></h3>
-  <p>Year, age group and female LFPR. Used for matching dashed lines.</p>
-</div>
+<p>Year, maternal age group and ASFR. Used for stacked fertility
+bars.</p>
+:::
 
-<div class="schema-card">
-  <h3><code>insight1_data</code></h3>
-  <p>Female university attainment joined with LFPR and first-birth age.</p>
-</div>
+::: schema-card
+<h3><code>lfpr_female</code></h3>
 
-<div class="schema-card">
-  <h3><code>family_timing</code></h3>
-  <p>Median first-marriage age and first-birth age in one tidy table.</p>
-</div>
+<p>Year, age group and female LFPR. Used for matching dashed lines.</p>
+:::
 
-<div class="schema-card">
-  <h3><code>family_size_40_49</code></h3>
-  <p>Completed family-size shares for ever-married women aged 40 to 49.</p>
-</div>
+::: schema-card
+<h3><code>insight1_data</code></h3>
 
-<div class="schema-card">
-  <h3><code>policy_window</code></h3>
-  <p>TFR aligned to policy years, with recession windows added separately.</p>
-</div>
+<p>Female university attainment joined with LFPR and first-birth
+age.</p>
+:::
 
-</div>
+::: schema-card
+<h3><code>family_timing</code></h3>
 
----
+<p>Median first-marriage age and first-birth age in one tidy table.</p>
+:::
+
+::: schema-card
+<h3><code>family_size_40_49</code></h3>
+
+<p>Completed family-size shares for ever-married women aged 40 to
+49.</p>
+:::
+
+::: schema-card
+<h3><code>policy_window</code></h3>
+
+<p>TFR aligned to policy years, with recession windows added
+separately.</p>
+:::
+:::::::::
+
+------------------------------------------------------------------------
 
 ## Final Improved Visualisation {#final-visualisation .section-divider background-image="images/finalvis-bg.jpg" background-size="cover" background-position="center" background-opacity="0.5"}
 
-<div class="section-number">06</div>
+::: section-number
+06
+:::
 
-<div class="divider-title">Final Improved Visualisation</div>
+::: divider-title
+Final Improved Visualisation
+:::
 
-<div class="divider-subtitle">
-  The final visualisation expands the original birth-count chart into a 1980-2025 fertility, labour-force, policy and recession view.
-</div>
+::: divider-subtitle
+The final visualisation expands the original birth-count chart into a
+1980-2025 fertility, labour-force, policy and recession view.
+:::
 
----
+------------------------------------------------------------------------
 
 ## Final visualisation {.clean-slide}
 
@@ -1355,226 +1651,322 @@ M182201 and M810741 are reused in more than one insight. Policy and recession ma
 p_main
 ```
 
-::: {.notes}
-Use this slide to set up the rest of the analysis. The main chart shows that fertility decline is long-term, that younger-age fertility fell sharply, and that female LFPR increased across most age groups.
+::: notes
+Use this slide to set up the rest of the analysis. The main chart shows
+that fertility decline is long-term, that younger-age fertility fell
+sharply, and that female LFPR increased across most age groups.
 :::
 
----
+------------------------------------------------------------------------
 
 ## What the final visual lets us ask {.clean-slide}
 
-<div class="kicker">Reading the main visual</div>
+::: kicker
+Reading the main visual
+:::
+
 <h2>The plot shows patterns, but the insights explain them</h2>
-<div class="hr-accent"></div>
 
-<div class="card-grid-3">
+::: hr-accent
+:::
 
-<div class="info-card blue">
-  <div class="num">01</div>
-  <h3>Female education and LFPR</h3>
-  <p>Female work participation rose alongside higher education and later first birth.</p>
-</div>
+::::::::::: card-grid-3
+:::: {.info-card .blue}
+::: num
+01
+:::
 
-<div class="info-card blue">
-  <div class="num">02</div>
-  <h3>Younger fertility weakened</h3>
-  <p>Young-age ASFR fell as schooling became longer and youth labour participation changed.</p>
-</div>
+<h3>Female education and LFPR</h3>
 
-<div class="info-card blue">
-  <div class="num">03</div>
-  <h3>Family formation shifted</h3>
-  <p>Marriage, first birth and completed family size all moved in ways that reinforce low fertility.</p>
-</div>
+<p>Female work participation rose alongside higher education and later
+first birth.</p>
+::::
 
-<div class="info-card blue">
-  <div class="num">04</div>
-  <h3>Policies and recessions</h3>
-  <p>Policy and downturn timing provide historical context, but do not prove direct causality.</p>
-</div>
+:::: {.info-card .blue}
+::: num
+02
+:::
 
-</div>
+<h3>Younger fertility weakened</h3>
 
----
+<p>Young-age ASFR fell as schooling became longer and youth labour
+participation changed.</p>
+::::
+
+:::: {.info-card .blue}
+::: num
+03
+:::
+
+<h3>Family formation shifted</h3>
+
+<p>Marriage, first birth and completed family size all moved in ways
+that reinforce low fertility.</p>
+::::
+
+:::: {.info-card .blue}
+::: num
+04
+:::
+
+<h3>Policies and recessions</h3>
+
+<p>Policy and downturn timing provide historical context, but do not
+prove direct causality.</p>
+::::
+:::::::::::
+
+------------------------------------------------------------------------
 
 ## Insights & Analysis {#insights-analysis .section-divider background-image="images/insightsanalysis-bg.jpg" background-size="cover" background-position="center" background-opacity="0.5"}
 
-<div class="section-number">07</div>
+::: section-number
+06
+:::
 
-<div class="divider-title">Insights & Analysis</div>
+::: divider-title
+Insights & Analysis
+:::
 
-<div class="divider-subtitle">
-  Four supporting insights answer what changed underneath the fertility decline.
-</div>
+::: divider-subtitle
+Four supporting insights answer what changed underneath the fertility
+decline.
+:::
 
----
+------------------------------------------------------------------------
 
 ## Insight 1: Education, LFPR and birth timing {.clean-slide}
 
-::: {.two-col}
-
+::::: two-col
 ```{r}
 #| fig-width: 8.8
 #| fig-height: 5.2
 p_insight1
 ```
 
-::: {.side-note}
-<div class="kicker">Insight 1</div>
-<h3>Education, work participation and later birth timing moved together</h3>
-<p>Female university attainment rose strongly from 1990 to 2025.</p>
-<p>The same period also shows higher female LFPR and later median age at first birth.</p>
-<p><strong>Interpretation:</strong> this supports the idea that women's pathway into adulthood increasingly involved higher education and work before motherhood.</p>
+:::: side-note
+::: kicker
+Insight 1
 :::
 
-:::
+<h3>Education, work participation and later birth timing moved
+together</h3>
 
----
+<p>The number of female LFPR increasing greatly from 50% in 1990 to 60% in 2025.</p>
+
+<p>The same period also shows the stark increase in the number of female university graduates over three decades.</p>
+
+<p>Over the same period also shows the number of median age at first birth rising from 28 years in 1990 to 32 years in 2025.</p>
+
+<p><strong>Interpretation:</strong> This shows that as more women are becoming educated, they will enter the workforce. Those who took this path will spend most of their twenties in university and working to establish a career before settling down. Therefore, the median age for first birth rises to 32.</p>
+::::
+:::::
+
+------------------------------------------------------------------------
 
 ## Insight 2: Longer schooling and younger-age fertility {.clean-slide}
 
-::: {.two-col}
-
+::::: two-col
 ```{r}
 #| fig-width: 8.8
 #| fig-height: 5.2
 p_insight2
 ```
 
-::: {.side-note}
-<div class="kicker">Insight 2</div>
+:::: side-note
+::: kicker
+Insight 2
+:::
+
 <h3>Younger adulthood shifted toward schooling</h3>
-<p>Female literacy and schooling increased, while LFPR for ages 15 to 24 weakened.</p>
-<p>This is especially clear for ages 15 to 19, where participation became much lower.</p>
-<p><strong>Interpretation:</strong> this helps explain why births among women aged 15 to 19 and 20 to 24 became much less important in the main visualisation.</p>
-:::
 
-:::
+<p>Government gave women equal opportunities. In 1961, free universal primary education was introduced for all children. In 1994, the secondary curriculum was unified for both sexes, ending the split between technical studies and home economics. Female literacy has risen sharply since the PAP took office, now standing at 97.9%.</p>
 
----
+<p>Women are spending more time in school, pursuing higher levels of education.</p>
 
-## Insight 3A: Family formation moved later {.clean-slide}
+<p>Therefore, the female LFPR for ages ranged 15-19 and 20-24 have dropped because girls at that age are still schooling and hence, not starting a family.</p>
 
-::: {.two-col}
+<p><strong>Interpretation:</strong>As more women pursue higher education, they delay starting a family. In the past, education went to sons while women were confined to labour or housework.</p>
+::::
+:::::
 
-```{r}
-#| fig-width: 7.2
-#| fig-height: 5.2
-p_insight3a
-```
+------------------------------------------------------------------------
 
-::: {.side-note}
-<div class="kicker">Insight 3A</div>
-<h3>Family formation shifted later</h3>
-<p>Median age at first marriage increased from the mid-20s toward the late-20s.</p>
-<p>Median age at first birth also moved upward, reaching the early-30s by the latest years.</p>
-<p><strong>Interpretation:</strong> Singapore's low fertility is partly about delayed entry into marriage and parenthood, not only fewer births in one year.</p>
-:::
+## Insight 3: Completed family size became smaller {.clean-slide}
 
-:::
-
----
-
-## Insight 3B: Completed family size became smaller {.clean-slide}
-
-::: {.two-col}
-
+::::: two-col
 ```{r}
 #| fig-width: 7.2
 #| fig-height: 5.2
 p_insight3b
 ```
 
-::: {.side-note}
-<div class="kicker">Insight 3B</div>
+:::: side-note
+::: kicker
+Insight 3
+:::
+
 <h3>Later family formation connects to smaller completed families</h3>
-<p>Among ever-married women aged 40 to 49, larger families became less common.</p>
+
+<p>Among ever-married women aged 40 to 49, larger families became less
+common.</p>
+
 <p>Smaller family-size categories became more prominent over time.</p>
-<p><strong>Interpretation:</strong> this connects delayed family formation to the longer-term TFR decline because fewer families end up having three or more children.</p>
-:::
 
-:::
+<p>Rising consumer price index over the years shows the increasing cost of living.</p>
 
----
+<p><strong>Interpretation:</strong> Because when women are more focused on pursuing higher levels of education and establishing careers, they will start families at a later age. At that age, they might not be as fertile to have many children. Moreover, the rising cost of living acts as a disincentive for families to have lesser children because its financially unsustainable. </p>
+::::
+:::::
+
+------------------------------------------------------------------------
 
 ## Insight 4: Policy and recession timing {.clean-slide}
 
-::: {.two-col}
-
+::::: two-col
 ```{r}
 #| fig-width: 7.2
 #| fig-height: 5.2
 p_insight4
 ```
 
-::: {.side-note}
-<div class="kicker">Insight 4</div>
-<h3>Policy and recession timing give context, not causal proof</h3>
-<p>Some policy periods coincide with short-term changes, but no sustained recovery appears.</p>
+:::: side-note
+::: kicker
+Insight 4
+:::
+
+<h3>Policy and recession timing give context</h3>
+
+<p>Some policy periods coincide with short-term changes, but no
+sustained recovery appears.</p>
+
 <p>Recession bands help show economic timing around policy windows.</p>
-<p><strong>Interpretation:</strong> policy matters, but fertility decline remains a broader structural pattern.</p>
-:::
 
-:::
+<p><strong>Interpretation:</strong> The policies introduced by the government have limited effectiveness. Some of its effectiveness may be compromised due to the enticing financial incentives during periods of economic downturn. </p>
+::::
+:::::
 
----
+------------------------------------------------------------------------
 
 ## Limitations {.clean-slide}
 
-<div class="kicker">Interpretation boundaries</div>
+::: kicker
+Interpretation boundaries
+:::
+
 <h2>What we can and cannot claim</h2>
-<div class="hr-accent"></div>
 
-<div class="limit-grid">
+::: hr-accent
+:::
 
-<div class="limit-card">
-  <h3>Association, not causation</h3>
-  <p>Policies, recessions and social indicators are used as timing context. They do not prove a direct cause.</p>
-</div>
+:::::: limit-grid
+::: limit-card
+<h3>Association, not causation</h3>
 
-<div class="limit-card">
-  <h3>Different measures</h3>
-  <p>ASFR, TFR, LFPR, education and age measures use different units, so we avoid forcing them onto one scale unless clearly labelled.</p>
-</div>
+<p>Policies, recessions and social indicators are used as timing
+context. They do not prove a direct cause.</p>
+:::
 
-<div class="limit-card">
-  <h3>Period versus cohort</h3>
-  <p>TFR describes fertility in a year, while completed family size describes older cohorts. Both are useful, but they answer different questions.</p>
-</div>
+::: limit-card
+<h3>Different measures</h3>
 
-</div>
+<p>ASFR, TFR, LFPR, education and age measures use different units, so
+we avoid forcing them onto one scale unless clearly labelled.</p>
+:::
 
----
+::: limit-card
+<h3>Period versus cohort</h3>
+
+<p>TFR describes fertility in a year, while completed family size
+describes older cohorts. Both are useful, but they answer different
+questions.</p>
+:::
+::::::
+
+------------------------------------------------------------------------
+
+## Conclusion {#conclusion-divider .section-divider background-image="images/conclusion-bg.jpg" background-size="cover" background-position="center" background-opacity="0.5"}
+
+::: section-number
+07
+:::
+
+::: divider-title
+Conclusion
+:::
+
+::: divider-subtitle
+What the whole story means for fertility decline.
+:::
+
+------------------------------------------------------------------------
 
 ## Conclusion {#conclusion .clean-slide}
 
-<div class="kicker">Final takeaway</div>
+::: kicker
+Final takeaway
+:::
 
-<div class="conclusion-big">
-Singapore's fertility decline appears to be a <span>long-term structural pattern</span>, not a drop caused by one isolated policy, recession or demographic change.
-</div>
+::: conclusion-big
+Singapore's fertility decline appears to be a long-term structural
+pattern, not a drop caused by one isolated policy, recession or
+demographic change.
+:::
 
-<div class="story-question">
-The clearest story is cumulative: younger-age fertility weakened, female education and LFPR rose, family formation shifted later and completed families became smaller. Policy matters, but it operates within these broader social and demographic shifts.
-</div>
+::: story-question
+The clearest story is cumulative: younger-age fertility weakened, female
+education and LFPR rose, family formation shifted later and completed
+families became smaller. Policy matters, but it operates within these
+broader social and demographic shifts.
+:::
 
----
+------------------------------------------------------------------------
 
 ## References {.clean-slide}
 
-<div class="kicker">Main sources</div>
+::: kicker
+Main sources
+:::
 
-<div class="references-list">
+::: references-list
+<p>Channel NewsAsia. Original birth-count visualisation used for
+critique.</p>
 
-<p>Channel NewsAsia. Original birth-count visualisation used for critique.</p>
-<p>Singapore Department of Statistics. <a href="https://data.gov.sg/datasets/d_e39eeaeadb571c0d0725ef1eec48d166/view">M810091: Births and Fertility Rates, Annual</a>.</p>
-<p>Singapore Department of Statistics. <a href="https://data.gov.sg/datasets/d_465c5bd4a9adae523f9577371daf5e24/view">M182201: Resident Labour Force Participation Rate by Age and Sex</a>.</p>
-<p>Singapore Department of Statistics. <a href="https://tablebuilder.singstat.gov.sg/table/TS/M850581">M850581: Residents 25+ by Highest Qualification Attained, Sex and Age Group</a>.</p>
-<p>Singapore Department of Statistics. <a href="https://data.gov.sg/datasets/d_a98f2ae027bf4442d7250d50505feabe/view">M850001: Indicators on Education and Literacy</a>.</p>
-<p>Singapore Department of Statistics. <a href="https://data.gov.sg/datasets/d_0f8fd20f3aecd9dccd41b9d750e72d4a/view">M850591: Mean Years of Schooling</a>.</p>
-<p>Singapore Department of Statistics. <a href="https://data.gov.sg/datasets/d_d032130d8b6425287566bd439f13d21c/view">M810741: Median Age of Mothers at First Birth, Annual</a>.</p>
-<p>Singapore Department of Statistics. <a href="https://tablebuilder.singstat.gov.sg/table/TS/M830182">M830182: Median Age at First Marriage of Resident and Citizen Grooms and Brides, Annual</a>.</p>
-<p>Singapore Department of Statistics. <a href="https://data.gov.sg/datasets/d_1de45e559613cb1a82b65ca23d9f2ffd/view">M810571: Resident Ever-Married Females by Age Group and Number of Children Born, Annual</a>.</p>
-<p>Team research. Policy and recession timing annotations used as context only.</p>
+<p>Singapore Department of Statistics.
+<a href="https://data.gov.sg/datasets/d_e39eeaeadb571c0d0725ef1eec48d166/view">M810091:
+Births and Fertility Rates, Annual</a>.</p>
 
-</div>
+<p>Singapore Department of Statistics.
+<a href="https://data.gov.sg/datasets/d_465c5bd4a9adae523f9577371daf5e24/view">M182201:
+Resident Labour Force Participation Rate by Age and Sex</a>.</p>
+
+<p>Singapore Department of Statistics.
+<a href="https://tablebuilder.singstat.gov.sg/table/TS/M850581">M850581:
+Residents 25+ by Highest Qualification Attained, Sex and Age
+Group</a>.</p>
+
+<p>Singapore Department of Statistics.
+<a href="https://data.gov.sg/datasets/d_a98f2ae027bf4442d7250d50505feabe/view">M850001:
+Indicators on Education and Literacy</a>.</p>
+
+<p>Singapore Department of Statistics.
+<a href="https://data.gov.sg/datasets/d_0f8fd20f3aecd9dccd41b9d750e72d4a/view">M850591:
+Mean Years of Schooling</a>.</p>
+
+<p>Singapore Department of Statistics.
+<a href="https://data.gov.sg/datasets/d_d032130d8b6425287566bd439f13d21c/view">M810741:
+Median Age of Mothers at First Birth, Annual</a>.</p>
+
+<p>Singapore Department of Statistics.
+<a href="https://tablebuilder.singstat.gov.sg/table/TS/M830182">M830182:
+Median Age at First Marriage of Resident and Citizen Grooms and Brides,
+Annual</a>.</p>
+
+<p>Singapore Department of Statistics.
+<a href="https://data.gov.sg/datasets/d_1de45e559613cb1a82b65ca23d9f2ffd/view">M810571:
+Resident Ever-Married Females by Age Group and Number of Children Born,
+Annual</a>.</p>
+
+<p>Team research. Policy and recession timing annotations used as
+context only.</p>
+:::
