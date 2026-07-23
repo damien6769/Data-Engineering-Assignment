@@ -655,9 +655,9 @@
   font-size: 1.2em;
   z-index: 2;
 }
-.pipe-step .step-id { color: var(--coral); font-weight: 800; font-size: 0.45em; letter-spacing: 0.12em; margin-bottom: 12px; }
-.pipe-step h3 { font-size: 0.65em; margin-bottom: 10px; }
-.pipe-step p { font-size: 0.42em; line-height: 1.35; color: var(--ink-soft); }
+.pipe-step .step-id { color: var(--coral); font-weight: 800; font-size: 0.54em; letter-spacing: 0.12em; margin-bottom: 12px; }
+.pipe-step h3 { font-size: 0.78em; margin-bottom: 10px; }
+.pipe-step p { font-size: 0.50em; line-height: 1.35; color: var(--ink-soft); }
 
 .schema-grid {
   display: grid;
@@ -850,7 +850,7 @@ pre code {
   border-radius: 999px;
   background: rgba(15, 58, 102, 0.10);
   color: var(--navy);
-  font-size: 0.46em;
+  font-size: 0.66em;
   font-weight: 900;
   letter-spacing: 0.04em;
   margin-bottom: 8px;
