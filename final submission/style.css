@@ -618,11 +618,11 @@
 }
 .source-tile .label {
   display: inline-block;
-  font-size: 0.36em;
+  font-size: 0.68em;
   letter-spacing: 0.12em;
   color: var(--coral-dark);
   background: rgba(184,111,95,0.11);
-  padding: 5px 9px;
+  padding: 8px 14px;
   border-radius: 999px;
   margin-bottom: 12px;
   font-weight: 800;
