@@ -369,6 +369,7 @@ schooling_5yr <- schooling |>
 
 policy_markers <- tribble(
   ~year, ~label,
+  1961, "1961: free universal\nprimary education",
   1994, "1994: curriculum unified\nfor both sexes"
 )
 
@@ -451,72 +452,28 @@ p_insight2 <- ggplot() +
     plot.margin = margin(6, 12, 6, 8)
   )
 
-first_marriage_wide <- read_singstat_wide(file.path(data_dir, "MedianAgeAtFirstMarriageOfResidentCitizenGroomsAndBridesAnnual.csv"))
-first_birth_wide <- read_singstat_wide(file.path(data_dir, "MedianAgeOfMothersAtFirstBirthAnnual.csv"))
 family_size_wide <- read_singstat_wide(file.path(data_dir, "ResidentEverMarriedFemalesByAgeGroupAndNumberOfChildrenBornAnnual.csv"))
-
-resident_brides_first_marriage <- first_marriage_wide |>
-  filter(data_series == "Resident Brides") |>
-  to_long_years() |>
-  transmute(year, median_age_first_marriage = value)
-
-resident_first_birth_age <- first_birth_wide |>
-  filter(data_series == "Median Age Of Mothers At First Birth For Resident Births") |>
-  to_long_years() |>
-  transmute(year, median_age_first_birth = value)
-
-family_timing <- bind_rows(
-  resident_brides_first_marriage |>
-    filter(year >= 1990, year <= 2024) |>
-    transmute(year, milestone = "First marriage", median_age = median_age_first_marriage),
-  resident_first_birth_age |>
-    filter(year >= 1990, year <= 2024) |>
-    transmute(year, milestone = "First birth", median_age = median_age_first_birth)
+cpi_wide <- readr::read_csv(
+  file.path(data_dir, "ConsumerPriceIndexCPI2024AsBaseYearMonthly.csv"),
+  na = c("", "na", "NA", "N.A.", "-"),
+  show_col_types = FALSE
 ) |>
-  mutate(milestone = factor(milestone, levels = c("First marriage", "First birth")))
+  rename(data_series = DataSeries)
 
-family_timing_labels <- family_timing |>
-  group_by(milestone) |>
-  filter(year %in% c(min(year), max(year))) |>
-  ungroup() |>
+cpi_annual <- cpi_wide |>
+  filter(data_series == "All Items") |>
+  pivot_longer(
+    cols = matches("^\\d{4}[A-Za-z]{3}$"),
+    names_to = "period",
+    values_to = "cpi_index"
+  ) |>
   mutate(
-    label = paste0(year, ": ", round(median_age, 1)),
-    label_x = if_else(year == min(year), year - 0.8, year + 0.45),
-    label_y = case_when(
-      milestone == "First marriage" & year == min(year) ~ median_age - 0.25,
-      milestone == "First birth" & year == min(year) ~ median_age + 0.25,
-      milestone == "First marriage" ~ median_age - 0.18,
-      TRUE ~ median_age + 0.18
-    ),
-    hjust_label = if_else(year == min(year), 1, 0)
-  )
-
-p_insight3a <- ggplot(family_timing, aes(x = year, y = median_age, colour = milestone)) +
-  geom_line(linewidth = 1.25) +
-  geom_point(data = family_timing_labels, size = 3.4, show.legend = FALSE) +
-  geom_label(
-    data = family_timing_labels,
-    aes(x = label_x, y = label_y, label = label, hjust = hjust_label),
-    size = 3.6,
-    label.size = 0.18,
-    fill = "white",
-    show.legend = FALSE
-  ) +
-  scale_colour_manual(values = c("First marriage" = "#2F4B7C", "First birth" = "#7A5195")) +
-  scale_x_continuous(breaks = seq(1990, 2025, 5), expand = expansion(mult = c(0.09, 0.16))) +
-  scale_y_continuous(breaks = seq(25, 33, 1), limits = c(24.7, 32.7)) +
-  labs(
-    title = "Did marriage and first birth shift later?",
-    subtitle = "Median age at first marriage and first birth both moved upward from 1990 to 2024.",
-    x = "Year",
-    y = "Median age",
-    colour = NULL
-  ) +
-  theme_minimal(base_size = 12) +
-  theme(
-    legend.position = "bottom",
-    plot.title = element_text(face = "bold")
-  )
+    year = as.integer(str_sub(period, 1, 4)),
+    cpi_index = readr::parse_number(as.character(cpi_index))
+  ) |>
+  filter(year >= 1990, year <= 2025) |>
+  group_by(year) |>
+  summarise(cpi_index = mean(cpi_index, na.rm = TRUE), .groups = "drop")
 
 family_size_tagged <- family_size_wide |>
   mutate(
@@ -554,6 +511,19 @@ family_size_selected <- family_size_40_49 |>
     label = if_else(share_pct >= 7, paste0(round(share_pct, 0), "%"), "")
   )
 
+cpi_selected <- cpi_annual |>
+  filter(year %in% c(1990, 2000, 2010, 2020, 2025)) |>
+  arrange(year) |>
+  mutate(
+    cost_step_pct = (cpi_index / lag(cpi_index) - 1) * 100,
+    cost_fill_pct = replace_na(cost_step_pct, 0),
+    cost_label = if_else(
+      year == 1990,
+      "Cost baseline",
+      paste0("+", round(cost_step_pct), "% cost")
+    )
+  )
+
 p_insight3b <- ggplot(family_size_selected, aes(x = factor(year), y = share_pct, fill = children_born)) +
   geom_col(width = 0.72, colour = "white", linewidth = 0.5) +
   geom_text(
@@ -563,10 +533,31 @@ p_insight3b <- ggplot(family_size_selected, aes(x = factor(year), y = share_pct,
     fontface = "bold",
     size = 3.4
   ) +
+  geom_tile(
+    data = cpi_selected,
+    aes(x = factor(year), y = 108, alpha = cost_fill_pct),
+    inherit.aes = FALSE,
+    fill = "#4B5FA8",
+    width = 0.72,
+    height = 7
+  ) +
+  geom_text(
+    data = cpi_selected,
+    aes(
+      x = factor(year),
+      y = 108,
+      label = cost_label
+    ),
+    inherit.aes = FALSE,
+    size = 3,
+    fontface = "bold",
+    colour = "#24305E"
+  ) +
   scale_y_continuous(
     labels = scales::label_percent(scale = 1),
     breaks = seq(0, 100, 25),
-    expand = expansion(mult = c(0, 0.02))
+    limits = c(0, 114),
+    expand = expansion(mult = c(0, 0.01))
   ) +
   scale_fill_manual(
     values = c(
@@ -577,15 +568,18 @@ p_insight3b <- ggplot(family_size_selected, aes(x = factor(year), y = share_pct,
     ),
     name = "Children born"
   ) +
+  scale_alpha_continuous(range = c(0.16, 0.72), guide = "none") +
   labs(
     title = "Did completed family size shift smaller?",
-    subtitle = "Ever-married resident females aged 40 to 49, selected years.",
+    subtitle = "Selected years. Top strip shows CPI increase from the previous selected year.",
     x = "Year",
-    y = "Share of women aged 40 to 49"
+    y = "Share of women aged 40 to 49",
+    caption = "Cost labels compare each selected year with the previous selected year. Family-size bars remain percentages."
   ) +
   theme_minimal(base_size = 12) +
   theme(
     legend.position = "bottom",
+    legend.box = "vertical",
     panel.grid.major.x = element_blank(),
     plot.title = element_text(face = "bold")
   )
@@ -1197,49 +1191,72 @@ born.</p>
 Data sources
 :::
 
-<h2>All 11 dataset files used in the final slides</h2>
+<h2>All 10 dataset files used in the final slides</h2>
 
 ::: hr-accent
 :::
 
-+-------------------------------------------------------------------------+----------------------+----------------------+
-| Dataset file                                                            | Main variables used  | Used for             |
-+=========================================================================+======================+======================+
-| `BirthsAndFertilityRatesAnnual.csv`                                     | TFR, ASFR by age     | Main visualisation   |
-|                                                                         | group                | and policy/recession |
-|                                                                         |                      | analysis             |
-+-------------------------------------------------------------------------+----------------------+----------------------+
-| `M182201.csv`                                                           | Female LFPR by age   | Main visualisation   |
-|                                                                         | group                |                      |
-+-------------------------------------------------------------------------+----------------------+----------------------+
-| `M182201_female_lfpr_aggregate.csv`                                     | Female LFPR          | Insight 1            |
-|                                                                         | aggregate            |                      |
-+-------------------------------------------------------------------------+----------------------+----------------------+
-| `M182201_female_lfpr_by_age_15_24.csv`                                  | Female LFPR, ages    | Insight 2            |
-|                                                                         | 15-19 and 20-24      |                      |
-+-------------------------------------------------------------------------+----------------------+----------------------+
-| `M850581_female_university_qualified.csv`                               | Female               | Insight 1            |
-|                                                                         | university-qualified |                      |
-|                                                                         | residents            |                      |
-+-------------------------------------------------------------------------+----------------------+----------------------+
-| `M850001_female_literacy_rate.csv`                                      | Female literacy rate | Insight 2            |
-+-------------------------------------------------------------------------+----------------------+----------------------+
-| `M850591_female_mean_years_schooling.csv`                               | Female mean years of | Insight 2            |
-|                                                                         | schooling            |                      |
-+-------------------------------------------------------------------------+----------------------+----------------------+
-| `M810741_median_age_first_birth.csv`                                    | Median age at first  | Insight 1            |
-|                                                                         | birth                |                      |
-+-------------------------------------------------------------------------+----------------------+----------------------+
-| `MedianAgeAtFirstMarriageOfResidentCitizenGroomsAndBridesAnnual.csv`    | Median age at first  | Insight 3A           |
-|                                                                         | marriage             |                      |
-+-------------------------------------------------------------------------+----------------------+----------------------+
-| `MedianAgeOfMothersAtFirstBirthAnnual.csv`                              | Median age of        | Insight 3A           |
-|                                                                         | mothers at first     |                      |
-|                                                                         | birth                |                      |
-+-------------------------------------------------------------------------+----------------------+----------------------+
-| `ResidentEverMarriedFemalesByAgeGroupAndNumberOfChildrenBornAnnual.csv` | Children born by     | Insight 3B           |
-|                                                                         | women aged 40 to 49  |                      |
-+-------------------------------------------------------------------------+----------------------+----------------------+
+<table class="custom-table compact-table">
+  <thead>
+    <tr>
+      <th>Dataset file</th>
+      <th>Main variables used</th>
+      <th>Used for</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>BirthsAndFertilityRatesAnnual.csv</code></td>
+      <td>TFR, ASFR by age group</td>
+      <td>Main visualisation and policy/recession analysis</td>
+    </tr>
+    <tr>
+      <td><code>M182201.csv</code></td>
+      <td>Female LFPR by age group</td>
+      <td>Main visualisation</td>
+    </tr>
+    <tr>
+      <td><code>M182201_female_lfpr_aggregate.csv</code></td>
+      <td>Female LFPR aggregate</td>
+      <td>Insight 1</td>
+    </tr>
+    <tr>
+      <td><code>M182201_female_lfpr_by_age_15_24.csv</code></td>
+      <td>Female LFPR, ages 15-19 and 20-24</td>
+      <td>Insight 2</td>
+    </tr>
+    <tr>
+      <td><code>M850581_female_university_qualified.csv</code></td>
+      <td>Female university-qualified residents</td>
+      <td>Insight 1</td>
+    </tr>
+    <tr>
+      <td><code>M850001_female_literacy_rate.csv</code></td>
+      <td>Female literacy rate</td>
+      <td>Insight 2</td>
+    </tr>
+    <tr>
+      <td><code>M850591_female_mean_years_schooling.csv</code></td>
+      <td>Female mean years of schooling</td>
+      <td>Insight 2</td>
+    </tr>
+    <tr>
+      <td><code>M810741_median_age_first_birth.csv</code></td>
+      <td>Median age at first birth</td>
+      <td>Insight 1</td>
+    </tr>
+    <tr>
+      <td><code>ResidentEverMarriedFemalesByAgeGroupAndNumberOfChildrenBornAnnual.csv</code></td>
+      <td>Children born by women aged 40 to 49</td>
+      <td>Insight 3</td>
+    </tr>
+    <tr>
+      <td><code>ConsumerPriceIndexCPI2024AsBaseYearMonthly.csv</code></td>
+      <td>CPI, all items</td>
+      <td>Insight 3</td>
+    </tr>
+  </tbody>
+</table>
 
 ------------------------------------------------------------------------
 
@@ -1249,7 +1266,7 @@ Data sources
 Source crediting
 :::
 
-<h2>Official source tables behind the 11 files</h2>
+<h2>Official source tables behind the 10 files</h2>
 
 ::: hr-accent
 :::
@@ -1294,14 +1311,10 @@ Female LFPR, ages 15 to 24</p>
 ::: source-link-card
 <h3>Insight 3 and 4</h3>
 
-<p><a href="https://tablebuilder.singstat.gov.sg/table/TS/M830182">M830182</a>
-Median Age at First Marriage</p>
-
-<p><a href="https://data.gov.sg/datasets/d_d032130d8b6425287566bd439f13d21c/view">M810741</a>
-Median Age of Mothers at First Birth</p>
-
 <p><a href="https://data.gov.sg/datasets/d_1de45e559613cb1a82b65ca23d9f2ffd/view">M810571</a>
 Ever-Married Females by Children Born</p>
+
+<p>Consumer Price Index, CPI 2024 as Base Year, Monthly. Uploaded project dataset.</p>
 
 <p><a href="https://data.gov.sg/datasets/d_e39eeaeadb571c0d0725ef1eec48d166/view">M810091</a>
 TFR for policy/recession windows</p>
@@ -1309,7 +1322,7 @@ TFR for policy/recession windows</p>
 :::::::
 
 ::: {.tiny-note .source-note}
-M182201 and M810741 are reused in more than one insight. Policy and
+M182201 is reused in more than one insight. Policy and
 recession markers are manually curated annotation tables used as
 context, not measured outcome data.
 :::
@@ -1514,7 +1527,7 @@ Turns raw data into story-ready variables.
 
 ------------------------------------------------------------------------
 
-## Engineering transformations and checks {.clean-slide}
+## Engineering transformations and checks {.clean-slide .schema-large}
 
 ::: kicker
 Reproducibility and validation
@@ -1571,7 +1584,7 @@ percentage totals.</p>
 
 ------------------------------------------------------------------------
 
-## Final plot-ready tables {.clean-slide}
+## Final plot-ready tables {.clean-slide .schema-large}
 
 ::: kicker
 Output structure
@@ -1737,7 +1750,7 @@ decline.
 
 ## Insight 1: Education, LFPR and birth timing {.clean-slide}
 
-::::: two-col
+::::: {.two-col .plot-wide}
 ```{r}
 #| fig-width: 8.8
 #| fig-height: 5.2
@@ -1766,7 +1779,7 @@ together</h3>
 
 ## Insight 2: Longer schooling and younger-age fertility {.clean-slide}
 
-::::: two-col
+::::: {.two-col .plot-wide}
 ```{r}
 #| fig-width: 8.8
 #| fig-height: 5.2
@@ -1794,10 +1807,10 @@ Insight 2
 
 ## Insight 3: Completed family size became smaller {.clean-slide}
 
-::::: two-col
+::::: {.two-col .plot-wide}
 ```{r}
-#| fig-width: 7.2
-#| fig-height: 5.2
+#| fig-width: 8.2
+#| fig-height: 5.5
 p_insight3b
 ```
 
@@ -1885,7 +1898,7 @@ questions.</p>
 
 ------------------------------------------------------------------------
 
-## Conclusion {#conclusion-divider .section-divider background-image="images/conclusion-bg.jpg" background-size="cover" background-position="center" background-opacity="0.5"}
+## Conclusion {#conclusion-divider .section-divider background-image="images/insightsanalysis-bg.jpg" background-size="cover" background-position="center" background-opacity="0.5"}
 
 ::: section-number
 07
@@ -1929,44 +1942,25 @@ Main sources
 :::
 
 ::: references-list
-<p>Channel NewsAsia. Original birth-count visualisation used for
-critique.</p>
+<ol>
+  <li>Chew, H. M. (2023, September 29). <em>Record number of marriages, drop in Singaporean births in 2022</em>. Channel NewsAsia. <a href="https://www.channelnewsasia.com/singapore/marriage-birth-rate-fertility-ageing-population-immigration-2022-3807991">https://www.channelnewsasia.com/singapore/marriage-birth-rate-fertility-ageing-population-immigration-2022-3807991</a></li>
 
-<p>Singapore Department of Statistics.
-<a href="https://data.gov.sg/datasets/d_e39eeaeadb571c0d0725ef1eec48d166/view">M810091:
-Births and Fertility Rates, Annual</a>.</p>
+  <li>Singapore Department of Statistics. (n.d.). <em>Births and fertility rates, annual</em> [Data set]. data.gov.sg. Retrieved July 24, 2026, from <a href="https://data.gov.sg/datasets/d_e39eeaeadb571c0d0725ef1eec48d166/view">https://data.gov.sg/datasets/d_e39eeaeadb571c0d0725ef1eec48d166/view</a></li>
 
-<p>Singapore Department of Statistics.
-<a href="https://data.gov.sg/datasets/d_465c5bd4a9adae523f9577371daf5e24/view">M182201:
-Resident Labour Force Participation Rate by Age and Sex</a>.</p>
+  <li>Singapore Department of Statistics. (n.d.). <em>Resident labour force participation rate by age and sex</em> [Data set]. data.gov.sg. Retrieved July 24, 2026, from <a href="https://data.gov.sg/datasets/d_465c5bd4a9adae523f9577371daf5e24/view">https://data.gov.sg/datasets/d_465c5bd4a9adae523f9577371daf5e24/view</a></li>
 
-<p>Singapore Department of Statistics.
-<a href="https://tablebuilder.singstat.gov.sg/table/TS/M850581">M850581:
-Residents 25+ by Highest Qualification Attained, Sex and Age
-Group</a>.</p>
+  <li>Singapore Department of Statistics. (n.d.). <em>Singapore residents aged 25 years and over by highest qualification attained, sex and age group</em> [Data set]. SingStat Table Builder. Retrieved July 24, 2026, from <a href="https://tablebuilder.singstat.gov.sg/table/TS/M850581">https://tablebuilder.singstat.gov.sg/table/TS/M850581</a></li>
 
-<p>Singapore Department of Statistics.
-<a href="https://data.gov.sg/datasets/d_a98f2ae027bf4442d7250d50505feabe/view">M850001:
-Indicators on Education and Literacy</a>.</p>
+  <li>Singapore Department of Statistics. (n.d.). <em>Indicators on education and literacy</em> [Data set]. data.gov.sg. Retrieved July 24, 2026, from <a href="https://data.gov.sg/datasets/d_a98f2ae027bf4442d7250d50505feabe/view">https://data.gov.sg/datasets/d_a98f2ae027bf4442d7250d50505feabe/view</a></li>
 
-<p>Singapore Department of Statistics.
-<a href="https://data.gov.sg/datasets/d_0f8fd20f3aecd9dccd41b9d750e72d4a/view">M850591:
-Mean Years of Schooling</a>.</p>
+  <li>Singapore Department of Statistics. (n.d.). <em>Mean years of schooling</em> [Data set]. data.gov.sg. Retrieved July 24, 2026, from <a href="https://data.gov.sg/datasets/d_0f8fd20f3aecd9dccd41b9d750e72d4a/view">https://data.gov.sg/datasets/d_0f8fd20f3aecd9dccd41b9d750e72d4a/view</a></li>
 
-<p>Singapore Department of Statistics.
-<a href="https://data.gov.sg/datasets/d_d032130d8b6425287566bd439f13d21c/view">M810741:
-Median Age of Mothers at First Birth, Annual</a>.</p>
+  <li>Singapore Department of Statistics. (n.d.). <em>Median age of mothers at first birth, annual</em> [Data set]. data.gov.sg. Retrieved July 24, 2026, from <a href="https://data.gov.sg/datasets/d_d032130d8b6425287566bd439f13d21c/view">https://data.gov.sg/datasets/d_d032130d8b6425287566bd439f13d21c/view</a></li>
 
-<p>Singapore Department of Statistics.
-<a href="https://tablebuilder.singstat.gov.sg/table/TS/M830182">M830182:
-Median Age at First Marriage of Resident and Citizen Grooms and Brides,
-Annual</a>.</p>
+  <li>Singapore Department of Statistics. (n.d.). <em>Resident ever-married females by age group and number of children born, annual</em> [Data set]. data.gov.sg. Retrieved July 24, 2026, from <a href="https://data.gov.sg/datasets/d_1de45e559613cb1a82b65ca23d9f2ffd/view">https://data.gov.sg/datasets/d_1de45e559613cb1a82b65ca23d9f2ffd/view</a></li>
 
-<p>Singapore Department of Statistics.
-<a href="https://data.gov.sg/datasets/d_1de45e559613cb1a82b65ca23d9f2ffd/view">M810571:
-Resident Ever-Married Females by Age Group and Number of Children Born,
-Annual</a>.</p>
+  <li>Singapore Department of Statistics. (2025). <em>Consumer price index (CPI), 2024 as base year, monthly</em> [Data set]. data.gov.sg. Retrieved July 24, 2026, from <a href="https://data.gov.sg/datasets/d_bdaff844e3ef89d39fceb962ff8f0791/view">https://data.gov.sg/datasets/d_bdaff844e3ef89d39fceb962ff8f0791/view</a></li>
 
-<p>Team research. Policy and recession timing annotations used as
-context only.</p>
+  <li>Team 11. (2026). <em>Policy and recession timing annotations for Singapore fertility analysis</em> [Unpublished data table]. AAI1001 Data Engineering and Visualization project.</li>
+</ol>
 :::

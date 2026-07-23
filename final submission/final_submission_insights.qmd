@@ -431,6 +431,7 @@ schooling_5yr <- schooling |>
 
 policy_markers <- tribble(
   ~year, ~label,
+  1961, "1961: free universal\nprimary education",
   1994, "1994: curriculum unified\nfor both sexes"
 )
 ```
@@ -517,73 +518,43 @@ ggplot() +
 
 ---
 
-## Insight 3: Later family formation and smaller completed families
+## Insight 3: Smaller completed families and cost context
 
-**Question:** Did later marriage and later first birth coincide with smaller completed families?
+**Question:** Did completed family size shift smaller while cost conditions rose?
 
 **Datasets used:**
 
 | Dataset | File | Source | Range |
 |---|---|---|---|
-| Median age at first marriage, resident brides | `MedianAgeAtFirstMarriageOfResidentCitizenGroomsAndBridesAnnual.csv` | SingStat | 1984 to 2024 |
-| Median age at first birth, resident births | `MedianAgeOfMothersAtFirstBirthAnnual.csv` | SingStat | 1990 to 2025 |
 | Ever-married resident females aged 40 to 49 by children born | `ResidentEverMarriedFemalesByAgeGroupAndNumberOfChildrenBornAnnual.csv` | SingStat | 1980 to 2025 |
+| Consumer price index, all items | `ConsumerPriceIndexCPI2024AsBaseYearMonthly.csv` | SingStat | 1961 to 2026 |
 
-**Reading the plots:** Plot A shows timing moving later. Plot B shows completed family size shifting away from 3 or more children.
+**Reading the plot:** Bars show completed family-size composition. The line uses the right axis to show CPI as broad cost context.
 
 ```{r}
 #| label: insight-3-data
-first_marriage_wide <- read_singstat_wide(file.path(data_dir, "MedianAgeAtFirstMarriageOfResidentCitizenGroomsAndBridesAnnual.csv"))
-first_birth_wide <- read_singstat_wide(file.path(data_dir, "MedianAgeOfMothersAtFirstBirthAnnual.csv"))
 family_size_wide <- read_singstat_wide(file.path(data_dir, "ResidentEverMarriedFemalesByAgeGroupAndNumberOfChildrenBornAnnual.csv"))
-
-resident_brides_first_marriage <- first_marriage_wide |>
-  filter(data_series == "Resident Brides") |>
-  to_long_years() |>
-  transmute(year, median_age_first_marriage = value)
-
-resident_first_birth_age <- first_birth_wide |>
-  filter(data_series == "Median Age Of Mothers At First Birth For Resident Births") |>
-  to_long_years() |>
-  transmute(year, median_age_first_birth = value)
-
-family_timing <- bind_rows(
-  resident_brides_first_marriage |>
-    filter(year >= 1990, year <= 2024) |>
-    transmute(year, milestone = "First marriage", median_age = median_age_first_marriage),
-  resident_first_birth_age |>
-    filter(year >= 1990, year <= 2024) |>
-    transmute(year, milestone = "First birth", median_age = median_age_first_birth)
+cpi_wide <- readr::read_csv(
+  file.path(data_dir, "ConsumerPriceIndexCPI2024AsBaseYearMonthly.csv"),
+  na = c("", "na", "NA", "N.A.", "-"),
+  show_col_types = FALSE
 ) |>
-  mutate(milestone = factor(milestone, levels = c("First marriage", "First birth")))
+  rename(data_series = DataSeries)
 
-family_timing_labels <- family_timing |>
-  group_by(milestone) |>
-  filter(year %in% c(min(year), max(year))) |>
-  ungroup() |>
-  mutate(
-    label = paste0(year, ": ", round(median_age, 1)),
-    label_x = if_else(year == min(year), year - 0.8, year + 0.45),
-    label_y = case_when(
-      milestone == "First marriage" & year == min(year) ~ median_age - 0.25,
-      milestone == "First birth" & year == min(year) ~ median_age + 0.25,
-      milestone == "First marriage" ~ median_age - 0.18,
-      TRUE ~ median_age + 0.18
-    ),
-    hjust_label = if_else(year == min(year), 1, 0)
-  )
-
-family_timing_note <- family_timing |>
-  group_by(milestone) |>
-  summarise(
-    start_age = median_age[year == min(year)],
-    end_age = median_age[year == max(year)],
-    change_years = end_age - start_age,
-    .groups = "drop"
+cpi_annual <- cpi_wide |>
+  filter(data_series == "All Items") |>
+  pivot_longer(
+    cols = matches("^\\d{4}[A-Za-z]{3}$"),
+    names_to = "period",
+    values_to = "cpi_index"
   ) |>
-  mutate(label = paste0(milestone, " shifted +", round(change_years, 1), " years")) |>
-  summarise(note = paste(label, collapse = "\n")) |>
-  mutate(year = 1991, median_age = 32.3)
+  mutate(
+    year = as.integer(str_sub(period, 1, 4)),
+    cpi_index = readr::parse_number(as.character(cpi_index))
+  ) |>
+  filter(year >= 1990, year <= 2025) |>
+  group_by(year) |>
+  summarise(cpi_index = mean(cpi_index, na.rm = TRUE), .groups = "drop")
 
 family_size_tagged <- family_size_wide |>
   mutate(
@@ -620,48 +591,20 @@ family_size_selected <- family_size_40_49 |>
     ),
     label = if_else(share_pct >= 7, paste0(round(share_pct, 0), "%"), "")
   )
-```
 
-```{r}
-#| label: insight-3-plot-a
-ggplot(family_timing, aes(x = year, y = median_age, colour = milestone)) +
-  geom_line(linewidth = 1.25) +
-  geom_point(data = family_timing_labels, size = 3.4, show.legend = FALSE) +
-  geom_label(
-    data = family_timing_labels,
-    aes(x = label_x, y = label_y, label = label, hjust = hjust_label),
-    size = 3.4,
-    fontface = "bold",
-    label.size = 0.18,
-    fill = "white",
-    show.legend = FALSE
-  ) +
-  geom_text(
-    data = family_timing_note,
-    aes(x = year, y = median_age, label = note),
-    inherit.aes = FALSE,
-    hjust = 0,
-    size = 3.5,
-    fontface = "bold",
-    colour = "grey25"
-  ) +
-  scale_colour_manual(values = c("First marriage" = "#2F4B7C", "First birth" = "#7A5195")) +
-  scale_x_continuous(breaks = seq(1990, 2025, 5), expand = expansion(mult = c(0.09, 0.16))) +
-  scale_y_continuous(breaks = seq(25, 33, 1), limits = c(24.7, 32.7)) +
-  labs(
-    title = "Did marriage and first birth shift later?",
-    subtitle = "Median ages for resident brides and resident births, 1990 to 2024.",
-    x = "Year",
-    y = "Median age",
-    colour = NULL,
-    caption = "The two medians describe population timing. They do not track the same individuals."
-  ) +
-  theme_minimal(base_size = 13) +
-  theme(
-    legend.position = "bottom",
-    plot.title = element_text(face = "bold"),
-    panel.grid.minor = element_blank()
+cpi_selected <- cpi_annual |>
+  filter(year %in% c(1990, 2000, 2010, 2020, 2025)) |>
+  arrange(year) |>
+  mutate(
+    cost_step_pct = (cpi_index / lag(cpi_index) - 1) * 100,
+    cost_fill_pct = replace_na(cost_step_pct, 0),
+    cost_label = if_else(
+      year == 1990,
+      "Cost baseline",
+      paste0("+", round(cost_step_pct), "% cost")
+    )
   )
+
 ```
 
 ```{r}
@@ -675,10 +618,31 @@ ggplot(family_size_selected, aes(x = factor(year), y = share_pct, fill = childre
     fontface = "bold",
     colour = "grey20"
   ) +
+  geom_tile(
+    data = cpi_selected,
+    aes(x = factor(year), y = 108, alpha = cost_fill_pct),
+    inherit.aes = FALSE,
+    fill = "#4B5FA8",
+    width = 0.72,
+    height = 7
+  ) +
+  geom_text(
+    data = cpi_selected,
+    aes(
+      x = factor(year),
+      y = 108,
+      label = cost_label
+    ),
+    inherit.aes = FALSE,
+    size = 3,
+    fontface = "bold",
+    colour = "#24305E"
+  ) +
   scale_y_continuous(
     labels = scales::label_percent(scale = 1),
     breaks = seq(0, 100, 25),
-    expand = expansion(mult = c(0, 0.02))
+    limits = c(0, 114),
+    expand = expansion(mult = c(0, 0.01))
   ) +
   scale_fill_manual(
     values = c(
@@ -688,17 +652,19 @@ ggplot(family_size_selected, aes(x = factor(year), y = share_pct, fill = childre
       "None" = "#6B7280"
     )
   ) +
+  scale_alpha_continuous(range = c(0.16, 0.72), guide = "none") +
   labs(
     title = "Did completed family size shift smaller?",
-    subtitle = "Share of ever-married resident females aged 40 to 49 by number of children born.",
+    subtitle = "Selected years. Top strip shows CPI increase from the previous selected year.",
     x = "Year",
     y = "Share of women aged 40 to 49",
     fill = "Children born",
-    caption = "Selected benchmark years are shown to keep the family-size shift readable."
+    caption = "Cost labels compare each selected year with the previous selected year. Family-size bars remain percentages."
   ) +
   theme_minimal(base_size = 13) +
   theme(
     legend.position = "bottom",
+    legend.box = "vertical",
     panel.grid.major.x = element_blank(),
     plot.title = element_text(face = "bold")
   )
