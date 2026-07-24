@@ -1053,7 +1053,8 @@ change or family-size behaviour.</p>
 
 ------------------------------------------------------------------------
 
-## Strengths & Weaknesses {.clean-slide}
+
+## Strengths {.clean-slide}
 
 ::: kicker
 Visual critique
@@ -1062,72 +1063,118 @@ Visual critique
 ::: hr-accent
 :::
 
-:::::::: contrast-grid
+<h3 style="margin-top: 0.2em;">
 
-::::: {.contrast-col .pro}
-
-::: contrast-label
-Strengths
-:::
-
-::: contrast-lead
 It communicates the headline quickly.
+
+</h3>
+
+::::::: two-col
+:::: image-frame
+<img src="images/cna_birth_chart.png" alt="Original CNA birth-count chart"/>
+
+::: caption
+Source: CNA birth-count visualisation on Singapore citizen births.
+:::
+::::
+
+::::::: card-stack
+:::: {.info-card .good .fragment}
+::: num
+01
 :::
 
-:::: contrast-item
 <h3>Clear message</h3>
 
 <p>The reader immediately sees that citizen births declined.</p>
 ::::
 
-:::: contrast-item
+:::: {.info-card .good .fragment}
+::: num
+02
+:::
+
 <h3>Simple encoding</h3>
 
 <p>Bars and direct labels are easy to read.</p>
 ::::
 
-:::: contrast-item
+:::: {.info-card .good .fragment}
+::: num
+03
+:::
+
 <h3>Useful for news</h3>
 
 <p>The short comparison period supports a compact article chart.</p>
 ::::
+:::::::
+:::::::
 
-:::::
 
-::::: {.contrast-col .con .fragment}
 
-::: contrast-label
-Weaknesses
+------------------------------------------------------------------------
+
+## Weaknesses {.clean-slide}
+
+::: kicker
+Visual critique
 :::
 
-::: contrast-lead
+::: hr-accent
+:::
+
+<h3 style="margin-top: 1em;">
+
 The chart shows the outcome, not the underlying pattern.
+
+</h3>
+
+::::::: two-col
+:::: image-frame
+<img src="images/cna_birth_chart.png" alt="Original CNA birth-count chart"/>
+
+::: caption
+Source: CNA birth-count visualisation on Singapore citizen births.
+:::
+::::
+
+::::::: card-stack
+:::: {.info-card .bad .fragment}
+::: num
+01
 :::
 
-:::: contrast-item
 <h3>Birth counts only</h3>
 
 <p>Counts are affected by population size and age structure, not only
 fertility behaviour.</p>
 ::::
 
-:::: contrast-item
+:::: {.info-card .bad .fragment}
+::: num
+02
+:::
+
 <h3>Short time horizon</h3>
 
 <p>2012-2022 is too short to explain Singapore's longer fertility
 transition.</p>
 ::::
 
-:::: contrast-item
+:::: {.info-card .bad .fragment}
+::: num
+03
+:::
+
 <h3>No driver context</h3>
 
 <p>It does not show maternal age, female LFPR, education, policy timing,
 recession context or family-size changes.</p>
 ::::
+:::::::
+:::::::
 
-:::::
-
-::::::::
 ------------------------------------------------------------------------
 
 ## Proposed Improvements {#proposed-improvements .section-divider background-image="images/improvements-bg.jpg" background-size="cover" background-position="center" background-opacity="0.5" transition="slide"}
