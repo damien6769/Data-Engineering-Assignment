@@ -28,6 +28,7 @@ editor:
 #| label: setup
 library(tidyverse)
 library(scales)
+library(ggnewscale)
 
 data_dir <- "datasets"
 
@@ -540,8 +541,14 @@ cpi_selected <- cpi_annual |>
     )
   )
 
-p_insight3b <- ggplot(family_size_selected, aes(x = factor(year), y = share_pct, fill = children_born)) +
+
+
+p_insight3b <- ggplot(
+  family_size_selected,
+  aes(x = factor(year), y = share_pct, fill = children_born)
+) +
   geom_col(width = 0.72, colour = "white", linewidth = 0.5) +
+
   geom_text(
     aes(label = label),
     position = position_stack(vjust = 0.5),
@@ -549,32 +556,7 @@ p_insight3b <- ggplot(family_size_selected, aes(x = factor(year), y = share_pct,
     fontface = "bold",
     size = 3.4
   ) +
-  geom_tile(
-    data = cpi_selected,
-    aes(x = factor(year), y = 108, alpha = cost_fill_pct),
-    inherit.aes = FALSE,
-    fill = "#4B5FA8",
-    width = 0.72,
-    height = 7
-  ) +
-  geom_text(
-    data = cpi_selected,
-    aes(
-      x = factor(year),
-      y = 108,
-      label = cost_label
-    ),
-    inherit.aes = FALSE,
-    size = 3,
-    fontface = "bold",
-    colour = "#24305E"
-  ) +
-  scale_y_continuous(
-    labels = scales::label_percent(scale = 1),
-    breaks = seq(0, 100, 25),
-    limits = c(0, 114),
-    expand = expansion(mult = c(0, 0.01))
-  ) +
+
   scale_fill_manual(
     values = c(
       "3 or more children" = "#B94E55",
@@ -584,7 +566,46 @@ p_insight3b <- ggplot(family_size_selected, aes(x = factor(year), y = share_pct,
     ),
     name = "Children born"
   ) +
-  scale_alpha_continuous(range = c(0.16, 0.72), guide = "none") +
+
+  ggnewscale::new_scale_fill() +
+
+  geom_tile(
+    data = cpi_selected,
+    aes(x = factor(year), y = 108, fill = cost_fill_pct),
+    inherit.aes = FALSE,
+    width = 0.72,
+    height = 7,
+    colour = "#EEF1F7",
+    linewidth = 0.4
+  ) +
+
+  geom_text(
+    data = cpi_selected,
+    aes(
+      x = factor(year),
+      y = 108,
+      label = cost_label,
+      colour = label_colour
+    ),
+    inherit.aes = FALSE,
+    size = 3,
+    fontface = "bold",
+    colour="black"
+  ) +
+
+  scale_fill_gradientn(
+    colours = c("#E7EBF8", "#BEC8EA", "#8798CF", "#4B5FA8"),
+    limits = c(0, max(cpi_selected$cost_fill_pct, na.rm = TRUE)),
+    guide = "none"
+  ) +
+
+  scale_y_continuous(
+    labels = scales::label_percent(scale = 1),
+    breaks = seq(0, 100, 25),
+    limits = c(0, 114),
+    expand = expansion(mult = c(0, 0.01))
+  ) +
+
   labs(
     title = "Did completed family size shift smaller?",
     subtitle = "Selected years. Top strip shows CPI increase from the previous selected year.",
@@ -592,6 +613,7 @@ p_insight3b <- ggplot(family_size_selected, aes(x = factor(year), y = share_pct,
     y = "Share of women aged 40 to 49",
     caption = "Cost labels compare each selected year with the previous selected year. Family-size bars remain percentages."
   ) +
+
   theme_minimal(base_size = 12) +
   theme(
     legend.position = "bottom",
@@ -599,6 +621,7 @@ p_insight3b <- ggplot(family_size_selected, aes(x = factor(year), y = share_pct,
     panel.grid.major.x = element_blank(),
     plot.title = element_text(face = "bold")
   )
+
 
 policy_events <- tribble(
   ~event_year, ~event_label, ~policy_stance,
@@ -2015,10 +2038,10 @@ economic downturn.</p>
 Interpretation boundaries
 :::
 
-<h2>What we can and cannot claim</h2>
-
 ::: hr-accent
 :::
+
+<h4>What we can and cannot claim</h4>
 
 :::::: limit-grid
 ::: limit-card
@@ -2066,6 +2089,9 @@ What the whole story means for fertility decline.
 
 ::: kicker
 Final takeaway
+:::
+
+::: hr-accent
 :::
 
 ::: conclusion-big
