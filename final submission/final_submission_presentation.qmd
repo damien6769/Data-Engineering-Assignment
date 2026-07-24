@@ -359,7 +359,19 @@ p_insight1 <- ggplot(insight1_data, aes(x = year, y = female_university_qualifie
     plot.margin = margin(6, 12, 6, 8)
   )
 
-literacy <- readr::read_csv(file.path(data_dir, "M850001_female_literacy_rate.csv"))
+literacy_raw <- read_csv(
+  file.path(data_dir, "IndicatorsOnEducationAndLiteracyAnnual.csv"),
+  na = c("", "NA", "na")
+)
+literacy <- literacy_raw |>
+  filter(str_detect(DataSeries, "^\\s*Literacy Rate \\(15 Years & Over\\) - (Males|Females)\\s*$")) |>
+  mutate(sex = if_else(str_detect(DataSeries, "Males"), "male_literacy_pct", "female_literacy_pct")) |>
+  select(-DataSeries) |>
+  pivot_longer(-sex, names_to = "year", values_to = "value") |>
+  mutate(year = as.integer(year), value = as.numeric(value)) |>
+  filter(!is.na(value)) |>
+  pivot_wider(names_from = sex, values_from = value) |>
+  arrange(year)
 schooling <- readr::read_csv(file.path(data_dir, "M850591_female_mean_years_schooling.csv"))
 lfpr_age <- readr::read_csv(file.path(data_dir, "M182201_female_lfpr_by_age_15_24.csv")) |>
   mutate(age_group = factor(age_group, levels = c("15-19", "20-24")))
@@ -368,79 +380,75 @@ schooling_5yr <- schooling |>
   filter(year %in% c(1980, 1985, 1990, 1995, 2000, 2005, 2010, 2015, 2020, 2024))
 
 policy_markers <- tribble(
-  ~year, ~label,
-  1961, "1961: free universal\nprimary education",
-  1994, "1994: curriculum unified\nfor both sexes"
+  ~year, ~label,             ~label_y,
+  1961,  "1961: universal\nprimary education",  102,
+  1994,  "1994: curriculum\nunified",             90,
+  2003,  "2003: quota on\nwomen lifted",          102
 )
 
 yr_scale <- 100 / 15
 
 p_insight2 <- ggplot() +
-  geom_area(
+  # literacy gap: shaded ribbon between male and female, then both lines on top
+  geom_ribbon(
     data = literacy,
-    aes(x = year, y = female_literacy_pct),
-    fill = "#4a3aa7",
-    alpha = 0.15
+    aes(x = year, ymin = female_literacy_pct, ymax = male_literacy_pct),
+    fill = "#8a4a12", alpha = 0.15
+  ) +
+  geom_line(
+    data = literacy,
+    aes(x = year, y = male_literacy_pct),
+    colour = "#2a78d6", linewidth = 0.9
   ) +
   geom_line(
     data = literacy,
     aes(x = year, y = female_literacy_pct),
-    colour = "#4a3aa7",
-    linewidth = 0.7,
-    alpha = 0.6
+    colour = "#c2255c", linewidth = 0.9
   ) +
+
   geom_col(
     data = schooling_5yr,
     aes(x = year, y = mean_years_schooling * yr_scale),
-    fill = "#c47a2c",
-    colour = "#8a561c",
-    width = 3
+    fill = "#c47a2c", colour = "#8a561c", width = 3
   ) +
   geom_text(
     data = schooling_5yr,
     aes(x = year, y = mean_years_schooling * yr_scale, label = mean_years_schooling),
-    vjust = -0.45,
-    size = 4,
-    colour = "#8a561c"
+    vjust = -0.45, size = 4, colour = "#8a561c"
   ) +
+
   geom_vline(
     data = policy_markers,
     aes(xintercept = year),
-    linetype = "dashed",
-    colour = "grey30",
-    linewidth = 0.8
+    linetype = "dashed", colour = "grey30", linewidth = 0.8
   ) +
   geom_text(
-    data = policy_markers,
-    aes(x = year, y = 102, label = label),
-    hjust = 0,
-    vjust = 1,
-    size = 3.3,
-    colour = "grey20",
-    lineheight = 0.9
-  ) +
+      data = policy_markers,
+      aes(x = year, y = label_y, label = label),
+      hjust = 0, vjust = 1, size = 3, colour = "grey20", lineheight = 0.9
+    ) +
+
   geom_line(
     data = lfpr_age,
     aes(x = year, y = lfpr_pct, colour = age_group),
-    linewidth = 1.8,
-    na.rm = TRUE
+    linewidth = 1.8, na.rm = TRUE
   ) +
   scale_colour_manual(
     name = "Female LFPR",
     values = c("15-19" = "#D73027", "20-24" = "#FC8D59")
   ) +
+
   scale_x_continuous(breaks = seq(1960, 2025, 10), limits = c(1960, 2026)) +
   scale_y_continuous(
     name = "Percent (%)",
     sec.axis = sec_axis(~ . / yr_scale, name = "Mean years of schooling"),
-    limits = c(0, 105),
-    expand = c(0, 0)
+    limits = c(0, 105), expand = c(0, 0)
   ) +
   labs(
     title = stringr::str_wrap("Did longer schooling coincide with younger women's labour withdrawal?", 62),
-    subtitle = stringr::str_wrap("Background = female literacy from 1960. Columns and lines start later where those datasets are available.", 72),
+    subtitle = stringr::str_wrap("Male and female literacy shown as separate lines, with the gap between them shaded. Columns and lines start later where those datasets are available.", 78),
     x = NULL,
-    caption = stringr::str_wrap("Sources: SingStat M850001, M850591 and M182201. Pre-1980 gaps reflect unavailable schooling and age-specific LFPR data, not removed observations.", 95)
+    caption = stringr::str_wrap("Sources: SingStat M850001 (male and female literacy), M850591, M182201. Pre-1980 gaps reflect unavailable schooling and age-specific LFPR data, not removed observations.", 95)
   ) +
   theme_minimal(base_size = 11) +
   theme(
@@ -1659,8 +1667,8 @@ The final visualisation expands the original birth-count chart into a
 ## Final visualisation {.clean-slide}
 
 ```{r}
-#| fig-width: 13.5
-#| fig-height: 6.8
+#| fig-width: 15
+#| fig-height: 8
 p_main
 ```
 
@@ -1762,8 +1770,7 @@ p_insight1
 Insight 1
 :::
 
-<h3>Education, work participation and later birth timing moved
-together</h3>
+<h3>What is driving the increase in female LFPR?</h3>
 
 <p>The number of female LFPR increasing greatly from 50% in 1990 to 60% in 2025.</p>
 
@@ -1771,7 +1778,7 @@ together</h3>
 
 <p>Over the same period also shows the number of median age at first birth rising from 28 years in 1990 to 32 years in 2025.</p>
 
-<p><strong>Interpretation:</strong> This shows that as more women are becoming educated, they will enter the workforce. Those who took this path will spend most of their twenties in university and working to establish a career before settling down. Therefore, the median age for first birth rises to 32.</p>
+<p><strong>Interpretation:</strong> Female LFPR in Singapore rose as a result of rising educational attainment [1]. This shift in cultural norm is causing later marriages, since more women are spending time pursuing higher education and establishing their careers [2].</p>
 ::::
 :::::
 
@@ -1791,15 +1798,15 @@ p_insight2
 Insight 2
 :::
 
-<h3>Younger adulthood shifted toward schooling</h3>
+<h3>Women literacy rates in Singapore</h3>
 
-<p>Government gave women equal opportunities. In 1961, free universal primary education was introduced for all children. In 1994, the secondary curriculum was unified for both sexes, ending the split between technical studies and home economics. Female literacy has risen sharply since the PAP took office, now standing at 97.9%.</p>
+<p>Government policies drove female literacy rates up. 1961: Free primary education was offered. 1994: School curriculum was unified for all sexes. 2003: Quote for female intake to NUS medical school lifted.</p>
 
-<p>Women are spending more time in school, pursuing higher levels of education.</p>
+<p>With more equal opportunities, women are now spending more time in school, pursuing higher levels of education.</p>
 
-<p>Therefore, the female LFPR for ages ranged 15-19 and 20-24 have dropped because girls at that age are still schooling and hence, not starting a family.</p>
+<p>Therefore, the female LFPR for ages ranged 15-19 and 20-24 have dropped because girls at that age are still schooling and hence, not able to join the workforce.</p>
 
-<p><strong>Interpretation:</strong>As more women pursue higher education, they delay starting a family. In the past, education went to sons while women were confined to labour or housework.</p>
+<p><strong>Interpretation:</strong> Education once went to sons; women were confined to labour or homemaking. Women now pursue higher education and delay starting a family, extending the same pattern of later labour force entry seen across this period.</p>
 ::::
 :::::
 
