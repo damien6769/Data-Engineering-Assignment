@@ -684,7 +684,7 @@ p_insight4 <- ggplot(policy_window, aes(x = relative_year, y = tfr, colour = pol
   )
 ```
 
-## Cover {.cover-slide background-image="images/cover-bg.jpg" background-size="cover" background-position="center" background-opacity="0.4"}
+## Cover {.cover-slide background-image="images/cover-bg.jpg" background-size="cover" background-position="center" background-opacity="0.4" transition="slide"}
 
 :::::: cover-content
 ::: cover-kicker
@@ -855,7 +855,7 @@ What the whole story means for fertility decline
 
 ------------------------------------------------------------------------
 
-## The Story {#the-story .section-divider background-image="images/story-bg.jpg" background-size="cover" background-position="center" background-opacity="0.5"}
+## The Story {#the-story .section-divider background-image="images/story-bg.jpg" background-size="cover" background-position="center" background-opacity="0.5" transition="slide"}
 
 ::: section-number
 01
@@ -884,7 +884,7 @@ Singapore's Population
 
 ::::: card-grid-3
 
-:::: {.fragment style="display:flex;flex-direction:column;align-items:center;text-align:center;background:none;box-shadow:none;"}
+:::: {.stat-pop style="display:flex;flex-direction:column;align-items:center;text-align:center;background:none;box-shadow:none;"}
 
 <span style="display:flex;align-items:center;justify-content:center;width:110px;height:110px;border-radius:50%;background:#ff6b4a;color:white;font-weight:700;font-size:2rem;line-height:1;margin:0 auto 14px auto;">0.87</span>
 
@@ -893,7 +893,7 @@ Singapore's Population
 ::::
 
 
-:::: {.fragment  style="display:flex;flex-direction:column;align-items:center;text-align:center;background:none;box-shadow:none;"}
+:::: {.stat-pop style="display:flex;flex-direction:column;align-items:center;text-align:center;background:none;box-shadow:none;"}
 
 <span style="display:flex;align-items:center;justify-content:center;width:110px;height:110px;border-radius:50%;background:#ff6b4a;color:white;font-weight:700;font-size:1.6rem;line-height:1;margin:0 auto 14px auto;">27,500</span>
 
@@ -901,7 +901,7 @@ Singapore's Population
 <p style="margin:0;">in 2025</p>
 ::::
 
-:::: {.fragment style="display:flex;flex-direction:column;align-items:center;text-align:center;background:none;box-shadow:none;"}
+:::: {.stat-pop style="display:flex;flex-direction:column;align-items:center;text-align:center;background:none;box-shadow:none;"}
 
 <span style="display:flex;align-items:center;justify-content:center;width:110px;height:110px;border-radius:50%;background:#ff6b4a;color:white;font-weight:700;font-size:1.6rem;line-height:1;margin:0 auto 14px auto;">1 in 5</span>
 
@@ -912,7 +912,7 @@ Singapore's Population
 
 :::::
 
-::: {.story-question .fragment style="font-size:28px;"} 
+::: {.story-question .fragment fragment-index=1 style="font-size:28px;"}
 **Why this matters**
 
 - Below replacement level -> population cannot sustain itself naturally
@@ -920,7 +920,7 @@ Singapore's Population
 - Citizen population will shrink -> impacting future sustainability
 :::
 
-::: {.story-question .fragment style="font-size:0.8em;"}
+::: {.story-question .fragment fragment-index=1 style="font-size:0.8em;"}
 To address this challenge, it is important to first understand the underlying factors that shape fertility decisions among Singaporeans.
 :::
 
@@ -954,7 +954,7 @@ associated with Singapore's persistently low fertility from 1980 to
 
 ------------------------------------------------------------------------
 
-## Original Visualisation & Critique {#original-visualisation .section-divider background-image="images/critique-bg.jpg" background-size="cover" background-position="center" background-opacity="0.5"}
+## Original Visualisation & Critique {#original-visualisation .section-divider background-image="images/critique-bg.jpg" background-size="cover" background-position="center" background-opacity="0.5" transition="slide"}
 
 ::: section-number
 02
@@ -1000,7 +1000,7 @@ change or family-size behaviour.</p>
 
 ------------------------------------------------------------------------
 
-## Strengths {.clean-slide}
+## Strengths & Weaknesses {.clean-slide}
 
 ::: kicker
 Visual critique
@@ -1009,92 +1009,75 @@ Visual critique
 ::: hr-accent
 :::
 
-<h3 style="margin-top: 1em;">It communicates the headline quickly.</h3>
+:::::::: contrast-grid
 
-::::::::: card-grid-3
-:::: {.info-card .good .fragment}
-::: num
-01
+::::: {.contrast-col .pro}
+
+::: contrast-label
+Strengths
 :::
 
+::: contrast-lead
+It communicates the headline quickly.
+:::
+
+:::: contrast-item
 <h3>Clear message</h3>
 
 <p>The reader immediately sees that citizen births declined.</p>
 ::::
 
-:::: {.info-card .good .fragment}
-::: num
-02
-:::
-
+:::: contrast-item
 <h3>Simple encoding</h3>
 
 <p>Bars and direct labels are easy to read.</p>
 ::::
 
-:::: {.info-card .good .fragment}
-::: num
-03
-:::
-
+:::: contrast-item
 <h3>Useful for news</h3>
 
 <p>The short comparison period supports a compact article chart.</p>
 ::::
-:::::::::
-------------------------------------------------------------------------
 
-## Weaknesses {.clean-slide}
+:::::
 
-::: kicker
-Visual critique
+::::: {.contrast-col .con .fragment}
+
+::: contrast-label
+Weaknesses
 :::
 
-::: hr-accent
+::: contrast-lead
+The chart shows the outcome, not the underlying pattern.
 :::
 
-<h3 style="margin-top: 1em;">The chart shows the outcome, not the underlying pattern.</h3>
-
-
-
-::::::::: card-grid-3
-:::: {.info-card .bad .fragment}
-::: num
-01
-:::
-
+:::: contrast-item
 <h3>Birth counts only</h3>
 
 <p>Counts are affected by population size and age structure, not only
 fertility behaviour.</p>
 ::::
 
-:::: {.info-card .bad .fragment}
-::: num
-02
-:::
-
+:::: contrast-item
 <h3>Short time horizon</h3>
 
 <p>2012-2022 is too short to explain Singapore's longer fertility
 transition.</p>
 ::::
 
-:::: {.info-card .bad .fragment}
-::: num
-03
-:::
-
+:::: contrast-item
 <h3>No driver context</h3>
 
 <p>It does not show maternal age, female LFPR, education, policy timing,
 recession context or family-size changes.</p>
 ::::
-:::::::::
 
+:::::
+
+::::::::
 ------------------------------------------------------------------------
 
-## Proposed Improvements {#proposed-improvements .section-divider background-image="images/improvements-bg.jpg" background-size="cover" background-position="center" background-opacity="0.5"}
+## Proposed Improvements {#proposed-improvements .section-divider background-image="images/improvements-bg.jpg" background-size="cover" background-position="center" background-opacity="0.5" transition="slide"}
 
 ::: section-number
 03
@@ -1123,7 +1106,7 @@ Redesign logic
 <h3 style="margin-top: 1em;">Each improvement addresses a weakness in the original chart</h3>
 
 ::::::::: card-grid-3
-:::: {.info-card .blue .fragment}
+:::: {.info-card .blue .fragment .fade-up fragment-index=1}
 ::: num
 01
 :::
@@ -1134,7 +1117,7 @@ Redesign logic
 behaviour rather than only population size.</p>
 ::::
 
-:::: {.info-card .blue .fragment}
+:::: {.info-card .blue .fragment .fade-up fragment-index=1}
 ::: num
 02
 :::
@@ -1145,7 +1128,7 @@ behaviour rather than only population size.</p>
 a short news period.</p>
 ::::
 
-:::: {.info-card .blue .fragment}
+:::: {.info-card .blue .fragment .fade-up fragment-index=1}
 ::: num
 03
 :::
@@ -1157,7 +1140,7 @@ can compare fertility movement with key contextual shifts.</p>
 ::::
 :::::::::
 
-::: {.story-question .fragment}
+::: {.story-question .fragment fragment-index=2}
 The improvement is not to add more variables for the sake of it. The
 goal is to make the main fertility story more explainable and
 self-contained.
@@ -1165,7 +1148,7 @@ self-contained.
 
 ------------------------------------------------------------------------
 
-## Data Sources {#data-sources .section-divider background-image="images/datasource-bg.jpg" background-size="cover" background-position="center" background-opacity="0.5"}
+## Data Sources {#data-sources .section-divider background-image="images/datasource-bg.jpg" background-size="cover" background-position="center" background-opacity="0.5" transition="slide"}
 
 ::: section-number
 04
@@ -1194,7 +1177,7 @@ Data curation
 :::
 
 ::::::::: {.source-grid}
-::: {.source-tile}
+::: {.source-tile .stat-pop}
 [SINGSTAT]{.label}
 
 <h3>Births and fertility rates</h3>
@@ -1203,7 +1186,7 @@ Data curation
 and policy analysis.</p>
 :::
 
-::: {.source-tile}
+::: {.source-tile .stat-pop}
 [SINGSTAT]{.label}
 
 <h3>Female LFPR</h3>
@@ -1212,7 +1195,7 @@ and policy analysis.</p>
 rate.</p>
 :::
 
-::: {.source-tile}
+::: {.source-tile .stat-pop}
 [SINGSTAT]{.label}
 
 <h3>Education indicators</h3>
@@ -1221,7 +1204,7 @@ rate.</p>
 schooling.</p>
 :::
 
-::: {.source-tile}
+::: {.source-tile .stat-pop}
 [SINGSTAT]{.label}
 
 <h3>Family timing</h3>
@@ -1230,7 +1213,7 @@ schooling.</p>
 birth.</p>
 :::
 
-::: {.source-tile}
+::: {.source-tile .stat-pop}
 [SINGSTAT]{.label}
 
 <h3>Completed family size</h3>
@@ -1239,7 +1222,7 @@ birth.</p>
 born.</p>
 :::
 
-::: {.source-tile}
+::: {.source-tile .stat-pop}
 [MANUAL]{.label}
 
 <h3>Policy and recession annotations</h3>
@@ -1365,7 +1348,7 @@ Data sources
 
 ------------------------------------------------------------------------
 
-## Data Engineering Workflow {#engineering-workflow .section-divider background-image="images/workflow-bg.jpg" background-size="cover" background-position="center" background-opacity="0.5"}
+## Data Engineering Workflow {#engineering-workflow .section-divider background-image="images/workflow-bg.jpg" background-size="cover" background-position="center" background-opacity="0.5" transition="slide"}
 
 ::: section-number
 05
@@ -1393,8 +1376,11 @@ Pipeline overview
 ::: hr-accent
 :::
 
-::::::::::::: pipeline
-:::: pipe-step
+::::::::::::: pipeline-rail
+:::: {.rail-step}
+::: rail-dot
+:::
+
 ::: step-id
 STEP 01
 :::
@@ -1404,7 +1390,10 @@ STEP 01
 <p>Read CSV files and locate the true data header.</p>
 ::::
 
-:::: pipe-step
+:::: {.rail-step}
+::: rail-dot
+:::
+
 ::: step-id
 STEP 02
 :::
@@ -1414,7 +1403,10 @@ STEP 02
 <p>Remove metadata, standardise labels and parse values.</p>
 ::::
 
-:::: pipe-step
+:::: {.rail-step}
+::: rail-dot
+:::
+
 ::: step-id
 STEP 03
 :::
@@ -1424,7 +1416,10 @@ STEP 03
 <p>Convert year columns into long format.</p>
 ::::
 
-:::: pipe-step
+:::: {.rail-step}
+::: rail-dot
+:::
+
 ::: step-id
 STEP 04
 :::
@@ -1434,7 +1429,10 @@ STEP 04
 <p>Combine datasets by year only where units are comparable.</p>
 ::::
 
-:::: pipe-step
+:::: {.rail-step}
+::: rail-dot
+:::
+
 ::: step-id
 STEP 05
 :::
@@ -1459,7 +1457,7 @@ Data engineering detail
 :::
 
 ::::::::::::::::::: engineering-card-grid
-:::: engineering-card
+:::: {.engineering-card .stat-pop}
 ::: eng-num
 01
 :::
@@ -1472,7 +1470,7 @@ before reading.</p>
 Prevents metadata from becoming fake observations.
 ::::
 
-:::: engineering-card
+:::: {.engineering-card .stat-pop}
 ::: eng-num
 02
 :::
@@ -1484,7 +1482,7 @@ Prevents metadata from becoming fake observations.
 Allows filtering, joining and plotting by year.
 ::::
 
-:::: engineering-card
+:::: {.engineering-card .stat-pop}
 ::: eng-num
 03
 :::
@@ -1497,7 +1495,7 @@ Years</code>.</p>
 Ensures ASFR and LFPR age bands match.
 ::::
 
-:::: engineering-card
+:::: {.engineering-card .stat-pop}
 ::: eng-num
 04
 :::
@@ -1509,7 +1507,7 @@ Ensures ASFR and LFPR age bands match.
 Prevents text values from breaking calculations.
 ::::
 
-:::: engineering-card
+:::: {.engineering-card .stat-pop}
 ::: eng-num
 05
 :::
@@ -1521,7 +1519,7 @@ Prevents text values from breaking calculations.
 Avoids inventing observations for missing periods.
 ::::
 
-:::: engineering-card
+:::: {.engineering-card .stat-pop}
 ::: eng-num
 06
 :::
@@ -1534,7 +1532,7 @@ tables.</p>
 Keeps annotations reproducible and separate from measured data.
 ::::
 
-:::: engineering-card
+:::: {.engineering-card .stat-pop}
 ::: eng-num
 07
 :::
@@ -1547,7 +1545,7 @@ clearly separated.</p>
 Avoids misleading comparisons across incompatible measures.
 ::::
 
-:::: engineering-card
+:::: {.engineering-card .stat-pop}
 ::: eng-num
 08
 :::
@@ -1574,43 +1572,73 @@ Reproducibility and validation
 ::: hr-accent
 :::
 
-::::::::: schema-grid
-::: schema-card
+::::::::: detail-rail-grid
+::: detail-rail-item
+<div class="rail-icon">{{< fa link >}}</div>
+::: rail-num
+01
+:::
+
 <h3>Year alignment</h3>
 
 <p>All tables were joined by <code>year</code>. No row was joined by
 position.</p>
 :::
 
-::: schema-card
+::: detail-rail-item
+<div class="rail-icon">{{< fa layer-group >}}</div>
+::: rail-num
+02
+:::
+
 <h3>Age-group matching</h3>
 
 <p>ASFR and LFPR age bands were standardised before plotting
 together.</p>
 :::
 
-::: schema-card
+::: detail-rail-item
+<div class="rail-icon">{{< fa landmark >}}</div>
+::: rail-num
+03
+:::
+
 <h3>Policy windows</h3>
 
 <p>TFR was converted to years before and after policy years for fair
 comparison.</p>
 :::
 
-::: schema-card
+::: detail-rail-item
+<div class="rail-icon">{{< fa chart-pie >}}</div>
+::: rail-num
+04
+:::
+
 <h3>Family-size shares</h3>
 
 <p>Counts of children born were converted into percentages within each
 year.</p>
 :::
 
-::: schema-card
+::: detail-rail-item
+<div class="rail-icon">{{< fa palette >}}</div>
+::: rail-num
+05
+:::
+
 <h3>Visual encodings</h3>
 
 <p>Size, colour and shaded bands were derived from clean numeric
 variables.</p>
 :::
 
-::: schema-card
+::: detail-rail-item
+<div class="rail-icon">{{< fa circle-check >}}</div>
+::: rail-num
+06
+:::
+
 <h3>Validation checks</h3>
 
 <p>Checked expected year ranges, missing values, age groups and
@@ -1631,42 +1659,60 @@ Output structure
 ::: hr-accent
 :::
 
-::::::::: schema-grid
-::: schema-card
-<h3><code>asfr_by_age</code></h3>
+::::::::: console-grid
+::: {.console-item .stat-pop}
+::: console-rule
+:::
+
+<h3><span class="console-prompt">&gt;</span> <code>asfr_by_age</code></h3>
 
 <p>Year, maternal age group and ASFR. Used for stacked fertility
 bars.</p>
 :::
 
-::: schema-card
-<h3><code>lfpr_female</code></h3>
+::: {.console-item .stat-pop}
+::: console-rule
+:::
+
+<h3><span class="console-prompt">&gt;</span> <code>lfpr_female</code></h3>
 
 <p>Year, age group and female LFPR. Used for matching dashed lines.</p>
 :::
 
-::: schema-card
-<h3><code>insight1_data</code></h3>
+::: {.console-item .stat-pop}
+::: console-rule
+:::
+
+<h3><span class="console-prompt">&gt;</span> <code>insight1_data</code></h3>
 
 <p>Female university attainment joined with LFPR and first-birth
 age.</p>
 :::
 
-::: schema-card
-<h3><code>family_timing</code></h3>
+::: {.console-item .stat-pop}
+::: console-rule
+:::
+
+<h3><span class="console-prompt">&gt;</span> <code>family_timing</code></h3>
 
 <p>Median first-marriage age and first-birth age in one tidy table.</p>
 :::
 
-::: schema-card
-<h3><code>family_size_40_49</code></h3>
+::: {.console-item .stat-pop}
+::: console-rule
+:::
+
+<h3><span class="console-prompt">&gt;</span> <code>family_size_40_49</code></h3>
 
 <p>Completed family-size shares for ever-married women aged 40 to
 49.</p>
 :::
 
-::: schema-card
-<h3><code>policy_window</code></h3>
+::: {.console-item .stat-pop}
+::: console-rule
+:::
+
+<h3><span class="console-prompt">&gt;</span> <code>policy_window</code></h3>
 
 <p>TFR aligned to policy years, with recession windows added
 separately.</p>
@@ -1675,7 +1721,7 @@ separately.</p>
 
 ------------------------------------------------------------------------
 
-## Final Improved Visualisation {#final-visualisation .section-divider background-image="images/finalvis-bg.jpg" background-size="cover" background-position="center" background-opacity="0.5"}
+## Final Improved Visualisation {#final-visualisation .section-divider background-image="images/finalvis-bg.jpg" background-size="cover" background-position="center" background-opacity="0.5" transition="slide"}
 
 ::: section-number
 06
@@ -1687,7 +1733,7 @@ Final Improved Visualisation
 
 ::: divider-subtitle
 The final visualisation expands the original birth-count chart into a
-1980-2025 fertility, labour-force, policy and recession view.
+1980-2025 fertility, labour-force, poliscy and recession view.
 :::
 
 ------------------------------------------------------------------------
@@ -1719,9 +1765,9 @@ Reading the main visual
 ::: hr-accent
 :::
 
-::::::::::: card-grid-3
-:::: {.info-card .blue}
-::: num
+::::::::::: insight-watermark-grid
+::: {.insight-item}
+::: watermark-num
 01
 :::
 
@@ -1729,10 +1775,10 @@ Reading the main visual
 
 <p>Female work participation rose alongside higher education and later
 first birth.</p>
-::::
+:::
 
-:::: {.info-card .blue}
-::: num
+::: {.insight-item}
+::: watermark-num
 02
 :::
 
@@ -1740,10 +1786,10 @@ first birth.</p>
 
 <p>Young-age ASFR fell as schooling became longer and youth labour
 participation changed.</p>
-::::
+:::
 
-:::: {.info-card .blue}
-::: num
+::: {.insight-item}
+::: watermark-num
 03
 :::
 
@@ -1751,10 +1797,10 @@ participation changed.</p>
 
 <p>Marriage, first birth and completed family size all moved in ways
 that reinforce low fertility.</p>
-::::
+:::
 
-:::: {.info-card .blue}
-::: num
+::: {.insight-item}
+::: watermark-num
 04
 :::
 
@@ -1762,12 +1808,12 @@ that reinforce low fertility.</p>
 
 <p>Policy and downturn timing provide historical context, but do not
 prove direct causality.</p>
-::::
+:::
 :::::::::::
 
 ------------------------------------------------------------------------
 
-## Insights & Analysis {#insights-analysis .section-divider background-image="images/insightsanalysis-bg.jpg" background-size="cover" background-position="center" background-opacity="0.5"}
+## Insights & Analysis {#insights-analysis .section-divider background-image="images/insightsanalysis-bg.jpg" background-size="cover" background-position="center" background-opacity="0.5" transition="slide"}
 
 ::: section-number
 07
@@ -1933,7 +1979,7 @@ questions.</p>
 
 ------------------------------------------------------------------------
 
-## Conclusion {#conclusion-divider .section-divider background-image="images/insightsanalysis-bg.jpg" background-size="cover" background-position="center" background-opacity="0.5"}
+## Conclusion {#conclusion-divider .section-divider background-image="images/insightsanalysis-bg.jpg" background-size="cover" background-position="center" background-opacity="0.5" transition="slide"}
 
 ::: section-number
 08
