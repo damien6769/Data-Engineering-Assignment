@@ -1925,6 +1925,9 @@ birth rising from 28 years in 1990 to 32 years in 2025.</p>
 result of rising educational attainment \[1\]. This shift in cultural
 norm is causing later marriages, since more women are spending time
 pursuing higher education and establishing their careers \[2\].</p>
+
+<p><strong>Research support:</strong> A peer-reviewed study published in the Journal of Social Policy associates delayed family formation and parenthood in Singapore with educational expansion, increased female labour-market participation, and changing attitudes towards marriage and childbearing. This is consistent with the parallel movement observed in our data, although it does not establish direct causation. [11]
+</p>
 ::::
 :::::
 
@@ -1962,6 +1965,11 @@ able to join the workforce.</p>
 were confined to labour or homemaking. Women now pursue higher education
 and delay starting a family, extending the same pattern of later labour
 force entry seen across this period.</p>
+
+<p><strong>Research support:</strong> Research published in the Journal of Social Policy and the Journal of Population Research notes that longer participation in education may postpone subsequent transitions into employment, marriage and parenthood. This supports our interpretation that extended schooling forms part of a wider delay in adult and family formation. [11][12]
+
+</p>
+
 ::::
 :::::
 
@@ -1997,6 +2005,10 @@ will start families at a later age. At that age, they might not be as
 fertile to have many children. Moreover, the rising cost of living acts
 as a disincentive for families to have lesser children because its
 financially unsustainable.</p>
+
+<p><strong>Research support:</strong> A SG household survey study conducted by NUS researchers found that later marriage was associated with fewer children. Respondents also identified expected finances, children’s education, childcare and housing costs as important considerations in their fertility decisions. [13]
+
+</p>
 ::::
 :::::
 
@@ -2027,6 +2039,9 @@ sustained recovery appears.</p>
 government have limited effectiveness. Some of its effectiveness may be
 compromised due to the enticing financial incentives during periods of
 economic downturn.</p>
+
+<p><strong>Research support:</strong> A study published in the Journal of Social Policy identified a possible mismatch between some pronatalist measures and the marriage and first-birth transitions most influential to TFR. A nationally representative survey study published in the Journal of Population Research also found that paternity leave, shared parental leave and the Baby Bonus were perceived as supportive of childbearing. [11][12]
+</p>
 ::::
 :::::
 
@@ -2182,6 +2197,29 @@ Retrieved July 24, 2026, from
 <li>Team 11. (2026). <em>Policy and recession timing annotations for
 Singapore fertility analysis</em> \[Unpublished data table\]. AAI1001
 Data Engineering and Visualization project.</li>
+
+<li>Chen, M., Yip, P. S. F., &amp; Yap, M. T. (2018).
+<em>Identifying the most influential groups in determining Singapore’s
+fertility</em>. <em>Journal of Social Policy, 47</em>(1), 139–160.
+<a href="https://doi.org/10.1017/S0047279417000241">https://doi.org/10.1017/S0047279417000241</a></li>
+
+<li>Tan, J. (2023). <em>Perceptions towards pronatalist policies in
+Singapore</em>. <em>Journal of Population Research, 40</em>, Article 14.
+<a href="https://doi.org/10.1007/s12546-023-09309-8">https://doi.org/10.1007/s12546-023-09309-8</a></li>
+
+<li>Hashmi, A. R., &amp; Mok, W. J. (2013).
+<em>Determinants of low fertility in Singapore: Evidence from a
+household survey</em>. <em>The Singapore Economic Review, 58</em>(4),
+1350023.
+<a href="https://doi.org/10.1142/S0217590813500239">https://doi.org/10.1142/S0217590813500239</a></li>
+
+<li>Tan, K., Li, N. P., Meltzer, A. L., Chin, J. L. J.,
+Tan, L. K. L., Lim, A. J., Neuberg, S. L., &amp; van Vugt, M. (2022).
+<em>Effects of economic uncertainty and socioeconomic status on
+reproductive timing: A life history approach</em>.
+<em>Current Research in Ecological and Social Psychology, 3</em>,
+100040.
+<a href="https://doi.org/10.1016/j.cresp.2022.100040">https://doi.org/10.1016/j.cresp.2022.100040</a></li>
 
 </ol>
 :::
