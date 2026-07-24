@@ -248,7 +248,7 @@
   justify-content: center;
   text-align: center;
 
-  padding: 0 100px;
+  padding: 50 100px;
   height: 100%;
 }
 
@@ -534,6 +534,36 @@
 }
 
 /* Strength / weakness / improvement cards */
+.card-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.card-stack .info-card {
+  min-height: unset;
+  padding: 16px 20px;
+}
+
+.card-stack .info-card .num {
+  margin-bottom: 6px;
+}
+
+.card-stack .info-card h3 {
+  font-size: 0.86em;
+  margin-bottom: 6px;
+}
+
+.card-stack .info-card p {
+  font-size: 0.62em;
+  line-height: 1.35;
+}
+
+
+
+
+
+
 .card-grid-3 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -986,6 +1016,7 @@ pre code {
 
 /* Print/render niceties */
 .reveal section img { max-height: 590px; }
+
 .reveal .r-stack > * { margin: 0; }
 
 /* Hide technical slide headings on custom full-layout slides */
@@ -1007,3 +1038,4 @@ pre code {
 .section-divider .divider-subtitle {
   color: rgba(255,255,255,0.82);
 }
+

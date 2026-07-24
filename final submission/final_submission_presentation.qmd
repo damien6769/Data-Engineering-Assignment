@@ -331,10 +331,14 @@ p_insight1 <- ggplot(insight1_data, aes(x = year, y = female_university_qualifie
     labels = paste0(insight1_legend_ages, " yrs"),
     guide = "legend"
   ) +
-  scale_x_continuous(breaks = seq(1990, 2025, 5)) +
+  scale_x_continuous(
+    breaks = seq(1990, 2025, 5),
+    expand = expansion(mult = c(0.02, 0.06))
+  ) +
   scale_y_continuous(
     name = "Female residents 25+, university-qualified",
-    labels = scales::label_number(scale_cut = scales::cut_short_scale())
+    labels = scales::label_number(scale_cut = scales::cut_short_scale()),
+    expand = expansion(mult = c(0.06, 0.10))
   ) +
   labs(
     title = stringr::str_wrap("Did female education, work participation and birth timing move together?", 62),
@@ -352,7 +356,7 @@ p_insight1 <- ggplot(insight1_data, aes(x = year, y = female_university_qualifie
     plot.title = element_text(face = "bold", size = 13),
     plot.subtitle = element_text(size = 9.5, lineheight = 1.05),
     plot.caption = element_text(size = 7.3, colour = "grey40", hjust = 0),
-    legend.position = "bottom",
+    legend.position = "right",
     legend.box = "vertical",
     legend.margin = margin(0, 0, 0, 0),
     legend.spacing.y = unit(1, "pt"),
@@ -456,8 +460,12 @@ p_insight2 <- ggplot() +
     plot.title = element_text(face = "bold", size = 13),
     plot.subtitle = element_text(size = 9.5, lineheight = 1.05),
     plot.caption = element_text(size = 7.3, colour = "grey40", hjust = 0),
-    legend.position = "top",
-    plot.margin = margin(6, 12, 6, 8)
+
+    legend.position = "right",
+    legend.box = "vertical",
+    legend.justification = "top",
+
+    plot.margin = margin(6, 24, 6, 8)
   )
 
 family_size_wide <- read_singstat_wide(file.path(data_dir, "ResidentEverMarriedFemalesByAgeGroupAndNumberOfChildrenBornAnnual.csv"))
@@ -882,46 +890,68 @@ Singapore's Population
 ::: hr-accent
 :::
 
-::::: card-grid-3
+:::::: card-grid-3
+::: {.fragment style="display:flex;flex-direction:column;align-items:center;text-align:center;background:none;box-shadow:none;"}
+[0.87]{style="display:flex;align-items:center;justify-content:center;width:110px;height:110px;border-radius:50%;background:#ff6b4a;color:white;font-weight:700;font-size:2rem;line-height:1;margin:0 auto 14px auto;"}
 
-:::: {.fragment style="display:flex;flex-direction:column;align-items:center;text-align:center;background:none;box-shadow:none;"}
+<h3 style="margin:0 0 6px 0;">
 
-<span style="display:flex;align-items:center;justify-content:center;width:110px;height:110px;border-radius:50%;background:#ff6b4a;color:white;font-weight:700;font-size:2rem;line-height:1;margin:0 auto 14px auto;">0.87</span>
+Total Fertility Rate
 
-<h3 style="margin:0 0 6px 0;">Total Fertility Rate</h3>
-<p style="margin:0;">in 2025</p>
-::::
+</h3>
 
+<p style="margin:0;">
 
-:::: {.fragment  style="display:flex;flex-direction:column;align-items:center;text-align:center;background:none;box-shadow:none;"}
+in 2025
 
-<span style="display:flex;align-items:center;justify-content:center;width:110px;height:110px;border-radius:50%;background:#ff6b4a;color:white;font-weight:700;font-size:1.6rem;line-height:1;margin:0 auto 14px auto;">27,500</span>
+</p>
+:::
 
-<h3 style="margin:0 0 6px 0;">Births</h3>
-<p style="margin:0;">in 2025</p>
-::::
+::: {.fragment style="display:flex;flex-direction:column;align-items:center;text-align:center;background:none;box-shadow:none;"}
+[27,500]{style="display:flex;align-items:center;justify-content:center;width:110px;height:110px;border-radius:50%;background:#ff6b4a;color:white;font-weight:700;font-size:1.6rem;line-height:1;margin:0 auto 14px auto;"}
 
-:::: {.fragment style="display:flex;flex-direction:column;align-items:center;text-align:center;background:none;box-shadow:none;"}
+<h3 style="margin:0 0 6px 0;">
 
-<span style="display:flex;align-items:center;justify-content:center;width:110px;height:110px;border-radius:50%;background:#ff6b4a;color:white;font-weight:700;font-size:1.6rem;line-height:1;margin:0 auto 14px auto;">1 in 5</span>
+Births
 
+</h3>
 
-<h3 style="margin:0 0 6px 0;">Aged 65+</h3>
-<p style="margin:0;">citizens</p>
-::::
+<p style="margin:0;">
 
-:::::
+in 2025
 
-::: {.story-question .fragment style="font-size:28px;"} 
+</p>
+:::
+
+::: {.fragment style="display:flex;flex-direction:column;align-items:center;text-align:center;background:none;box-shadow:none;"}
+[1 in
+5]{style="display:flex;align-items:center;justify-content:center;width:110px;height:110px;border-radius:50%;background:#ff6b4a;color:white;font-weight:700;font-size:1.6rem;line-height:1;margin:0 auto 14px auto;"}
+
+<h3 style="margin:0 0 6px 0;">
+
+Aged 65+
+
+</h3>
+
+<p style="margin:0;">
+
+citizens
+
+</p>
+:::
+::::::
+
+::: {.story-question .fragment style="font-size:28px;"}
 **Why this matters**
 
-- Below replacement level -> population cannot sustain itself naturally
+- Below replacement level -\> population cannot sustain itself naturally
 
-- Citizen population will shrink -> impacting future sustainability
+- Citizen population will shrink -\> impacting future sustainability
 :::
 
 ::: {.story-question .fragment style="font-size:0.8em;"}
-To address this challenge, it is important to first understand the underlying factors that shape fertility decisions among Singaporeans.
+To address this challenge, it is important to first understand the
+underlying factors that shape fertility decisions among Singaporeans.
 :::
 
 ------------------------------------------------------------------------
@@ -935,10 +965,11 @@ Research focus
 ::: hr-accent
 :::
 
-::: story-big
-Why has Singapore's fertility rate kept falling despite policy
-attention?
-:::
+
+<div class="story-big">
+Why has Singapore's fertility rate kept <span>falling</span> despite policy
+attention?.
+</div>
 
 ::: story-sub
 Our answer is descriptive, not causal: the decline appears alongside
@@ -1009,9 +1040,22 @@ Visual critique
 ::: hr-accent
 :::
 
-<h3 style="margin-top: 1em;">It communicates the headline quickly.</h3>
+<h3 style="margin-top: 0.2em;">
 
-::::::::: card-grid-3
+It communicates the headline quickly.
+
+</h3>
+
+::::::: two-col
+:::: image-frame
+<img src="images/cna_birth_chart.png" alt="Original CNA birth-count chart"/>
+
+::: caption
+Source: CNA birth-count visualisation on Singapore citizen births.
+:::
+::::
+
+::::::: card-stack
 :::: {.info-card .good .fragment}
 ::: num
 01
@@ -1041,7 +1085,11 @@ Visual critique
 
 <p>The short comparison period supports a compact article chart.</p>
 ::::
-:::::::::
+:::::::
+:::::::
+
+
+
 ------------------------------------------------------------------------
 
 ## Weaknesses {.clean-slide}
@@ -1053,11 +1101,22 @@ Visual critique
 ::: hr-accent
 :::
 
-<h3 style="margin-top: 1em;">The chart shows the outcome, not the underlying pattern.</h3>
+<h3 style="margin-top: 1em;">
 
+The chart shows the outcome, not the underlying pattern.
 
+</h3>
 
-::::::::: card-grid-3
+::::::: two-col
+:::: image-frame
+<img src="images/cna_birth_chart.png" alt="Original CNA birth-count chart"/>
+
+::: caption
+Source: CNA birth-count visualisation on Singapore citizen births.
+:::
+::::
+
+::::::: card-stack
 :::: {.info-card .bad .fragment}
 ::: num
 01
@@ -1090,7 +1149,14 @@ transition.</p>
 <p>It does not show maternal age, female LFPR, education, policy timing,
 recession context or family-size changes.</p>
 ::::
-:::::::::
+:::::::
+:::::::
+
+
+
+
+
+
 
 ------------------------------------------------------------------------
 
@@ -1120,7 +1186,11 @@ Redesign logic
 ::: hr-accent
 :::
 
-<h3 style="margin-top: 1em;">Each improvement addresses a weakness in the original chart</h3>
+<h3 style="margin-top: 1em;">
+
+Each improvement addresses a weakness in the original chart
+
+</h3>
 
 ::::::::: card-grid-3
 :::: {.info-card .blue .fragment}
@@ -1188,13 +1258,13 @@ final visualisation window is 1980-2025.
 Data curation
 :::
 
-<h2>Official datasets used in the final analysis</h2>
-
 ::: hr-accent
 :::
 
-::::::::: {.source-grid}
-::: {.source-tile}
+<h3>Official datasets used in the final analysis</h3>
+
+::::::::: source-grid
+::: source-tile
 [SINGSTAT]{.label}
 
 <h3>Births and fertility rates</h3>
@@ -1203,7 +1273,7 @@ Data curation
 and policy analysis.</p>
 :::
 
-::: {.source-tile}
+::: source-tile
 [SINGSTAT]{.label}
 
 <h3>Female LFPR</h3>
@@ -1212,7 +1282,7 @@ and policy analysis.</p>
 rate.</p>
 :::
 
-::: {.source-tile}
+::: source-tile
 [SINGSTAT]{.label}
 
 <h3>Education indicators</h3>
@@ -1221,7 +1291,7 @@ rate.</p>
 schooling.</p>
 :::
 
-::: {.source-tile}
+::: source-tile
 [SINGSTAT]{.label}
 
 <h3>Family timing</h3>
@@ -1230,7 +1300,7 @@ schooling.</p>
 birth.</p>
 :::
 
-::: {.source-tile}
+::: source-tile
 [SINGSTAT]{.label}
 
 <h3>Completed family size</h3>
@@ -1239,7 +1309,7 @@ birth.</p>
 born.</p>
 :::
 
-::: {.source-tile}
+::: source-tile
 [MANUAL]{.label}
 
 <h3>Policy and recession annotations</h3>
@@ -1256,10 +1326,10 @@ born.</p>
 Data sources
 :::
 
-<h2>All 10 dataset files used in the final slides</h2>
-
 ::: hr-accent
 :::
+
+<h2>All 10 dataset files used in the final slides</h2>
 
 <table class="custom-table compact-table">
   <thead>
@@ -1323,15 +1393,20 @@ Data sources
   </tbody>
 </table>
 
+
 ------------------------------------------------------------------------
 
 ## Dataset source links {.clean-slide}
 
-<div class="kicker">Source crediting</div>
+::: kicker
+Source crediting
+:::
+
+::: hr-accent
+:::
 
 <h2>Official source tables behind the 10 files</h2>
 
-<div class="hr-accent"></div>
 
 ```{=html}
 <div class="source-link-grid">
@@ -1361,7 +1436,13 @@ Data sources
 </div>
 ```
 
-<p class="tiny-note source-note">M182201 is reused in more than one insight. Policy and recession markers are manually curated annotation tables used as context, not measured outcome data.</p>
+<p class="tiny-note source-note">
+
+M182201 is reused in more than one insight. Policy and recession markers
+are manually curated annotation tables used as context, not measured
+outcome data.
+
+</p>
 
 ------------------------------------------------------------------------
 
@@ -1388,10 +1469,12 @@ datasets.
 Pipeline overview
 :::
 
-<h2>One reproducible workflow across datasets</h2>
-
 ::: hr-accent
 :::
+
+<h4>One reproducible workflow across datasets
+</h4>
+
 
 ::::::::::::: pipeline
 :::: pipe-step
@@ -1453,10 +1536,11 @@ STEP 05
 Data engineering detail
 :::
 
-<h2>The raw files did not all arrive in analysis-ready form</h2>
-
 ::: hr-accent
 :::
+
+<h4>The raw files did not all arrive in analysis-ready form</h4>
+
 
 ::::::::::::::::::: engineering-card-grid
 :::: engineering-card
@@ -1569,10 +1653,12 @@ Turns raw data into story-ready variables.
 Reproducibility and validation
 :::
 
-<h2>Key transformations used before plotting</h2>
-
 ::: hr-accent
 :::
+
+<h4>
+Key transformations used before plotting
+</h4>
 
 ::::::::: schema-grid
 ::: schema-card
@@ -1626,10 +1712,11 @@ percentage totals.</p>
 Output structure
 :::
 
-<h2>Cleaned tables prepared for visualisation and analysis</h2>
-
 ::: hr-accent
 :::
+
+
+<h4>Cleaned tables prepared for visualisation and analysis</h4>
 
 ::::::::: schema-grid
 ::: schema-card
@@ -1714,10 +1801,12 @@ sharply, and that female LFPR increased across most age groups.
 Reading the main visual
 :::
 
-<h2>The plot shows patterns, but the insights explain them</h2>
-
 ::: hr-accent
 :::
+
+
+<h4>The plot shows patterns, but the insights explain them</h4>
+
 
 ::::::::::: card-grid-3
 :::: {.info-card .blue}
@@ -1800,13 +1889,19 @@ Insight 1
 
 <h3>What is driving the increase in female LFPR?</h3>
 
-<p>The number of female LFPR increasing greatly from 50% in 1990 to 60% in 2025.</p>
+<p>The number of female LFPR increasing greatly from 50% in 1990 to 60%
+in 2025.</p>
 
-<p>The same period also shows the stark increase in the number of female university graduates over three decades.</p>
+<p>The same period also shows the stark increase in the number of female
+university graduates over three decades.</p>
 
-<p>Over the same period also shows the number of median age at first birth rising from 28 years in 1990 to 32 years in 2025.</p>
+<p>Over the same period also shows the number of median age at first
+birth rising from 28 years in 1990 to 32 years in 2025.</p>
 
-<p><strong>Interpretation:</strong> Female LFPR in Singapore rose as a result of rising educational attainment [1]. This shift in cultural norm is causing later marriages, since more women are spending time pursuing higher education and establishing their careers [2].</p>
+<p><strong>Interpretation:</strong> Female LFPR in Singapore rose as a
+result of rising educational attainment \[1\]. This shift in cultural
+norm is causing later marriages, since more women are spending time
+pursuing higher education and establishing their careers \[2\].</p>
 ::::
 :::::
 
@@ -1828,13 +1923,22 @@ Insight 2
 
 <h3>Women literacy rates in Singapore</h3>
 
-<p>Government policies drove female literacy rates up. 1961: Free primary education was offered. 1994: School curriculum was unified for all sexes. 2003: Quote for female intake to NUS medical school lifted.</p>
+<p>Government policies drove female literacy rates up. 1961: Free
+primary education was offered. 1994: School curriculum was unified for
+all sexes. 2003: Quote for female intake to NUS medical school
+lifted.</p>
 
-<p>With more equal opportunities, women are now spending more time in school, pursuing higher levels of education.</p>
+<p>With more equal opportunities, women are now spending more time in
+school, pursuing higher levels of education.</p>
 
-<p>Therefore, the female LFPR for ages ranged 15-19 and 20-24 have dropped because girls at that age are still schooling and hence, not able to join the workforce.</p>
+<p>Therefore, the female LFPR for ages ranged 15-19 and 20-24 have
+dropped because girls at that age are still schooling and hence, not
+able to join the workforce.</p>
 
-<p><strong>Interpretation:</strong> Education once went to sons; women were confined to labour or homemaking. Women now pursue higher education and delay starting a family, extending the same pattern of later labour force entry seen across this period.</p>
+<p><strong>Interpretation:</strong> Education once went to sons; women
+were confined to labour or homemaking. Women now pursue higher education
+and delay starting a family, extending the same pattern of later labour
+force entry seen across this period.</p>
 ::::
 :::::
 
@@ -1861,9 +1965,15 @@ common.</p>
 
 <p>Smaller family-size categories became more prominent over time.</p>
 
-<p>Rising consumer price index over the years shows the increasing cost of living.</p>
+<p>Rising consumer price index over the years shows the increasing cost
+of living.</p>
 
-<p><strong>Interpretation:</strong> Because when women are more focused on pursuing higher levels of education and establishing careers, they will start families at a later age. At that age, they might not be as fertile to have many children. Moreover, the rising cost of living acts as a disincentive for families to have lesser children because its financially unsustainable. </p>
+<p><strong>Interpretation:</strong> Because when women are more focused
+on pursuing higher levels of education and establishing careers, they
+will start families at a later age. At that age, they might not be as
+fertile to have many children. Moreover, the rising cost of living acts
+as a disincentive for families to have lesser children because its
+financially unsustainable.</p>
 ::::
 :::::
 
@@ -1890,7 +2000,10 @@ sustained recovery appears.</p>
 
 <p>Recession bands help show economic timing around policy windows.</p>
 
-<p><strong>Interpretation:</strong> The policies introduced by the government have limited effectiveness. Some of its effectiveness may be compromised due to the enticing financial incentives during periods of economic downturn. </p>
+<p><strong>Interpretation:</strong> The policies introduced by the
+government have limited effectiveness. Some of its effectiveness may be
+compromised due to the enticing financial incentives during periods of
+economic downturn.</p>
 ::::
 :::::
 
@@ -1951,9 +2064,15 @@ What the whole story means for fertility decline.
 
 ## Conclusion {#conclusion .clean-slide .conclusion-slide}
 
-<div class="kicker">Final takeaway</div>
+::: kicker
+Final takeaway
+:::
 
-<div class="conclusion-big">Singapore's fertility decline is best read as a linked structural change, not a single drop caused by one policy, recession or demographic event.</div>
+::: conclusion-big
+Singapore's fertility decline is best read as a linked structural
+change, not a single drop caused by one policy, recession or demographic
+event.
+:::
 
 ```{=html}
 <div class="conclusion-points">
@@ -1972,7 +2091,12 @@ What the whole story means for fertility decline.
 </div>
 ```
 
-<div class="conclusion-final">Policy and recession timing help explain short-term context, but they do not overturn the wider pattern. The main message is cumulative: fertility declined because several social, economic and demographic patterns moved together.</div>
+::: conclusion-final
+Policy and recession timing help explain short-term context, but they do
+not overturn the wider pattern. The main message is cumulative:
+fertility declined because several social, economic and demographic
+patterns moved together.
+:::
 
 ------------------------------------------------------------------------
 
@@ -1984,24 +2108,54 @@ Main sources
 
 ::: references-list
 <ol>
-  <li>Chew, H. M. (2023, September 29). <em>Record number of marriages, drop in Singaporean births in 2022</em>. Channel NewsAsia. <a href="https://www.channelnewsasia.com/singapore/marriage-birth-rate-fertility-ageing-population-immigration-2022-3807991">https://www.channelnewsasia.com/singapore/marriage-birth-rate-fertility-ageing-population-immigration-2022-3807991</a></li>
 
-  <li>Singapore Department of Statistics. (n.d.). <em>Births and fertility rates, annual</em> [Data set]. data.gov.sg. Retrieved July 24, 2026, from <a href="https://data.gov.sg/datasets/d_e39eeaeadb571c0d0725ef1eec48d166/view">https://data.gov.sg/datasets/d_e39eeaeadb571c0d0725ef1eec48d166/view</a></li>
+<li>Chew, H. M. (2023, September 29). <em>Record number of marriages,
+drop in Singaporean births in 2022</em>. Channel NewsAsia.
+<a href="https://www.channelnewsasia.com/singapore/marriage-birth-rate-fertility-ageing-population-immigration-2022-3807991">https://www.channelnewsasia.com/singapore/marriage-birth-rate-fertility-ageing-population-immigration-2022-3807991</a></li>
 
-  <li>Singapore Department of Statistics. (n.d.). <em>Resident labour force participation rate by age and sex</em> [Data set]. data.gov.sg. Retrieved July 24, 2026, from <a href="https://data.gov.sg/datasets/d_465c5bd4a9adae523f9577371daf5e24/view">https://data.gov.sg/datasets/d_465c5bd4a9adae523f9577371daf5e24/view</a></li>
+<li>Singapore Department of Statistics. (n.d.). <em>Births and fertility
+rates, annual</em> \[Data set\]. data.gov.sg. Retrieved July 24, 2026,
+from
+<a href="https://data.gov.sg/datasets/d_e39eeaeadb571c0d0725ef1eec48d166/view">https://data.gov.sg/datasets/d_e39eeaeadb571c0d0725ef1eec48d166/view</a></li>
 
-  <li>Singapore Department of Statistics. (n.d.). <em>Singapore residents aged 25 years and over by highest qualification attained, sex and age group</em> [Data set]. SingStat Table Builder. Retrieved July 24, 2026, from <a href="https://tablebuilder.singstat.gov.sg/table/TS/M850581">https://tablebuilder.singstat.gov.sg/table/TS/M850581</a></li>
+<li>Singapore Department of Statistics. (n.d.). <em>Resident labour
+force participation rate by age and sex</em> \[Data set\]. data.gov.sg.
+Retrieved July 24, 2026, from
+<a href="https://data.gov.sg/datasets/d_465c5bd4a9adae523f9577371daf5e24/view">https://data.gov.sg/datasets/d_465c5bd4a9adae523f9577371daf5e24/view</a></li>
 
-  <li>Singapore Department of Statistics. (n.d.). <em>Indicators on education and literacy</em> [Data set]. data.gov.sg. Retrieved July 24, 2026, from <a href="https://data.gov.sg/datasets/d_a98f2ae027bf4442d7250d50505feabe/view">https://data.gov.sg/datasets/d_a98f2ae027bf4442d7250d50505feabe/view</a></li>
+<li>Singapore Department of Statistics. (n.d.). <em>Singapore residents
+aged 25 years and over by highest qualification attained, sex and age
+group</em> \[Data set\]. SingStat Table Builder. Retrieved July 24,
+2026, from
+<a href="https://tablebuilder.singstat.gov.sg/table/TS/M850581">https://tablebuilder.singstat.gov.sg/table/TS/M850581</a></li>
 
-  <li>Singapore Department of Statistics. (n.d.). <em>Mean years of schooling</em> [Data set]. data.gov.sg. Retrieved July 24, 2026, from <a href="https://data.gov.sg/datasets/d_0f8fd20f3aecd9dccd41b9d750e72d4a/view">https://data.gov.sg/datasets/d_0f8fd20f3aecd9dccd41b9d750e72d4a/view</a></li>
+<li>Singapore Department of Statistics. (n.d.). <em>Indicators on
+education and literacy</em> \[Data set\]. data.gov.sg. Retrieved July
+24, 2026, from
+<a href="https://data.gov.sg/datasets/d_a98f2ae027bf4442d7250d50505feabe/view">https://data.gov.sg/datasets/d_a98f2ae027bf4442d7250d50505feabe/view</a></li>
 
-  <li>Singapore Department of Statistics. (n.d.). <em>Median age of mothers at first birth, annual</em> [Data set]. data.gov.sg. Retrieved July 24, 2026, from <a href="https://data.gov.sg/datasets/d_d032130d8b6425287566bd439f13d21c/view">https://data.gov.sg/datasets/d_d032130d8b6425287566bd439f13d21c/view</a></li>
+<li>Singapore Department of Statistics. (n.d.). <em>Mean years of
+schooling</em> \[Data set\]. data.gov.sg. Retrieved July 24, 2026, from
+<a href="https://data.gov.sg/datasets/d_0f8fd20f3aecd9dccd41b9d750e72d4a/view">https://data.gov.sg/datasets/d_0f8fd20f3aecd9dccd41b9d750e72d4a/view</a></li>
 
-  <li>Singapore Department of Statistics. (n.d.). <em>Resident ever-married females by age group and number of children born, annual</em> [Data set]. data.gov.sg. Retrieved July 24, 2026, from <a href="https://data.gov.sg/datasets/d_1de45e559613cb1a82b65ca23d9f2ffd/view">https://data.gov.sg/datasets/d_1de45e559613cb1a82b65ca23d9f2ffd/view</a></li>
+<li>Singapore Department of Statistics. (n.d.). <em>Median age of
+mothers at first birth, annual</em> \[Data set\]. data.gov.sg. Retrieved
+July 24, 2026, from
+<a href="https://data.gov.sg/datasets/d_d032130d8b6425287566bd439f13d21c/view">https://data.gov.sg/datasets/d_d032130d8b6425287566bd439f13d21c/view</a></li>
 
-  <li>Singapore Department of Statistics. (2025). <em>Consumer price index (CPI), 2024 as base year, monthly</em> [Data set]. data.gov.sg. Retrieved July 24, 2026, from <a href="https://data.gov.sg/datasets/d_bdaff844e3ef89d39fceb962ff8f0791/view">https://data.gov.sg/datasets/d_bdaff844e3ef89d39fceb962ff8f0791/view</a></li>
+<li>Singapore Department of Statistics. (n.d.). <em>Resident
+ever-married females by age group and number of children born,
+annual</em> \[Data set\]. data.gov.sg. Retrieved July 24, 2026, from
+<a href="https://data.gov.sg/datasets/d_1de45e559613cb1a82b65ca23d9f2ffd/view">https://data.gov.sg/datasets/d_1de45e559613cb1a82b65ca23d9f2ffd/view</a></li>
 
-  <li>Team 11. (2026). <em>Policy and recession timing annotations for Singapore fertility analysis</em> [Unpublished data table]. AAI1001 Data Engineering and Visualization project.</li>
+<li>Singapore Department of Statistics. (2025). <em>Consumer price index
+(CPI), 2024 as base year, monthly</em> \[Data set\]. data.gov.sg.
+Retrieved July 24, 2026, from
+<a href="https://data.gov.sg/datasets/d_bdaff844e3ef89d39fceb962ff8f0791/view">https://data.gov.sg/datasets/d_bdaff844e3ef89d39fceb962ff8f0791/view</a></li>
+
+<li>Team 11. (2026). <em>Policy and recession timing annotations for
+Singapore fertility analysis</em> \[Unpublished data table\]. AAI1001
+Data Engineering and Visualization project.</li>
+
 </ol>
 :::
