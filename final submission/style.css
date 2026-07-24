@@ -741,13 +741,53 @@
 .limit-card p { font-size: 0.48em; color: var(--ink-soft); }
 .conclusion-big {
   font-family: Georgia, "Times New Roman", serif;
-  font-size: 1.65em;
+  font-size: 1.45em;
   line-height: 1.15;
   color: var(--ink);
   max-width: 1040px;
-  margin-top: 58px;
+  margin-top: 34px;
 }
 .conclusion-big span { color: var(--coral); font-style: italic; }
+
+.conclusion-points {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-top: 30px;
+}
+
+.conclusion-point {
+  background: rgba(255,255,255,0.82);
+  border: 1px solid rgba(38,50,56,0.14);
+  border-radius: 18px;
+  padding: 20px 22px;
+  box-shadow: 0 10px 26px rgba(38,50,56,0.08);
+}
+
+.conclusion-point h3 {
+  font-size: 0.72em;
+  line-height: 1.18;
+  margin-bottom: 10px;
+  color: var(--ink);
+}
+
+.conclusion-point p {
+  font-size: 0.52em;
+  line-height: 1.38;
+  color: var(--ink-soft);
+}
+
+.conclusion-final {
+  margin-top: 26px;
+  padding: 18px 24px;
+  border-left: 6px solid var(--coral);
+  background: rgba(255,255,255,0.76);
+  border-radius: 14px;
+  font-size: 0.72em;
+  line-height: 1.42;
+  color: var(--ink);
+  box-shadow: 0 10px 28px rgba(37,54,64,0.08);
+}
 
 /* Code blocks */
 pre {

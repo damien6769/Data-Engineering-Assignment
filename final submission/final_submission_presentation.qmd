@@ -805,7 +805,7 @@ Raw data to visualisation-ready tables
 
 ::::::: timeline-item
 ::: timeline-number
-05
+06
 :::
 
 ::::: timeline-text
@@ -821,7 +821,7 @@ The main 1980-2025 fertility view
 
 ::::::: {.timeline-item .timeline-final}
 ::: timeline-number
-06
+07
 :::
 
 ::::: timeline-text
@@ -837,7 +837,7 @@ Four supporting patterns behind the main visual
 
 ::::::: {.timeline-item .timeline-final}
 ::: timeline-number
-07
+08
 :::
 
 ::::: timeline-text
@@ -1136,8 +1136,8 @@ Data curation
 ::: hr-accent
 :::
 
-::::::::: source-grid
-::: source-tile
+::::::::: {.source-grid}
+::: {.source-tile}
 [SINGSTAT]{.label}
 
 <h3>Births and fertility rates</h3>
@@ -1146,7 +1146,7 @@ Data curation
 and policy analysis.</p>
 :::
 
-::: source-tile
+::: {.source-tile}
 [SINGSTAT]{.label}
 
 <h3>Female LFPR</h3>
@@ -1155,7 +1155,7 @@ and policy analysis.</p>
 rate.</p>
 :::
 
-::: source-tile
+::: {.source-tile}
 [SINGSTAT]{.label}
 
 <h3>Education indicators</h3>
@@ -1164,7 +1164,7 @@ rate.</p>
 schooling.</p>
 :::
 
-::: source-tile
+::: {.source-tile}
 [SINGSTAT]{.label}
 
 <h3>Family timing</h3>
@@ -1173,7 +1173,7 @@ schooling.</p>
 birth.</p>
 :::
 
-::: source-tile
+::: {.source-tile}
 [SINGSTAT]{.label}
 
 <h3>Completed family size</h3>
@@ -1182,7 +1182,7 @@ birth.</p>
 born.</p>
 :::
 
-::: source-tile
+::: {.source-tile}
 [MANUAL]{.label}
 
 <h3>Policy and recession annotations</h3>
@@ -1270,70 +1270,41 @@ Data sources
 
 ## Dataset source links {.clean-slide}
 
-::: kicker
-Source crediting
-:::
+<div class="kicker">Source crediting</div>
 
 <h2>Official source tables behind the 10 files</h2>
 
-::: hr-accent
-:::
+<div class="hr-accent"></div>
 
-::::::: source-link-grid
-::: source-link-card
+```{=html}
+<div class="source-link-grid">
+<div class="source-link-card">
 <h3>Main visualisation</h3>
-
-<p><a href="https://data.gov.sg/datasets/d_e39eeaeadb571c0d0725ef1eec48d166/view">M810091</a>
-Births and Fertility Rates</p>
-
-<p><a href="https://data.gov.sg/datasets/d_465c5bd4a9adae523f9577371daf5e24/view">M182201</a>
-Resident LFPR by Age and Sex</p>
-:::
-
-::: source-link-card
+<p><a href="https://data.gov.sg/datasets/d_e39eeaeadb571c0d0725ef1eec48d166/view">M810091</a> Births and Fertility Rates</p>
+<p><a href="https://data.gov.sg/datasets/d_465c5bd4a9adae523f9577371daf5e24/view">M182201</a> Resident LFPR by Age and Sex</p>
+</div>
+<div class="source-link-card">
 <h3>Insight 1</h3>
-
-<p><a href="https://tablebuilder.singstat.gov.sg/table/TS/M850581">M850581</a>
-Highest Qualification Attained</p>
-
-<p><a href="https://data.gov.sg/datasets/d_465c5bd4a9adae523f9577371daf5e24/view">M182201</a>
-Female LFPR aggregate</p>
-
-<p><a href="https://data.gov.sg/datasets/d_d032130d8b6425287566bd439f13d21c/view">M810741</a>
-Median Age of Mothers at First Birth</p>
-:::
-
-::: source-link-card
+<p><a href="https://tablebuilder.singstat.gov.sg/table/TS/M850581">M850581</a> Highest Qualification Attained</p>
+<p><a href="https://data.gov.sg/datasets/d_465c5bd4a9adae523f9577371daf5e24/view">M182201</a> Female LFPR aggregate</p>
+<p><a href="https://data.gov.sg/datasets/d_d032130d8b6425287566bd439f13d21c/view">M810741</a> Median Age of Mothers at First Birth</p>
+</div>
+<div class="source-link-card">
 <h3>Insight 2</h3>
-
-<p><a href="https://data.gov.sg/datasets/d_a98f2ae027bf4442d7250d50505feabe/view">M850001</a>
-Education and Literacy Indicators</p>
-
-<p><a href="https://data.gov.sg/datasets/d_0f8fd20f3aecd9dccd41b9d750e72d4a/view">M850591</a>
-Mean Years of Schooling</p>
-
-<p><a href="https://data.gov.sg/datasets/d_465c5bd4a9adae523f9577371daf5e24/view">M182201</a>
-Female LFPR, ages 15 to 24</p>
-:::
-
-::: source-link-card
+<p><a href="https://data.gov.sg/datasets/d_a98f2ae027bf4442d7250d50505feabe/view">M850001</a> Education and Literacy Indicators</p>
+<p><a href="https://data.gov.sg/datasets/d_0f8fd20f3aecd9dccd41b9d750e72d4a/view">M850591</a> Mean Years of Schooling</p>
+<p><a href="https://data.gov.sg/datasets/d_465c5bd4a9adae523f9577371daf5e24/view">M182201</a> Female LFPR, ages 15 to 24</p>
+</div>
+<div class="source-link-card">
 <h3>Insight 3 and 4</h3>
-
-<p><a href="https://data.gov.sg/datasets/d_1de45e559613cb1a82b65ca23d9f2ffd/view">M810571</a>
-Ever-Married Females by Children Born</p>
-
+<p><a href="https://data.gov.sg/datasets/d_1de45e559613cb1a82b65ca23d9f2ffd/view">M810571</a> Ever-Married Females by Children Born</p>
 <p>Consumer Price Index, CPI 2024 as Base Year, Monthly. Uploaded project dataset.</p>
+<p><a href="https://data.gov.sg/datasets/d_e39eeaeadb571c0d0725ef1eec48d166/view">M810091</a> TFR for policy and recession windows</p>
+</div>
+</div>
+```
 
-<p><a href="https://data.gov.sg/datasets/d_e39eeaeadb571c0d0725ef1eec48d166/view">M810091</a>
-TFR for policy/recession windows</p>
-:::
-:::::::
-
-::: {.tiny-note .source-note}
-M182201 is reused in more than one insight. Policy and
-recession markers are manually curated annotation tables used as
-context, not measured outcome data.
-:::
+<p class="tiny-note source-note">M182201 is reused in more than one insight. Policy and recession markers are manually curated annotation tables used as context, not measured outcome data.</p>
 
 ------------------------------------------------------------------------
 
@@ -1742,7 +1713,7 @@ prove direct causality.</p>
 ## Insights & Analysis {#insights-analysis .section-divider background-image="images/insightsanalysis-bg.jpg" background-size="cover" background-position="center" background-opacity="0.5"}
 
 ::: section-number
-06
+07
 :::
 
 ::: divider-title
@@ -1908,7 +1879,7 @@ questions.</p>
 ## Conclusion {#conclusion-divider .section-divider background-image="images/insightsanalysis-bg.jpg" background-size="cover" background-position="center" background-opacity="0.5"}
 
 ::: section-number
-07
+08
 :::
 
 ::: divider-title
@@ -1921,24 +1892,30 @@ What the whole story means for fertility decline.
 
 ------------------------------------------------------------------------
 
-## Conclusion {#conclusion .clean-slide}
+## Conclusion {#conclusion .clean-slide .conclusion-slide}
 
-::: kicker
-Final takeaway
-:::
+<div class="kicker">Final takeaway</div>
 
-::: conclusion-big
-Singapore's fertility decline appears to be a long-term structural
-pattern, not a drop caused by one isolated policy, recession or
-demographic change.
-:::
+<div class="conclusion-big">Singapore's fertility decline is best read as a linked structural change, not a single drop caused by one policy, recession or demographic event.</div>
 
-::: story-question
-The clearest story is cumulative: younger-age fertility weakened, female
-education and LFPR rose, family formation shifted later and completed
-families became smaller. Policy matters, but it operates within these
-broader social and demographic shifts.
-:::
+```{=html}
+<div class="conclusion-points">
+<div class="conclusion-point">
+<h3>1. Young-age fertility weakened</h3>
+<p>The final visual shows a clear fall in births among younger age groups, especially ages 15 to 24.</p>
+</div>
+<div class="conclusion-point">
+<h3>2. Education and work patterns shifted</h3>
+<p>Female education and LFPR rose over the same period, while marriage and first birth moved later.</p>
+</div>
+<div class="conclusion-point">
+<h3>3. Smaller families became more common</h3>
+<p>Completed family size shifted away from larger families, reinforcing the long-term fall in fertility.</p>
+</div>
+</div>
+```
+
+<div class="conclusion-final">Policy and recession timing help explain short-term context, but they do not overturn the wider pattern. The main message is cumulative: fertility declined because several social, economic and demographic patterns moved together.</div>
 
 ------------------------------------------------------------------------
 
