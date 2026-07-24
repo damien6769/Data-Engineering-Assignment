@@ -76,7 +76,7 @@
 
 /* Helpers */
 .kicker {
-  font-size: 0.46em;
+  font-size: 0.8em;
   text-transform: uppercase;
   letter-spacing: 0.18em;
   font-weight: 800;
@@ -237,7 +237,6 @@
 
 
 
-
 /* Section divider slides */
 .section-divider {
   position: relative;
@@ -306,12 +305,8 @@
   display: none !important;
 }
 
-
-.section-number {
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 0.8em;
-  font-weight: 700;
-  margin-bottom: 20px;
+.section-divider .divider-inner {
+  text-align: center;
 }
 
 /* Timeline contents */
@@ -336,7 +331,7 @@
 }
 .contents-kicker {
   margin-bottom: 18px;
-  font-size: 0.56em;
+  font-size: 0.8em;
   font-weight: 800;
   letter-spacing: 0.20em;
   color: var(--coral);
@@ -447,14 +442,14 @@
   font-size: 2.1em;
   line-height: 1.10;
   color: var(--ink);
-  max-width: 900px;
+  max-width: none;
   margin-top: 70px;
 }
 .story-big span { color: var(--coral); font-style: italic; }
 .story-sub {
   margin-top: 28px;
-  max-width: 780px;
-  font-size: 0.68em;
+  max-width: none;
+  font-size: 32px;
   line-height: 1.45;
   color: var(--ink-soft);
 }
@@ -464,9 +459,9 @@
   border-left: 6px solid var(--coral);
   background: rgba(255,255,255,0.74);
   border-radius: 14px;
-  font-size: 0.68em;
+  font-size: 0.8em;
   color: var(--ink);
-  max-width: 900px;
+  max-width: none;
   box-shadow: 0 10px 28px rgba(37,54,64,0.08);
 }
 .lens-grid {
@@ -560,18 +555,18 @@
   box-shadow: 0 12px 28px rgba(38,50,56,0.08);
 }
 .info-card .num {
-  font-size: 0.52em;
+  font-size: 0.6em;
   font-weight: 800;
   letter-spacing: 0.12em;
   color: var(--coral);
   margin-bottom: 16px;
 }
 .info-card h3 {
-  font-size: 0.78em;
+  font-size: 1em;
   line-height: 1.15;
   margin-bottom: 12px;
 }
-.info-card p { font-size: 0.50em; color: var(--ink-soft); line-height: 1.42; }
+.info-card p { font-size: 0.8em; color: var(--ink-soft); line-height: 1.42; }
 .info-card.good { border-top: 6px solid var(--sage); }
 .info-card.bad { border-top: 6px solid var(--coral); }
 .info-card.blue { border-top: 6px solid var(--blue); }
