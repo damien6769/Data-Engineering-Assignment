@@ -290,9 +290,48 @@ p_main <- ggplot() +
     plot.margin = margin(0, 8, 6, 8)
   )
 
-grads <- readr::read_csv(file.path(data_dir, "M850581_female_university_qualified.csv"))
-lfpr_aggregate <- readr::read_csv(file.path(data_dir, "M182201_female_lfpr_aggregate.csv"))
-birthage <- readr::read_csv(file.path(data_dir, "M810741_median_age_first_birth.csv"))
+education_wide <- read_singstat_wide(file.path(data_dir, "M850581.csv"))
+
+grads <- education_wide |>
+  filter(data_series == "Total Females - University") |>
+  to_long_years() |>
+  transmute(
+    year,
+    female_university_qualified = value
+  ) |>
+  filter(!is.na(female_university_qualified)) |>
+  arrange(year)
+
+lfpr_aggregate <- lfpr_wide |>
+  filter(data_series == "Female Resident Participation Rate") |>
+  to_long_years() |>
+  transmute(
+    year,
+    female_lfpr_pct = value
+  ) |>
+  filter(!is.na(female_lfpr_pct)) |>
+  arrange(year)
+
+birthage_wide <- readr::read_csv(
+  file.path(data_dir, "MedianAgeOfMothersAtFirstBirthAnnual.csv"),
+  na = c("", "na", "NA", "N.A.", "-"),
+  show_col_types = FALSE
+)
+
+birthage <- birthage_wide |>
+  filter(DataSeries == "Median Age Of Resident Mothers At First Birth") |>
+  mutate(across(matches("^\\d{4}$"), as.character)) |>
+  pivot_longer(
+    cols = matches("^\\d{4}$"),
+    names_to = "year",
+    values_to = "median_age_first_birth"
+  ) |>
+  transmute(
+    year = as.integer(year),
+    median_age_first_birth = readr::parse_number(median_age_first_birth)
+  ) |>
+  filter(!is.na(year), !is.na(median_age_first_birth)) |>
+  arrange(year)
 
 insight1_data <- grads |>
   left_join(lfpr_aggregate, by = "year") |>
@@ -378,8 +417,15 @@ literacy <- literacy_raw |>
   pivot_wider(names_from = sex, values_from = value) |>
   arrange(year)
 schooling <- readr::read_csv(file.path(data_dir, "M850591_female_mean_years_schooling.csv"))
-lfpr_age <- readr::read_csv(file.path(data_dir, "M182201_female_lfpr_by_age_15_24.csv")) |>
-  mutate(age_group = factor(age_group, levels = c("15-19", "20-24")))
+lfpr_age <- lfpr_female |>
+  filter(age_group %in% c("15-19 Years", "20-24 Years")) |>
+  transmute(
+    year,
+    age_group = stringr::str_remove(as.character(age_group), " Years$"),
+    lfpr_pct = female_lfpr_pct
+  ) |>
+  mutate(age_group = factor(age_group, levels = c("15-19", "20-24"))) |>
+  arrange(age_group, year)
 
 schooling_5yr <- schooling |>
   filter(year %in% c(1980, 1985, 1990, 1995, 2000, 2005, 2010, 2015, 2020, 2024))
@@ -541,8 +587,6 @@ cpi_selected <- cpi_annual |>
     )
   )
 
-
-
 p_insight3b <- ggplot(
   family_size_selected,
   aes(x = factor(year), y = share_pct, fill = children_born)
@@ -667,6 +711,22 @@ shock_window <- policy_events |>
     xmin = pmax(relative_year, -5),
     xmax = pmin(relative_recovery_end, 10)
   )
+
+# Concise validation checks for the plot-ready tables
+family_share_check <- family_size_40_49 |>
+  summarise(total_share = sum(share_pct), .by = year)
+
+stopifnot(
+  all(c(1980, 2025) %in% asfr_by_age$year),
+  all(c(1990, 2025) %in% lfpr_female$year),
+  setequal(as.character(unique(asfr_by_age$age_group)), age_groups),
+  nrow(distinct(asfr_by_age, year, age_group)) == nrow(asfr_by_age),
+  nrow(distinct(lfpr_female, year, age_group)) == nrow(lfpr_female),
+  all(between(lfpr_female$female_lfpr_pct, 0, 100)),
+  all(abs(family_share_check$total_share - 100) < 0.01),
+  !anyNA(cpi_selected$cpi_index),
+  !anyNA(policy_window$tfr)
+)
 
 p_insight4 <- ggplot(policy_window, aes(x = relative_year, y = tfr, colour = policy_stance)) +
   geom_rect(
@@ -837,7 +897,7 @@ Raw data to visualisation-ready tables
 
 ::::::: timeline-item
 ::: timeline-number
-06
+05
 :::
 
 ::::: timeline-text
@@ -853,7 +913,7 @@ The main 1980-2025 fertility view
 
 ::::::: timeline-item
 ::: timeline-number
-07
+06
 :::
 
 ::::: timeline-text
@@ -869,7 +929,7 @@ Four supporting patterns behind the main visual
 
 ::::::: timeline-item
 ::: timeline-number
-08
+07
 :::
 
 ::::: timeline-text
@@ -1296,8 +1356,7 @@ schooling.</p>
 
 <h3>Family timing</h3>
 
-<p>Median age at first marriage and median age of mothers at first
-birth.</p>
+<p>Median age of resident mothers at first birth.</p>
 :::
 
 ::: {.source-tile .stat-pop}
@@ -1330,7 +1389,7 @@ Data sources
 :::
 
 <h4>
-All 10 dataset files used in the final slides</h4>
+All 8 dataset files used in the final slides</h4>
 
 <table class="custom-table compact-table">
   <thead>
@@ -1348,21 +1407,11 @@ All 10 dataset files used in the final slides</h4>
     </tr>
     <tr>
       <td><code>M182201.csv</code></td>
-      <td>Female LFPR by age group</td>
-      <td>Main visualisation</td>
+      <td>Female LFPR aggregate and by age group</td>
+      <td>Main visualisation, Insights 1 and 2</td>
     </tr>
     <tr>
-      <td><code>M182201_female_lfpr_aggregate.csv</code></td>
-      <td>Female LFPR aggregate</td>
-      <td>Insight 1</td>
-    </tr>
-    <tr>
-      <td><code>M182201_female_lfpr_by_age_15_24.csv</code></td>
-      <td>Female LFPR, ages 15-19 and 20-24</td>
-      <td>Insight 2</td>
-    </tr>
-    <tr>
-      <td><code>M850581_female_university_qualified.csv</code></td>
+      <td><code>M850581.csv</code></td>
       <td>Female university-qualified residents</td>
       <td>Insight 1</td>
     </tr>
@@ -1377,7 +1426,7 @@ All 10 dataset files used in the final slides</h4>
       <td>Insight 2</td>
     </tr>
     <tr>
-      <td><code>M810741_median_age_first_birth.csv</code></td>
+      <td><code>MedianAgeOfMothersAtFirstBirthAnnual.csv</code></td>
       <td>Median age at first birth</td>
       <td>Insight 1</td>
     </tr>
@@ -1407,7 +1456,7 @@ Source crediting
 :::
 
 <h4 style="margin-top: 1em;">
-Official source tables behind the 10 files</h4>
+Official source tables behind the 8 files</h4>
 
 
 ```{=html}
@@ -1432,7 +1481,7 @@ Official source tables behind the 10 files</h4>
 <div class="source-link-card">
 <h3>Insight 3 and 4</h3>
 <p><a href="https://data.gov.sg/datasets/d_1de45e559613cb1a82b65ca23d9f2ffd/view">M810571</a> Ever-Married Females by Children Born</p>
-<p>Consumer Price Index, CPI 2024 as Base Year, Monthly. Uploaded project dataset.</p>
+<p><a href="https://data.gov.sg/datasets/d_bdaff844e3ef89d39fceb962ff8f0791/view">Consumer Price Index</a>, CPI 2024 as Base Year, Monthly</p>
 <p><a href="https://data.gov.sg/datasets/d_e39eeaeadb571c0d0725ef1eec48d166/view">M810091</a> TFR for policy and recession windows</p>
 </div>
 </div>
@@ -1808,9 +1857,9 @@ age.</p>
 ::: console-rule
 :::
 
-<h3><span class="console-prompt">&gt;</span> <code>family_timing</code></h3>
+<h3><span class="console-prompt">&gt;</span> <code>birthage</code></h3>
 
-<p>Median first-marriage age and first-birth age in one tidy table.</p>
+<p>Year and median age of resident mothers at first birth.</p>
 :::
 
 ::: {.console-item .stat-pop}
@@ -2089,19 +2138,19 @@ Insight 1
 
 <h3>What is driving the increase in female LFPR?</h3>
 
-<p>The number of female LFPR increasing greatly from 50% in 1990 to 60%
-in 2025.</p>
+<p>Female LFPR increased from approximately 50% in 1990 to 60% in
+2025.</p>
 
-<p>The same period also shows the stark increase in the number of female
-university graduates over three decades.</p>
+<p>Over the same period, the number of female university graduates
+increased substantially.</p>
 
-<p>Over the same period also shows the number of median age at first
-birth rising from 28 years in 1990 to 32 years in 2025.</p>
+<p>The median age at first birth also rose from approximately 28 years
+in 1990 to 32 years in 2025.</p>
 
-<p><strong>Interpretation:</strong> Female LFPR in Singapore rose as a
-result of rising educational attainment \[1\]. This shift in cultural
-norm is causing later marriages, since more women are spending time
-pursuing higher education and establishing their careers \[2\].</p>
+<p><strong>Interpretation:</strong> Female LFPR rose alongside increasing
+educational attainment. As more women pursued higher education and
+established careers, first birth and family formation also shifted later
+\[11\].</p>
 
 <p><strong>Research support:</strong> A peer-reviewed study published in the Journal of Social Policy associates delayed family formation and parenthood in Singapore with educational expansion, increased female labour-market participation, and changing attitudes towards marriage and childbearing. This is consistent with the parallel movement observed in our data, although it does not establish direct causation. [11]
 </p>
