@@ -1868,6 +1868,192 @@ sharply, and that female LFPR increased across most age groups.
 
 ------------------------------------------------------------------------
 
+## How to Read the Visualisation {.custom-slide}
+
+::: kicker
+guide
+:::
+
+::: hr-accent
+:::
+
+<table class="custom-table compact-table">
+  <thead>
+    <tr>
+      <th>Aesthetic / Layer</th>
+      <th>Variable / Measure</th>
+      <th>How to Read & Interpret</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>X-Axis</td>
+      <td>Year</td>
+      <td>Data from 1980-2025</td>
+    </tr>
+    <tr>
+      <td>Left Y-Axis</td>
+      <td>ASFR</td>
+      <td>Stacked Bar Charts represent ASFR</td>
+    </tr>
+    <tr>
+      <td>Right Y-Axis</td>
+      <td>Female LFPR</td>
+      <td>Dashed Lines show female LFPR</td>
+    </tr>
+    <tr>
+      <td>Colour</td>
+      <td>Age Group</td>
+      <td>Each colour represent a different age group</td>
+    </tr>
+    <tr>
+      <td>Dotted Lines</td>
+      <td>Major Policies</td>
+      <td>Marks years when a major policy is introduced</td>
+    </tr>
+    <tr>
+      <td>Shaded grey bands</td>
+      <td>Recession Periods</td>
+      <td>Marks years when a recession period happened</td>
+    </tr>
+  </tbody>
+</table>
+
+<div style="background-color: #ffffff; border: 1px solid #cbd5e1; border-left: 5px solid #ea580c; border-radius: 6px; padding: 12px 16px; margin-top: 15px; font-size: 0.9em; color: #1e293b;">
+  <strong>Summary:</strong> By extending the design across <strong>6 key visual dimensions</strong> (Time, ASFR, LFPR, Age Demographics, Policy Context, and Economic Shocks), the chart transforms raw statistical data into an integrated exploratory view of Singapore's demographic shift.
+</div>
+
+------------------------------------------------------------------------
+
+## Visual Improvement Mapping {.custom-slide}
+
+::: kicker
+how the improved visualisation addresses the original weaknesses
+:::
+
+::: hr-accent
+:::
+
+:::::: three-col
+
+
+::: {.map-column}
+
+::: {.info-card .bad .fragment style="padding:6px 12px; min-height:80px;"}
+
+::: num
+X
+:::
+
+<h3 style="margin:4px 0;">Raw birth counts</h3>
+
+:::
+
+
+::: {.arrow-down .fragment style="text-align:center;font-size:2rem;margin:12px;"}
+↓
+:::
+
+
+::: {.info-card .good .fragment}
+
+::: num
+✓
+:::
+
+<h3>Age-Specific Fertility Rates</h3>
+
+<p>
+Calculated ASFR values (births per 1,000 women by age group) 
+are stacked to represent the TFR profile, isolating fertility 
+behaviour from population changes.
+</p>
+
+:::
+
+:::
+
+
+
+::: {.map-column}
+
+::: {.info-card .bad .fragment style="padding:6px 12px; min-height:80px;"}
+
+::: num
+X
+:::
+
+<h3 style="margin:4px 0;">Short time horizon</h3>
+
+:::
+
+
+::: {.arrow-down .fragment style="text-align:center;font-size:2rem;margin:12px;"}
+↓
+:::
+
+
+::: {.info-card .good .fragment}
+
+::: num
+✓
+:::
+
+<h3>Extended historical view</h3>
+
+<p>
+The dataset is expanded from 1980–2025, revealing long-term 
+shifts such as delayed childbearing and declining fertility 
+among younger age groups.
+</p>
+
+:::
+
+:::
+
+
+
+::: {.map-column}
+
+::: {.info-card .bad .fragment style="padding:6px 12px; min-height:80px;"}
+
+::: num
+X
+:::
+
+<h3 style="margin:4px 0;">No driver context</h3>
+
+:::
+
+
+::: {.arrow-down .fragment style="text-align:center;font-size:2rem;margin:12px;"}
+↓
+:::
+
+
+::: {.info-card .good .fragment}
+
+::: num
+✓
+:::
+
+<h3>Contextual overlays</h3>
+
+<p>
+Female LFPR trends, policy milestones, and recession periods 
+are added to explain possible drivers behind fertility shifts.
+</p>
+
+:::
+
+:::
+
+
+::::::
+
+
+------------------------------------------------------------------------
+
 ## Insights & Analysis {#insights-analysis .section-divider background-image="images/insightsanalysis-bg.jpg" background-size="cover" background-position="center" background-opacity="0.5" transition="slide"}
 
 ::: section-number
@@ -2145,15 +2331,11 @@ patterns moved together.
 
 ## References {.clean-slide}
 
-::: kicker
-Main sources
-:::
-
 ::: references-list
 <ol>
 
 <li>Chew, H. M. (2023, September 29). <em>Record number of marriages,
-drop in Singaporean births in 2022</em>. Channel NewsAsia.
+drop in Singaporean births in 2022</em>. Channel News Asia.
 <a href="https://www.channelnewsasia.com/singapore/marriage-birth-rate-fertility-ageing-population-immigration-2022-3807991">https://www.channelnewsasia.com/singapore/marriage-birth-rate-fertility-ageing-population-immigration-2022-3807991</a></li>
 
 <li>Singapore Department of Statistics. (n.d.). <em>Births and fertility
@@ -2225,6 +2407,10 @@ reproductive timing: A life history approach</em>.
 <em>Current Research in Ecological and Social Psychology, 3</em>,
 100040.
 <a href="https://doi.org/10.1016/j.cresp.2022.100040">https://doi.org/10.1016/j.cresp.2022.100040</a></li>
+
+<li>Ang H. M. (2026, February 26). <em>Singapore's fertility rate drops to historic low of 0.87 as country faces 'existential challenge': DPM Gan</em>. Channel News Asia.
+<a href="https://www.channelnewsasia.com/singapore/total-fertility-rate-tfr-2025-record-low-citizen-population-5954306">https://www.channelnewsasia.com/singapore/total-fertility-rate-tfr-2025-record-low-citizen-population-5954306</a></li>
+
 
 </ol>
 :::

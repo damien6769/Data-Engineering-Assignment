@@ -1414,3 +1414,24 @@ pre code {
 .reveal section.clean-slide .two-col:has(.card-stack) .info-card p {
   font-size: 0.52em;
 }
+
+.three-col {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+  width:100%;
+}
+
+.map-column {
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
+}
+
+.info-card.good {
+  border-left: 6px solid #2ca25f;
+}
+
+.arrow-down {
+  opacity:0.8;
+}
