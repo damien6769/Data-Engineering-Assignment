@@ -563,7 +563,7 @@
 }
 
 .card-stack .info-card p {
-  font-size: 0.62em;
+  font-size: 0.8em;
   line-height: 1.35;
 }
 
@@ -604,7 +604,7 @@
   line-height: 1.15;
   margin-bottom: 12px;
 }
-.info-card p { font-size: 0.8em; color: var(--ink-soft); line-height: 1.42; }
+.info-card p { font-size: 0.7em; color: var(--ink-soft); line-height: 1.42; }
 .info-card.good { border-top: 6px solid var(--sage); }
 .info-card.bad { border-top: 6px solid var(--coral); }
 .info-card.blue { border-top: 6px solid var(--blue); }
@@ -771,7 +771,7 @@
   box-shadow: 0 10px 26px rgba(38,50,56,0.08);
 }
 .limit-card h3 { font-size: 0.70em; margin-bottom: 10px; }
-.limit-card p { font-size: 0.48em; color: var(--ink-soft); }
+.limit-card p { font-size: 0.7em; color: var(--ink-soft); }
 .conclusion-big {
   font-family: Georgia, "Times New Roman", serif;
   font-size: 1.45em;
@@ -805,7 +805,7 @@
 }
 
 .conclusion-point p {
-  font-size: 0.52em;
+  font-size: 0.7em;
   line-height: 1.38;
   color: var(--ink-soft);
 }

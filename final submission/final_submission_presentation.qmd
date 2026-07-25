@@ -907,78 +907,47 @@ policies coincide with recovery.
 ## Background {.story-slide}
 
 ::: kicker
-Singapore's Population
+Singapore's Population Challenge
 :::
 
 ::: hr-accent
 :::
 
 :::::: card-grid-3
+
 ::: {.stat-pop style="display:flex;flex-direction:column;align-items:center;text-align:center;background:none;box-shadow:none;"}
-[0.87]{style="display:flex;align-items:center;justify-content:center;width:110px;height:110px;border-radius:50%;background:#ff6b4a;color:white;font-weight:700;font-size:2rem;line-height:1;margin:0 auto 14px auto;"}
+[↓ 0.87]{style="display:flex;align-items:center;justify-content:center;width:110px;height:110px;border-radius:50%;background:#ff6b4a;color:white;font-weight:700;font-size:2rem;line-height:1;margin:0 auto 4px auto;"}
 
-<h3 style="margin:0 0 6px 0;">
-
-Total Fertility Rate
-
-</h3>
-
-<p style="margin:0;">
-
-in 2025
-
-</p>
+<h4 style="margin:0 0 2px 0;">Total Fertility Rate</h4>
+<p>in 2025</p>
 :::
 
 ::: {.stat-pop style="display:flex;flex-direction:column;align-items:center;text-align:center;background:none;box-shadow:none;"}
-[27,500]{style="display:flex;align-items:center;justify-content:center;width:110px;height:110px;border-radius:50%;background:#ff6b4a;color:white;font-weight:700;font-size:1.6rem;line-height:1;margin:0 auto 14px auto;"}
+[↓ 27,500]{style="display:flex;align-items:center;justify-content:center;width:110px;height:110px;border-radius:50%;background:#ff6b4a;color:white;font-weight:700;font-size:1.6rem;line-height:1;margin:0 auto 4px auto;"}
 
-<h3 style="margin:0 0 6px 0;">
-
-Births
-
-</h3>
-
-<p style="margin:0;">
-
-in 2025
-
-</p>
+<h4 style="margin:0 0 2px 0;">Births</h4>
+<p>in 2025 (all-time low record)</p>
 :::
 
 ::: {.stat-pop style="display:flex;flex-direction:column;align-items:center;text-align:center;background:none;box-shadow:none;"}
-[1 in
-5]{style="display:flex;align-items:center;justify-content:center;width:110px;height:110px;border-radius:50%;background:#ff6b4a;color:white;font-weight:700;font-size:1.6rem;line-height:1;margin:0 auto 14px auto;"}
+[↑ 1 in
+5]{style="display:flex;align-items:center;justify-content:center;width:110px;height:110px;border-radius:50%;background:#ff6b4a;color:white;font-weight:700;font-size:1.6rem;line-height:1;margin:0 auto 50px auto;"}
 
-<h3 style="margin:0 0 6px 0;">
-
-Aged 65+
-
-</h3>
-
-<p style="margin:0;">
-
-citizens
-
-</p>
+<h4 style="margin:0 0 2px 0;">Aged 65+</h4>
+<p>citizens</p>
 :::
+
 ::::::
 
-::: {.story-question .fragment fragment-index=1 style="font-size:28px;"}
-**Why this matters**
-
-- Below replacement level -\> population cannot sustain itself naturally
-
-- Citizen population will shrink -\> impacting future sustainability
+::: {.fragment style="text-align:center; width:100%; margin-top:36px;"}
+<h5>Singapore faces a rapidly ageing population driven by persistently low fertility.</h5>
 :::
 
-::: {.story-question .fragment fragment-index=1 style="font-size:0.8em;"}
-To address this challenge, it is important to first understand the underlying factors that shape fertility decisions among Singaporeans.
-:::
+
 
 ------------------------------------------------------------------------
 
-## What question are we answering? {.story-slide}
+## Framing the Question {.story-slide}
 
 ::: kicker
 Research focus
@@ -987,22 +956,26 @@ Research focus
 ::: hr-accent
 :::
 
+::: {.story-question .fragment style="font-size:30px;"}
+<strong>Why this matters</strong>
 
-<div class="story-big">
-Why has Singapore's fertility rate kept <span>falling</span> despite policy
-attention?.
-</div>
+- Below replacement level → population cannot sustain itself naturally
 
-::: story-sub
-Our answer is descriptive, not causal: the decline appears alongside
-later family formation, changing education and labour-force patterns,
-smaller completed families and uneven policy or recession timing.
+- Citizen population will shrink → impacts future sustainability
+
+- Hard to reverse → fewer women of childbearing age over time
 :::
 
-::: story-question
-<strong>Main question:</strong> What demographic and social changes are
-associated with Singapore's persistently low fertility from 1980 to
+::: {.story-question .fragment style="font-size:24px;"}
+We explore how Singapore's fertility decline has occurred alongside changes in family formation, education, labour-force participation, policies and economic conditions.
+:::
+
+::: {.fragment}
+<div class="story-big">
+What **demographic and social changes** are
+associated with Singapore's <span>persistently low fertility</span> from 1980 to
 2025?
+</div>
 :::
 
 ------------------------------------------------------------------------
@@ -1027,6 +1000,7 @@ long-term fertility behaviour.
 ## The Original CNA Visualisation {.clean-slide}
 
 ::::::: two-col
+
 :::: image-frame
 <img src="images/cna_birth_chart.png" alt="Original CNA birth-count chart"/>
 
@@ -1040,15 +1014,22 @@ Source: CNA birth-count visualisation on Singapore citizen births.
 Original story
 :::
 
-<h3>Annual citizen births fell in the recent decade</h3>
+##### Annual citizen births fell over the past decade
 
-<p>The chart uses annual birth counts to show that Singapore citizen
-births dropped, with 2022 highlighted as a low point.</p>
+The chart shows the decline in Singapore's birth rate from 2012 to 2022.
 
-<p>It is effective as a news graphic, but it does not explain whether
-the decline came from fertility timing, age structure, labour-force
-change or family-size behaviour.</p>
+**2 Primary Dimensions:**
+
+- **Year** — Annual observations on the x-axis.
+- **Number of Singapore Citizen Births** — Birth counts represented by bar height.
+
+**Supporting design elements:**
+
+- **Period grouping** — Colour shades compare 2013–2017 and 2018–2022.
+- **Average birth annotations** — Five-year averages show changes between periods.
+- **Direct value labels** — Exact values above bars improve readability.
 ::::
+
 :::::::
 
 ------------------------------------------------------------------------
@@ -1558,6 +1539,7 @@ STEP 05
 <h3>Validate</h3>
 
 <p>Check expected year ranges, age groups and missing values.</p>
+
 ::::
 :::::::::::::
 
@@ -1675,6 +1657,7 @@ Avoids misleading comparisons across incompatible measures.
 visual encodings.</p>
 
 Turns raw data into story-ready variables.
+
 ::::
 :::::::::::::::::::
 
@@ -1882,65 +1865,6 @@ Use this slide to set up the rest of the analysis. The main chart shows
 that fertility decline is long-term, that younger-age fertility fell
 sharply, and that female LFPR increased across most age groups.
 :::
-
-------------------------------------------------------------------------
-
-## What the final visual lets us ask {.clean-slide}
-
-::: kicker
-Reading the main visual
-:::
-
-::: hr-accent
-:::
-
-<h4>The plot shows patterns, but the insights explain them</h4>
-
-::::::::::: insight-watermark-grid
-::: {.insight-item}
-::: watermark-num
-01
-:::
-
-<h3>Female education and LFPR</h3>
-
-<p>Female work participation rose alongside higher education and later
-first birth.</p>
-:::
-
-::: {.insight-item}
-::: watermark-num
-02
-:::
-
-<h3>Younger fertility weakened</h3>
-
-<p>Young-age ASFR fell as schooling became longer and youth labour
-participation changed.</p>
-:::
-
-::: {.insight-item}
-::: watermark-num
-03
-:::
-
-<h3>Family formation shifted</h3>
-
-<p>Marriage, first birth and completed family size all moved in ways
-that reinforce low fertility.</p>
-:::
-
-::: {.insight-item}
-::: watermark-num
-04
-:::
-
-<h3>Policies and recessions</h3>
-
-<p>Policy and downturn timing provide historical context, but do not
-prove direct causality.</p>
-:::
-:::::::::::
 
 ------------------------------------------------------------------------
 
@@ -2201,11 +2125,20 @@ event.
 </div>
 ```
 
-::: conclusion-final
+::: {.fragment}
+<span style="display:block; margin-top:28px; 
+padding:14px 18px; 
+background:rgba(0,0,0,0.03); 
+border-left:5px solid #c0392b; 
+font-size:1.12em; 
+font-weight:500; 
+line-height:1.6; 
+color:#1f2d3d;">
 Policy and recession timing help explain short-term context, but they do
-not overturn the wider pattern. The main message is cumulative:
+not overturn the wider pattern. <br> The main message is cumulative:
 fertility declined because several social, economic and demographic
 patterns moved together.
+</span>
 :::
 
 ------------------------------------------------------------------------
