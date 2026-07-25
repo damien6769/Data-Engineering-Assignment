@@ -975,18 +975,29 @@ Singapore's Population Challenge
 :::
 
 :::::: card-grid-3
-
 ::: {.stat-pop style="display:flex;flex-direction:column;align-items:center;text-align:center;background:none;box-shadow:none;"}
-[↓ 0.87]{style="display:flex;align-items:center;justify-content:center;width:110px;height:110px;border-radius:50%;background:#ff6b4a;color:white;font-weight:700;font-size:2rem;line-height:1;margin:0 auto 4px auto;"}
+[↓
+0.87]{style="display:flex;align-items:center;justify-content:center;width:110px;height:110px;border-radius:50%;background:#ff6b4a;color:white;font-weight:700;font-size:2rem;line-height:1;margin:0 auto 4px auto;"}
 
-<h4 style="margin:0 0 2px 0;">Total Fertility Rate</h4>
+<h4 style="margin:0 0 2px 0;">
+
+Total Fertility Rate
+
+</h4>
+
 <p>in 2025</p>
 :::
 
 ::: {.stat-pop style="display:flex;flex-direction:column;align-items:center;text-align:center;background:none;box-shadow:none;"}
-[↓ 27,500]{style="display:flex;align-items:center;justify-content:center;width:110px;height:110px;border-radius:50%;background:#ff6b4a;color:white;font-weight:700;font-size:1.6rem;line-height:1;margin:0 auto 4px auto;"}
+[↓
+27,500]{style="display:flex;align-items:center;justify-content:center;width:110px;height:110px;border-radius:50%;background:#ff6b4a;color:white;font-weight:700;font-size:1.6rem;line-height:1;margin:0 auto 4px auto;"}
 
-<h4 style="margin:0 0 2px 0;">Births</h4>
+<h4 style="margin:0 0 2px 0;">
+
+Births
+
+</h4>
+
 <p>in 2025 (all-time low record)</p>
 :::
 
@@ -994,17 +1005,20 @@ Singapore's Population Challenge
 [↑ 1 in
 5]{style="display:flex;align-items:center;justify-content:center;width:110px;height:110px;border-radius:50%;background:#ff6b4a;color:white;font-weight:700;font-size:1.6rem;line-height:1;margin:0 auto 50px auto;"}
 
-<h4 style="margin:0 0 2px 0;">Aged 65+</h4>
+<h4 style="margin:0 0 2px 0;">
+
+Aged 65+
+
+</h4>
+
 <p>citizens</p>
 :::
-
 ::::::
 
 ::: {.fragment style="text-align:center; width:100%; margin-top:36px;"}
-<h5>Singapore faces a rapidly ageing population driven by persistently low fertility.</h5>
+<h5>Singapore faces a rapidly ageing population driven by persistently
+low fertility.</h5>
 :::
-
-
 
 ------------------------------------------------------------------------
 
@@ -1028,16 +1042,17 @@ Research focus
 :::
 
 ::: {.story-question .fragment style="font-size:24px;"}
-We explore how Singapore's fertility decline has occurred alongside changes in family formation, education, labour-force participation, policies and economic conditions.
+We explore how Singapore's fertility decline has occurred alongside
+changes in family formation, education, labour-force participation,
+policies and economic conditions.
 :::
 
-::: {.fragment}
-<div class="story-big">
-What **demographic and social changes** are
-associated with Singapore's <span>persistently low fertility</span> from 1980 to
-2025?
-</div>
+:::: fragment
+::: story-big
+What **demographic and social changes** are associated with Singapore's
+persistently low fertility from 1980 to 2025?
 :::
+::::
 
 ------------------------------------------------------------------------
 
@@ -1061,7 +1076,6 @@ long-term fertility behaviour.
 ## The Original CNA Visualisation {.clean-slide}
 
 ::::::: two-col
-
 :::: image-frame
 <img src="images/cna_birth_chart.png" alt="Original CNA birth-count chart"/>
 
@@ -1082,19 +1096,19 @@ The chart shows the decline in Singapore's birth rate from 2012 to 2022.
 **2 Primary Dimensions:**
 
 - **Year** — Annual observations on the x-axis.
-- **Number of Singapore Citizen Births** — Birth counts represented by bar height.
+- **Number of Singapore Citizen Births** — Birth counts represented by
+  bar height.
 
 **Supporting design elements:**
 
 - **Period grouping** — Colour shades compare 2013–2017 and 2018–2022.
-- **Average birth annotations** — Five-year averages show changes between periods.
+- **Average birth annotations** — Five-year averages show changes
+  between periods.
 - **Direct value labels** — Exact values above bars improve readability.
 ::::
-
 :::::::
 
 ------------------------------------------------------------------------
-
 
 ## Strengths {.clean-slide}
 
@@ -1111,7 +1125,7 @@ It communicates the headline quickly.
 
 </h3>
 
-::::::: two-col
+:::::::::::: two-col
 :::: image-frame
 <img src="images/cna_birth_chart.png" alt="Original CNA birth-count chart"/>
 
@@ -1120,15 +1134,17 @@ Source: CNA birth-count visualisation on Singapore citizen births.
 :::
 ::::
 
-::::::: card-stack
+::::::::: card-stack
 :::: {.info-card .good .fragment}
 ::: num
 01
 :::
 
-<h3>Clear message</h3>
+<h3>Honest, simple encoding</h3>
 
-<p>The reader immediately sees that citizen births declined.</p>
+<p>Zero-based y-axis (no truncation exaggerating the decline)</p>
+
+<p>Bars and direct labels are easy to read</p>
 ::::
 
 :::: {.info-card .good .fragment}
@@ -1136,9 +1152,11 @@ Source: CNA birth-count visualisation on Singapore citizen births.
 02
 :::
 
-<h3>Simple encoding</h3>
+<h3>Immediately communicates its headline</h3>
 
-<p>Bars and direct labels are easy to read.</p>
+<p>Reader grasps the core message ("births declined") within seconds</p>
+
+<p>Bars and direct labels are easy to read</p>
 ::::
 
 :::: {.info-card .good .fragment}
@@ -1146,14 +1164,12 @@ Source: CNA birth-count visualisation on Singapore citizen births.
 03
 :::
 
-<h3>Useful for news</h3>
+<h3>Fits for a quick news read</h3>
 
-<p>The short comparison period supports a compact article chart.</p>
+<p>Short, compact window suits a quick news-article chart</p>
 ::::
-:::::::
-:::::::
-
-
+:::::::::
+::::::::::::
 
 ------------------------------------------------------------------------
 
@@ -1172,7 +1188,7 @@ The chart shows the outcome, not the underlying pattern.
 
 </h3>
 
-::::::: two-col
+:::::::::::: two-col
 :::: image-frame
 <img src="images/cna_birth_chart.png" alt="Original CNA birth-count chart"/>
 
@@ -1181,16 +1197,16 @@ Source: CNA birth-count visualisation on Singapore citizen births.
 :::
 ::::
 
-::::::: card-stack
+::::::::: card-stack
 :::: {.info-card .bad .fragment}
 ::: num
 01
 :::
 
-<h3>Birth counts only</h3>
+<h3>Limited measure of fertility behaviour</h3>
 
-<p>Counts are affected by population size and age structure, not only
-fertility behaviour.</p>
+<p>Birth counts, not fertility rates used. Does not account for
+maternal-age structure. Annual changes appear visually compressed</p>
 ::::
 
 :::: {.info-card .bad .fragment}
@@ -1198,10 +1214,10 @@ fertility behaviour.</p>
 02
 :::
 
-<h3>Short time horizon</h3>
+<h3>Restricted time and context</h3>
 
-<p>2012-2022 is too short to explain Singapore's longer fertility
-transition.</p>
+<p>The short 2012–2022 period lacks wider social and economic context,
+while five-year averages hide annual variation</p>
 ::::
 
 :::: {.info-card .bad .fragment}
@@ -1209,13 +1225,12 @@ transition.</p>
 03
 :::
 
-<h3>No driver context</h3>
+<h3>Weak visual explanation</h3>
 
-<p>It does not show maternal age, female LFPR, education, policy timing,
-recession context or family-size changes.</p>
+<p>Lacks explicit axis labels, units, legend. Unclear colour meaning</p>
 ::::
-:::::::
-:::::::
+:::::::::
+::::::::::::
 
 ------------------------------------------------------------------------
 
@@ -1252,41 +1267,43 @@ Each improvement addresses a weakness in the original chart
 </h3>
 
 ::::::::: card-grid-3
-:::: {.info-card .blue .fragment .fade-up fragment-index=1}
+:::: {.info-card .blue .fragment .fade-up fragment-index="1"}
 ::: num
 01
 :::
 
-<h3>Use ASFR and TFR</h3>
+<h3>Better fertility measurement</h3>
 
-<p>Move beyond raw birth counts so the visual better reflects fertility
-behaviour rather than only population size.</p>
+<p>Replace raw birth counts with age-specific fertility rates to show
+how fertility patterns differ across maternal age groups.</p>
 ::::
 
-:::: {.info-card .blue .fragment .fade-up fragment-index=1}
+:::: {.info-card .blue .fragment .fade-up fragment-index="1"}
 ::: num
 02
 :::
 
-<h3>Extend the period</h3>
+<h3>Extended Historical view & context</h3>
 
-<p>Use a 1980-2025 window to show longer fertility transition, not just
-a short news period.</p>
+<p>Extend the annual timeline and incorporate female LFPR, policy
+milestones and recession periods to provide wider demographic and
+economic context.</p>
 ::::
 
-:::: {.info-card .blue .fragment .fade-up fragment-index=1}
+:::: {.info-card .blue .fragment .fade-up fragment-index="1"}
 ::: num
 03
 :::
 
-<h3>Add context</h3>
+<h3>Clearer visual communication</h3>
 
-<p>Overlay female LFPR, policy milestones and recessions so the audience
-can compare fertility movement with key contextual shifts.</p>
+<p>Use consistent age-group colours, explicit axes, legends and
+annotation styles to make the visualisation easier to interpret
+independently.</p>
 ::::
 :::::::::
 
-::: {.story-question .fragment fragment-index=2}
+::: {.story-question .fragment fragment-index="2"}
 The improvement is not to add more variables for the sake of it. The
 goal is to make the main fertility story more explainable and
 self-contained.
@@ -1320,8 +1337,7 @@ Data curation
 ::: hr-accent
 :::
 
-<h4>
-Official datasets used in the final analysis</h4>
+<h4>Official datasets used in the final analysis</h4>
 
 ::::::::: source-grid
 ::: {.source-tile .stat-pop}
@@ -1388,61 +1404,36 @@ Data sources
 ::: hr-accent
 :::
 
-<h4>
-All 8 dataset files used in the final slides</h4>
+<h4>All 8 dataset files used in the final slides</h4>
 
-<table class="custom-table compact-table">
-  <thead>
-    <tr>
-      <th>Dataset file</th>
-      <th>Main variables used</th>
-      <th>Used for</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>BirthsAndFertilityRatesAnnual.csv</code></td>
-      <td>TFR, ASFR by age group</td>
-      <td>Main visualisation and policy/recession analysis</td>
-    </tr>
-    <tr>
-      <td><code>M182201.csv</code></td>
-      <td>Female LFPR aggregate and by age group</td>
-      <td>Main visualisation, Insights 1 and 2</td>
-    </tr>
-    <tr>
-      <td><code>M850581.csv</code></td>
-      <td>Female university-qualified residents</td>
-      <td>Insight 1</td>
-    </tr>
-    <tr>
-      <td><code>IndicatorsOnEducationAndLiteracyAnnual.csv</code></td>
-      <td>Female literacy rate</td>
-      <td>Insight 2</td>
-    </tr>
-    <tr>
-      <td><code>M850591_female_mean_years_schooling.csv</code></td>
-      <td>Female mean years of schooling</td>
-      <td>Insight 2</td>
-    </tr>
-    <tr>
-      <td><code>MedianAgeOfMothersAtFirstBirthAnnual.csv</code></td>
-      <td>Median age at first birth</td>
-      <td>Insight 1</td>
-    </tr>
-    <tr>
-      <td><code>ResidentEverMarriedFemalesByAgeGroupAndNumberOfChildrenBornAnnual.csv</code></td>
-      <td>Children born by women aged 40 to 49</td>
-      <td>Insight 3</td>
-    </tr>
-    <tr>
-      <td><code>ConsumerPriceIndexCPI2024AsBaseYearMonthly.csv</code></td>
-      <td>CPI, all items</td>
-      <td>Insight 3</td>
-    </tr>
-  </tbody>
-</table>
-
++-------------------------------------------------------------------------+----------------------+----------------------+
+| Dataset file                                                            | Main variables used  | Used for             |
++=========================================================================+======================+======================+
+| `BirthsAndFertilityRatesAnnual.csv`                                     | TFR, ASFR by age     | Main visualisation   |
+|                                                                         | group                | and policy/recession |
+|                                                                         |                      | analysis             |
++-------------------------------------------------------------------------+----------------------+----------------------+
+| `M182201.csv`                                                           | Female LFPR          | Main visualisation,  |
+|                                                                         | aggregate and by age | Insights 1 and 2     |
+|                                                                         | group                |                      |
++-------------------------------------------------------------------------+----------------------+----------------------+
+| `M850581.csv`                                                           | Female               | Insight 1            |
+|                                                                         | university-qualified |                      |
+|                                                                         | residents            |                      |
++-------------------------------------------------------------------------+----------------------+----------------------+
+| `IndicatorsOnEducationAndLiteracyAnnual.csv`                            | Female literacy rate | Insight 2            |
++-------------------------------------------------------------------------+----------------------+----------------------+
+| `M850591_female_mean_years_schooling.csv`                               | Female mean years of | Insight 2            |
+|                                                                         | schooling            |                      |
++-------------------------------------------------------------------------+----------------------+----------------------+
+| `MedianAgeOfMothersAtFirstBirthAnnual.csv`                              | Median age at first  | Insight 1            |
+|                                                                         | birth                |                      |
++-------------------------------------------------------------------------+----------------------+----------------------+
+| `ResidentEverMarriedFemalesByAgeGroupAndNumberOfChildrenBornAnnual.csv` | Children born by     | Insight 3            |
+|                                                                         | women aged 40 to 49  |                      |
++-------------------------------------------------------------------------+----------------------+----------------------+
+| `ConsumerPriceIndexCPI2024AsBaseYearMonthly.csv`                        | CPI, all items       | Insight 3            |
++-------------------------------------------------------------------------+----------------------+----------------------+
 
 ------------------------------------------------------------------------
 
@@ -1456,8 +1447,10 @@ Source crediting
 :::
 
 <h4 style="margin-top: 1em;">
-Official source tables behind the 8 files</h4>
 
+Official source tables behind the 8 files
+
+</h4>
 
 ```{=html}
 <div class="source-link-grid">
@@ -1523,13 +1516,13 @@ Pipeline overview
 ::: hr-accent
 :::
 
-<h4>
-One reproducible workflow across datasets</h4>
+<h4>One reproducible workflow across datasets</h4>
 
-::::::::::::: pipeline-rail
-:::: {.rail-step}
+:::::::::::::::::: pipeline-rail
+::::: rail-step
 ::: rail-dot
 :::
+
 ::: step-id
 STEP 01
 :::
@@ -1537,9 +1530,9 @@ STEP 01
 <h3>Import</h3>
 
 <p>Read CSV files and locate the true data header.</p>
-::::
+:::::
 
-:::: {.rail-step}
+::::: rail-step
 ::: rail-dot
 :::
 
@@ -1550,9 +1543,9 @@ STEP 02
 <h3>Clean</h3>
 
 <p>Remove metadata, standardise labels and parse values.</p>
-::::
+:::::
 
-:::: {.rail-step}
+::::: rail-step
 ::: rail-dot
 :::
 
@@ -1563,9 +1556,9 @@ STEP 03
 <h3>Reshape</h3>
 
 <p>Convert year columns into long format.</p>
-::::
+:::::
 
-:::: {.rail-step}
+::::: rail-step
 ::: rail-dot
 :::
 
@@ -1576,9 +1569,9 @@ STEP 04
 <h3>Join</h3>
 
 <p>Combine datasets by year only where units are comparable.</p>
-::::
+:::::
 
-:::: {.rail-step}
+::::: rail-step
 ::: rail-dot
 :::
 
@@ -1589,9 +1582,8 @@ STEP 05
 <h3>Validate</h3>
 
 <p>Check expected year ranges, age groups and missing values.</p>
-
-::::
-:::::::::::::
+:::::
+::::::::::::::::::
 
 ------------------------------------------------------------------------
 
@@ -1605,7 +1597,6 @@ Data engineering detail
 :::
 
 <h4>The raw files did not all arrive in analysis-ready form</h4>
-
 
 ::::::::::::::::::: engineering-card-grid
 :::: {.engineering-card .stat-pop}
@@ -1707,7 +1698,6 @@ Avoids misleading comparisons across incompatible measures.
 visual encodings.</p>
 
 Turns raw data into story-ready variables.
-
 ::::
 :::::::::::::::::::
 
@@ -1724,8 +1714,8 @@ Reproducibility and validation
 
 <h4>Key transformations used before plotting</h4>
 
-::::::::: detail-rail-grid
-::: detail-rail-item
+::::::::::::::::::::: detail-rail-grid
+::::: detail-rail-item
 ::: rail-icon
 {{< fa link >}}
 :::
@@ -1733,16 +1723,18 @@ Reproducibility and validation
 ::: rail-num
 01
 :::
+
 <h3>Year alignment</h3>
 
 <p>All tables were joined by <code>year</code>. No row was joined by
 position.</p>
-:::
+:::::
 
-::: detail-rail-item
+::::: detail-rail-item
 ::: rail-icon
 {{< fa layer-group >}}
 :::
+
 ::: rail-num
 02
 :::
@@ -1751,12 +1743,13 @@ position.</p>
 
 <p>ASFR and LFPR age bands were standardised before plotting
 together.</p>
-:::
+:::::
 
-::: detail-rail-item
+::::: detail-rail-item
 ::: rail-icon
 {{< fa landmark >}}
 :::
+
 ::: rail-num
 03
 :::
@@ -1765,12 +1758,13 @@ together.</p>
 
 <p>TFR was converted to years before and after policy years for fair
 comparison.</p>
-:::
+:::::
 
-::: detail-rail-item
+::::: detail-rail-item
 ::: rail-icon
 {{< fa chart-pie >}}
 :::
+
 ::: rail-num
 04
 :::
@@ -1779,12 +1773,13 @@ comparison.</p>
 
 <p>Counts of children born were converted into percentages within each
 year.</p>
-:::
+:::::
 
-::: detail-rail-item
+::::: detail-rail-item
 ::: rail-icon
 {{< fa palette >}}
 :::
+
 ::: rail-num
 05
 :::
@@ -1793,12 +1788,13 @@ year.</p>
 
 <p>Size, colour and shaded bands were derived from clean numeric
 variables.</p>
-:::
+:::::
 
-::: detail-rail-item
+::::: detail-rail-item
 ::: rail-icon
 {{< fa circle-check >}}
 :::
+
 ::: rail-num
 06
 :::
@@ -1807,8 +1803,8 @@ variables.</p>
 
 <p>Checked expected year ranges, missing values, age groups and
 percentage totals.</p>
-:::
-:::::::::
+:::::
+:::::::::::::::::::::
 
 ------------------------------------------------------------------------
 
@@ -1823,65 +1819,65 @@ Output structure
 
 <h4>Cleaned tables prepared for visualisation and analysis</h4>
 
-::::::::: console-grid
-::: {.console-item .stat-pop}
+::::::::::::::: console-grid
+:::: {.console-item .stat-pop}
 ::: console-rule
 :::
 
-<h3><span class="console-prompt">&gt;</span> <code>asfr_by_age</code></h3>
+<h3>[\>]{.console-prompt} <code>asfr_by_age</code></h3>
 
 <p>Year, maternal age group and ASFR. Used for stacked fertility
 bars.</p>
-:::
+::::
 
-::: {.console-item .stat-pop}
+:::: {.console-item .stat-pop}
 ::: console-rule
 :::
 
-<h3><span class="console-prompt">&gt;</span> <code>lfpr_female</code></h3>
+<h3>[\>]{.console-prompt} <code>lfpr_female</code></h3>
 
 <p>Year, age group and female LFPR. Used for matching dashed lines.</p>
-:::
+::::
 
-::: {.console-item .stat-pop}
+:::: {.console-item .stat-pop}
 ::: console-rule
 :::
 
-<h3><span class="console-prompt">&gt;</span> <code>insight1_data</code></h3>
+<h3>[\>]{.console-prompt} <code>insight1_data</code></h3>
 
 <p>Female university attainment joined with LFPR and first-birth
 age.</p>
-:::
+::::
 
-::: {.console-item .stat-pop}
+:::: {.console-item .stat-pop}
 ::: console-rule
 :::
 
-<h3><span class="console-prompt">&gt;</span> <code>birthage</code></h3>
+<h3>[\>]{.console-prompt} <code>birthage</code></h3>
 
 <p>Year and median age of resident mothers at first birth.</p>
-:::
+::::
 
-::: {.console-item .stat-pop}
+:::: {.console-item .stat-pop}
 ::: console-rule
 :::
 
-<h3><span class="console-prompt">&gt;</span> <code>family_size_40_49</code></h3>
+<h3>[\>]{.console-prompt} <code>family_size_40_49</code></h3>
 
 <p>Completed family-size shares for ever-married women aged 40 to
 49.</p>
-:::
+::::
 
-::: {.console-item .stat-pop}
+:::: {.console-item .stat-pop}
 ::: console-rule
 :::
 
-<h3><span class="console-prompt">&gt;</span> <code>policy_window</code></h3>
+<h3>[\>]{.console-prompt} <code>policy_window</code></h3>
 
 <p>TFR aligned to policy years, with recession windows added
 separately.</p>
-:::
-:::::::::
+::::
+:::::::::::::::
 
 ------------------------------------------------------------------------
 
@@ -1927,51 +1923,33 @@ guide
 ::: hr-accent
 :::
 
-<table class="custom-table compact-table">
-  <thead>
-    <tr>
-      <th>Aesthetic / Layer</th>
-      <th>Variable / Measure</th>
-      <th>How to Read & Interpret</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>X-Axis</td>
-      <td>Year</td>
-      <td>Data from 1980-2025</td>
-    </tr>
-    <tr>
-      <td>Left Y-Axis</td>
-      <td>ASFR</td>
-      <td>Stacked Bar Charts represent ASFR</td>
-    </tr>
-    <tr>
-      <td>Right Y-Axis</td>
-      <td>Female LFPR</td>
-      <td>Dashed Lines show female LFPR</td>
-    </tr>
-    <tr>
-      <td>Colour</td>
-      <td>Age Group</td>
-      <td>Each colour represent a different age group</td>
-    </tr>
-    <tr>
-      <td>Dotted Lines</td>
-      <td>Major Policies</td>
-      <td>Marks years when a major policy is introduced</td>
-    </tr>
-    <tr>
-      <td>Shaded grey bands</td>
-      <td>Recession Periods</td>
-      <td>Marks years when a recession period happened</td>
-    </tr>
-  </tbody>
-</table>
++-------------------+--------------------+-----------------------------+
+| Aesthetic / Layer | Variable / Measure | How to Read & Interpret     |
++===================+====================+=============================+
+| X-Axis            | Year               | Data from 1980-2025         |
++-------------------+--------------------+-----------------------------+
+| Left Y-Axis       | ASFR               | Stacked Bar Charts          |
+|                   |                    | represent ASFR              |
++-------------------+--------------------+-----------------------------+
+| Right Y-Axis      | Female LFPR        | Dashed Lines show female    |
+|                   |                    | LFPR                        |
++-------------------+--------------------+-----------------------------+
+| Colour            | Age Group          | Each colour represent a     |
+|                   |                    | different age group         |
++-------------------+--------------------+-----------------------------+
+| Dotted Lines      | Major Policies     | Marks years when a major    |
+|                   |                    | policy is introduced        |
++-------------------+--------------------+-----------------------------+
+| Shaded grey bands | Recession Periods  | Marks years when a          |
+|                   |                    | recession period happened   |
++-------------------+--------------------+-----------------------------+
 
-<div style="background-color: #ffffff; border: 1px solid #cbd5e1; border-left: 5px solid #ea580c; border-radius: 6px; padding: 12px 16px; margin-top: 15px; font-size: 0.9em; color: #1e293b;">
-  <strong>Summary:</strong> By extending the design across <strong>6 key visual dimensions</strong> (Time, ASFR, LFPR, Age Demographics, Policy Context, and Economic Shocks), the chart transforms raw statistical data into an integrated exploratory view of Singapore's demographic shift.
-</div>
+::: {style="background-color: #ffffff; border: 1px solid #cbd5e1; border-left: 5px solid #ea580c; border-radius: 6px; padding: 12px 16px; margin-top: 15px; font-size: 0.9em; color: #1e293b;"}
+<strong>Summary:</strong> By extending the design across <strong>6 key
+visual dimensions</strong> (Time, ASFR, LFPR, Age Demographics, Policy
+Context, and Economic Shocks), the chart transforms raw statistical data
+into an integrated exploratory view of Singapore's demographic shift.
+:::
 
 ------------------------------------------------------------------------
 
@@ -1984,123 +1962,97 @@ how the improved visualisation addresses the original weaknesses
 ::: hr-accent
 :::
 
-:::::: three-col
-
-
-::: {.map-column}
-
-::: {.info-card .bad .fragment style="padding:6px 12px; min-height:80px;"}
-
+::::::::::::::::::::: three-col
+:::::::: map-column
+:::: {.info-card .bad .fragment style="padding:6px 12px; min-height:80px;"}
 ::: num
-X
+01
 :::
 
-<h3 style="margin:4px 0;">Raw birth counts</h3>
+<h3 style="margin:4px 0;">
 
-:::
+Limited measure of fertility behaviour
 
+</h3>
+::::
 
 ::: {.arrow-down .fragment style="text-align:center;font-size:2rem;margin:12px;"}
 ↓
 :::
 
-
-::: {.info-card .good .fragment}
-
+:::: {.info-card .good .fragment}
 ::: num
 ✓
 :::
 
-<h3>Age-Specific Fertility Rates</h3>
+<h3>Better fertility measurement</h3>
 
-<p>
-Calculated ASFR values (births per 1,000 women by age group) 
-are stacked to represent the TFR profile, isolating fertility 
-behaviour from population changes.
-</p>
+<p>Calculated ASFR values (births per 1,000 women by age group) are
+stacked to represent the TFR profile, isolating fertility behaviour from
+population changes.</p>
+::::
+::::::::
 
-:::
-
-:::
-
-
-
-::: {.map-column}
-
-::: {.info-card .bad .fragment style="padding:6px 12px; min-height:80px;"}
-
+:::::::: map-column
+:::: {.info-card .bad .fragment style="padding:6px 12px; min-height:80px;"}
 ::: num
-X
+02
 :::
 
-<h3 style="margin:4px 0;">Short time horizon</h3>
+<h3 style="margin:4px 0;">
 
-:::
+Restricted time and context
 
+</h3>
+::::
 
 ::: {.arrow-down .fragment style="text-align:center;font-size:2rem;margin:12px;"}
 ↓
 :::
 
-
-::: {.info-card .good .fragment}
-
+:::: {.info-card .good .fragment}
 ::: num
 ✓
 :::
 
-<h3>Extended historical view</h3>
+<h3>Extended historical view & context</h3>
 
-<p>
-The dataset is expanded from 1980–2025, revealing long-term 
-shifts such as delayed childbearing and declining fertility 
-among younger age groups.
-</p>
+<p>The dataset is expanded to 1980–2025 to reveal long-term fertility
+shifts, while female LFPR trends, policy milestones and recession
+periods provide context for the possible drivers behind these
+changes.</p>
+::::
+::::::::
 
-:::
-
-:::
-
-
-
-::: {.map-column}
-
-::: {.info-card .bad .fragment style="padding:6px 12px; min-height:80px;"}
-
+:::::::: map-column
+:::: {.info-card .bad .fragment style="padding:6px 12px; min-height:80px;"}
 ::: num
-X
+03
 :::
 
-<h3 style="margin:4px 0;">No driver context</h3>
+<h3 style="margin:4px 0;">
 
-:::
+Weak visual explanation
 
+</h3>
+::::
 
 ::: {.arrow-down .fragment style="text-align:center;font-size:2rem;margin:12px;"}
 ↓
 :::
 
-
-::: {.info-card .good .fragment}
-
+:::: {.info-card .good .fragment}
 ::: num
 ✓
 :::
 
-<h3>Contextual overlays</h3>
+<h3>Clearer visual communication</h3>
 
-<p>
-Female LFPR trends, policy milestones, and recession periods 
-are added to explain possible drivers behind fertility shifts.
-</p>
-
-:::
-
-:::
-
-
-::::::
-
+<p>Added explicit axes, consistent age-group colours, legends and
+annotation explanations so the chart remains self-contained.</p>
+::::
+::::::::
+:::::::::::::::::::::
 
 ------------------------------------------------------------------------
 
@@ -2130,7 +2082,6 @@ decline.
 p_insight1
 ```
 
-
 :::: side-note
 ::: kicker
 Insight 1
@@ -2147,13 +2098,17 @@ increased substantially.</p>
 <p>The median age at first birth also rose from approximately 28 years
 in 1990 to 32 years in 2025.</p>
 
-<p><strong>Interpretation:</strong> Female LFPR rose alongside increasing
-educational attainment. As more women pursued higher education and
-established careers, first birth and family formation also shifted later
-\[11\].</p>
+<p><strong>Interpretation:</strong> Female LFPR rose alongside
+increasing educational attainment. As more women pursued higher
+education and established careers, first birth and family formation also
+shifted later \[11\].</p>
 
-<p><strong>Research support:</strong> A peer-reviewed study published in the Journal of Social Policy associates delayed family formation and parenthood in Singapore with educational expansion, increased female labour-market participation, and changing attitudes towards marriage and childbearing. This is consistent with the parallel movement observed in our data, although it does not establish direct causation. [11]
-</p>
+<p><strong>Research support:</strong> A peer-reviewed study published in
+the Journal of Social Policy associates delayed family formation and
+parenthood in Singapore with educational expansion, increased female
+labour-market participation, and changing attitudes towards marriage and
+childbearing. This is consistent with the parallel movement observed in
+our data, although it does not establish direct causation. \[11\]</p>
 ::::
 :::::
 
@@ -2175,19 +2130,16 @@ Insight 2
 
 <h3>Women's literacy rates in Singapore</h3>
 
-<p>Government policies drove female literacy rates up.
-1961: Free
-primary education was offered. 
-1994: School curriculum was unified for
-all sexes. 
-2003: Quota for female intake to NUS medical school
+<p>Government policies drove female literacy rates up. 1961: Free
+primary education was offered. 1994: School curriculum was unified for
+all sexes. 2003: Quota for female intake to NUS medical school
 lifted.</p>
 
 <p>With more equal opportunities, women are now spending more time in
 school, pursuing higher levels of education.</p>
 
-<p>Therefore, female LFPR for women aged 15-19 and 20-24 has
-dropped because young women at those ages are still schooling and hence, not
+<p>Therefore, female LFPR for women aged 15-19 and 20-24 has dropped
+because young women at those ages are still schooling and hence, not
 able to join the workforce.</p>
 
 <p><strong>Interpretation:</strong> Education once went to sons; women
@@ -2195,10 +2147,12 @@ were confined to labour or homemaking. Women now pursue higher education
 and delay starting a family, extending the same pattern of later labour
 force entry seen across this period.</p>
 
-<p><strong>Research support:</strong> Research published in the Journal of Social Policy and the Journal of Population Research notes that longer participation in education may postpone subsequent transitions into employment, marriage and parenthood. This supports our interpretation that extended schooling forms part of a wider delay in adult and family formation. [11][12]
-
-</p>
-
+<p><strong>Research support:</strong> Research published in the Journal
+of Social Policy and the Journal of Population Research notes that
+longer participation in education may postpone subsequent transitions
+into employment, marriage and parenthood. This supports our
+interpretation that extended schooling forms part of a wider delay in
+adult and family formation. \[11\]\[12\]</p>
 ::::
 :::::
 
@@ -2235,9 +2189,11 @@ fertile to have many children. Moreover, the rising cost of living acts
 as a disincentive for families to have more children because it is
 financially unsustainable.</p>
 
-<p><strong>Research support:</strong> A SG household survey study conducted by NUS researchers found that later marriage was associated with fewer children. Respondents also identified expected finances, children’s education, childcare and housing costs as important considerations in their fertility decisions. [13]
-
-</p>
+<p><strong>Research support:</strong> A SG household survey study
+conducted by NUS researchers found that later marriage was associated
+with fewer children. Respondents also identified expected finances,
+children’s education, childcare and housing costs as important
+considerations in their fertility decisions. \[13\]</p>
 ::::
 :::::
 
@@ -2269,8 +2225,13 @@ government have limited effectiveness. Some of its effectiveness may be
 compromised due to the enticing financial incentives during periods of
 economic downturn.</p>
 
-<p><strong>Research support:</strong> A study published in the Journal of Social Policy identified a possible mismatch between some pronatalist measures and the marriage and first-birth transitions most influential to TFR. A nationally representative survey study published in the Journal of Population Research also found that paternity leave, shared parental leave and the Baby Bonus were perceived as supportive of childbearing. [11][12]
-</p>
+<p><strong>Research support:</strong> A study published in the Journal
+of Social Policy identified a possible mismatch between some pronatalist
+measures and the marriage and first-birth transitions most influential
+to TFR. A nationally representative survey study published in the
+Journal of Population Research also found that paternity leave, shared
+parental leave and the Baby Bonus were perceived as supportive of
+childbearing. \[11\]\[12\]</p>
 ::::
 :::::
 
@@ -2361,20 +2322,18 @@ event.
 </div>
 ```
 
-::: {.fragment}
-<span style="display:block; margin-top:28px; 
+::: fragment
+[ Policy and recession timing help explain short-term context, but they
+do not overturn the wider pattern. <br> The main message is cumulative:
+fertility declined because several social, economic and demographic
+patterns moved together. ]{style="display:block; margin-top:28px; 
 padding:14px 18px; 
 background:rgba(0,0,0,0.03); 
 border-left:5px solid #c0392b; 
 font-size:1.12em; 
 font-weight:500; 
 line-height:1.6; 
-color:#1f2d3d;">
-Policy and recession timing help explain short-term context, but they do
-not overturn the wider pattern. <br> The main message is cumulative:
-fertility declined because several social, economic and demographic
-patterns moved together.
-</span>
+color:#1f2d3d;"}
 :::
 
 ------------------------------------------------------------------------
@@ -2419,6 +2378,7 @@ July 24, 2026, from
 <a href="https://data.gov.sg/datasets/d_d032130d8b6425287566bd439f13d21c/view">https://data.gov.sg/datasets/d_d032130d8b6425287566bd439f13d21c/view</a></li>
 
 </ol>
+
 <ol start="8">
 
 <li>Singapore Department of Statistics. (n.d.). <em>Resident
@@ -2435,32 +2395,31 @@ Retrieved July 24, 2026, from
 Singapore fertility analysis</em> \[Unpublished data table\]. AAI1001
 Data Engineering and Visualization project.</li>
 
-<li>Chen, M., Yip, P. S. F., &amp; Yap, M. T. (2018).
-<em>Identifying the most influential groups in determining Singapore’s
-fertility</em>. <em>Journal of Social Policy, 47</em>(1), 139–160.
+<li>Chen, M., Yip, P. S. F., & Yap, M. T. (2018). <em>Identifying the
+most influential groups in determining Singapore’s fertility</em>.
+<em>Journal of Social Policy, 47</em>(1), 139–160.
 <a href="https://doi.org/10.1017/S0047279417000241">https://doi.org/10.1017/S0047279417000241</a></li>
 
 <li>Tan, J. (2023). <em>Perceptions towards pronatalist policies in
 Singapore</em>. <em>Journal of Population Research, 40</em>, Article 14.
 <a href="https://doi.org/10.1007/s12546-023-09309-8">https://doi.org/10.1007/s12546-023-09309-8</a></li>
 
-<li>Hashmi, A. R., &amp; Mok, W. J. (2013).
-<em>Determinants of low fertility in Singapore: Evidence from a
-household survey</em>. <em>The Singapore Economic Review, 58</em>(4),
-1350023.
+<li>Hashmi, A. R., & Mok, W. J. (2013). <em>Determinants of low
+fertility in Singapore: Evidence from a household survey</em>. <em>The
+Singapore Economic Review, 58</em>(4), 1350023.
 <a href="https://doi.org/10.1142/S0217590813500239">https://doi.org/10.1142/S0217590813500239</a></li>
 
-<li>Tan, K., Li, N. P., Meltzer, A. L., Chin, J. L. J.,
-Tan, L. K. L., Lim, A. J., Neuberg, S. L., &amp; van Vugt, M. (2022).
-<em>Effects of economic uncertainty and socioeconomic status on
-reproductive timing: A life history approach</em>.
-<em>Current Research in Ecological and Social Psychology, 3</em>,
-100040.
+<li>Tan, K., Li, N. P., Meltzer, A. L., Chin, J. L. J., Tan, L. K. L.,
+Lim, A. J., Neuberg, S. L., & van Vugt, M. (2022). <em>Effects of
+economic uncertainty and socioeconomic status on reproductive timing: A
+life history approach</em>. <em>Current Research in Ecological and
+Social Psychology, 3</em>, 100040.
 <a href="https://doi.org/10.1016/j.cresp.2022.100040">https://doi.org/10.1016/j.cresp.2022.100040</a></li>
 
-<li>Ang H. M. (2026, February 26). <em>Singapore's fertility rate drops to historic low of 0.87 as country faces 'existential challenge': DPM Gan</em>. Channel News Asia.
+<li>Ang H. M. (2026, February 26). <em>Singapore's fertility rate drops
+to historic low of 0.87 as country faces 'existential challenge': DPM
+Gan</em>. Channel News Asia.
 <a href="https://www.channelnewsasia.com/singapore/total-fertility-rate-tfr-2025-record-low-citizen-population-5954306">https://www.channelnewsasia.com/singapore/total-fertility-rate-tfr-2025-record-low-citizen-population-5954306</a></li>
-
 
 </ol>
 :::
