@@ -691,6 +691,7 @@ p_insight4 <- ggplot(policy_window, aes(x = relative_year, y = tfr, colour = pol
   facet_wrap(~ event_label, scales = "free_y", ncol = 2) +
   scale_colour_manual(values = c("Anti-natalist" = "#D95F02", "Pro-natalist" = "#1B9E77")) +
   scale_fill_manual(
+    limits = c("Moderate", "Severe", "Most severe"),
     values = c(
       "Most severe" = "#B2182B",
       "Severe" = "#8073AC",
@@ -1366,7 +1367,7 @@ All 10 dataset files used in the final slides</h4>
       <td>Insight 1</td>
     </tr>
     <tr>
-      <td><code>M850001_female_literacy_rate.csv</code></td>
+      <td><code>IndicatorsOnEducationAndLiteracyAnnual.csv</code></td>
       <td>Female literacy rate</td>
       <td>Insight 2</td>
     </tr>
@@ -1847,7 +1848,7 @@ Final Improved Visualisation
 
 ::: divider-subtitle
 The final visualisation expands the original birth-count chart into a
-1980-2025 fertility, labour-force, poliscy and recession view.
+1980-2025 fertility, labour-force, policy and recession view.
 :::
 
 ------------------------------------------------------------------------
@@ -2123,21 +2124,21 @@ p_insight2
 Insight 2
 :::
 
-<h3>Women literacy rates in Singapore</h3>
+<h3>Women's literacy rates in Singapore</h3>
 
 <p>Government policies drove female literacy rates up.
 1961: Free
 primary education was offered. 
 1994: School curriculum was unified for
 all sexes. 
-2003: Quote for female intake to NUS medical school
+2003: Quota for female intake to NUS medical school
 lifted.</p>
 
 <p>With more equal opportunities, women are now spending more time in
 school, pursuing higher levels of education.</p>
 
-<p>Therefore, the female LFPR for ages ranged 15-19 and 20-24 have
-dropped because girls at that age are still schooling and hence, not
+<p>Therefore, female LFPR for women aged 15-19 and 20-24 has
+dropped because young women at those ages are still schooling and hence, not
 able to join the workforce.</p>
 
 <p><strong>Interpretation:</strong> Education once went to sons; women
@@ -2182,7 +2183,7 @@ of living.</p>
 on pursuing higher levels of education and establishing careers, they
 will start families at a later age. At that age, they might not be as
 fertile to have many children. Moreover, the rising cost of living acts
-as a disincentive for families to have lesser children because its
+as a disincentive for families to have more children because it is
 financially unsustainable.</p>
 
 <p><strong>Research support:</strong> A SG household survey study conducted by NUS researchers found that later marriage was associated with fewer children. Respondents also identified expected finances, children’s education, childcare and housing costs as important considerations in their fertility decisions. [13]
@@ -2197,7 +2198,7 @@ financially unsustainable.</p>
 
 ::::: {.two-col .plot-wide}
 ```{r}
-#| fig-width: 7.2
+#| fig-width: 8.8
 #| fig-height: 5.2
 p_insight4
 ```
