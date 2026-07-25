@@ -794,9 +794,9 @@ education, policy context and family formation.
 ::::::
 
 ::: cover-team
-<strong>Team 11</strong><br> Levl Lim Jing Qiang (2501118) - Damien Tan
-Qing Xun (2503046)<br> Angel Zhang XinYu (2503541) - Gador Sophia Helen
-Santiago (2503845) - Yap Suen Hong (2500770)<br>
+<strong>Team 11</strong><br> Levl Lim Jing Qiang (2501118) · Damien Tan
+Qing Xun (2503046)<br> Angel Zhang XinYu (2503541) · Gador Sophia Helen
+Santiago (2503845) · Yap Suen Hong (2500770)<br>
 :::
 
 ::::: cover-stat
@@ -1395,6 +1395,7 @@ born.</p>
 
 ------------------------------------------------------------------------
 
+
 ## Dataset Inventory {.clean-slide}
 
 ::: kicker
@@ -1404,36 +1405,61 @@ Data sources
 ::: hr-accent
 :::
 
-<h4>All 8 dataset files used in the final slides</h4>
+<h4>
+All 8 dataset files used in the final slides</h4>
 
-+-------------------------------------------------------------------------+----------------------+----------------------+
-| Dataset file                                                            | Main variables used  | Used for             |
-+=========================================================================+======================+======================+
-| `BirthsAndFertilityRatesAnnual.csv`                                     | TFR, ASFR by age     | Main visualisation   |
-|                                                                         | group                | and policy/recession |
-|                                                                         |                      | analysis             |
-+-------------------------------------------------------------------------+----------------------+----------------------+
-| `M182201.csv`                                                           | Female LFPR          | Main visualisation,  |
-|                                                                         | aggregate and by age | Insights 1 and 2     |
-|                                                                         | group                |                      |
-+-------------------------------------------------------------------------+----------------------+----------------------+
-| `M850581.csv`                                                           | Female               | Insight 1            |
-|                                                                         | university-qualified |                      |
-|                                                                         | residents            |                      |
-+-------------------------------------------------------------------------+----------------------+----------------------+
-| `IndicatorsOnEducationAndLiteracyAnnual.csv`                            | Female literacy rate | Insight 2            |
-+-------------------------------------------------------------------------+----------------------+----------------------+
-| `M850591_female_mean_years_schooling.csv`                               | Female mean years of | Insight 2            |
-|                                                                         | schooling            |                      |
-+-------------------------------------------------------------------------+----------------------+----------------------+
-| `MedianAgeOfMothersAtFirstBirthAnnual.csv`                              | Median age at first  | Insight 1            |
-|                                                                         | birth                |                      |
-+-------------------------------------------------------------------------+----------------------+----------------------+
-| `ResidentEverMarriedFemalesByAgeGroupAndNumberOfChildrenBornAnnual.csv` | Children born by     | Insight 3            |
-|                                                                         | women aged 40 to 49  |                      |
-+-------------------------------------------------------------------------+----------------------+----------------------+
-| `ConsumerPriceIndexCPI2024AsBaseYearMonthly.csv`                        | CPI, all items       | Insight 3            |
-+-------------------------------------------------------------------------+----------------------+----------------------+
+<table class="custom-table compact-table">
+  <thead>
+    <tr>
+      <th>Dataset file</th>
+      <th>Main variables used</th>
+      <th>Used for</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>BirthsAndFertilityRatesAnnual.csv</code></td>
+      <td>TFR, ASFR by age group</td>
+      <td>Main visualisation and policy/recession analysis</td>
+    </tr>
+    <tr>
+      <td><code>M182201.csv</code></td>
+      <td>Female LFPR aggregate and by age group</td>
+      <td>Main visualisation, Insights 1 and 2</td>
+    </tr>
+    <tr>
+      <td><code>M850581.csv</code></td>
+      <td>Female university-qualified residents</td>
+      <td>Insight 1</td>
+    </tr>
+    <tr>
+      <td><code>IndicatorsOnEducationAndLiteracyAnnual.csv</code></td>
+      <td>Female literacy rate</td>
+      <td>Insight 2</td>
+    </tr>
+    <tr>
+      <td><code>M850591_female_mean_years_schooling.csv</code></td>
+      <td>Female mean years of schooling</td>
+      <td>Insight 2</td>
+    </tr>
+    <tr>
+      <td><code>MedianAgeOfMothersAtFirstBirthAnnual.csv</code></td>
+      <td>Median age at first birth</td>
+      <td>Insight 1</td>
+    </tr>
+    <tr>
+      <td><code>ResidentEverMarriedFemalesByAgeGroupAndNumberOfChildrenBornAnnual.csv</code></td>
+      <td>Children born by women aged 40 to 49</td>
+      <td>Insight 3</td>
+    </tr>
+    <tr>
+      <td><code>ConsumerPriceIndexCPI2024AsBaseYearMonthly.csv</code></td>
+      <td>CPI, all items</td>
+      <td>Insight 3</td>
+    </tr>
+  </tbody>
+</table>
+
 
 ------------------------------------------------------------------------
 
@@ -1923,33 +1949,51 @@ guide
 ::: hr-accent
 :::
 
-+-------------------+--------------------+-----------------------------+
-| Aesthetic / Layer | Variable / Measure | How to Read & Interpret     |
-+===================+====================+=============================+
-| X-Axis            | Year               | Data from 1980-2025         |
-+-------------------+--------------------+-----------------------------+
-| Left Y-Axis       | ASFR               | Stacked Bar Charts          |
-|                   |                    | represent ASFR              |
-+-------------------+--------------------+-----------------------------+
-| Right Y-Axis      | Female LFPR        | Dashed Lines show female    |
-|                   |                    | LFPR                        |
-+-------------------+--------------------+-----------------------------+
-| Colour            | Age Group          | Each colour represent a     |
-|                   |                    | different age group         |
-+-------------------+--------------------+-----------------------------+
-| Dotted Lines      | Major Policies     | Marks years when a major    |
-|                   |                    | policy is introduced        |
-+-------------------+--------------------+-----------------------------+
-| Shaded grey bands | Recession Periods  | Marks years when a          |
-|                   |                    | recession period happened   |
-+-------------------+--------------------+-----------------------------+
+<table class="custom-table compact-table">
+  <thead>
+    <tr>
+      <th>Aesthetic / Layer</th>
+      <th>Variable / Measure</th>
+      <th>How to Read & Interpret</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>X-Axis</td>
+      <td>Year</td>
+      <td>Data from 1980-2025</td>
+    </tr>
+    <tr>
+      <td>Left Y-Axis</td>
+      <td>ASFR</td>
+      <td>Stacked Bar Charts represent ASFR</td>
+    </tr>
+    <tr>
+      <td>Right Y-Axis</td>
+      <td>Female LFPR</td>
+      <td>Dashed Lines show female LFPR</td>
+    </tr>
+    <tr>
+      <td>Colour</td>
+      <td>Age Group</td>
+      <td>Each colour represent a different age group</td>
+    </tr>
+    <tr>
+      <td>Dotted Lines</td>
+      <td>Major Policies</td>
+      <td>Marks years when a major policy is introduced</td>
+    </tr>
+    <tr>
+      <td>Shaded grey bands</td>
+      <td>Recession Periods</td>
+      <td>Marks years when a recession period happened</td>
+    </tr>
+  </tbody>
+</table>
 
-::: {style="background-color: #ffffff; border: 1px solid #cbd5e1; border-left: 5px solid #ea580c; border-radius: 6px; padding: 12px 16px; margin-top: 15px; font-size: 0.9em; color: #1e293b;"}
-<strong>Summary:</strong> By extending the design across <strong>6 key
-visual dimensions</strong> (Time, ASFR, LFPR, Age Demographics, Policy
-Context, and Economic Shocks), the chart transforms raw statistical data
-into an integrated exploratory view of Singapore's demographic shift.
-:::
+<div style="background-color: #ffffff; border: 1px solid #cbd5e1; border-left: 5px solid #ea580c; border-radius: 6px; padding: 12px 16px; margin-top: 15px; font-size: 0.9em; color: #1e293b;">
+  <strong>Summary:</strong> By extending the design across <strong>6 key visual dimensions</strong> (Time, ASFR, LFPR, Age Demographics, Policy Context, and Economic Shocks), the chart transforms raw statistical data into an integrated exploratory view of Singapore's demographic shift.
+</div>
 
 ------------------------------------------------------------------------
 
