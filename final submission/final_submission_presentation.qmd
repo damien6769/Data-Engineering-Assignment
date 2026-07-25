@@ -1331,189 +1331,76 @@ final visualisation window is 1980-2025.
 ## Core Datasets Used {.clean-slide}
 
 ::: kicker
-Data curation
+Data curation & sourcing
 :::
 
 ::: hr-accent
 :::
 
-<h4>Official datasets used in the final analysis</h4>
-
-::::::::: source-grid
-::: {.source-tile .stat-pop}
-[SINGSTAT]{.label}
-
-<h3>Births and fertility rates</h3>
-
-<p>TFR and ASFR by maternal age group. Used for the main visualisation
-and policy analysis.</p>
-:::
-
-::: {.source-tile .stat-pop}
-[SINGSTAT]{.label}
-
-<h3>Female LFPR</h3>
-
-<p>Resident female labour-force participation by age group and aggregate
-rate.</p>
-:::
-
-::: {.source-tile .stat-pop}
-[SINGSTAT]{.label}
-
-<h3>Education indicators</h3>
-
-<p>Female university-qualified residents, literacy and mean years of
-schooling.</p>
-:::
-
-::: {.source-tile .stat-pop}
-[SINGSTAT]{.label}
-
-<h3>Family timing</h3>
-
-<p>Median age of resident mothers at first birth.</p>
-:::
-
-::: {.source-tile .stat-pop}
-[SINGSTAT]{.label}
-
-<h3>Completed family size</h3>
-
-<p>Ever-married resident females aged 40 to 49 by number of children
-born.</p>
-:::
-
-::: {.source-tile .stat-pop}
-[MANUAL]{.label}
-
-<h3>Policy and recession annotations</h3>
-
-<p>Used as timing context only, not as causal proof.</p>
-:::
-:::::::::
-
-------------------------------------------------------------------------
-
-
-## Dataset Inventory {.clean-slide}
-
-::: kicker
-Data sources
-:::
-
-::: hr-accent
-:::
-
-<h4>
-All 8 dataset files used in the final slides</h4>
-
-<table class="custom-table compact-table">
-  <thead>
-    <tr>
-      <th>Dataset file</th>
-      <th>Main variables used</th>
-      <th>Used for</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>BirthsAndFertilityRatesAnnual.csv</code></td>
-      <td>TFR, ASFR by age group</td>
-      <td>Main visualisation and policy/recession analysis</td>
-    </tr>
-    <tr>
-      <td><code>M182201.csv</code></td>
-      <td>Female LFPR aggregate and by age group</td>
-      <td>Main visualisation, Insights 1 and 2</td>
-    </tr>
-    <tr>
-      <td><code>M850581.csv</code></td>
-      <td>Female university-qualified residents</td>
-      <td>Insight 1</td>
-    </tr>
-    <tr>
-      <td><code>IndicatorsOnEducationAndLiteracyAnnual.csv</code></td>
-      <td>Female literacy rate</td>
-      <td>Insight 2</td>
-    </tr>
-    <tr>
-      <td><code>M850591_female_mean_years_schooling.csv</code></td>
-      <td>Female mean years of schooling</td>
-      <td>Insight 2</td>
-    </tr>
-    <tr>
-      <td><code>MedianAgeOfMothersAtFirstBirthAnnual.csv</code></td>
-      <td>Median age at first birth</td>
-      <td>Insight 1</td>
-    </tr>
-    <tr>
-      <td><code>ResidentEverMarriedFemalesByAgeGroupAndNumberOfChildrenBornAnnual.csv</code></td>
-      <td>Children born by women aged 40 to 49</td>
-      <td>Insight 3</td>
-    </tr>
-    <tr>
-      <td><code>ConsumerPriceIndexCPI2024AsBaseYearMonthly.csv</code></td>
-      <td>CPI, all items</td>
-      <td>Insight 3</td>
-    </tr>
-  </tbody>
-</table>
-
-
-------------------------------------------------------------------------
-
-## Dataset Source Links {.clean-slide}
-
-::: kicker
-Source crediting
-:::
-
-::: hr-accent
-:::
-
-<h4 style="margin-top: 1em;">
-
-Official source tables behind the 8 files
-
-</h4>
+<h4>Official datasets used in the final analysis, with sources</h4>
 
 ```{=html}
-<div class="source-link-grid">
-<div class="source-link-card">
-<h3>Main visualisation</h3>
-<p><a href="https://data.gov.sg/datasets/d_e39eeaeadb571c0d0725ef1eec48d166/view">M810091</a> Births and Fertility Rates</p>
-<p><a href="https://data.gov.sg/datasets/d_465c5bd4a9adae523f9577371daf5e24/view">M182201</a> Resident LFPR by Age and Sex</p>
-</div>
-<div class="source-link-card">
-<h3>Insight 1</h3>
-<p><a href="https://tablebuilder.singstat.gov.sg/table/TS/M850581">M850581</a> Highest Qualification Attained</p>
-<p><a href="https://data.gov.sg/datasets/d_465c5bd4a9adae523f9577371daf5e24/view">M182201</a> Female LFPR aggregate</p>
-<p><a href="https://data.gov.sg/datasets/d_d032130d8b6425287566bd439f13d21c/view">M810741</a> Median Age of Mothers at First Birth</p>
-</div>
-<div class="source-link-card">
-<h3>Insight 2</h3>
-<p><a href="https://data.gov.sg/datasets/d_a98f2ae027bf4442d7250d50505feabe/view">M850001</a> Education and Literacy Indicators</p>
-<p><a href="https://data.gov.sg/datasets/d_0f8fd20f3aecd9dccd41b9d750e72d4a/view">M850591</a> Mean Years of Schooling</p>
-<p><a href="https://data.gov.sg/datasets/d_465c5bd4a9adae523f9577371daf5e24/view">M182201</a> Female LFPR, ages 15 to 24</p>
-</div>
-<div class="source-link-card">
-<h3>Insight 3 and 4</h3>
-<p><a href="https://data.gov.sg/datasets/d_1de45e559613cb1a82b65ca23d9f2ffd/view">M810571</a> Ever-Married Females by Children Born</p>
-<p><a href="https://data.gov.sg/datasets/d_bdaff844e3ef89d39fceb962ff8f0791/view">Consumer Price Index</a>, CPI 2024 as Base Year, Monthly</p>
-<p><a href="https://data.gov.sg/datasets/d_e39eeaeadb571c0d0725ef1eec48d166/view">M810091</a> TFR for policy and recession windows</p>
-</div>
+<div class="source-grid">
+
+<a class="source-tile stat-pop" href="https://data.gov.sg/datasets/d_e39eeaeadb571c0d0725ef1eec48d166/view" target="_blank" rel="noopener">
+<h3>Births and fertility rates</h3>
+<p>TFR and ASFR by maternal age group, the two core fertility measures behind the main visualisation.</p>
+<p class="used-for">Main visualisation, policy/ recession analysis</p>
+<span class="src-code">BirthsAndFertilityRatesAnnual.csv</span>
+</a>
+
+<a class="source-tile stat-pop" href="https://data.gov.sg/datasets/d_465c5bd4a9adae523f9577371daf5e24/view" target="_blank" rel="noopener">
+<h3>Female LFPR</h3>
+<p>Resident female labour-force participation, both the overall rate and the breakdown by age group.</p>
+<p class="used-for">Main visualisation, Insights 1 and 2</p>
+<span class="src-code">M182201.csv</span>
+</a>
+
+<a class="source-tile stat-pop" href="https://tablebuilder.singstat.gov.sg/table/TS/M850581" target="_blank" rel="noopener">
+<h3>Highest qualification</h3>
+<p>Female residents aged 25 and over by highest qualification attained, tracking university attainment growth.</p>
+<p class="used-for">Insight 1</p>
+<span class="src-code">M850581.csv</span>
+</a>
+
+<a class="source-tile stat-pop" href="https://data.gov.sg/datasets/d_a98f2ae027bf4442d7250d50505feabe/view" target="_blank" rel="noopener">
+<h3>Education and literacy</h3>
+<p>Female literacy rate over time, shown alongside male rate for comparison.</p>
+<p class="used-for">Insight 2</p>
+<span class="src-code">IndicatorsOnEducationAndLiteracyAnnual.csv</span>
+</a>
+
+<a class="source-tile stat-pop" href="https://data.gov.sg/datasets/d_0f8fd20f3aecd9dccd41b9d750e72d4a/view" target="_blank" rel="noopener">
+
+<h3>Mean years of schooling</h3>
+<p>Average number of years Singaporean women spent in education.</p>
+<p class="used-for">Insight 2</p>
+<span class="src-code">M850591_female_mean_years_schooling.csv</span>
+</a>
+
+<a class="source-tile stat-pop" href="https://data.gov.sg/datasets/d_d032130d8b6425287566bd439f13d21c/view" target="_blank" rel="noopener">
+<h3>Family timing</h3>
+<p>Median age of resident mothers at first birth, tracked annually.</p>
+<p class="used-for">Insight 1</p>
+<span class="src-code">MedianAgeOfMothersAtFirstBirthAnnual.csv</span>
+</a>
+
+<a class="source-tile stat-pop" href="https://data.gov.sg/datasets/d_1de45e559613cb1a82b65ca23d9f2ffd/view" target="_blank" rel="noopener">
+<h3>Completed family size</h3>
+<p>Ever-married resident women aged 40 to 49, grouped by number of children born.</p>
+<p class="used-for">Insight 3</p>
+<span class="src-code">ResidentEverMarriedFemales…csv</span>
+</a>
+
+<a class="source-tile stat-pop" href="https://data.gov.sg/datasets/d_bdaff844e3ef89d39fceb962ff8f0791/view" target="_blank" rel="noopener">
+<h3>Consumer price index</h3>
+<p>All-items CPI, 2024 rebased, used to separate genuine economic hardship from policy timing.</p>
+<p class="used-for">Insight 3</p>
+<span class="src-code">ConsumerPriceIndexCPI2024...csv</span>
+</a>
+
 </div>
 ```
-
-<p class="tiny-note source-note">
-
-M182201 is reused in more than one insight. Policy and recession markers
-are manually curated annotation tables used as context, not measured
-outcome data.
-
-</p>
-
 ------------------------------------------------------------------------
 
 ## Data Engineering Workflow {#engineering-workflow .section-divider background-image="images/workflow-bg.jpg" background-size="cover" background-position="center" background-opacity="0.5" transition="slide"}
