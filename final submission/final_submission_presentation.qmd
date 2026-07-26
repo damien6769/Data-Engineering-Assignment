@@ -1820,6 +1820,67 @@ p_main
 
 ------------------------------------------------------------------------
 
+## How to Read the Visualisation {.custom-slide}
+
+::: kicker
+guide
+:::
+
+::: hr-accent
+:::
+
+<table class="custom-table compact-table">
+  <thead>
+    <tr>
+      <th>Aesthetic / Layer</th>
+      <th>Variable / Measure</th>
+      <th>How to Read & Interpret</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>X-Axis</td>
+      <td>Year</td>
+      <td>Data from 1980-2025</td>
+    </tr>
+    <tr>
+      <td>Left Y-Axis</td>
+      <td>ASFR<sup>1</sup></td>
+      <td>Stacked Bar Charts represent ASFR</td>
+    </tr>
+    <tr>
+      <td>Right Y-Axis</td>
+      <td>Female LFPR<sup>2</sup></td>
+      <td>Dashed Lines show female LFPR</td>
+    </tr>
+    <tr>
+      <td>Colour</td>
+      <td>Age Group</td>
+      <td>Each colour represent a different age group</td>
+    </tr>
+    <tr>
+      <td>Dotted Lines</td>
+      <td>Major Policies</td>
+      <td>Marks years when a major policy is introduced</td>
+    </tr>
+    <tr>
+      <td>Shaded grey bands</td>
+      <td>Recession Periods</td>
+      <td>Marks years when a recession period happened</td>
+    </tr>
+  </tbody>
+</table>
+<p style="font-size: 0.5em; color: #475569;">
+  <sup>1</sup> ASFR (Age-Specific Fertility Rate): number of births per 1,000 women in a given age group.<br>
+  <sup>2</sup> LFPR (Labour Force Participation Rate): percentage of women in the labour force.
+</p>
+
+<div style="background-color: #ffffff; border: 1px solid #cbd5e1; border-left: 5px solid #ea580c; border-radius: 6px; padding: 12px 16px; margin-top: 15px; font-size: 0.9em; color: #1e293b;">
+  <strong>Summary:</strong> By extending the design across <strong>6 key visual dimensions</strong> (Time, ASFR, LFPR, Age Demographics, Policy Context, and Economic Shocks), the chart transforms raw statistical data into an integrated exploratory view of Singapore's demographic shift.
+</div>
+
+------------------------------------------------------------------------
+
 ## Visual Observations {.clean-slide}
 
 ::: kicker
@@ -1891,70 +1952,7 @@ p_main
 
 </div>
 </div>
-
 ------------------------------------------------------------------------
-
-## How to Read the Visualisation {.custom-slide}
-
-::: kicker
-guide
-:::
-
-::: hr-accent
-:::
-
-<table class="custom-table compact-table">
-  <thead>
-    <tr>
-      <th>Aesthetic / Layer</th>
-      <th>Variable / Measure</th>
-      <th>How to Read & Interpret</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>X-Axis</td>
-      <td>Year</td>
-      <td>Data from 1980-2025</td>
-    </tr>
-    <tr>
-      <td>Left Y-Axis</td>
-      <td>ASFR<sup>1</sup></td>
-      <td>Stacked Bar Charts represent ASFR</td>
-    </tr>
-    <tr>
-      <td>Right Y-Axis</td>
-      <td>Female LFPR<sup>2</sup></td>
-      <td>Dashed Lines show female LFPR</td>
-    </tr>
-    <tr>
-      <td>Colour</td>
-      <td>Age Group</td>
-      <td>Each colour represent a different age group</td>
-    </tr>
-    <tr>
-      <td>Dotted Lines</td>
-      <td>Major Policies</td>
-      <td>Marks years when a major policy is introduced</td>
-    </tr>
-    <tr>
-      <td>Shaded grey bands</td>
-      <td>Recession Periods</td>
-      <td>Marks years when a recession period happened</td>
-    </tr>
-  </tbody>
-</table>
-<p style="font-size: 0.5em; color: #475569;">
-  <sup>1</sup> ASFR (Age-Specific Fertility Rate): number of births per 1,000 women in a given age group.<br>
-  <sup>2</sup> LFPR (Labour Force Participation Rate): percentage of women in the labour force.
-</p>
-
-<div style="background-color: #ffffff; border: 1px solid #cbd5e1; border-left: 5px solid #ea580c; border-radius: 6px; padding: 12px 16px; margin-top: 15px; font-size: 0.9em; color: #1e293b;">
-  <strong>Summary:</strong> By extending the design across <strong>6 key visual dimensions</strong> (Time, ASFR, LFPR, Age Demographics, Policy Context, and Economic Shocks), the chart transforms raw statistical data into an integrated exploratory view of Singapore's demographic shift.
-</div>
-
-------------------------------------------------------------------------
-
 ## Visual Improvement Mapping {.custom-slide}
 
 ::: kicker
