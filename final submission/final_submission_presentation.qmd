@@ -2234,8 +2234,6 @@ Final takeaway
 ::: hr-accent
 :::
 
-<h6>"What demographic and social changes are associated with Singapore’s persistently low fertility from 1980 to 2025?"</h6>
-
 ::: conclusion-big
 Singapore's fertility decline is best read as a <span>linked structural change</span>, not a single drop caused by one policy, recession or demographic event.
 :::
