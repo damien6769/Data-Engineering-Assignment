@@ -2273,7 +2273,7 @@ questions.</p>
 
 ------------------------------------------------------------------------
 
-## Conclusion {#conclusion-divider .section-divider background-image="images/insightsanalysis-bg.jpg" background-size="cover" background-position="center" background-opacity="0.5" transition="slide"}
+## Conclusion {#conclusion-divider .section-divider background-image="images/conc-bg.jpg" background-size="cover" background-position="center" background-opacity="0.5" transition="slide"}
 
 ::: {.divider-inner}
 
@@ -2336,7 +2336,7 @@ color:#1f2d3d;"}
 
 ------------------------------------------------------------------------
 
-## Thank You {#thankyou-divider .section-divider transition="slide"}
+## Thank You {#thankyou-divider .section-divider background-image="images/thankyou-bg.jpg" background-size="cover" background-position="center" background-opacity="0.5" transition="slide"}
 
 ::: {.divider-inner}
 
