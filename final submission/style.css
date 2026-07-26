@@ -1259,47 +1259,71 @@ pre code {
 /* Rail-grid detail list */
 .detail-rail-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  column-gap: 40px;
-  row-gap: 50px;
-  margin-top: 60px;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 60px;
+  row-gap: 70px;
+  margin-top: 90px;
+}
+
+.detail-rail-item:nth-child(3) {
+  grid-column: 1 / -1;
+  justify-self: center;
+  max-width: 760px;
 }
 
 .detail-rail-item {
-  border-top: 1.5px solid rgba(38, 56, 64, 0.22);
-  padding-top: 16px;
-}
-
-.detail-rail-item .rail-icon {
-  font-size: 1.5em;
-  color: var(--navy);
-  display: inline-flex;
-  align-items: center;
-  vertical-align: middle;
-  margin-right: 12px;
+  position: relative;
+  padding-top: 8px;
 }
 
 .detail-rail-item .rail-num {
+  position: absolute;
+  top: -38px;
+  left: -10px;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.detail-rail-item .rail-num p {
+  margin: 0;
   font-family: Georgia, "Times New Roman", serif;
-  font-size: 0.95em;
-  font-weight: 700;
-  color: var(--coral);
-  display: inline-flex;
-  align-items: center;
-  vertical-align: middle;
+  font-size: 4.4em;
+  line-height: 1;
+  color: rgba(184, 111, 95, 0.18);
+}
+
+.detail-rail-item:nth-child(2) .rail-num p {
+  color: rgba(15, 58, 102, 0.14);
 }
 
 .detail-rail-item h3 {
-  font-size: 1.0em;
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 1.15em;
   color: var(--ink);
-  margin: 14px 0 10px 0;
+  margin: 0;
+}
+
+.detail-rail-item .rail-icon {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 1.25em;
+  color: var(--navy);
+  margin-left: 10px;
 }
 
 .detail-rail-item p {
-  font-size: 0.66em;
+  position: relative;
+  z-index: 1;
+  display: block;
+  margin-top: 12px;
+  font-size: 0.68em;
   line-height: 1.55;
   color: var(--ink-soft);
-  margin: 0;
 }
 
 .eng-num p {
@@ -1488,3 +1512,16 @@ pre code {
 .arrow-down {
   opacity:0.8;
 }
+
+@keyframes detailPopIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.reveal .slides section.present .detail-rail-item {
+  animation: detailPopIn 0.5s ease-out both;
+}
+
+.reveal .slides section.present .detail-rail-item:nth-child(1) { animation-delay: 0s; }
+.reveal .slides section.present .detail-rail-item:nth-child(2) { animation-delay: 0.15s; }
+.reveal .slides section.present .detail-rail-item:nth-child(3) { animation-delay: 0.30s; }

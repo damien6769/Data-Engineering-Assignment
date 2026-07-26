@@ -1607,8 +1607,9 @@ Avoids misleading comparisons across incompatible measures.
 
 <h3>Derived measures</h3>
 
-<p><strong>Fix:</strong> compute shares, policy-relative years and
-visual encodings.</p>
+<p><strong>Fix:</strong> convert counts into within-year percentages,
+and derive size, colour and shading from the clean numeric
+variables.</p>
 
 Turns raw data into story-ready variables.
 ::::
@@ -1629,9 +1630,6 @@ Reproducibility and validation
 
 ::::::::::::::::::::: detail-rail-grid
 ::::: detail-rail-item
-::: rail-icon
-{{< fa link >}}
-:::
 
 ::: rail-num
 01
@@ -1639,83 +1637,45 @@ Reproducibility and validation
 
 <h3>Year alignment</h3>
 
+::: rail-icon
+{{< fa link >}}
+:::
+
 <p>All tables were joined by <code>year</code>. No row was joined by
 position.</p>
 :::::
 
 ::::: detail-rail-item
-::: rail-icon
-{{< fa layer-group >}}
-:::
 
 ::: rail-num
 02
 :::
 
-<h3>Age-group matching</h3>
+<h3>Policy windows</h3>
 
-<p>ASFR and LFPR age bands were standardised before plotting
-together.</p>
-:::::
-
-::::: detail-rail-item
 ::: rail-icon
 {{< fa landmark >}}
 :::
-
-::: rail-num
-03
-:::
-
-<h3>Policy windows</h3>
 
 <p>TFR was converted to years before and after policy years for fair
 comparison.</p>
 :::::
 
 ::::: detail-rail-item
-::: rail-icon
-{{< fa chart-pie >}}
-:::
 
 ::: rail-num
-04
-:::
-
-<h3>Family-size shares</h3>
-
-<p>Counts of children born were converted into percentages within each
-year.</p>
-:::::
-
-::::: detail-rail-item
-::: rail-icon
-{{< fa palette >}}
-:::
-
-::: rail-num
-05
-:::
-
-<h3>Visual encodings</h3>
-
-<p>Size, colour and shaded bands were derived from clean numeric
-variables.</p>
-:::::
-
-::::: detail-rail-item
-::: rail-icon
-{{< fa circle-check >}}
-:::
-
-::: rail-num
-06
+03
 :::
 
 <h3>Validation checks</h3>
 
-<p>Checked expected year ranges, missing values, age groups and
-percentage totals.</p>
+::: rail-icon
+{{< fa circle-check >}}
+:::
+
+<p>Automated checks after cleaning: no duplicate year/age-group rows,
+LFPR values within 0 to 100%, matching age bands, shares summing to
+100%, and no missing CPI or TFR values.</p>
 :::::
 :::::::::::::::::::::
 
