@@ -1216,8 +1216,7 @@ maternal-age structure. Annual changes appear visually compressed</p>
 
 <h3>Restricted time and context</h3>
 
-<p>The short 2012–2022 period lacks wider social and economic context,
-while five-year averages hide annual variation</p>
+<p>The short 2012–2022 period lacks wider social and economic context, making long-term fertility patterns difficult to interpret</p>
 ::::
 
 :::: {.info-card .bad .fragment}
