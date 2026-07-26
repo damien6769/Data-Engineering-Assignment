@@ -838,7 +838,7 @@ fertility decline.
 
 ::::: timeline-text
 ::: timeline-title
-The Story
+[The Story](#the-story)
 :::
 
 ::: timeline-description
@@ -854,7 +854,7 @@ The story we want to tell
 
 ::::: timeline-text
 ::: timeline-title
-Original Visualisation Critique and Improvements
+[Original Visualisation Critique and Improvements](#original-visualisation)
 :::
 
 ::: timeline-description
@@ -870,7 +870,7 @@ What the CNA chart shows and misses, and how we redesigned the scope
 
 ::::: timeline-text
 ::: timeline-title
-Data Curation and Sources
+[Data Curation and Sources](#data-sources)
 :::
 
 ::: timeline-description
@@ -886,7 +886,7 @@ Official datasets used
 
 ::::: timeline-text
 ::: timeline-title
-Data Engineering Workflow
+[Data Engineering Workflow](#engineering-workflow)
 :::
 
 ::: timeline-description
@@ -902,7 +902,7 @@ Raw data to visualisation-ready tables
 
 ::::: timeline-text
 ::: timeline-title
-Final Improved Visualisation
+[Final Improved Visualisation](#final-visualisation)
 :::
 
 ::: timeline-description
@@ -918,7 +918,7 @@ The main 1980-2025 fertility view
 
 ::::: timeline-text
 ::: timeline-title
-Data Analysis and Insights
+[Data Analysis and Insights](#insights-analysis)
 :::
 
 ::: timeline-description
@@ -934,7 +934,7 @@ Four supporting patterns behind the main visual
 
 ::::: timeline-text
 ::: timeline-title
-Conclusion
+[Conclusion](#conslusion-divider)
 :::
 
 ::: timeline-description
@@ -1849,7 +1849,7 @@ p_main
 
 <!-- RIGHT: CARDS -->
 <div style="flex: 1;">
-<div style="font-size: 0.95rem;">
+<div style="font-size: 18px;">
 
 ::::::::: card-stack
 
