@@ -934,7 +934,7 @@ Four supporting patterns behind the main visual
 
 ::::: timeline-text
 ::: timeline-title
-[Conclusion](#conslusion-divider)
+[Conclusion](#conclusion-divider)
 :::
 
 ::: timeline-description
