@@ -1169,9 +1169,9 @@ Source: CNA birth-count visualisation on Singapore citizen births.
 
 <h3>Immediately communicates its headline</h3>
 
-<p>Reader grasps the core message ("births declined") within seconds</p>
+<p>Clear, direct title</p>
 
-<p>Bars and direct labels are easy to read</p>
+<p>Reader grasps the core message ("births declined") within seconds</p>
 ::::
 
 :::: {.info-card .good .fragment}
