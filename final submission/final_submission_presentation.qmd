@@ -838,11 +838,11 @@ fertility decline.
 
 ::::: timeline-text
 ::: timeline-title
-Original Visualisation and Story
+The Story
 :::
 
 ::: timeline-description
-What the CNA chart shows and misses
+The story we want to tell
 :::
 :::::
 :::::::
@@ -854,11 +854,11 @@ What the CNA chart shows and misses
 
 ::::: timeline-text
 ::: timeline-title
-Critique and Improvements
+Original Visualisation Critique and Improvements
 :::
 
 ::: timeline-description
-How we redesigned the scope
+What the CNA chart shows and misses, and how we redesigned the scope
 :::
 :::::
 :::::::
@@ -1003,7 +1003,7 @@ Births
 
 ::: {.stat-pop style="display:flex;flex-direction:column;align-items:center;text-align:center;background:none;box-shadow:none;"}
 [↑ 1 in
-5]{style="display:flex;align-items:center;justify-content:center;width:110px;height:110px;border-radius:50%;background:#ff6b4a;color:white;font-weight:700;font-size:1.6rem;line-height:1;margin:0 auto 50px auto;"}
+5]{style="display:flex;align-items:center;justify-content:center;width:110px;height:110px;border-radius:50%;background:#ff6b4a;color:white;font-weight:700;font-size:1.6rem;line-height:1;margin:0 auto 4px auto;"}
 
 <h4 style="margin:0 0 2px 0;">
 
@@ -1852,12 +1852,12 @@ guide
     </tr>
     <tr>
       <td>Left Y-Axis</td>
-      <td>ASFR</td>
+      <td>ASFR<sup>1</sup></td>
       <td>Stacked Bar Charts represent ASFR</td>
     </tr>
     <tr>
       <td>Right Y-Axis</td>
-      <td>Female LFPR</td>
+      <td>Female LFPR<sup>2</sup></td>
       <td>Dashed Lines show female LFPR</td>
     </tr>
     <tr>
@@ -1877,6 +1877,10 @@ guide
     </tr>
   </tbody>
 </table>
+<p style="font-size: 0.5em; color: #475569;">
+  <sup>1</sup> ASFR (Age-Specific Fertility Rate): number of births per 1,000 women in a given age group.<br>
+  <sup>2</sup> LFPR (Labour Force Participation Rate): percentage of women in the labour force.
+</p>
 
 <div style="background-color: #ffffff; border: 1px solid #cbd5e1; border-left: 5px solid #ea580c; border-radius: 6px; padding: 12px 16px; margin-top: 15px; font-size: 0.9em; color: #1e293b;">
   <strong>Summary:</strong> By extending the design across <strong>6 key visual dimensions</strong> (Time, ASFR, LFPR, Age Demographics, Policy Context, and Economic Shocks), the chart transforms raw statistical data into an integrated exploratory view of Singapore's demographic shift.
@@ -2230,10 +2234,10 @@ Final takeaway
 ::: hr-accent
 :::
 
+<h6>"What demographic and social changes are associated with Singapore’s persistently low fertility from 1980 to 2025?"</h6>
+
 ::: conclusion-big
-Singapore's fertility decline is best read as a linked structural
-change, not a single drop caused by one policy, recession or demographic
-event.
+Singapore's fertility decline is best read as a <span>linked structural change</span>, not a single drop caused by one policy, recession or demographic event.
 :::
 
 ```{=html}
@@ -2254,10 +2258,7 @@ event.
 ```
 
 ::: fragment
-[ Policy and recession timing help explain short-term context, but they
-do not overturn the wider pattern. <br> The main message is cumulative:
-fertility declined because several social, economic and demographic
-patterns moved together. ]{style="display:block; margin-top:28px; 
+[Fertility declined not because of one turning point, but because multiple demographic, social and economic changes accumulated and reinforced one another over time. This suggests that addressing the issue will require equally multi-dimensional approaches, rather than isolated policy fixes.]{style="display:block; margin-top:28px; 
 padding:14px 18px; 
 background:rgba(0,0,0,0.03); 
 border-left:5px solid #c0392b; 
