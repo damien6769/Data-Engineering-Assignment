@@ -1819,11 +1819,79 @@ The final visualisation expands the original birth-count chart into a
 p_main
 ```
 
-::: notes
-Use this slide to set up the rest of the analysis. The main chart shows
-that fertility decline is long-term, that younger-age fertility fell
-sharply, and that female LFPR increased across most age groups.
+------------------------------------------------------------------------
+
+## Visual Observations {.clean-slide}
+
+::: kicker
+trends seen on the visualisation
 :::
+
+::: hr-accent
+:::
+
+<div style="display: flex; align-items: flex-start; gap: 2rem;">
+
+<!-- LEFT: PLOT -->
+<div style="flex: 2;">
+
+```{r}
+#| fig-width: 10
+#| fig-height: 6.5
+#| echo: false
+#| message: false
+#| warning: false
+
+p_main
+```
+
+</div>
+
+<!-- RIGHT: CARDS -->
+<div style="flex: 1;">
+<div style="font-size: 0.95rem;">
+
+::::::::: card-stack
+
+:::: {.info-card .good .fragment}
+::: num
+01
+:::
+
+<h4>ASFR Decline</h4>
+
+<p>ASFR shows a long-term decline from >350 births per 1,000 women in 1980 to <200 by 2025.</p>
+
+::::
+
+:::: {.info-card .good .fragment}
+::: num
+02
+:::
+
+<h4>LFPR Trends</h4>
+
+<p>Prime-age female cohorts (25–49) steadily increase in rate while the youngest group (15–19) sloped downward to remain separated below 20%.</p>
+
+::::
+
+:::: {.info-card .good .fragment}
+::: num
+03
+:::
+
+<h4>Recession & Policies</h4>
+
+<p>Recession bands coincide with temporary downward dips in ASFR. Policy lines show a brief upward bump in bar height following the 1987 policy marker before long-term downward trends resume.</p>
+
+::::
+
+:::::::::
+
+</div>
+
+</div>
+</div>
 
 ------------------------------------------------------------------------
 
