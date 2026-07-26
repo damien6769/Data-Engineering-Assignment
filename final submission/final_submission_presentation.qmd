@@ -1167,7 +1167,7 @@ Source: CNA birth-count visualisation on Singapore citizen births.
 02
 :::
 
-<h3>Immediately communicates its headline</h3>
+<h3>Message is straightforward</h3>
 
 <p>Clear, direct title</p>
 
