@@ -949,6 +949,8 @@ What the whole story means for fertility decline
 
 ## The Story {#the-story .section-divider background-image="images/story-bg.jpg" background-size="cover" background-position="center" background-opacity="0.5" transition="slide"}
 
+::: {.divider-inner}
+
 ::: section-number
 01
 :::
@@ -961,6 +963,8 @@ The Story
 Singapore's fertility decline is not only about fewer births. It is also
 about who is giving birth, when family formation happens and whether
 policies coincide with recovery.
+:::
+
 :::
 
 ------------------------------------------------------------------------
@@ -1013,7 +1017,14 @@ Aged 65+
 
 <p>citizens</p>
 :::
+
+
+<div style="position:absolute; left:50%; transform:translateX(-50%); bottom:80px; font-size:0.9rem; color:#aaa; text-align:center;width:max-content;">
+Source: Channel News Asia (2026)
+</div>
+
 ::::::
+
 
 ::: {.fragment style="text-align:center; width:100%; margin-top:36px;"}
 <h5>Singapore faces a rapidly ageing population driven by persistently
@@ -1058,6 +1069,8 @@ persistently low fertility from 1980 to 2025?
 
 ## Original Visualisation & Critique {#original-visualisation .section-divider background-image="images/critique-bg.jpg" background-size="cover" background-position="center" background-opacity="0.5" transition="slide"}
 
+::: {.divider-inner}
+
 ::: section-number
 02
 :::
@@ -1069,6 +1082,8 @@ Original Visualisation & Critique
 ::: divider-subtitle
 The original CNA chart is clear for a news story, but it cannot explain
 long-term fertility behaviour.
+:::
+
 :::
 
 ------------------------------------------------------------------------
@@ -1235,6 +1250,8 @@ maternal-age structure. Annual changes appear visually compressed</p>
 
 ## Proposed Improvements {#proposed-improvements .section-divider background-image="images/improvements-bg.jpg" background-size="cover" background-position="center" background-opacity="0.5" transition="slide"}
 
+::: {.divider-inner}
+
 ::: section-number
 03
 :::
@@ -1246,6 +1263,8 @@ Proposed Improvements
 ::: divider-subtitle
 We keep the original concern about declining births, but redesign the
 analysis to explain fertility behaviour more directly.
+:::
+
 :::
 
 ------------------------------------------------------------------------
@@ -1312,6 +1331,8 @@ self-contained.
 
 ## Data Sources {#data-sources .section-divider background-image="images/datasource-bg.jpg" background-size="cover" background-position="center" background-opacity="0.5" transition="slide"}
 
+::: {.divider-inner}
+
 ::: section-number
 04
 :::
@@ -1323,6 +1344,8 @@ Data Sources
 ::: divider-subtitle
 We use official SingStat datasets and separate event annotations. The
 final visualisation window is 1980-2025.
+:::
+
 :::
 
 ------------------------------------------------------------------------
@@ -1404,6 +1427,8 @@ Data curation & sourcing
 
 ## Data Engineering Workflow {#engineering-workflow .section-divider background-image="images/workflow-bg.jpg" background-size="cover" background-position="center" background-opacity="0.5" transition="slide"}
 
+::: {.divider-inner}
+
 ::: section-number
 05
 :::
@@ -1415,6 +1440,8 @@ Data Engineering Workflow
 ::: divider-subtitle
 The workflow standardises raw wide tables into consistent plot-ready
 datasets.
+:::
+
 :::
 
 ------------------------------------------------------------------------
@@ -1757,6 +1784,8 @@ separately.</p>
 
 ## Final Improved Visualisation {#final-visualisation .section-divider background-image="images/finalvis-bg.jpg" background-size="cover" background-position="center" background-opacity="0.5" transition="slide"}
 
+::: {.divider-inner}
+
 ::: section-number
 06
 :::
@@ -1768,6 +1797,8 @@ Final Improved Visualisation
 ::: divider-subtitle
 The final visualisation expands the original birth-count chart into a
 1980-2025 fertility, labour-force, policy and recession view.
+:::
+
 :::
 
 ------------------------------------------------------------------------
@@ -1914,7 +1945,9 @@ p_main
 
 </div>
 </div>
+
 ------------------------------------------------------------------------
+
 ## Visual Improvement Mapping {.custom-slide}
 
 ::: kicker
@@ -2020,6 +2053,8 @@ annotation explanations so the chart remains self-contained.</p>
 
 ## Insights & Analysis {#insights-analysis .section-divider background-image="images/insightsanalysis-bg.jpg" background-size="cover" background-position="center" background-opacity="0.5" transition="slide"}
 
+::: {.divider-inner}
+
 ::: section-number
 07
 :::
@@ -2031,6 +2066,8 @@ Insights & Analysis
 ::: divider-subtitle
 Four supporting insights answer what changed underneath the fertility
 decline.
+:::
+
 :::
 
 ------------------------------------------------------------------------
@@ -2238,6 +2275,8 @@ questions.</p>
 
 ## Conclusion {#conclusion-divider .section-divider background-image="images/insightsanalysis-bg.jpg" background-size="cover" background-position="center" background-opacity="0.5" transition="slide"}
 
+::: {.divider-inner}
+
 ::: section-number
 08
 :::
@@ -2248,6 +2287,8 @@ Conclusion
 
 ::: divider-subtitle
 What the whole story means for fertility decline.
+:::
+
 :::
 
 ------------------------------------------------------------------------
@@ -2291,6 +2332,18 @@ font-size:1.12em;
 font-weight:500; 
 line-height:1.6; 
 color:#1f2d3d;"}
+:::
+
+------------------------------------------------------------------------
+
+## Thank You {#thankyou-divider .section-divider transition="slide"}
+
+::: {.divider-inner}
+
+::: divider-title
+Thank You
+:::
+
 :::
 
 ------------------------------------------------------------------------
