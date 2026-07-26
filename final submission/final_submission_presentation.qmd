@@ -1626,7 +1626,7 @@ Reproducibility and validation
 ::: hr-accent
 :::
 
-<h4>Key transformations used before plotting</h4>
+<h4>The same steps produce the same result every time</h4>
 
 ::::::::::::::::::::: detail-rail-grid
 ::::: detail-rail-item
@@ -1641,8 +1641,9 @@ Reproducibility and validation
 {{< fa link >}}
 :::
 
-<p>All tables were joined by <code>year</code>. No row was joined by
-position.</p>
+<p>All tables were joined by <code>year</code>, never by row position,
+so the result does not change depending on the order rows happen to
+arrive in each file.</p>
 :::::
 
 ::::: detail-rail-item
@@ -1657,8 +1658,9 @@ position.</p>
 {{< fa landmark >}}
 :::
 
-<p>TFR was converted to years before and after policy years for fair
-comparison.</p>
+<p>The same fixed window, 5 years before to 10 years after, is applied
+to every policy event by one formula, not chosen individually per
+event.</p>
 :::::
 
 ::::: detail-rail-item
